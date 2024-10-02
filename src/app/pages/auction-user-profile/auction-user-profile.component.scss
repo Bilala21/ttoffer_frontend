@@ -1,0 +1,26 @@
+.active-tab {
+    cursor: pointer;
+    position: relative;
+}
+
+.active-line {
+    height: 2px;
+    background-color: black;
+    width: 100%;
+    position: absolute;
+    bottom: -10px;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+@media (width < 1030px){
+    .sm-img-h{
+        height: 60px !important;
+    }
+}
+
+.bg-success{
+    background-color: blue !important;
+}

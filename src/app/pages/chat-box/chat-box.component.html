@@ -1,0 +1,295 @@
+<!-- <app-header></app-header> -->
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-xl-11 mx-auto">
+            <div class="row">
+                <div class="col-xl-4 col-md-4" style="border-right: 1px solid #E5E5E5;">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-9 mt-2">
+                            <div class="d-flex">
+                                <div class="dropdown">
+                                    <!-- <button class="btn text-dark border-0 btn-outline-secondary dropdown-toggle"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Messages
+                                    </button> -->
+                                    <button class="btn text-dark border-0 btn-outline-secondary cursor-none"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Messages
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                </div>
+                                <div class="text-center sm-p-2"
+                                    style="background-color: #EDF2F7; border-radius: 6vh; padding: 10px;">
+                                    <h6 class="m-0 sm-cat-text3" style="font-size: 2vh;">{{chatBox.length}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-3">
+                            <img style="cursor: pointer;" src="assets/images/addIcon.png" class="sm-img2" alt="">
+                        </div> -->
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 d-none d-xl-block">
+                            <input type="text" class="w-100 form-control p-4 position-relative"
+                                style="border-radius: 2vh;" placeholder="Search...">
+                            <img src="assets/images/chatSearchIcon.png" class="position-absolute"
+                                style="left: 21px; top: 18px" alt="">
+                        </div>
+                        <div class="col-12 d-block d-xl-none">
+                            <input type="text" class="w-100 form-control position-relative"
+                                style="border-radius: 1vh; font-size: 15px; padding-left: 20px;"
+                                placeholder="Search...">
+                            <img src="assets/images/chatSearchIcon.png" class="position-absolute"
+                                style="left: 17px; top: 10px" alt="">
+                        </div>
+                    </div>
+                    <div class="row mt-3 p-2" style="cursor: pointer;" *ngFor="let data of chatBox"
+                        (click)="getConversation(data)" [ngClass]="{'active': selectedUser === data}">
+                        <div class="col-md-4 col-xl-3 col-3">
+                            <img src="{{data.user_image}}" class="w-100 sm-img-h"
+                                style="height: 60px; border-radius: 10px;" alt="">
+                        </div>
+                        <div class="col-6 m-0 p-0">
+                            <h6 class="m-0">{{ data.sender.id !== currentUserid ? data.sender.name : data.receiver.name }}</h6>
+                             <span class="sm-cat-text3">{{data.message}}</span>
+                        </div>
+                        <div class="col-2 m-0 p-0" style="text-align: end;">
+                            <span class="sm-cat-text3">{{ getTimeDifference(data.updated_at) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-md-8" *ngIf="selectedUser">
+                    <div class="row">
+                        <div class="col-xl-1 col-md-2 col-2">
+                            <img src="{{selectedUser.img}}" class="w-100" style="border-radius: 10px;" alt="">
+                        </div>
+                        <div class="col-9">
+                            <h6 class="m-0">{{selectedUser.name}}</h6>
+                            <div class="d-flex align-items-center">
+                                <img src="assets/images/chatOnline-icon.png" alt="">
+                                <span style="margin-left: 5px;">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" *ngif="offerStatus">
+                        <div class="col-xl-6 mx-auto mt-5">
+                            <div class="position-relative text-center p-3"
+                                style="background-color: #F3F4F5; border-radius: 15px;">
+                                <img class="position-absolute" style="top: -20%; left: 40%;"
+                                    src="assets/images/offer-img.png" alt="">
+                                <h6 style="margin-top: 5vh;">Sent you a offer</h6>
+                                <h5 style="margin-top: 3vh; font-weight: bolder;">AED 500</h5>
+                                <div class="row mt-5">
+                                    <div class="col-4">
+                                        <button class="btn btn-dark w-100 sm-cat-text1"
+                                            style="border-radius: 3vh; font-size: 1.5vh;" (click)="rejectOffer()">Reject
+                                            Offer</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-dark w-100 sm-cat-text1"
+                                            style="border-radius: 3vh; font-size: 1.5vh;" (click)="acceptOffer()">Accept
+                                            Offer</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-dark w-100 sm-cat-text1" (click)="openModal()"
+                                            style="border-radius: 3vh; font-size: 1.5vh;">Counter Offer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div *ngFor="let row of conversationBox">
+                        <div>{{row.message}}</div>
+                    </div> -->
+
+                    <!-- old code -->
+
+                    <!-- <div *ngFor="let message of conversationBox; let index = index" class="mt-3">
+                            <p [ngClass]="{'right mt-3 mb-3': currentUserid == message.sender_id, 'left mb-3 mt-3': currentUserid != message.sender_id}" style="border-radius: 2vh;">{{ message.message }}</p>
+                    </div> -->
+
+                    <!-- new code -->
+                    <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div *ngFor="let message of conversationBox; let index = index" class="row mt-2 message-container align-items-center">
+                            <div style="margin-right: -15px;margin-left: -15px;" class="col-auto" [ngClass]="{'order-1': currentUserid == message.sender_id, 'order-0': currentUserid != message.sender_id}">
+                                <img [src]="currentUserid == message.sender_id ? conversationBox.sender : conversationBox.replier"
+                                     class="userImage"
+                                     alt="User Image" style="border-radius: 4vh;"
+                                     [ngClass]="{'rightImg': currentUserid == message.sender_id, 'leftImg': currentUserid != message.sender_id}"/>
+                            </div>
+                            <div class="col" [ngClass]="{'text-end': currentUserid == message.sender_id, 'text-start': currentUserid != message.sender_id}">
+                                <p [ngClass]="{'right': currentUserid == message.sender_id, 'left': currentUserid != message.sender_id}"
+                                   style="border-radius: 5vh; margin: 0;">
+                                    {{ message.message }}
+                                </p>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="d-flex align-items-center sm-mt-5" style="margin-top: 30vh; margin-bottom: 5vh;">
+                            <div>
+                                <img src="assets/images/attach-icon.png" alt="">
+                            </div>
+                            <div class="input-group d-none d-xl-block" style="position: relative; margin-left: 5px;">
+                                <input type="text" class="form-control w-100 p-4" style="border-radius: 10px;"
+                                    placeholder="Type a message" [formControl]="messageControl" (focus)="showSuggestions()"
+                                    (blur)="hideSuggestions()" [(ngModel)]="message" />
+                                <img src="assets/images/send-icon.png"
+                                    style="right: 5vh; top: 2.8vh;z-index: 9999; position: absolute;" alt=""
+                                    (click)="sendMsg()" />
+                                <div *ngIf="suggestionsVisible" class="suggestions-container">
+                                    <div *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)"
+                                        class="suggestion-box">
+                                        <span style="font-size: 2.2vh;">{{ suggestion }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group d-block d-xl-none" style="position: relative; margin-left: 5px;">
+                                <input type="text" class="form-control w-100 p-4" style="border-radius: 10px;"
+                                    placeholder="Type a message" [formControl]="messageControl" (focus)="showSuggestions()"
+                                    (blur)="hideSuggestions()" [(ngModel)]="message" />
+                                <img src="assets/images/send-icon.png"
+                                    style="right: 2vh; top: 1.8vh;z-index: 9999; position: absolute;" alt=""
+                                    (click)="sendMsg()" />
+                                <div *ngIf="suggestionsVisible" class="suggestions-container">
+                                    <div *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)"
+                                        class="suggestion-box">
+                                        <span style="font-size: 2.2vh;">{{ suggestion }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div> -->
+                    <div class="row">
+                        <!-- <div class="col-md-12"> -->
+
+
+                            <div class="chat-container col-md-12">
+                                <div class="message-area">
+                                    <div *ngFor="let message of conversationBox; let index = index"
+                                        class="row mt-2 message-container align-items-center">
+                                        <div style="margin-right: -15px;margin-left: -15px;" class="col-auto"
+                                            [ngClass]="{'order-1': currentUserid == message.sender_id, 'order-0': currentUserid != message.sender_id}">
+                                            <img [src]="currentUserid == message.sender_id ? conversationBox.sender : conversationBox.replier"
+                                                class="userImage" alt="User Image" style="border-radius: 4vh;"
+                                                [ngClass]="{'rightImg': currentUserid == message.sender_id, 'leftImg': currentUserid != message.sender_id}" />
+                                        </div>
+                                        <div class="col"
+                                            [ngClass]="{'text-end': currentUserid == message.sender_id, 'text-start': currentUserid != message.sender_id}">
+                                            <p [ngClass]="{'right': currentUserid == message.sender_id, 'left': currentUserid != message.sender_id}"
+                                                style="border-radius: 5vh; margin: 0;">
+                                                {{ message.message }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="footer-input">
+                                    <div class="d-flex align-items-center sm-mt-5">
+                                        <div>
+                                            <img src="assets/images/attach-icon.png" alt="">
+                                        </div>
+                                        <div class="input-group" style="position: relative; margin-left: 5px;">
+                                            <!-- <input type="text" class="form-control w-100 p-4"
+                                                style="border-radius: 10px;" placeholder="Type a message"
+                                                [formControl]="messageControl" (focus)="showSuggestions()"
+                                                (blur)="hideSuggestions()" [(ngModel)]="message" /> -->
+                                            <input type="text" class="form-control w-100 p-4"
+                                                style="border-radius: 10px;" placeholder="Type a message"
+                                                [formControl]="messageControl"
+                                                 [(ngModel)]="message" />
+                                            <img src="assets/images/send-icon.png"
+                                                style="right: 5vh; top: 2.8vh;z-index: 9999; position: absolute;" alt=""
+                                                (click)="sendMsg()" />
+                                            <div *ngIf="suggestionsVisible" class="suggestions-container">
+                                                <div *ngFor="let suggestion of suggestions"
+                                                    (click)="selectSuggestion(suggestion)" class="suggestion-box">
+                                                    <span style="font-size: 2.2vh;">{{ suggestion }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-12">
+                    <app-footer></app-footer>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="offerModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 20px;">
+            <div class="modal-header" style="height: 15px; border-bottom:none ;">
+                <!-- <button type="button" class="back" (click)="back()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button> -->
+                <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body ">
+                <div class="row mb-5">
+                    <h4 class="modal-title m-auto " id="offerModalLabel">Counter Offer</h4>
+                </div>
+                <div class="row" *ngif="offerStatus">
+                    <div class="col-md-10 mx-auto mt-5">
+                        <div class="position-relative text-center p-3"
+                            style="background-color: #F3F4F5; border-radius: 15px;">
+                            <img class="position-absolute" style="top: -20%; left: 40%;"
+                                src="assets/images/offer-img.png" alt="">
+                            <h6 style="margin-top: 5vh;">Sent you a offer</h6>
+                            <h5 style="margin-top: 3vh; font-weight: bolder;">AED 500</h5>
+                            <div class="row mt-5 justify-content-around">
+                                <div class="col-4">
+                                    <button class="btn btn-dark w-100 sm-cat-text"
+                                        style="border-radius: 3vh; font-size: 10px;" (click)="rejectOffer()">Reject
+                                        Offer</button>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-dark w-100 sm-cat-text"
+                                        style="border-radius: 3vh; font-size: 10px;" (click)="acceptOffer()">Accept
+                                        Offer</button>
+                                </div>
+                                <!-- <div class="col-4">
+                                    <button class="btn btn-dark w-100 sm-cat-text" (click)="openModal()"
+                                        style="border-radius: 3vh; font-size: 2vh;">Control Offer</button>
+                                </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mx-auto text-center mt-3">
+                                    <h5>Enter Your Price</h5>
+                                    <input type="text" placeholder="AED 60" class="form-control text-center"
+                                        style="border-radius: 10px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mx-auto mt-5">
+                            <button class="btn btn-dark w-100" style="border-radius: 15px;">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

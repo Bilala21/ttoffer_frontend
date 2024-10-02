@@ -1,0 +1,81 @@
+.filter-sidebar,
+.post-list {
+  height: 100vh;
+  overflow-y: auto;
+
+}
+.post-list{
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #88888884;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.btngroup.active {
+  background-color: #343a40;
+  color: white;
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.custom-row > div {
+  margin-bottom: 0;
+}
+
+
+.custom-row .col-5,
+.custom-row .col-2 {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.total-result{
+  color: #636A80;
+   margin-left: 5px;
+   font-size: 15px;
+}
+.result-count{
+  color: black;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  z-index: 999;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.tab-btn{
+  border: 1px solid #9CA3AF;
+}
+
+.page-dropdown{
+  border-radius: 1vh;
+}

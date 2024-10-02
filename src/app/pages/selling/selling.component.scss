@@ -1,0 +1,41 @@
+.sidebar {
+    height: 40%; 
+    overflow-y: auto;
+  }
+  
+  .sidebar-content {
+    padding: 20px;
+    width: 99%;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #88888884; 
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  
+  .btn-group{
+    background-color: transparent !important;
+    color: black;
+}
+.btngroup.active {
+    background-color: #343a40; 
+    color: white;
+}
+.imageSize{
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+}

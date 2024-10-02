@@ -1,0 +1,99 @@
+.card-image{
+    border-radius: 12.44px;
+    height:173px ;
+}
+.card{
+    border: 1.5px solid #A2A2A2;
+    border-radius: 12.44px;
+} 
+ .Price-heading{
+font-family: Poppins;
+font-size: 20px;
+font-weight: 600;
+}
+.post-heading1{
+    line-height: 14.4px;
+}
+.offer-sticker{
+    border-radius: 2vh;
+    top: 10px;
+    left: 5px;
+    padding: .5vh 4vh .5vh 4vh;
+}
+.wish-list{
+    top: 10px;
+     right: 5px;
+}
+.remaning-timmer{
+    background-color: #FFD33C;
+    border-radius: 5px;
+}
+
+.getItNow{
+    color: #767E94;
+    font-size: 10px;
+  }
+  .store{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #EBEEF7;
+    }
+  .store:hover{
+    border: none;
+  }
+  
+  .aHover:hover{
+  color: rgb(0, 0, 0) !important;
+  }
+  .bidButton{
+    background-color: #1E293B;
+    border-radius: 50px;
+    color:white;
+    border:none;
+    text-decoration: none;
+  }
+  
+  .pointer{
+    cursor: pointer !important;
+  }
+  
+  .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  
+  .location-icon{
+    width: 7%
+  }
+  .location{
+    font-size: 2.5vh;
+     margin-left: 5px;
+      text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; color: #8E8E8E
+  }
+  .attribute-titile{
+    padding: 6px; color: #8E8E8E;
+  }
+  .card-Title{
+    text-align: left;
+     font-size: 15px;
+     font-weight: 400;
+      line-height: 12px; 
+    }
+.offer-Title{
+  font-size: 16px;
+  
+}
+.attribute{
+  padding-left: 8px;
+}
+.price{
+  font-size: 20px;
+  font-weight: 600;
+}
+.wish-list img{
+  cursor: pointer;
+}
