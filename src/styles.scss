@@ -1,0 +1,294 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the theme object.
+$tt-offer-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($tt-offer-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($tt-offer-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($tt-offer-theme);
+/* You can add global styles to this file, and also import other style files */
+.textHover:hover{
+    color: blue !important;
+  }
+
+  // *{
+  //   border: 1px solid red;
+  // }
+
+  @media (width < 1030px){
+    .sm-xl-font{
+      font-size: 1.5vh;
+    }
+    .smm-cat-text{
+      font-size: 1vh !important;
+    }
+  }
+  
+.card{
+  border: 1.5px solid #A2A2A2;
+}
+  @media (width < 1030px){
+    .sm-card-height{
+      height: 32vh !important;
+    }
+    .sm-text{
+      font-size: 3vh;
+    }
+    .sm-cat-text1{
+      font-size: 8px !important;
+    }
+    .sm-cat-text3{
+      font-size: 10px !important;
+    }
+    .sm-cat-text4{
+      font-size: 16px !important;
+    }
+    .sm-cat-text{
+      font-size: 1vh !important;
+    }
+    .sm-cat-text2{
+      font-size: .5vh !important;
+    }
+    .sm-cat-text5{
+      font-size: 24px !important;
+    }
+    .sm-text{
+      font-size: 1.2vh !important;
+    }
+
+    .sm-font{
+      font-size: 15px !important;
+    }
+
+    .sm-h-card{
+      height: 15vh !important;
+    }
+    
+    .sm-h-50{
+      height: 50px !important;
+      border-radius: 10px;
+    }
+    .sm-font1{
+      font-size: 13px !important;
+    }
+
+    .sm-m-0{
+      margin: 0 !important;
+    }
+  
+    .sm-ms-3{
+      margin-left: 8px !important;
+    }
+
+    .smm-cat-text{
+      font-size: 1vh !important;
+    }
+  
+    .sm-drop-text{
+      font-size: 1.5vh !important;
+    }
+  
+    .sm-img{
+      height: 15px !important;
+    }
+
+    .sm-img2{
+      height: 23px !important;
+    }
+    .sm-img3{
+      width:23px !important;
+    }
+
+    .sm-img4{
+      width:30px !important;
+    }
+
+    .sm-img-h{
+      height: 30px !important;
+    }
+
+    .sm-mt-0{
+      margin-top: 0 !important;
+    }
+    .sm-mt-2{
+      margin-top: 5px !important;
+    }
+    .sm-pe-0{
+      padding-right: 0 !important;
+    }
+    .sm-p-0{
+      padding: 0 ;
+    }
+    .sm-p-2{
+      padding: 10px !important;
+    }
+    .sm-p-3{
+      padding: 5px !important;
+    }
+    .sm-p-5{
+      padding: 5px !important;
+    }
+    .sm-p-1{
+      padding: 1px !important;
+    }
+    .sm-round{
+      border-radius: 20px !important;
+      height: 23px !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .sm-h{
+      height: 75px !important;
+      margin-right: 5px;
+      border-radius: 20px !important;
+    }
+    .sm-mt-5{
+      margin-top: 10px !important;
+    }
+    .sm-mt-3{
+      margin-top: 15px !important;
+    }
+    .sm-height{
+      height: 28vh !important;
+    }
+    .sm-justify-content-center{
+      justify-content: center !important;
+    }
+    .sm-w-75{
+      width: 75% !important;
+    }
+  }
+
+  @media (width < 400px){
+    .sm-card-h{
+      height: 30vh !important;
+    }
+    .sm-c-height{
+      height: 25vh !important;
+    }
+    .sm-cat1{
+      font-size: 1vh !important;
+    }
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// .spinner {
+//   border: 16px solid #f3f3f3; /* Light grey */
+//   border-top: 16px solid #3498db; /* Blue */
+//   border-radius: 50%;
+//   width: 120px;
+//   height: 120px;
+//   animation: spin 2s linear infinite;
+// }
+
+// @keyframes spin {
+//   0% { transform: rotate(0deg); }
+//   100% { transform: rotate(360deg); }
+// }
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background for contrast */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Maximum z-index to ensure it's on top of other content */
+  pointer-events: none; /* Prevents interaction with other elements */
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  width: 17px; /* Size of the dots */
+  height: 17px; /* Size of the dots */
+  margin: 0 9px; /* Space between dots */
+  border-radius: 50%;
+  background-color: #FFC107; /* Yellow color for dots */
+  animation: bounce 0.6s infinite alternate; /* Bouncing effect */
+}
+
+/* Adjusting animation timing for a staggered effect */
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  to {
+    transform: translateY(-20px); /* Bounce height */
+  }
+}
+
+
+
+//new Css
+
+.skel-pro{
+  position: relative;
+      overflow: hidden;
+      width: 100%;
+
+      &:before {
+          content: '';
+          display: block;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-image: linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0),linear-gradient(#f4f4f4 100%, transparent 0);
+      }
+
+      &:after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          right: -50%;
+          bottom: -50%;
+          background-image: linear-gradient(90deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 80%);
+          animation: skeletonloading 1.5s infinite;
+      }
+}

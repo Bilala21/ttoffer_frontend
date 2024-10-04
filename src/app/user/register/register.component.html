@@ -1,0 +1,66 @@
+<div class="row">
+  <!-- <div class="text-center">
+  <h6 class="">Profile Detail</h6>
+  <img src="assets/images/register-img.png" class="w-50 mt-3" alt="">
+</div> -->
+<div class="col-lg-1 col-md-2 col-2" style="font-size: 6px; cursor: pointer;">
+  <i class="fa fa-arrow-left fa-2x" (click)="backButton()"></i>
+
+</div>
+<div class="col-lg-11 col-md-10 col-10 text-center">
+
+  <h6 class="">Profile Detail</h6>
+  <img src="assets/images/register-img.png" class="w-50 mt-3" alt="">
+</div>
+</div>
+<div class="row mt-5">
+  <div class="col-6">
+    <label>First Name</label>
+    <input type="text" placeholder="First Name" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="firstName">
+  </div>
+  <div class="col-6">
+    <label>Last Name</label>
+    <input type="text" placeholder="Last Name" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="lastName">
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <label>Username</label>
+    <input type="text" placeholder="Username" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="username">
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <label>Email/Phone</label>
+    <input type="text" placeholder="name@example.com" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="emailOrPhone">
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <label>Phone</label>
+    <input type="text" placeholder="name@example.com" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="phone">
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <label>Password</label>
+    <input type="password" placeholder="Your Password" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="password">
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <label>Confirm Password</label>
+    <input type="password" placeholder="Confirm password" class="form-control"
+      style="border-radius: 13px;" [(ngModel)]="confirmPassword">
+      <div><span class="text-danger mt-2">{{errorMessage}}</span></div>
+    <button class="btn btn-dark w-100 mt-3" style="border-radius: 20px; padding: 10px;"
+      [disabled]="!ValidFor()" (click)="confirmRegistration()">Confirm</button>
+  </div>
+</div>
