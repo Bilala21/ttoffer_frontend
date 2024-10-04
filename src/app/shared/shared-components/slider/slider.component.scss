@@ -1,0 +1,204 @@
+.carousel-inner {
+    .carousel-item {
+      height: 100vh;
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        // opacity: 0.8;
+      }
+    }
+    .custom-caption {
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      right: 10%;
+      bottom: 15%;
+      text-align: left;
+      color: #fff;
+    }
+    .custom-caption h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .custom-caption p {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    .btn-start {
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #f7b924;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .btn-start:hover {
+      background-color: #d4a617;
+    }
+  }
+  .carousel-indicators [data-target]{
+    background-color: #d3cec1;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+  }
+  .carousel-indicators .active {
+    background-color: #c1af7d;
+    min-width: 38px !important;
+    min-height: 10px !important;
+    border: .5 solid #c1af7d;
+    border-radius: 10px !important;
+  }
+  @media (max-width: 768px) {
+    .carousel-inner .carousel-item {
+      height: 70vh;
+    }
+    .custom-caption {
+      top: 20%;
+    }
+    .custom-caption h2 {
+      font-size: 2rem;
+    }
+    .custom-caption p {
+      font-size: 0.9rem;
+    }
+  }
+  @media (max-width: 576px) {
+    .carousel-inner .carousel-item {
+      height: 60vh;
+    }
+    .custom-caption {
+      top: 15%;
+    }
+    .custom-caption h2 {
+      font-size: 1.5rem;
+    }
+    .custom-caption p {
+      font-size: 0.8rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .carousel-inner .carousel-item {
+      height: calc(100vh - 50px);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .carousel {
+//   .carousel-inner {
+//     .carousel-item {
+//       height: 100vh; /* Full height for large screens */
+//       img {
+//         object-fit: cover;
+//         width: 100%;
+//         height: 100%;
+//         border-radius: 20px;
+//         opacity: 0.8;
+//       }
+
+//       .custom-caption {
+//         position: absolute;
+//         top: 30%;
+//         left: 10%;
+//         right: 10%;
+//         bottom: 15%;
+//         text-align: left;
+//         color: #fff;
+
+//         h2 {
+//           font-size: 2.5rem;
+//           font-weight: bold;
+//         }
+
+//         p {
+//           font-size: 1rem;
+//           margin-top: 0.5rem;
+//         }
+
+//         .btn-start {
+//           margin-top: 1rem;
+//           padding: 0.8rem 1.5rem;
+//           background-color: #f7b924;
+//           color: #000;
+//           border: none;
+//           border-radius: 5px;
+//           font-weight: bold;
+//           &:hover {
+//             background-color: #d4a617;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .bullet [data-bs-target] {
+//     background-color: #d3cec1; /* Bullet color */
+//     width: 10px !important;
+//     height: 10px !important;
+//     border-radius: 20px !important;
+//   }
+
+//   .bullet .active {
+//     background-color: #c1af7d; /* Active bullet color */
+//     width: 38px !important;
+//     height: 10px !important;
+//     border-radius: 8px !important;
+//   }
+
+//   /* Media Queries for responsive adjustments */
+//   @media (max-width: 768px) {
+//     .carousel-inner .carousel-item {
+//       height: 70vh; /* Reduced height for tablets */
+//     }
+
+//     .custom-caption {
+//       top: 20%;
+//       h2 {
+//         font-size: 2rem;
+//       }
+//       p {
+//         font-size: 0.9rem;
+//       }
+//     }
+//   }
+
+//   @media (max-width: 576px) {
+//     .carousel-inner .carousel-item {
+//       height: 60vh; /* Reduced height for mobiles */
+//     }
+
+//     .custom-caption {
+//       top: 15%;
+//       h2 {
+//         font-size: 1.5rem;
+//       }
+//       p {
+//         font-size: 0.8rem;
+//       }
+//     }
+//   }
+
+//   /* For extra-large screens */
+//   @media (min-width: 1200px) {
+//     .carousel-inner .carousel-item {
+//       height: calc(100vh - 50px); /* Full height */
+//     }
+//   }
+// }

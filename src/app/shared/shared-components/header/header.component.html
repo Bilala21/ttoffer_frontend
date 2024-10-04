@@ -1,153 +1,607 @@
 <div class="container-fluid">
-	<div *ngIf="loading" class="loader-overlay">
-		<div class="loader"></div>
-	</div>
-	<div class="row">
-		<div class="col-xl-11 mx-auto mt-3">
-			<div class="d-none d-xl-block">
-				<div class="row align-items-center  mt-2 justify-content-between">
-					<div class="col-12">
-						<div class="d-flex align-items-center">
-							<a href="#/">
-								<img src="assets/images/LOGO.png" class="pointer" style="height: 6vh;">
-							</a>
-							<div class="search-bar position-relative d-flex align-items-center mx-2">
-								<input type="text" placeholder="Search" class="form-control sm-input-size" id="search"
-									name="search" style="border-radius: 13px; font-size: 2vh; padding: 3vh;">
-								<div class="position-absolute position d-flex align-items-center"
-									style="right: 0; z-index: 999;">
+  <div *ngIf="loading" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
 
-									<button class="btn sm-p-0">
-										<img src="assets/images/search-icon.png" alt="Search Icon" class="w-75">
-									</button>
-								</div>
-							</div>
-							<div class="d-flex align-items-center">
-								<img src="assets/images/location.png" alt="Location Icon">
-								<span class="pointer sm-text"
-									style="color: #636A80!important; font-size: 2vh; margin-left: 5px;">{{currentUser.location}}</span>
-							</div>
-							<div class="d-none d-md-flex align-items-center ml-3">
-								<div class="border-right text-center px-4">
-									<a style="text-decoration: none;" href="/profilePageBy/{{currentUser.id}}/savedItems">
-										<img src="assets/images/heart.png">
-										<p style="color: #636A80!important; font-size: 2vh;">Saved</p>
-									</a>
-								</div>
-								<div class="border-right text-center px-4">
-									<a href="/chatBox/{{currentUser.id}}" style="text-decoration: none;">
-										<img src="assets/images/messages.png">
-										<p style="color: #636A80!important; font-size: 2vh;">Chat</p>
-									</a>
-								</div>
-								<div class="border-right text-center px-2">
-									<div (click)="toggleDropdown($event)" class=" pointer">
-										<img src="assets/images/notification-bing.svg" alt="">
-										<p style="color: #636A80!important; font-size: 2vh;">Notification</p>
-									</div>
-									<div *ngIf="isDropdownOpen" class="dropdown-menu show" style="height: 80vh; overflow-y: scroll;overflow-x: hidden; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
-										<!-- <a href="'/reviewPage'" class="pointer" style="text-decoration: none; color: black;"> -->
-										<app-notification class="pointer"></app-notification>
-										<!-- </a> -->
-									</div>
-								</div>
-								<button class="btn btn-warning rounded-4 mx-1"
-									style="border-radius: 2.2vh; padding: .5vh 3vh .5vh 3vh; font-size: 2.2vh;">
-									{{ onlineCount }} <span style="padding-left: 5px;">Online</span> <img src="assets/images/global.png" style="height: 4vh; padding-left: 6px;">
-								</button>
-								<a class="btn btn-warning rounded-4 mx-1"
-									style="border-radius: 3vh; padding: 1vh; font-size: 2.2vh;"
-									href="profilePageBy/{{currentUserId}}/addPost">Post Product</a>
-								<!-- <button class="btn btn-warning rounded-4 mx-1"
+  <!-- <div *ngIf="sideBarVale" (click)="sideBar()" class="loader-overlay">side bar</div> -->
+
+  <div class="row">
+    <!-- col-xl-11 -->
+    <div class="col-xl-11 mx-auto mt-3">
+      <!-- desktop-nav-start-->
+      <div class="d-none d-lg-block">
+        <div class="row align-items-center mt-2 justify-content-between">
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3 navbar-desktop">
+                <a routerLink="/">
+                  <img
+                    class="logo"
+                    src="assets/images/logo-1.png"
+                    loading="lazy"
+                    alt="logo"
+                  />
+                </a>
+
+                <div
+                  class="search-box position-relative d-flex align-items-center mx-2"
+                >
+                  <!-- Search Input -->
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    class="search-input"
+                    id="search"
+                    name="search"
+                  />
+
+                  <!-- Vertical Divider -->
+                  <div
+                    class="vr"
+                    style="
+                      height: 20px;
+                      width: 0.5px;
+                      border-right: 1px solid #dadde5;
+                    "
+                  ></div>
+
+                  <!-- Text and Search Icon -->
+                  <div
+                    class="d-flex align-items-center justify-content-end px-2 for-sale-search-icon"
+                  >
+                    <span
+                      >For Sale
+                      <img
+                        src="assets/images/arrow-left.svg"
+                        alt="arrow"
+                        loading="lazy"
+                      />
+                    </span>
+                    <div class="icon-search">
+                      <img
+                        src="assets/images/search-icon.png"
+                        alt="Search Icon"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center location">
+                  <img
+                    src="assets/images/location.svg"
+                    alt="Location Icon"
+                    loading="lazy"
+                  />
+
+                  <span>{{ currentUser.location }} Belarus</span>
+                </div>
+              </div>
+
+              <div
+                class="d-none d-md-flex align-items-center ml-3 navbar-right-images"
+              >
+                <div class="border-right text-center px-4 text-img">
+                  <a
+                    style="text-decoration: none;color:#636a80"
+                    routerLink="/profilePageBy/{{ currentUser.id }}/savedItems"
+                  >
+                    <img
+                      src="assets/images/heart.png"
+                      alt="saved"
+                      loading="lazy"
+                      class="navbar-heart-chat-tag-img"
+                    />
+                    <p>Saved</p>
+                  </a>
+                </div>
+
+                <div class="border-right text-center px-4 text-img">
+                  <a
+                    href="/chatBox/{{ currentUser.id }}"
+                    style="text-decoration: none;color: #636a80;"
+                  >
+                    <img
+                      src="assets/images/messages.png"
+                      alt="chat"
+                      loading="lazy"
+                    />
+                    <p>Chat</p>
+                  </a>
+                </div>
+
+                <div class="border-right text-center px-4 text-img">
+                  <div (click)="toggleDropdown($event)">
+                    <a routerLink="selling" style="color: #636a80;">
+                      <img
+                        src="assets/images/tag-2.png"
+                        loading="lazy"
+                        alt="tag"
+                      />
+
+                      <p>Selling</p>
+                    </a>
+                  </div>
+
+                  <!-- <div class="border-right text-center px-2">
+                  <div (click)="toggleDropdown($event)" class="pointer">
+                    <img src="assets/images/notification-bing.svg" alt="" />
+                    <p style="color: #636a80 !important; font-size: 2vh">
+                      Notification
+                    </p>
+                  </div> -->
+
+                  <!-- <div
+                    *ngIf="isDropdownOpen"
+                    class="dropdown-menu show"
+                    style="
+                      height: 80vh;
+                      overflow-y: scroll;
+                      overflow-x: hidden;
+                      scroll-behavior: smooth;
+                      -webkit-overflow-scrolling: touch;
+                    "
+                  >
+                   <a href="'/reviewPage'" class="pointer" style="text-decoration: none; color: black;">
+                    <app-notification class="pointer"></app-notification>
+                     </a> 
+                  </div> -->
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <button
+                  *ngIf="!currentUser.id"
+                  class="btn btn-warning rounded-4 mx-1"
+                  style="
+                    border-radius: 2.2vh;
+                    padding: 0.5vh 3vh 0.5vh 3vh;
+                    font-size: 2.2vh;
+                  "
+                >
+                  {{ onlineCount }}
+                  <span style="padding-left: 5px">Online</span>
+                  <img
+                    src="assets/images/global.png"
+                    style="height: 4vh; padding-left: 6px"
+                  />
+                </button>
+
+                <a
+                  *ngIf="!currentUser.id"
+                  class="btn btn-warning rounded-4 mx-1"
+                  style="border-radius: 3vh; padding: 1vh; font-size: 2.2vh"
+                  href="profilePageBy/{{ currentUserId }}/addPost"
+                  >Post Product</a
+                >
+                <!-- <button class="btn btn-warning rounded-4 mx-1"
 									style="border-radius: 2.2vh; padding: 1vh 3vh 1vh 3vh; font-size: 2.2vh;">Post Product</button> -->
-								<div *ngIf="!currentUser.id" class="mx-1">
-									<button class="btn btn-dark rounded-4"
-										style="border-radius: 2.2vh; padding: 1vh 2.5vh 1vh 2.5vh; font-size:  2.2vh;"
-										(click)="openModal()">Log In</button>
-								</div>
-								<!-- <div *ngIf="currentUser.id" class="mx-1">
-									<a href="/profilePage/{{currentUser.id}}"><img class="userProgile" src={{imgUrl}} /></a>
-								</div> -->
-								<div *ngIf="currentUser.id" class="mx-1 user-profile-container" (click)="toggleDropdown1($event)">
-									<a>
-										<img class="userProgile" [src]="imgUrl" />
-									</a>
-									<div *ngIf="dropdownVisible" class="dropdown-menu">
-										<a class="dropdown-item" href="/profilePage/{{currentUser.id}}">View Profile</a>
-										<button class="dropdown-item" (click)="logout()">Logout</button>
-									</div>
-								</div>
+                <div *ngIf="!currentUser.id" class="mx-1">
+                  <button
+                    class="btn btn-dark rounded-4"
+                    style="
+                      border-radius: 2.2vh;
+                      padding: 1vh 2.5vh 1vh 2.5vh;
+                      font-size: 2.2vh;
+                    "
+                    (click)="openModal()"
+                  >
+                    Log In
+                  </button>
+                </div>
 
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="d-block d-xl-none">
-				<div class="d-flex align-items-center justify-content-between">
-					<div class="d-flex align-items-center">
-						<div>
-							<a href="#/">
-								<img src="assets/images/LOGO.png" class="pointer sm-img-logo mx-1">
-							</a>
-						</div>
-						<div class="search-bar position-relative mt-2">
-							<input type="text" placeholder="Search" class="form-control sm-input-size w-100"
-								style="border-radius: 2vh; font-size: 1vh; padding: 2vh;">
-							<div class="position-absolute d-flex align-items-center" style="right: 5px; z-index: 999;">
-								<button class="btn sm-p-0">
-									<img src="assets/images/search-icon.png" alt="Search Icon" class="w-75 sm-img-icon">
-								</button>
-							</div>
-						</div>
-						<div class="d-flex align-items-center mx-2">
-							<img src="assets/images/location.png" alt="Location Icon " class="sm-img-icon">
-							<span class="pointer sm-text"
-								style="color: #636A80!important; font-size: 2vh; margin-left: 5px;">Belarus</span>
-						</div>
-					</div>
-					<div class="d-flex align-items-center">
-						<div class="">
-							<div (click)="toggleDropdown($event)">
-								<img src="assets/images/notification-bing.svg" alt="" class="sm-img-icon">
-							</div>
-							<div *ngIf="isDropdownOpen" class="dropdown-menu show">
-								<!-- <a [routerLink]="'/reviewPage'" class="pointer" style="text-decoration: none; color: black;"> -->
-								<app-notification class="pointer"></app-notification>
-								<!-- </a> -->
-							</div>
-						</div>
-						<div (click)="openMobileMenu()" class="mx-2">
-							<img src="assets/images/menu.svg" class="w-100 sm-img-menu" alt="Menu Icon">
-						</div>
-					</div>
-				</div>
+                <div
+                  *ngIf="currentUser.id"
+                  class="mx-1 user-profile-container"
+                  (click)="toggleDropdown1($event)"
+                  style="padding-left: 7px"
+                >
+                  <a>
+                    <img
+                      class="userProgile"
+                      [src]="
+                        imgUrl
+                          ? imgUrl
+                          : 'assets/images/profile-placeholder.png'
+                      "
+                      loading="lazy"
+                    />
+                    <img
+                      src="assets/images/arrow-left.svg"
+                      alt=""
+                      style="
+                        width: 12px;
+                        height: 12px;
+                        transform: rotate(90deg);
+                        margin-left: 4px;
+                        filter: invert(53%) sepia(0%) saturate(0%)
+                          hue-rotate(0deg) brightness(92%) contrast(88%);
+                      "
+                      loading="lazy"
+                    />
+                  </a>
+                  <div *ngIf="dropdownVisible" class="dropdown-menu">
+                    <a
+                      class="dropdown-item"
+                      href="/profilePage/{{ currentUser.id }}"
+                      style="
+                        font-size: 12px;
+                        line-height: 8px;
+                        font-weight: 500;
+                      "
+                      >View Profile</a
+                    >
+                    <button
+                      class="dropdown-item"
+                      (click)="logout()"
+                      style="
+                        font-size: 12px;
+                        line-height: 8px;
+                        font-weight: 500;
+                      "
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- desktop-nav-end -->
 
-			</div>
+      <!-- table-view-nav-menu-start -->
+      <div class="col-xl-11 mx-auto d-none d-md-block d-lg-none">
+        <div class="d-flex align-items-center justify-content-between">
+          <!-- jsdhfkhskdf -->
+          <div class="d-flex align-items-center gap-3">
+            <a href="#/">
+              <img
+                src="assets/images/logo-1.png"
+                class="pointer"
+                style="width: 133.36px; height: 35.79px; object-fit: contain"
+                loading="lazy"
+                alt="logo"
+              />
+            </a>
+            <div
+              class="search-bar position-relative d-flex align-items-center mx-2"
+              style="
+                width: 280px;
+                border-radius: 13px;
+                border: 1px solid lightgray;
+                padding: 0px 5px;
+              "
+            >
+              <!-- Search Input   class="form-control sm-input-size" -->
+              <input
+                type="text"
+                placeholder="Search"
+                name="search"
+                style="
+                  border: none;
+                  border-radius: 13px 0 0 13px;
+                  font-size: 12px;
+                  line-height: 8.64px;
+                  font-weight: 400;
+                  color: #292d32;
+                  flex: 1;
+                  outline: none; /* Remove outline on focus */
+                  box-shadow: none; /* Remove focus ring */
+                "
+              />
 
+              <!-- Vertical Divider -->
+              <div
+                class="vr"
+                style="height: 50%; width: 4px; background-color: green"
+              ></div>
 
-			<!-- mobile view manu -->
-			<div class="col-xl-6 d-block d-xl-none slide-menu" [ngClass]="{'open': openMenu}">
-				<div class="row align-items-center">
-					<div class="col-xl-4">
-						<div class="row align-items-center">
-							<div class="col-md-3 col-2 pointer p-0">
-								<div class="border-right text-center">
-									<a href="/profilePage/{{currentUser.id}}">
-										<img src="assets/images/heart.png" class="sm-img">
-										<p style="color: #636A80!important; font-size: 2vh;" class="sm-cat-text4">Saved</p>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3 col-2 pointer p-0">
-								<div class="border-right text-center">
-									<a href="/chatBox/{{currentUser.id}}">
-										<img src="assets/images/messages.png" class="sm-img">
-										<p style="color: #636A80!important; font-size: 2vh;" class="sm-cat-text4">Chat</p>
-									</a>
-								</div>
-							</div>
-							<!-- <div class="col-2 pointer p-0">
+              <!-- Text and Search Icon -->
+              <div
+                class="d-flex align-items-center px-2"
+                style="background-color: white; border-radius: 0 13px 13px 0"
+              >
+                <span
+                  style="
+                    margin-right: 10px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 8.64px;
+                  "
+                  >For Sale
+                  <img
+                    src="assets/images/arrow-left.svg"
+                    alt=""
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      transform: rotate(90deg);
+                      margin-left: 4px;
+                    "
+                    loading="lazy"
+                  />
+                </span>
+                <button class="btn sm-p-0" style="padding: 0">
+                  <img
+                    src="assets/images/search-icon.png"
+                    alt="Search Icon"
+                    style="width: 28px"
+                    loading="lazy"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+              <img
+                src="assets/images/location.svg"
+                alt="Location Icon"
+                style="
+                  width: 20px;
+                  height: 20px;
+                  filter: brightness(0) saturate(100%) invert(61%) sepia(7%)
+                    saturate(0%) hue-rotate(189deg) brightness(92%)
+                    contrast(88%);
+                "
+                loading="lazy"
+              />
+
+              <span
+                class="pointer"
+                style="
+                  color: #636a80 !important;
+                  font-size: 12px;
+                  margin-left: 5px;
+                  line-height: 18px;
+                  font-weight: 400;
+                "
+                >{{ currentUser.location }} Belarus</span
+              >
+            </div>
+          </div>
+
+          <!-- icon (click)="openMobileMenu()" -->
+          <div (click)="sideBar()" class="mx-2">
+            <img
+              src="assets/images/menu.svg"
+              style="width: 24px; height: 24px; cursor: pointer"
+              alt="Menu Icon"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- jhdkfjhskdhf -->
+        </div>
+
+        <!-- mobile view menu -->
+
+        <!-- down-yellow-buttons menu-start -->
+        <div
+          class="col-xl-11 d-block d-xl-none slide-menu"
+          [ngClass]="{ open: openMenu }"
+        >
+          <div
+            class="d-lg-none d-flex align-items-center justify-content-center ml-3 mt-2"
+          >
+            <div class="border-right text-center px-4">
+              <a
+                style="text-decoration: none"
+                href="/profilePageBy/{{ currentUser.id }}/savedItems"
+              >
+                <img
+                  src="assets/images/heart.png"
+                  alt="saved"
+                  loading="lazy"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Saved
+                </p>
+              </a>
+            </div>
+
+            <div class="border-right text-center px-4">
+              <a
+                href="/chatBox/{{ currentUser.id }}"
+                style="text-decoration: none"
+              >
+                <img
+                  src="assets/images/messages.png"
+                  alt="chat"
+                  loading="lazy"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Chat
+                </p>
+              </a>
+            </div>
+            <!-- <div class="border-right text-center px-2">
+			  <div (click)="toggleDropdown($event)" class="pointer">
+				<img src="assets/images/notification-bing.svg" alt="" />
+				<p style="color: #636a80 !important; font-size: 2vh">
+				  Notification
+				</p>
+			  </div> -->
+            <div class="border-right text-center px-4">
+              <div (click)="toggleDropdown($event)" class="pointer">
+                <img
+                  src="assets/images/tag-2.png"
+                  loading="lazy"
+                  alt="tag"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    font-weight: 400;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Selling
+                </p>
+              </div>
+              <div
+                *ngIf="isDropdownOpen"
+                class="dropdown-menu show"
+                style="
+                  height: 80vh;
+                  overflow-y: scroll;
+                  overflow-x: hidden;
+                  scroll-behavior: smooth;
+                  -webkit-overflow-scrolling: touch;
+                "
+              >
+                <!-- <a href="'/reviewPage'" class="pointer" style="text-decoration: none; color: black;"> -->
+                <app-notification class="pointer"></app-notification>
+                <!-- </a> -->
+              </div>
+            </div>
+            <button
+              *ngIf="!currentUser.id"
+              class="btn btn-warning rounded-4 mx-1"
+              style="
+                border-radius: 2.2vh;
+                padding: 0.5vh 3vh 0.5vh 3vh;
+                font-size: 2.2vh;
+              "
+            >
+              {{ onlineCount }}
+              <span style="padding-left: 5px">Online</span>
+              <img
+                src="assets/images/global.png"
+                style="height: 4vh; padding-left: 6px"
+              />
+            </button>
+            <a
+              *ngIf="!currentUser.id"
+              class="btn btn-warning rounded-4 mx-1"
+              style="border-radius: 3vh; padding: 1vh; font-size: 2.2vh"
+              href="profilePageBy/{{ currentUserId }}/addPost"
+              >Post Product</a
+            >
+            <!-- <button class="btn btn-warning rounded-4 mx-1"
+								style="border-radius: 2.2vh; padding: 1vh 3vh 1vh 3vh; font-size: 2.2vh;">Post Product</button> -->
+            <div *ngIf="!currentUser.id" class="mx-1">
+              <button
+                class="btn btn-dark rounded-4"
+                style="
+                  border-radius: 2.2vh;
+                  padding: 1vh 2.5vh 1vh 2.5vh;
+                  font-size: 2.2vh;
+                "
+                (click)="openModal()"
+              >
+                Log In
+              </button>
+            </div>
+            <div
+              *ngIf="currentUser.id"
+              class="mx-1 user-profile-container"
+              (click)="toggleDropdown1($event)"
+              style="padding-left: 7px"
+            >
+              <a>
+                <img
+                  class="userProgile"
+                  [src]="
+                    imgUrl ? imgUrl : 'assets/images/profile-placeholder.png'
+                  "
+                  loading="lazy"
+                />
+                <img
+                  src="assets/images/arrow-left.svg"
+                  alt=""
+                  style="
+                    width: 12px;
+                    height: 12px;
+                    transform: rotate(90deg);
+                    margin-left: 4px;
+                    filter: invert(53%) sepia(0%) saturate(0%) hue-rotate(0deg)
+                      brightness(92%) contrast(88%);
+                  "
+                  loading="lazy"
+                />
+              </a>
+              <div
+                *ngIf="dropdownVisible"
+                class="dropdown-menu"
+                style="position: relative; z-index: 99999; right: 10px"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/profilePage/{{ currentUser.id }}"
+                  style="font-size: 12px; line-height: 8px; font-weight: 500"
+                  >View Profile</a
+                >
+                <button
+                  class="dropdown-item"
+                  (click)="logout()"
+                  style="font-size: 12px; line-height: 8px; font-weight: 500"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row align-items-center">
+            <div class="col-xl-4">
+              <div class="row align-items-center">
+                <div class="col-md-3 col-2 pointer p-0">
+                  <div class="border-right text-center">
+                    <a href="/profilePage/{{ currentUser.id }}">
+                      <img src="assets/images/heart.png" class="sm-img" />
+                      <p
+                        style="color: #636a80 !important; font-size: 2vh"
+                        class="sm-cat-text4"
+                      >
+                        Saved
+                      </p>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-3 col-2 pointer p-0">
+                  <div class="border-right text-center">
+                    <a href="/chatBox/{{ currentUser.id }}">
+                      <img src="assets/images/messages.png" class="sm-img" />
+                      <p
+                        style="color: #636a80 !important; font-size: 2vh"
+                        class="sm-cat-text4"
+                      >
+                        Chat
+                      </p>
+                    </a>
+                  </div>
+                </div>
+                <!-- <div class="col-2 pointer p-0">
 								<div class=" text-center">
 									<a href="/selling">
 										<img src="assets/images/tag-2.png" class="sm-img">
@@ -155,133 +609,679 @@
 									</a>
 								</div>
 							</div> -->
-							<div class="col-md-2 col-3 p-1">
-								<button
-									class="btn btn-warning rounded-4 w-100 d-flex align-items-center justify-content-between sm-cat-text3 sm-p-3"
-									style="border-radius: 3vh; ">
-									{{ onlineCount }} Online
-									<img src="assets/images/global.png" class="sm-img" style="height: 3vh;">
-								</button>
-							</div>
-							<div class="col-md-2 col-3 p-1">
-								<button (click)="navigateToProfilePage(currentUserId)" class="btn btn-warning w-100 rounded-4 sm-cat-text3 sm-p-3" style="border-radius: 3vh;">
-									Post Product
-								  </button>
-							</div>
-							<div class="col-2 p-1 text-center">
-								<div *ngIf="!currentUser.id" class="mx-1">
-									<button class="btn btn-dark rounded-4 w-75"
-										style="border-radius: 2.2vh; padding: 1vh 2.5vh 1vh 2.5vh; font-size:  2.2vh;"
-										(click)="openModal()">Log In</button>
-								</div>
-								<!-- <div *ngIf="currentUser.id" class="mx-1">
+          <!-- <div class="col-md-2 col-3 p-1">
+                  <button
+                    class="btn btn-warning rounded-4 w-100 d-flex align-items-center justify-content-between sm-cat-text3 sm-p-3"
+                    style="border-radius: 3vh"
+                  >
+                    {{ onlineCount }} Online
+                    <img
+                      src="assets/images/global.png"
+                      class="sm-img"
+                      style="height: 3vh"
+                    />
+                  </button>
+                </div> -->
+          <!-- <div class="col-md-2 col-3 p-1">
+                  <button
+                    (click)="navigateToProfilePage(currentUserId)"
+                    class="btn btn-warning w-100 rounded-4 sm-cat-text3 sm-p-3"
+                    style="border-radius: 3vh"
+                  >
+                    Post Product
+                  </button>
+                </div> -->
+
+          <!-- <div class="col-2 p-1 text-center"> -->
+
+          <!-- <div *ngIf="!currentUser.id" class="mx-1">
+                    <button
+                      class="btn btn-dark rounded-4 w-75"
+                      style="
+                        border-radius: 2.2vh;
+                        padding: 1vh 2.5vh 1vh 2.5vh;
+                        font-size: 2.2vh;
+                      "
+                      (click)="openModal()"
+                    >
+                      Log In
+                    </button>
+                  </div> -->
+          <!-- <div *ngIf="currentUser.id" class="mx-1">
 									<a href="/profilePage/{{currentUser.id}}"><img class="userProgile" src={{imgUrl}} /></a>
 								</div> -->
-								<div *ngIf="currentUser.id" class="mx-1 user-profile-container " (click)="toggleDropdown1($event)">
-									<a>
-										<img class="userProgile" [src]="imgUrl" />
-									</a>
-									<div *ngIf="dropdownVisible" class="dropdown-menu">
-										<a class="dropdown-item" href="/profilePage/{{currentUser.id}}">View Profile</a>
-										<button class="dropdown-item" (click)="logout()">Logout</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- desktop -->
-	 <div class="row   justify-content-center">
-		<div class="col-xl-11 mx-auto">
-			<div class="d-none d-xl-block">
-				<!-- <div class="scroll-container " style="margin-top: 3vh;">
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-						href="/catagories/1">Mobile</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-						href="/catagories/2">Electronic & Appliances</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;" href="/catagories/3">Property For Sale</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;" href="/catagories/4">Property for Rent</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-						href="/catagories/5">Vehicles</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;" href="/catagories/6">Bikes</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-						href="/catagories/7">Jobs</a>
-					<a  style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-						href="/catagories/8">Services</a>
-
-					<div class="menu">
-                        <a  style="color: #636A80;font-size: 2vh; cursor: pointer;"  >More</a>
-                        <div class="dropdown-content">
-                            <a href="/catagories/9">Furniture & Home</a>
-                            <a href="/catagories/10">Fashion & Beauty</a>
-                            <a href="/catagories/11">Kids</a>
-                            <a href="/catagories/12">Animals</a>
-
-                        </div>
+          <!-- <div
+                    *ngIf="currentUser.id"
+                    class="mx-1 user-profile-container"
+                    (click)="toggleDropdown1($event)"
+                  >
+                    <a>
+                      <img
+                        class="userProgile"
+                        [src]="
+                          imgUrl
+                            ? imgUrl
+                            : 'assets/images/profile-placeholder.png'
+                        "
+                      />
+                    </a>
+                    <div *ngIf="dropdownVisible" class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        href="/profilePage/{{ currentUser.id }}"
+                        >View Profile</a
+                      >
+                      <button class="dropdown-item" (click)="logout()">
+                        Logout
+                      </button>
                     </div>
-				</div> -->
-        <div class="scroll-container" style="margin-top: 3vh;">
-          <!-- Display the first 8 categories -->
-          <ng-container *ngFor="let category of categories.slice(0, 8)">
-            <a style="margin-right: 3.7vh; font-size: 2vh; color: #636A80;"
-               [routerLink]="['/post/post-category', category.id]">
-              {{ category.name }}
-            </a>
-          </ng-container>
+                  </div> -->
 
-          <!-- Display the "More" dropdown if there are more than 8 categories -->
-          <div *ngIf="categories.length > 8" class="menu">
-            <a style="color: #636A80; font-size: 2vh; cursor: pointer;">More</a>
-            <div class="dropdown-content">
-              <a *ngFor="let category of categories.slice(8)"
-                 [routerLink]="['/post/post-category', category.id]">
-                {{ category.name }}
-              </a>
+          <!-- </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <!-- down-yellow-buttons menu-end -->
+      </div>
+      <!-- table-view-nav-menu-end -->
+
+      <!-- mobile-view-nav-menu-start -->
+      <div class="col-xl-11 mx-auto d-block d-md-none">
+        <div class="d-flex align-items-center justify-content-between">
+          <!-- jsdhfkhskdf -->
+          <div class="d-flex align-items-center gap-3">
+            <a href="#/">
+              <img
+                src="assets/images/logo-1.png"
+                class="pointer"
+                style="width: 79.24px; height: 21.09px; object-fit: contain"
+                loading="lazy"
+                alt="logo"
+              />
+            </a>
+            <div
+              class="search-bar position-relative d-flex align-items-center mx-2"
+              style="
+                width: 162px;
+                border-radius: 8.76px;
+                border: 0.55px solid lightgray;
+                padding: 0px 3px;
+              "
+            >
+              <!-- Search Input   class="form-control sm-input-size" -->
+              <input
+                type="text"
+                placeholder="Search"
+                name="search"
+                style="
+                  border: none;
+                  border-radius: 13px 0 0 13px;
+                  font-size: 12px;
+                  line-height: 8.64px;
+                  font-weight: 400;
+                  color: #292d32;
+                  /* flex: 1; */
+                  width: 50%;
+                  outline: none; /* Remove outline on focus */
+                  box-shadow: none; /* Remove focus ring */
+                  /* border:1px solid red */
+                "
+              />
+
+              <!-- Vertical Divider -->
+              <div
+                class="vr"
+                style="height: 50%; width: 4px; background-color: green"
+              ></div>
+
+              <!-- Text and Search Icon -->
+              <div
+                class="d-flex align-items-center"
+                style="
+                  background-color: white;
+                  border-radius: 0 13px 13px 0;
+                  flex: 1;
+                "
+              >
+                <span
+                  style="
+                    /* margin-right: 10px; */
+                    font-size: 8px;
+                    font-weight: 600;
+                    line-height: 5.76px;
+                  "
+                  >For Sale
+                  <img
+                    src="assets/images/arrow-left.svg"
+                    alt=""
+                    style="
+                      width: 6.57px;
+                      height: 6.57px;
+                      transform: rotate(90deg);
+                      margin-left: 6px;
+                    "
+                    loading="lazy"
+                  />
+                </span>
+
+                <button class="btn p-0" style="padding: 0; margin-left: auto">
+                  <img
+                    src="assets/images/search-icon.png"
+                    alt="Search Icon"
+                    style="width: 15px; height: 15px"
+                    loading="lazy"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+              <img
+                src="assets/images/location.svg"
+                alt="Location Icon"
+                style="
+                  width: 10.95px;
+                  height: 10.95px;
+                  filter: brightness(0) saturate(100%) invert(61%) sepia(7%)
+                    saturate(0%) hue-rotate(189deg) brightness(92%)
+                    contrast(88%);
+                "
+                loading="lazy"
+              />
+
+              <span
+                class="pointer"
+                style="
+                  color: #636a80 !important;
+                  font-size: 8px;
+                  margin-left: 3px;
+                  line-height: 12px;
+                  font-weight: 400;
+                "
+                >{{ currentUser.location }} Belarus</span
+              >
             </div>
           </div>
+
+          <!-- icon -->
+          <div (click)="openMobileMenu()" class="mx-2">
+            <img
+              src="assets/images/menu.svg"
+              style="width: 20px; height: 20px; cursor: pointer"
+              alt="Menu Icon"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- jhdkfjhskdhf -->
         </div>
 
-			</div>
-		</div>
-	</div>
-	<!-- <div class=" d-block d-xl-none text-center sm-mt-2">
-		<a  style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;"
-			href="/catagories/1">Mobile</a>
-		<a  style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/2">Electronic & Appliances</a>
-		<a  style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/3">Property For Sale</a>
-		<a  style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;"
-			href="/catagories/4">Property for Rent</a>
-		<a  style="color: #636A80;font-size: 2.4vw; cursor: pointer;" >More</a>
-	</div> -->
+        <!-- mobile view menu -->
 
-	<div class="d-block d-xl-none text-center sm-mt-2">
-		<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/1">Mobile</a>
-		<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/2">Electronic & Appliances</a>
-		<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/3">Property For Sale</a>
-		<!-- <a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/4">Property for Rent</a> -->
-		<a (click)="toggleMobileMenu()" style="color: #636A80; font-size: 2.4vw; cursor: pointer;">More</a>
-		<div *ngIf="isMobileMenuVisible" class="more-menu">
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/4">Property For Sale</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/5">Property for Rent</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/6">Vehicles</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/7">Jobs</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/8">Services</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/9">Furniture & Home</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/10">Fashion & Beauty</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/11">Kids</a>
-			<a style="margin-right: 1.5vh; font-size: 2.4vw; color: #636A80;" href="/catagories/12">Animals</a>
-		</div>
-	</div>
+        <!-- down-yellow-buttons menu-start -->
+        <div
+          class="col-xl-11 d-block d-xl-none slide-menu"
+          [ngClass]="{ open: openMenu }"
+        >
+          <div
+            class="d-lg-none d-flex align-items-center justify-content-center ml-3 mt-2"
+          >
+            <div class="border-right text-center px-4">
+              <a
+                style="text-decoration: none"
+                href="/profilePageBy/{{ currentUser.id }}/savedItems"
+              >
+                <img
+                  src="assets/images/heart.png"
+                  alt="saved"
+                  loading="lazy"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Saved
+                </p>
+              </a>
+            </div>
 
+            <div class="border-right text-center px-4">
+              <a
+                href="/chatBox/{{ currentUser.id }}"
+                style="text-decoration: none"
+              >
+                <img
+                  src="assets/images/messages.png"
+                  alt="chat"
+                  loading="lazy"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Chat
+                </p>
+              </a>
+            </div>
+            <!-- <div class="border-right text-center px-2">
+				  <div (click)="toggleDropdown($event)" class="pointer">
+					<img src="assets/images/notification-bing.svg" alt="" />
+					<p style="color: #636a80 !important; font-size: 2vh">
+					  Notification
+					</p>
+				  </div> -->
+            <div class="border-right text-center px-4">
+              <div (click)="toggleDropdown($event)" class="pointer">
+                <img
+                  src="assets/images/tag-2.png"
+                  loading="lazy"
+                  alt="tag"
+                  style="width: 20px; height: 20px"
+                />
+                <p
+                  style="
+                    color: #636a80 !important;
+                    font-size: 10px;
+                    font-weight: 400;
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                  "
+                >
+                  Selling
+                </p>
+              </div>
+              <div
+                *ngIf="isDropdownOpen"
+                class="dropdown-menu show"
+                style="
+                  height: 80vh;
+                  overflow-y: scroll;
+                  overflow-x: hidden;
+                  scroll-behavior: smooth;
+                  -webkit-overflow-scrolling: touch;
+                "
+              >
+                <!-- <a href="'/reviewPage'" class="pointer" style="text-decoration: none; color: black;"> -->
+                <app-notification class="pointer"></app-notification>
+                <!-- </a> -->
+              </div>
+            </div>
+            <button
+              *ngIf="!currentUser.id"
+              class="btn btn-warning rounded-4 mx-1"
+              style="
+                border-radius: 2.2vh;
+                padding: 0.5vh 3vh 0.5vh 3vh;
+                font-size: 2.2vh;
+              "
+            >
+              {{ onlineCount }}
+              <span style="padding-left: 5px">Online</span>
+              <img
+                src="assets/images/global.png"
+                style="height: 4vh; padding-left: 6px"
+              />
+            </button>
+            <a
+              *ngIf="!currentUser.id"
+              class="btn btn-warning rounded-4 mx-1"
+              style="border-radius: 3vh; padding: 1vh; font-size: 2.2vh"
+              href="profilePageBy/{{ currentUserId }}/addPost"
+              >Post Product</a
+            >
+            <!-- <button class="btn btn-warning rounded-4 mx-1"
+									style="border-radius: 2.2vh; padding: 1vh 3vh 1vh 3vh; font-size: 2.2vh;">Post Product</button> -->
+            <div *ngIf="!currentUser.id" class="mx-1">
+              <button
+                class="btn btn-dark rounded-4"
+                style="
+                  border-radius: 2.2vh;
+                  padding: 1vh 2.5vh 1vh 2.5vh;
+                  font-size: 2.2vh;
+                "
+                (click)="openModal()"
+              >
+                Log In
+              </button>
+            </div>
+            <div
+              *ngIf="currentUser.id"
+              class="mx-1 user-profile-container"
+              (click)="toggleDropdown1($event)"
+              style="padding-left: 7px"
+            >
+              <a>
+                <img
+                  class="userProgile"
+                  [src]="
+                    imgUrl ? imgUrl : 'assets/images/profile-placeholder.png'
+                  "
+                  loading="lazy"
+                />
+                <img
+                  src="assets/images/arrow-left.svg"
+                  alt=""
+                  style="
+                    width: 12px;
+                    height: 12px;
+                    transform: rotate(90deg);
+                    margin-left: 4px;
+                    filter: invert(53%) sepia(0%) saturate(0%) hue-rotate(0deg)
+                      brightness(92%) contrast(88%);
+                  "
+                  loading="lazy"
+                />
+              </a>
+              <div
+                *ngIf="dropdownVisible"
+                class="dropdown-menu"
+                style="position: relative; z-index: 99999; right: 10px"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/profilePage/{{ currentUser.id }}"
+                  style="font-size: 12px; line-height: 8px; font-weight: 500"
+                  >View Profile</a
+                >
+                <button
+                  class="dropdown-item"
+                  (click)="logout()"
+                  style="font-size: 12px; line-height: 8px; font-weight: 500"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row align-items-center">
+				<div class="col-xl-4">
+				  <div class="row align-items-center">
+					<div class="col-md-3 col-2 pointer p-0">
+					  <div class="border-right text-center">
+						<a href="/profilePage/{{ currentUser.id }}">
+						  <img src="assets/images/heart.png" class="sm-img" />
+						  <p
+							style="color: #636a80 !important; font-size: 2vh"
+							class="sm-cat-text4"
+						  >
+							Saved
+						  </p>
+						</a>
+					  </div>
+					</div>
+					<div class="col-md-3 col-2 pointer p-0">
+					  <div class="border-right text-center">
+						<a href="/chatBox/{{ currentUser.id }}">
+						  <img src="assets/images/messages.png" class="sm-img" />
+						  <p
+							style="color: #636a80 !important; font-size: 2vh"
+							class="sm-cat-text4"
+						  >
+							Chat
+						  </p>
+						</a>
+					  </div>
+					</div>
+					<!-- <div class="col-2 pointer p-0">
+									<div class=" text-center">
+										<a href="/selling">
+											<img src="assets/images/tag-2.png" class="sm-img">
+											<p style="color: #636A80!important; font-size: 2vh;" class="sm-cat-text4">Selling</p>
+										</a>
+									</div>
+								</div> -->
+          <!-- <div class="col-md-2 col-3 p-1">
+					  <button
+						class="btn btn-warning rounded-4 w-100 d-flex align-items-center justify-content-between sm-cat-text3 sm-p-3"
+						style="border-radius: 3vh"
+					  >
+						{{ onlineCount }} Online
+						<img
+						  src="assets/images/global.png"
+						  class="sm-img"
+						  style="height: 3vh"
+						/>
+					  </button>
+					</div> -->
+          <!-- <div class="col-md-2 col-3 p-1">
+					  <button
+						(click)="navigateToProfilePage(currentUserId)"
+						class="btn btn-warning w-100 rounded-4 sm-cat-text3 sm-p-3"
+						style="border-radius: 3vh"
+					  >
+						Post Product
+					  </button>
+					</div> -->
 
-	<hr class="sm-mt-2">
-	<!-- header  -->
+          <!-- <div class="col-2 p-1 text-center"> -->
 
-	<!-- <div class="row mt-5 d-block d-md-none">
+          <!-- <div *ngIf="!currentUser.id" class="mx-1">
+						<button
+						  class="btn btn-dark rounded-4 w-75"
+						  style="
+							border-radius: 2.2vh;
+							padding: 1vh 2.5vh 1vh 2.5vh;
+							font-size: 2.2vh;
+						  "
+						  (click)="openModal()"
+						>
+						  Log In
+						</button>
+					  </div> -->
+          <!-- <div *ngIf="currentUser.id" class="mx-1">
+										<a href="/profilePage/{{currentUser.id}}"><img class="userProgile" src={{imgUrl}} /></a>
+									</div> -->
+          <!-- <div
+						*ngIf="currentUser.id"
+						class="mx-1 user-profile-container"
+						(click)="toggleDropdown1($event)"
+					  >
+						<a>
+						  <img
+							class="userProgile"
+							[src]="
+							  imgUrl
+								? imgUrl
+								: 'assets/images/profile-placeholder.png'
+							"
+						  />
+						</a>
+						<div *ngIf="dropdownVisible" class="dropdown-menu">
+						  <a
+							class="dropdown-item"
+							href="/profilePage/{{ currentUser.id }}"
+							>View Profile</a
+						  >
+						  <button class="dropdown-item" (click)="logout()">
+							Logout
+						  </button>
+						</div>
+					  </div> -->
+
+          <!-- </div>
+				  </div>
+				</div>
+			  </div> -->
+        </div>
+        <!-- down-yellow-buttons menu-end -->
+      </div>
+      <!-- mobile-view-nav-menu-end -->
+    </div>
+    <!-- col-xl-11 -->
+
+    <!-- sub-menu-desktop-start -->
+    <div
+      class="d-none d-lg-flex text-center"
+      style="
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 35px;
+      "
+    >
+      <!-- Display the first 8 categories -->
+      <ng-container *ngFor="let category of categories.slice(0, 8)">
+        <a
+          style="
+            margin-right: 24px;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 400px;
+            color: #636a80;
+          "
+          [routerLink]="['/post/post-category', category.id]"
+        >
+          {{ category.name }}
+        </a>
+      </ng-container>
+
+      <!-- Display the "More" dropdown if there are more than 8 categories  class="menu"-->
+      <div *ngIf="categories.length > 8" style="position: relative">
+        <a
+          style="
+            color: #636a80;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 400px;
+            cursor: pointer;
+          "
+          (click)="toggleMobileMenu()"
+          >More</a
+        >
+        <div class="dropdown-content" *ngIf="isMobileMenuVisible">
+          <a
+            *ngFor="let category of categories.slice(8)"
+            [routerLink]="['/post/post-category', category.id]"
+          >
+            {{ category.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- sub-menu-desktop-end -->
+
+    <!-- sub-menu-tab-category --->
+    <div
+      class="d-none d-lg-none d-md-flex text-center"
+      style="
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 25px;
+      "
+    >
+      <!-- Display the first 3 categories -->
+      <ng-container *ngFor="let category of categories.slice(0, 4)">
+        <a
+          style="
+            margin-right: 24px;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 400px;
+            color: #636a80;
+          "
+          [routerLink]="['/post/post-category', category.id]"
+        >
+          {{ category.name }}
+        </a>
+      </ng-container>
+
+      <div *ngIf="categories.length > 4" class="" style="position: relative">
+        <a
+          style="
+            color: #636a80;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 400px;
+            cursor: pointer;
+          "
+          (click)="toggleMobileMenu()"
+          >More</a
+        >
+
+        <div *ngIf="isMobileMenuVisible" class="more-menu">
+          <a
+            *ngFor="let category of categories.slice(4)"
+            [routerLink]="['/post/post-category', category.id]"
+          >
+            {{ category.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- sub-menu-tab-category -->
+
+    <!-- sub-menu-mobile-category --->
+    <div
+      class="d-md-none text-center"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 25px;
+      "
+    >
+      <!-- Display the first 3 categories -->
+      <ng-container *ngFor="let category of categories.slice(0, 4)">
+        <a
+          style="
+            margin-right: 18px;
+            font-size: 8px;
+            line-height: 18px;
+            font-weight: 400px;
+            color: #636a80;
+          "
+          [routerLink]="['/post/post-category', category.id]"
+        >
+          {{ category.name }}
+        </a>
+      </ng-container>
+
+      <div *ngIf="categories.length > 4" class="" style="position: relative">
+        <a
+          style="
+            color: #636a80;
+            font-size: 8px;
+            line-height: 18px;
+            font-weight: 400px;
+            cursor: pointer;
+          "
+          (click)="toggleMobileMenu()"
+          >More</a
+        >
+
+        <div *ngIf="isMobileMenuVisible" class="mobile-drop-down">
+          <a
+            *ngFor="let category of categories.slice(4)"
+            [routerLink]="['/post/post-category', category.id]"
+          >
+            {{ category.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- sub-menu-mobile-category -->
+    <hr class="my-2" style="width: 100%" />
+
+    <!-- header  -->
+
+    <!-- <div class="row mt-5 d-block d-md-none">
 		<div class="col-12 mx-auto text-center">
 			<h6 style="font-size: 1.7vh; font-weight: bold;">Make local buying and selling easy and straightforward!</h6>
 			<span style="font-size: 2.5vh;">Download our app</span>
@@ -316,35 +1316,52 @@
 		</div>
 	</div> -->
 
-	<!-- login-modal.component.html -->
-	<!-- <button type="button" class="btn btn-primary" >
+    <!-- login-modal.component.html -->
+    <!-- <button type="button" class="btn btn-primary" >
 	Open Login Modal
   </button>
    -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!-- <button type="button" class="back" (click)="back()" aria-label="Close">
+
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <button type="button" class="back" (click)="back()" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button> -->
-					<h4 class="modal-title"
-						*ngIf="!showPhoneBox && !showEmailBox && !showRegisterBox && !showForgotBox && !showOTPBox"
-						id="loginModalLabel">Sign up/Log in</h4>
-					<!-- <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+            <h4
+              class="modal-title"
+              *ngIf="
+                !showPhoneBox &&
+                !showEmailBox &&
+                !showRegisterBox &&
+                !showForgotBox &&
+                !showOTPBox
+              "
+              id="loginModalLabel"
+            >
+              Sign up/Log in
+            </h4>
+            <!-- <button type="button" class="close" (click)="closeModal()" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button> -->
-				</div>
-				<!-- Modal Body -->
-				<div class="modal-body ">
-					<div class="row">
-						<div class="col-10 mx-auto" *ngIf="showPhoneBox">
-							<!-- <div class="text-center">
+          </div>
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-10 mx-auto" *ngIf="showPhoneBox">
+                <!-- <div class="text-center">
 								<h6 class="">Phone</h6>
 								<img src="assets/images/phone-img.png" class="w-75 mt-3" alt="">
 							</div> -->
-							<!-- <div class="row">
+                <!-- <div class="row">
 								<div class="col-lg-1 col-md-2 col-2" style="font-size: 6px; cursor: pointer;">
 									<i class="fa fa-arrow-left fa-2x" (click)="backButton()"></i>
 
@@ -376,88 +1393,158 @@
 									(click)="loginWithPhone()">Sign
 									in</button>
 							</div> -->
-              <app-phone-sign-in
-              (backEvent)="backButton()"
-              (closeModalEvent)="closeModal()">
-            </app-phone-sign-in>
-						</div>
-						<div class="col-10 mx-auto" *ngIf="showForgotBox">
-							<div class="text-center">
-								<h6 class="">Email</h6>
-								<img src="assets/images/email-img.png" class="w-75 mt-3" alt="">
-							</div>
-							<div class="mt-4">
-								<label>Email</label>
-								<input #emailInput="ngModel" [(ngModel)]="email" name="email" type="text"
-									placeholder="Enter Your Email" class="form-control" style="border-radius: 18px;"
-									required>
-							</div>
-							<div class="mt-4">
-								<button class="btn btn-dark w-100" (click)="openOTP()"
-									style="border-radius: 20px; padding: 10px;" [disabled]="!emailInput.value">Send
-									OTP</button>
-							</div>
-						</div>
-						<div class="col-10 mx-auto" *ngIf="showForgotPhoneBox">
-							<div class="text-center">
-								<h6 class="">Phone Number</h6>
-								<img src="assets/images/email-img.png" class="w-75 mt-3" alt="">
-							</div>
-							<div class="mt-4">
-								<label>Phone</label>
-								<input #emailInput="ngModel" [(ngModel)]="email" name="phone" type="text"
-									placeholder="Enter Your Phone" class="form-control" style="border-radius: 18px;"
-									required>
-							</div>
-							<div class="mt-4">
-								<button class="btn btn-dark w-100" (click)="openOTP()"
-									style="border-radius: 20px; padding: 10px;" [disabled]="!emailInput.value">Send
-									OTP</button>
-							</div>
-						</div>
-						<div class="col-10 mx-auto" *ngIf="showOTPBox">
-							<div class="text-center">
-								<h6 class="">Verify</h6>
-								<img src="assets/images/verify-img.png" class="w-75 mt-3" alt="">
-							</div>
-							<div class="mt-4">
-								<p>Please type in the OTP code we sent to your email. It's an extra step to make sure
-									it's really you and keep your account safe.</p>
-								<span>Verification Code Sent to name&commat;dummy.com</span>
-							</div>
-							<div class="row mt-4">
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" style="border-radius: 10px;">
-								</div>
-							</div>
-							<div class="mt-4 text-center">
-								<button class="btn btn-dark w-100"
-									style="border-radius: 20px; padding: 10px;">Verify</button>
-								<span style="cursor: pointer;" class="mt-3">Didn’t Receive OTP?</span>
-								<h6 style="cursor: pointer;" class="mt-3">Resend Code</h6>
-							</div>
-						</div>
-						<div class="col-10 mx-auto" *ngIf="showEmailBox">
-							<!-- <div class="text-center">
+                <app-phone-sign-in
+                  (backEvent)="backButton()"
+                  (closeModalEvent)="closeModal()"
+                >
+                </app-phone-sign-in>
+              </div>
+              <div class="col-10 mx-auto" *ngIf="showForgotBox">
+                <div class="text-center">
+                  <h6 class="">Email</h6>
+                  <img
+                    src="assets/images/email-img.png"
+                    class="w-75 mt-3"
+                    alt=""
+                  />
+                </div>
+                <div class="mt-4">
+                  <label>Email</label>
+                  <input
+                    #emailInput="ngModel"
+                    [(ngModel)]="email"
+                    name="email"
+                    type="text"
+                    placeholder="Enter Your Email"
+                    class="form-control"
+                    style="border-radius: 18px"
+                    required
+                  />
+                </div>
+                <div class="mt-4">
+                  <button
+                    class="btn btn-dark w-100"
+                    (click)="openOTP()"
+                    style="border-radius: 20px; padding: 10px"
+                    [disabled]="!emailInput.value"
+                  >
+                    Send OTP
+                  </button>
+                </div>
+              </div>
+              <div class="col-10 mx-auto" *ngIf="showForgotPhoneBox">
+                <div class="text-center">
+                  <h6 class="">Phone Number</h6>
+                  <img
+                    src="assets/images/email-img.png"
+                    class="w-75 mt-3"
+                    alt=""
+                  />
+                </div>
+                <div class="mt-4">
+                  <label>Phone</label>
+                  <input
+                    #emailInput="ngModel"
+                    [(ngModel)]="email"
+                    name="phone"
+                    type="text"
+                    placeholder="Enter Your Phone"
+                    class="form-control"
+                    style="border-radius: 18px"
+                    required
+                  />
+                </div>
+                <div class="mt-4">
+                  <button
+                    class="btn btn-dark w-100"
+                    (click)="openOTP()"
+                    style="border-radius: 20px; padding: 10px"
+                    [disabled]="!emailInput.value"
+                  >
+                    Send OTP
+                  </button>
+                </div>
+              </div>
+              <div class="col-10 mx-auto" *ngIf="showOTPBox">
+                <div class="text-center">
+                  <h6 class="">Verify</h6>
+                  <img
+                    src="assets/images/verify-img.png"
+                    class="w-75 mt-3"
+                    alt=""
+                  />
+                </div>
+                <div class="mt-4">
+                  <p>
+                    Please type in the OTP code we sent to your email. It's an
+                    extra step to make sure it's really you and keep your
+                    account safe.
+                  </p>
+                  <span>Verification Code Sent to name&commat;dummy.com</span>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="border-radius: 10px"
+                    />
+                  </div>
+                </div>
+                <div class="mt-4 text-center">
+                  <button
+                    class="btn btn-dark w-100"
+                    style="border-radius: 20px; padding: 10px"
+                  >
+                    Verify
+                  </button>
+                  <span style="cursor: pointer" class="mt-3"
+                    >Didn’t Receive OTP?</span
+                  >
+                  <h6 style="cursor: pointer" class="mt-3">Resend Code</h6>
+                </div>
+              </div>
+              <div class="col-10 mx-auto" *ngIf="showEmailBox">
+                <!-- <div class="text-center">
 								<h6 class="">Email</h6>
 								<img src="assets/images/email-img.png" class="w-75 mt-3" alt="">
 							</div> -->
-							<!-- <div class="row">
+                <!-- <div class="row">
 								<div class="col-lg-1 col-md-2 col-2" style="font-size: 6px; cursor: pointer;">
 									<i class="fa fa-arrow-left fa-2x" (click)="backButton()"></i>
 
@@ -485,18 +1572,18 @@
 								<button class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
 									[disabled]="!isFormValid()" (click)="signInWithEmail()">Sign in</button>
 							</div> -->
-              <app-email-sign-in
-              (backEvent)="backButton()"
-              (closeModalEvent)="closeModal()">
-            </app-email-sign-in>
-
-						</div>
-						<div class="col-11 mx-auto" *ngIf="showRegisterBox">
-							<!-- <div class="text-center">
+                <app-email-sign-in
+                  (backEvent)="backButton()"
+                  (closeModalEvent)="closeModal()"
+                >
+                </app-email-sign-in>
+              </div>
+              <div class="col-11 mx-auto" *ngIf="showRegisterBox">
+                <!-- <div class="text-center">
 								<h6 class="">Profile Detail</h6>
 								<img src="assets/images/register-img.png" class="w-50 mt-3" alt="">
 							</div> -->
-							<!-- <div class="row">
+                <!-- <div class="row">
 
 							<div class="col-lg-1 col-md-2 col-2" style="font-size: 6px; cursor: pointer;">
 								<i class="fa fa-arrow-left fa-2x" (click)="backButton()"></i>
@@ -559,57 +1646,94 @@
 										[disabled]="!ValidFor()" (click)="confirmRegistration()">Confirm</button>
 								</div>
 							</div> -->
-              <app-register
-              (backEvent)="backButton()"
-              (closeModalEvent)="closeModal()">
-            </app-register>
+                <app-register
+                  (backEvent)="backButton()"
+                  (closeModalEvent)="closeModal()"
+                >
+                </app-register>
+              </div>
 
-						</div>
-
-						<div class="col-10 mx-auto "
-							*ngIf="!showPhoneBox && !showEmailBox && !showRegisterBox && !showForgotBox && !showOTPBox && !showForgotPhoneBox">
-							<button class="btn btn-outline-dark btn-block" style="border-radius: 18px;" (click)="googleSignIn()">
-								<img src="https://img.icons8.com/color/48/000000/google-logo.png"  alt="Google" />
-								Continue
-								with Google
-							</button>
-							<!-- <button class="btn btn-dark btn-block" style="border-radius: 18px;">
+              <div
+                class="col-10 mx-auto"
+                *ngIf="
+                  !showPhoneBox &&
+                  !showEmailBox &&
+                  !showRegisterBox &&
+                  !showForgotBox &&
+                  !showOTPBox &&
+                  !showForgotPhoneBox
+                "
+              >
+                <button
+                  class="btn btn-outline-dark btn-block"
+                  style="border-radius: 18px"
+                  (click)="googleSignIn()"
+                >
+                  <img
+                    src="https://img.icons8.com/color/48/000000/google-logo.png"
+                    alt="Google"
+                  />
+                  Continue with Google
+                </button>
+                <!-- <button class="btn btn-dark btn-block" style="border-radius: 18px;">
 								<img src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple" />
 								Continue
 								with Apple
 							</button> -->
-							<button class="btn btn-outline-dark btn-block" (click)="openPhone()"
-								style="border-radius: 18px;">
-								<img src="https://img.icons8.com/ios-filled/50/000000/phone.png" alt="Phone" /> Continue
-								with Phone
-							</button>
-							<button class="btn btn-outline-dark btn-block" (click)="openEmail()"
-								style="border-radius: 18px;">
-								<img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="Email" /> Continue
-								with Email
-							</button>
-							<span class="mt-3">Don't have an account? <a style="color: black; cursor: pointer; text-decoration: underline;"
-									(click)="openRegister()">Register</a></span>
-							<p class="mt-5 text-center">
-								By moving forward, you're agreeing to our <a href="#">Terms of Service</a> and
-								recognizing
-								that you've checked out our <a href="#">Privacy Policy</a> to understand how we handle
-								your
-								information.
-							</p>
-						</div>
-					</div>
-				</div>
+                <button
+                  class="btn btn-outline-dark btn-block"
+                  (click)="openPhone()"
+                  style="border-radius: 18px"
+                >
+                  <img
+                    src="https://img.icons8.com/ios-filled/50/000000/phone.png"
+                    alt="Phone"
+                  />
+                  Continue with Phone
+                </button>
+                <button
+                  class="btn btn-outline-dark btn-block"
+                  (click)="openEmail()"
+                  style="border-radius: 18px"
+                >
+                  <img
+                    src="https://img.icons8.com/ios-filled/50/000000/email.png"
+                    alt="Email"
+                  />
+                  Continue with Email
+                </button>
+                <span class="mt-3"
+                  >Don't have an account?
+                  <a
+                    style="
+                      color: black;
+                      cursor: pointer;
+                      text-decoration: underline;
+                    "
+                    (click)="openRegister()"
+                    >Register</a
+                  ></span
+                >
+                <p class="mt-5 text-center">
+                  By moving forward, you're agreeing to our
+                  <a href="#">Terms of Service</a> and recognizing that you've
+                  checked out our <a href="#">Privacy Policy</a> to understand
+                  how we handle your information.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-			</div>
-		</div>
-	</div>
-
-	<!-- <div class=text-center>
+    <!-- <div class=text-center>
  @if(isActive) {
         <h1>All Categories</h1>
     }
 </div> -->
 
-	<!-- <app-body></app-body> -->
-	<!-- <app-body></app-body> -->
+    <!-- <app-body></app-body> -->
+    <!-- <app-body></app-body> -->
+  </div>
+</div>
