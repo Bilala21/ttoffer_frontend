@@ -16,23 +16,27 @@ import { UserModule } from '../../../user/user.module';
 import { LookupService } from '../../services/lookup/lookup.service';
 import { category } from '../../Models/Product/category';
 @Component({
-    selector: 'app-header',
-    standalone: true,
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss',
-    imports: [
-        NgIf,
-        FormsModule,
-        NgFor,
-        CommonModule,
-        NotificationComponent,
-        RouterModule,
+  selector: 'app-header',
+  standalone: true,
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
+  imports: [
+    NgIf,
+    FormsModule,
+    NgFor,
+    CommonModule,
+    NotificationComponent,
+    RouterModule,
         UserModule
     ]
 })
 
 export class HeaderComponent {
   isMenuDropdownOpen = false;
+  sideBarVale = false;
+  sideBar() {
+    this.sideBarVale = true;
+  }
   @ViewChild('inputFields')
   isMobileMenuVisible: boolean = false;
   inputFields: ElementRef[] = [];
@@ -80,8 +84,8 @@ export class HeaderComponent {
   updateOnlineCount() {
     // this.onlineCount = Math.floor(Math.random() * 100);
     const min = 700;
-  const max = 13000;
-  this.onlineCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    const max = 13000;
+    this.onlineCount = Math.floor(Math.random() * (max - min + 1)) + min;
   }
   toggleMobileMenu() {
     this.isMobileMenuVisible = !this.isMobileMenuVisible;
@@ -92,7 +96,7 @@ export class HeaderComponent {
     }
     this.userInfo()
     this.updateOnlineCount();
-    
+
     this.categories = await this.lookupService.GetProductCategories();
     this.intervalId = setInterval(() => this.updateOnlineCount(), 100000);
   }
@@ -172,20 +176,20 @@ export class HeaderComponent {
       password: this.password
     }
     this.mainServices.getSignUp(input).pipe(
-      catchError((error) => {
+        catchError((error) => {
 
 
         this.errorMessage = error.error.message.username!=undefined ?error.error.message.username[0]:error.error.message.password!=undefined?error.error.message.password[0]:error.error.message ;
-        return '';
-      })
+          return '';
+        })
     ).subscribe((res: any) => {
 
-      if (res != null) {
+        if (res != null) {
           this.showRegisterBox = false;
           this.showSuccessMessage("Account Registered Successfully");
 
-      }
-    });
+        }
+      });
   }
   googleSignIn() {
     this.authService.signInWithGoogle().subscribe({
@@ -211,54 +215,54 @@ export class HeaderComponent {
   }
   googleAccountRegister(input: any,user:any) {
     this.mainServices.getSignUp(input).pipe(
-      catchError((error: any) => {
+        catchError((error: any) => {
 
         if (error.error.message === "Email address already taken.") {
-          let loginInput = {
-            email: user.email,
+            let loginInput = {
+              email: user.email,
             password: user.email
           }
 
-          this.Login(loginInput);
+            this.Login(loginInput);
         }
         else{
           this.showSuccessMessage(error.error.error)
           this.loading=false;
-        }
+          }
 
-        return of(null);
-      })
+          return of(null);
+        })
     ).subscribe(res => {
-      if (res != null) {
-        let loginInput = {
-          email: user.email,
+        if (res != null) {
+          let loginInput = {
+            email: user.email,
           password: user.password
         }
-        this.Login(loginInput);
-      }
-    });
+          this.Login(loginInput);
+        }
+      });
   }
   Login(loginInput: any) {
     this.mainServices.getAuthByLogin(loginInput).pipe(
-      catchError((error: any) => {
+        catchError((error: any) => {
         this.showSuccessMessage(error.error.error)
       this.loading=false
-        return of(null);
-      })
+          return of(null);
+        })
     ).subscribe(res => {
-      if (res) {
-        // Proceed with login processing if response is not null
-        localStorage.setItem('authToken', res.data.token);
-        const jsonString = JSON.stringify(res.data.user);
+        if (res) {
+          // Proceed with login processing if response is not null
+          localStorage.setItem('authToken', res.data.token);
+          const jsonString = JSON.stringify(res.data.user);
         localStorage.setItem("key", jsonString);
-        const jsonStringGetData = localStorage.getItem('key');
+          const jsonStringGetData = localStorage.getItem('key');
         this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
-        this.loading = false;
-        this.location.go(this.location.path());
-        window.location.reload();
-        this.closeModal();
-      }
-    });
+          this.loading = false;
+          this.location.go(this.location.path());
+          window.location.reload();
+          this.closeModal();
+        }
+      });
   }
   constructor(
     private lookupService:LookupService,
@@ -368,20 +372,20 @@ export class HeaderComponent {
     this.closeModal();
     this.mainServices.getAuthByLogin(input).subscribe(res => {
       res
-      localStorage.setItem('authToken', res.data.token);
-      const jsonString = JSON.stringify(res.data.user);
+        localStorage.setItem('authToken', res.data.token);
+        const jsonString = JSON.stringify(res.data.user);
       localStorage.setItem("key", jsonString);
-      const jsonStringGetData = localStorage.getItem('key');
+        const jsonStringGetData = localStorage.getItem('key');
       this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
-      this.loading = false;
+        this.loading = false;
       this.location.go  (this.location.path());
-      window.location.reload();
+        window.location.reload();
       this.closeModal()
-    },
+      },
     (err:any)=>{
       this.showSuccessMessage(err.error.message)
       this.loading=false
-    }
+      }
   )
   }
   getAuthPhone() {
@@ -393,18 +397,18 @@ export class HeaderComponent {
     this.closeModal();
     this.mainServices.loginWithPhone(input).subscribe((res:any) => {
       res
-      localStorage.setItem('authToken', res.data.token);
-      const jsonString = JSON.stringify(res.data.user);
+        localStorage.setItem('authToken', res.data.token);
+        const jsonString = JSON.stringify(res.data.user);
       localStorage.setItem("key", jsonString);
-      const jsonStringGetData = localStorage.getItem('key');
+        const jsonStringGetData = localStorage.getItem('key');
       this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
       this.loading = false
-    },
+      },
     (err:any)=>{
 
       this.showSuccessMessage(err.error.message)
       this.loading=false
-    }
+      }
   )
   }
   openEmail() {
@@ -426,12 +430,12 @@ export class HeaderComponent {
       this.showOTPBox = true
       this.showForgotPhoneBox = false
       this.showForgotBox = false
-    },
+      },
     (err:any)=>{
 
       this.showSuccessMessage(err.error.msg)
       this.loading = false
-    }
+      }
   )
   }
   openForgot() {
@@ -528,15 +532,15 @@ export class HeaderComponent {
 
     this.router.navigate(['/body']).then(() => {
 
-        // this.location.go(this.location.path());
+      // this.location.go(this.location.path());
 
 
-        window.location.reload();
+      window.location.reload();
     });
 
 
     this.loading = false;
-}
+  }
 
 
 

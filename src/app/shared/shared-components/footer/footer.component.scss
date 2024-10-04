@@ -1,107 +1,244 @@
-.footer-container {
-    background-color: #f8f9fa;
-    padding: 20px 0;
+.first-footer {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.footer-logo {
+  width: 133.36px;
+  height: 35.79px;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.footer-points {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #767e94;
+  p{
+    margin: 0px;
+    padding: 0px;
+  }
+}
+
+.margin-top-class {
+  margin-top: 36px !important;
+}
+
+.footer-headings {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-icons {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #767e94;
+  display: flex;
+  gap: 5px;
+  margin-top: 15px;
+  
+  a {
+    color: #767e94;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+    // background-color: black;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  a:hover {
+    background-color: black;
+    color: white;
+    padding: 10px;
+  }
+}
+
+
+.btnHover {
+  background-color: #ffffff;
+  border: 0.75px solid #ebeef7;
+  border-radius: 5px;
+  transition: box-shadow 0.3s ease, border-radius 0.3s ease;
+  span {
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 12px;
+    color: #767e94;
+  }
+  h6 {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #191f33;
+  }
+}
+
+.btnHover:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  border-radius: 10px; /* Rounded corners on hover */
+  cursor: pointer;
+  border: none;
+}
+
+///////////////////====================down-footer-style-start==================/////////////////////////
+.down-footer {
+  background: #f4f4f4;
+  padding: 16px;
+}
+.down-footer-text {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #767e94;
+}
+
+.down-footer-text-second {
+  display: flex;
+  justify-content: end;
+  .first-a {
+    margin-right: 5px;
+    color: #767e94;
+  }
+  .second-a {
+    margin-left: 5px;
+    color: #767e94;
+  }
+}
+////============================ 992px================================= /////
+@media (max-width: 992px) {
+  .footer-points{
+    p{
+      margin-top: 6px;
+    }
+  }
+  .footer-headings{
+    margin-top: 20px;
+  }
+  .support-heading{
+    margin-top: 0px;
+  }
+  // /////==========================down-footer============================///////
+  .down-footer {
+    background: transparent;
+    padding-top: 0px;
+  }
+  .down-footer-text {
+    font-size: 12px;
+    margin-top: 24px;
+    padding: 12px 15px;
+    background-color: #f5fffc;
+  }
+  .down-footer-text-first {
     text-align: center;
   }
-  
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-  }
-  
-  .footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 20px;
-  }
-  
-  .footer-section h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
-  .footer-section p, .footer-section ul {
-    margin: 5px 0;
-  }
-  
-  .footer-section ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin: 5px 0;
-  }
-  
-  .footer-section ul li a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .app-links img {
-    width: 120px;
-    margin: 10px 5px;
-  }
-  
-  .social-links a {
-    margin: 0 10px;
-    font-size: 1.5em;
-    color: #333;
-  }
-  
-  .footer-bottom {
-    background-color: #e9ecef;
-    padding: 10px 0;
-    font-size: 0.9em;
-  }
-  
-  .footer-bottom p {
-    margin: 5px 0;
-  }
-  
-  .footer-bottom .footer-links {
-    margin: 10px 0;
-  }
-  
-  .footer-bottom .footer-links a {
-    text-decoration: none;
-    color: #333;
-    margin: 0 5px;
-  }
 
-  .pointer{
-    cursor: pointer;
+  .down-footer-text-second {
+    justify-content: center;
+    margin-top: 10px;
   }
+}
+// ////=========================== 768 ================================ /////
+@media (max-width: 768px) {
+  .support-heading{
+    margin-top: 20px;
+  }
+  .footer-google-app-store-btn{
+    width: 115px;
+  }
+}
+///////======================================= 300px ==============================/////
+@media (max-width:300px) {
+  .low-300{
+    margin-top: 5px;
+  }
+}
 
-  .btnHover:hover{
-    box-shadow: #dbd6d6 0px 7px 20px 0px;
-    cursor: pointer;
-  }
+// .footer-content {
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: space-around;
+//   padding: 20px;
+// }
 
-  .col-2 p:hover{
-    color: blue !important;
-  }
-  
-  @media (max-width: 1030px) {
-    .footer-content {
-      flex-direction: column;
-    }
-  }
+// .footer-section {
+//   flex: 1;
+//   min-width: 200px;
+//   margin: 20px;
+// }
 
-  @media (width < 1030px) {
-    .sm-mt-5{
-      margin-top: 15px;
-    }
-    .sm-footer-text{
-      font-size: 1.6vh !important;
-    }
-  }
-  .quick-link{
-    color: black;
-    text-decoration: none;
-  }
-  .logo-img{
-    max-width: 50px;
-  }
+// .footer-section h3 {
+//   font-size: 1.2em;
+//   margin-bottom: 10px;
+// }
+
+// .footer-section p,
+// .footer-section ul {
+//   margin: 5px 0;
+// }
+
+// .footer-section ul {
+//   list-style-type: none;
+//   padding: 0;
+// }
+
+// .footer-section ul li {
+//   margin: 5px 0;
+// }
+
+// .footer-section ul li a {
+//   text-decoration: none;
+//   color: #333;
+// }
+
+// .app-links img {
+//   width: 120px;
+//   margin: 10px 5px;
+// }
+
+// .social-links a {
+//   margin: 0 10px;
+//   font-size: 1.5em;
+//   color: #333;
+// }
+
+// .footer-bottom {
+//   background-color: #e9ecef;
+//   padding: 10px 0;
+//   font-size: 0.9em;
+// }
+
+// .footer-bottom p {
+//   margin: 5px 0;
+// }
+
+// .footer-bottom .footer-links {
+//   margin: 10px 0;
+// }
+
+// .footer-bottom .footer-links a {
+//   text-decoration: none;
+//   color: #333;
+//   margin: 0 5px;
+// }
+
+// .pointer {
+//   cursor: pointer;
+// }
+
+// .col-2 p:hover {
+//   color: blue !important;
+// }
+
+
