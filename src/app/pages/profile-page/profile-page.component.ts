@@ -133,7 +133,6 @@ export class ProfilePageComponent {
     { id: 3, name: 'Three' },
   ]
 
-  
   categories: any = [
     { id: 1, name: 'Mobiles' },
     { id: 3, name: 'Property for Sale' },
