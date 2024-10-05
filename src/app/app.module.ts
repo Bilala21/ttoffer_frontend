@@ -17,7 +17,8 @@ import { FooterComponent } from './shared/shared-components/footer/footer.compon
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    
+    RouterModule.forRoot([]),
     FooterComponent,
     HeaderComponent
     

@@ -32,12 +32,15 @@ export class PaymentComponent implements OnInit {
   last4: any;
 
   constructor(private stripeService: StripeServiceService) {}
-  async ngOnInit() {
+  ngOnInit() {
     this.stripe = this.stripeService.getStripe();
+  }
+
+  async ngAfterViewInit() {
     if (this.stripe) {
       const elements = this.stripe.elements();
       this.card = elements.create('card');
-      this.card.mount('#card-element');
+      this.card.mount('#card-element'); // Now the DOM is ready
     }
   }
   pay(amount: any) {

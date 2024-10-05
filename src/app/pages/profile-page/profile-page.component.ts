@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf, Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HeaderComponent } from "../../shared/shared-components/header/header.component";
 import { FooterComponent } from "../../shared/shared-components/footer/footer.component";
 import { SellingComponent } from "../selling/selling.component";
@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification/notification.component';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CurrentLocationComponent } from '../current-location/current-location.component';
+import { SharedDataService } from '../../shared/services/shared-data.service';
 
 interface ImageSnippet {
   file: File | null;
@@ -49,7 +50,8 @@ interface ImageSnippet {
 export class ProfilePageComponent {
   showOTPBox: boolean = false;
   progress!: number;
-  showMore: boolean = false;
+  defaultProfileUrl: string = 'assets/images/updateImage.png'; 
+    showMore: boolean = false;
   selectedTab: string = 'purchasesSales';
   selectedTabItem: string = '';
   selectedTabId: any;
@@ -133,7 +135,6 @@ export class ProfilePageComponent {
     { id: 3, name: 'Three' },
   ]
 
-  
   categories: any = [
     { id: 1, name: 'Mobiles' },
     { id: 3, name: 'Property for Sale' },
@@ -570,7 +571,7 @@ export class ProfilePageComponent {
     { id: '3', name: '3' },
   ]
   // selectedFile: File | null = null;
-  selectedFile: File[] = []
+  selectedFile: any;
   loading = false;
   categoryLookup: { [key: string]: any };
 
@@ -580,7 +581,9 @@ export class ProfilePageComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    private router:Router
+    private router:Router,
+    public cd:ChangeDetectorRef,
+    public service:SharedDataService
   ) {
     this.currentUserId = this.extension.getUserId();
     this.categoryLookup = {
@@ -658,6 +661,7 @@ export class ProfilePageComponent {
   // }
 
   selectTab(tab: string) {
+    debugger
     this.selectedTab = tab;
     this.showDiv = false;
     this.showMore = false
@@ -1157,12 +1161,8 @@ export class ProfilePageComponent {
   }
   onImageUpload(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
-
-      for (let i = 0; i < event.target.files.length; i++) {
-
-        this.selectedFile.push(event.target.files[i]);
-        this.readFileAsDataURL(event.target.files[i]);
-      }
+this.selectedFile=event.target.files[0];
+     
     }
     // this.selectedFile = event.target.files[0] ?? null;
     // const input = event.target as HTMLInputElement;
@@ -1176,29 +1176,54 @@ export class ProfilePageComponent {
   }
 
   updateProfile(): void {
-
     if (this.selectedFile) {
-      let formData = new FormData();
-      // this.filesabc.forEach(file => formData.append('video', file, file.name));
-      this.selectedFile.forEach((file, index) => {
-        formData.append(`img`, file, file.name);
-      });
-      formData.append('user_id', ((this.currentUserId) ? Number(this.currentUserId) : 0).toString());
+      let formData=new FormData();
+console.log(this.selectedFile);
+      formData.append('user_id',this.currentUserId.toString());
+      formData.append('img', this.selectedFile);
+      const url = `https://ttoffer.com/backend/public/api/update/user`;  
+      const token = localStorage.getItem('authToken');
+      
+   
+      
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              // 'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`      // Include the token in the Authorization header
+          },
+          body:formData
+      })
+      .then((response:any) => {
+        debugger
+          if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();  // or response.text(), response.blob(), etc. based on your needs
+      })
+      .then(data =>
+      {
+        this.imageUrl=data.data.img;
+        this.service.changeImageUrl(this.imageUrl)
+        this.UpdateLocalUserData(data.data)
 
-      this.http.post('https://www.ttoffer.com/backend/public/api/update/user', formData, { headers: this.getHeaders() }).subscribe(
-        (response: any) => {
+      }
+      )
 
-          this.UpdateLocalUserData(response.data)
-          this.showSuccessMessage(response.message)
-          console.log('File upload successful', response);
-          // this.updateProductImage()
-          // this.atributes()
-          // this.addProductSeccondStep();
-        },
-        error => {
-          console.error('File upload failed', error);
-        }
-      );
+      // this.http.post(`https://ttoffer.com/backend/public/api/update/user`,formData, { headers: this.getHeaders() }).subscribe(
+      //   (response: any) => {
+
+      //     this.UpdateLocalUserData(response.data)
+      //     this.showSuccessMessage(response.message)
+      //     console.log('File upload successful', response);
+      //     this.updateProductImage();
+      //     // this.atributes()
+      //     this.addProductSeccondStep();
+      //   },
+      //   error => {
+      //     console.error('File upload failed', error);
+      //   }
+      // );
       // let data = {
       //   user_id: 11,
       //   img: this.selectedFile
@@ -1285,7 +1310,7 @@ export class ProfilePageComponent {
     formData.append('user_id', ((this.currentUserId) ? Number(this.currentUserId) : 0).toString());
     formData.append('title', this.title);
     formData.append('description', this.description);
-
+debugger
     this.http.post('https://www.ttoffer.com/backend/public/api/add-product-first-step', formData, { headers: this.getHeaders() }).subscribe(
       (response: any) => {
 
@@ -1492,108 +1517,114 @@ export class ProfilePageComponent {
     })
   }
   getSelling() {
-
-    this.loading = true
-    this.mainServices.getSelling().subscribe((res: any) => {
-
-      this.sellingList = res
-      this.purchaseListTemp = res.data.purchase
-      // this.purchaseListTemp = this.purchaseListTemp.filter((item: any) => {
-      //   return this.selectedTabItem == null
-      //     ? item.user_id == this.selectedTabId
-      //     : item.id == this.selectedTabId;        });
-      this.sellingListTemp = res.data.selling
-      if (this.selectedTab != "") {
-        this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
-          // return item.id == this.selectedTabId;
-          return this.selectedTabItem == null
-          ? item.user_id == this.selectedTabId
-          : item.id == this.selectedTabId;        });
-        // this.readFileAsDataURL(this.sellingListTemp[0].video[0].src)
-        console.log('this is temp file:', this.sellingListTemp)
-        // this.convertLinksToBase64(this.sellingListTemp[0].video)
-
-        if(this.selectedTabItem == 'editPost'){
-          this.isEditPost = true
-          this.locationId = this.sellingListTemp[0].location
-          this.productId = this.sellingListTemp[0].id
-          this.title = this.sellingListTemp[0].title
-          this.description = this.sellingListTemp[0].description
-        }else{
-          this.locationId = this.currentUserProfile.location
+    // this.loading = true;
+    this.mainServices.getSelling().subscribe({
+      next: (res: any) => {
+        this.sellingList = res;
+        this.purchaseListTemp = res.data?.purchase || [];
+        this.sellingListTemp = res.data?.selling || [];
+  
+        if (this.selectedTab !== "") {
+          this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
+            return this.selectedTabItem == null
+              ? item.user_id === this.selectedTabId
+              : item.id === this.selectedTabId;
+          });
+  
+          if (this.sellingListTemp?.[0]) {
+            if (this.selectedTabItem === 'editPost') {
+              this.isEditPost = true;
+              this.locationId = this.sellingListTemp[0]?.location || null;
+              this.productId = this.sellingListTemp[0]?.id || null;
+              this.title = this.sellingListTemp[0]?.title || '';
+              this.description = this.sellingListTemp[0]?.description || '';
+            } else {
+              this.locationId = this.currentUserProfile?.location || null;
+            }
+  
+            const attributesString = this.sellingListTemp[0]?.attributes;
+            if (attributesString) {
+              try {
+                const parsedAttributes = JSON.parse(attributesString);
+                const parsedAttributesAttributesString = parsedAttributes?.attributes;
+  
+                if (parsedAttributesAttributesString) {
+                  const parsedAttributesAttributes = JSON.parse(parsedAttributesAttributesString);
+  
+                  this.brandId = parsedAttributes?.brand || null;
+                  this.selectedCategoryId = parsedAttributesAttributes?.category_id || null;
+                  this.selectedSubCategoryId = parsedAttributesAttributes?.sub_category_id || null;
+                  this.subCategoriesId = this.getSubCategoryName(this.selectedCategoryId, this.selectedSubCategoryId);
+                  this.conditionId = parsedAttributes?.condition || null;
+                  this.makeAndModelId = parsedAttributes?.makeAndModel || null;
+                  this.mileage = parsedAttributes?.milage || null;
+                  this.storageId = parsedAttributes?.storage || null;
+                  this.colorId = parsedAttributesAttributes?.color || null;
+                  this.typeId = parsedAttributes?.type || null;
+                  this.bedRoomId = parsedAttributes?.bedrooms || null;
+                  this.areaSizeId = parsedAttributes?.area || null;
+                  this.feartureId = parsedAttributes?.feature || null;
+                  this.amenitiesId = parsedAttributes?.Amenities || null;
+                  this.yearId = parsedAttributes?.year || null;
+                  this.price = parsedAttributes?.price || null;
+                  this.fuelTypeId = parsedAttributes?.fuelType || null;
+                  this.engineCapacityId = parsedAttributes?.engineCapacity || null;
+                  this.subCategoriesId = parsedAttributes?.subcategory || null;
+                  this.modelId = parsedAttributes?.model || null;
+                  this.jobtypeId = parsedAttributes?.type || null;
+                  this.experienceId = parsedAttributes?.experience || null;
+                  this.educationId = parsedAttributes?.education || null;
+                  this.salaryId = parsedAttributes?.salary || null;
+                  this.salaryPeriodId = parsedAttributes?.salaryPeriod || null;
+                  this.companyNameId = parsedAttributes?.companyName || null;
+                  this.positionTypeId = parsedAttributes?.positionType || null;
+                  this.careerLevelId = parsedAttributes?.carrierLevel || null;
+                  this.carId = parsedAttributes?.car || null;
+                  this.ageId = parsedAttributes?.age || null;
+                  this.breedId = parsedAttributes?.breed || null;
+                  this.fabricId = parsedAttributes?.fabric || null;
+                  this.suitTypeId = parsedAttributes?.suitType || null;
+                  this.toyId = parsedAttributes?.toy || null;
+                } else {
+                  console.error("Parsed attributes object does not contain 'attributes'.");
+                }
+              } catch (error) {
+                console.error("Error parsing attributes:", error);
+              }
+            }
+  
+            // Handle pricing information
+            this.startingTime = this.sellingListTemp[0]?.starting_time || null;
+            this.endingTime = this.sellingListTemp[0]?.ending_time || null;
+            this.startingDate = this.sellingListTemp[0]?.starting_date || null;
+            this.endingDate = this.sellingListTemp[0]?.ending_date || null;
+            this.startingPrice = this.sellingListTemp[0]?.auction_price || null;
+            this.price = this.sellingListTemp[0]?.fix_price || null;
+  
+            // Determine pricing category
+            if (this.sellingListTemp[0]?.fix_price != null) {
+              this.pricingCatId = "FixedPrice";
+            } else if (this.sellingListTemp[0]?.auction_price != null) {
+              this.pricingCatId = "Auction";
+            } else {
+              this.pricingCatId = "SellToTTOffer";
+            }
+          }
         }
-
-        const parsedAttributes = JSON.parse(this.sellingListTemp[0].attributes);
-        const parsedAttributesAttributes = JSON.parse(parsedAttributes.attributes);
-        // const parsedAttributes = JSON.parse(attributesObject.attributes);
-        this.loading = false
-        // const parsedAttributes = JSON.parse(this.sellingListTemp[0].attributes);
-
-        // Extract the category_id
-        // this.categories.id = attributesObject.category_id;
-
-
-        this.brandId = parsedAttributes.brand;
-        this.selectedCategoryId = parsedAttributesAttributes.category_id
-        this.selectedSubCategoryId = parsedAttributesAttributes.sub_category_id
-        this.subCategoriesId = this.getSubCategoryName(this.selectedCategoryId, this.selectedSubCategoryId);
-        console.log('Extracted category_id:', this.categories.id);
-        // this.brandId = parsedAttributes.brand
-        this.conditionId = parsedAttributes.condition
-        this.makeAndModelId = parsedAttributes.makeAndModel
-        this.mileage = parsedAttributes.milage
-        // this.pricingCatId = parsedAttributes.milage
-        // this.price = parsedAttributes.price
-        this.storageId = parsedAttributes.storage
-        this.colorId = parsedAttributesAttributes.color
-        this.typeId = parsedAttributes.type
-        this.bedRoomId = parsedAttributes.bedrooms
-        this.areaSizeId = parsedAttributes.area
-        this.feartureId = parsedAttributes.feature
-        this.amenitiesId = parsedAttributes.Amenities
-        this.yearId = parsedAttributes.year
-        this.price = parsedAttributes.price
-        this.fuelTypeId = parsedAttributes.fuelType
-        this.engineCapacityId = parsedAttributes.engineCapacity
-        this.subCategoriesId = parsedAttributes.subcategory
-        this.modelId = parsedAttributes.model
-        this.jobtypeId = parsedAttributes.type
-        this.experienceId = parsedAttributes.experience
-        this.educationId = parsedAttributes.education
-        this.salaryId = parsedAttributes.salary
-        this.salaryPeriodId = parsedAttributes.salaryPeriod
-        this.companyNameId = parsedAttributes.companyName
-        this.positionTypeId = parsedAttributes.possitionType
-        this.careerLevelId = parsedAttributes.carrierLevel
-        this.carId = parsedAttributes.car
-        this.ageId = parsedAttributes.age
-        this.breedId = parsedAttributes.breed
-        // this.fashionTypeId = parsedAttributes.milage
-        this.fabricId = parsedAttributes.fabric
-        this.suitTypeId = parsedAttributes.suitType
-        this.toyId = parsedAttributes.toy
-        this.startingTime = this.sellingListTemp[0].starting_time
-        this.endingTime = this.sellingListTemp[0].ending_time
-        this.startingDate = this.sellingListTemp[0].starting_date
-        this.endingDate = this.sellingListTemp[0].ending_date
-        this.startingPrice = this.sellingListTemp[0].auction_price
-        this.price = this.sellingListTemp[0].fix_price
-        if (this.sellingListTemp[0].fix_price != null) {
-          this.pricingCatId = "FixedPrice"
-        } else if (this.sellingListTemp[0].auction_price != null) {
-          this.pricingCatId = "Auction"
-        }
-        else {
-          this.pricingCatId = "SellToTTOffer"
-        }
+  
+        this.loading = false;
+        console.log(this.sellingList);
+      },
+      error: (err: any) => {
+        console.error('Error fetching selling data:', err);
+        this.loading = false;
       }
-      console.log(this.sellingList)
-
-    })
+    });
   }
+  
   getNotification(){
 
-    this.loading = true;
+    // this.loading = true;
     this.mainServices.getNotification(this.currentUserId).subscribe((res:any) => {
 
       // this.notificationList = res.data
@@ -1765,7 +1796,7 @@ export class ProfilePageComponent {
   }
   wishListProduct() {
 
-    this.loading = true
+    // this.loading = true
     var input = {
       user_id: this.currentUserId
     }

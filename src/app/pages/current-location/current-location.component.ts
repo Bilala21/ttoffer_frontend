@@ -19,7 +19,7 @@ export class CurrentLocationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getCurrentLocation();
+    // this.getCurrentLocation();
   }
 
   async getCurrentLocation() {

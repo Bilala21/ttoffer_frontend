@@ -39,7 +39,7 @@
 .accordion-body.active {
   padding-top: 0 !important;
   padding: 15px;
-  max-height: 400px;
+  // max-height: 400px;
 }
 
 .chevron-icon {
@@ -157,4 +157,34 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.skeleton-img {
+  background: linear-gradient(90deg, #e0e0e0 20%, #f0f0f0 50%, #e0e0e0 80%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-text {
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin: 5px 0;
+}
+
+.skeleton-icon {
+  background: #e0e0e0;
+  border-radius: 50%;
+}
+
+.skeleton-button {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }

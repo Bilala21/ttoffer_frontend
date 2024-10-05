@@ -35,6 +35,7 @@ export class EmailSignInComponent {
   }
   signInWithEmail() {
     if (this.isFormValid()) {
+      debugger
       this.getAuth();
     }
   }
@@ -70,6 +71,7 @@ export class EmailSignInComponent {
 
     this.mainServices.getAuthByLogin(input).subscribe(
       res => {
+        debugger
         localStorage.setItem('authToken', res.data.token);
         const jsonString = JSON.stringify(res.data.user);
         localStorage.setItem("key", jsonString);

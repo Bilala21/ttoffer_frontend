@@ -4,7 +4,7 @@ import { FooterComponent } from "../../shared/shared-components/footer/footer.co
 import { ProductCarouselComponent } from "../carousels/product-carousel/product-carousel.component";
 import { HeaderComponent } from "../../shared/shared-components/header/header.component";
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +25,8 @@ import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
     NgFor,
     CommonModule,
     FormsModule,
-    NgxSpinnerComponent
+    NgxSpinnerComponent,
+    RouterModule
   ]
 })
 export class AuctionProductComponent {
