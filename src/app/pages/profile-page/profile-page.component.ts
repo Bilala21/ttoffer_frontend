@@ -18,6 +18,8 @@ import { NotificationComponent } from '../notification/notification.component';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CurrentLocationComponent } from '../current-location/current-location.component';
 import { SharedDataService } from '../../shared/services/shared-data.service';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { AccountSettingDialogeComponent } from '../account-setting-dialoge/account-setting-dialoge.component';
 
 interface ImageSnippet {
   file: File | null;
@@ -32,6 +34,7 @@ interface ImageSnippet {
     CommonModule,
     HeaderComponent,
     NgFor,
+    MatDialogModule,
     FooterComponent,
     SellingComponent,
     FormsModule,
@@ -52,7 +55,7 @@ export class ProfilePageComponent {
   progress!: number;
   defaultProfileUrl: string = 'assets/images/updateImage.png'; 
     showMore: boolean = false;
-  selectedTab: string = 'purchasesSales';
+  selectedTab: any = 'purchasesSales';
   selectedTabItem: string = '';
   selectedTabId: any;
   activeButton: number = 1;
@@ -99,18 +102,20 @@ export class ProfilePageComponent {
   positionTypeId: string = "";
   careerLevelId: string = "";
   carId: string = "";
+  userSetting:any;
   ageId: string = "";
   breedId: string = "";
   fashionTypeId: string = "";
   fabricId: string = "";
   suitTypeId: string = "";
   toyId: string = "";
+  final_price:any=900
   startingTime: string = "";
   endingTime: string = "";
   startingDate: Date | null = null;
   endingDate: Date | null = null;
   productId: number = 0;
-  locationId: string = "";
+  locationId: string = "Rawind";
   jSonAttributes: any;
   startingPrice: string = "";
   lowestPrice: string = "";
@@ -125,10 +130,11 @@ export class ProfilePageComponent {
   allowRating:boolean=false;
   isDisabled:boolean = false;
   isEditPost:boolean = false;
-
+  subCategory:any=[]
   showNotif() {
     this.showNotification = true
   }
+  
   rawData: any = [
     { id: 1, name: 'One' },
     { id: 2, name: 'Two' },
@@ -136,19 +142,7 @@ export class ProfilePageComponent {
   ]
 
   categories: any = [
-    { id: 1, name: 'Mobiles' },
-    { id: 3, name: 'Property for Sale' },
-    { id: 5, name: 'Vehicles' },
-    { id: 4, name: 'Property for Rent' },
-    { id: 2, name: 'Electronic & Appliance' },
-    { id: 6, name: 'Bike' },
-    { id: 7, name: 'Job' },
-    { id: 8, name: 'Services' },
-    { id: 12, name: 'Animals' },
-    { id: 9, name: 'Furniture and home decor' },
-    { id: 10, name: 'Fashion (dress) and beauty' },
-    { id: 11, name: 'Kids' },
-    // {id:12, name:'Kids'}
+   
   ]
   pricingCategories: any = [
     { id: 'FixedPrice', name: 'Fixed Price' },
@@ -574,7 +568,7 @@ export class ProfilePageComponent {
   selectedFile: any;
   loading = false;
   categoryLookup: { [key: string]: any };
-
+  editProductData: any = null;
   constructor(
     private mainServices: MainServicesService,
     private extension: Extension,
@@ -582,6 +576,7 @@ export class ProfilePageComponent {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private router:Router,
+    public dialog: MatDialog,
     public cd:ChangeDetectorRef,
     public service:SharedDataService
   ) {
@@ -608,15 +603,45 @@ export class ProfilePageComponent {
     this.customLink = window.location.href;
     this.selectedTabItem = this.route.snapshot.paramMap.get('name')!;
     this.selectedTabId = this.route.snapshot.paramMap.get('id')!;
-    if (this.selectedTabItem != null) {
-      this.selectTab(this.selectedTabItem)
-    }
-    else {
-      this.selectTab("purchasesSales")
-    }
+    // const editProfile=localStorage.getItem('editProduct')
+    // if (ed) {
+    //   this.editProductData = JSON.parse(editProfile);
+    //   this.selectTab('addPost');
+    //   this.populateFormForEdit();
+    // }
+    // else {
+     const currentTab:any=localStorage.getItem('currentTab')
+      this.selectTab(currentTab)
+    // }
+    this.loadCategories()
     this.getSelling();
     this.getCurrentUser();
     this.wishListProduct();
+  }
+  loadCategories(): void {
+    this.mainServices.getCategories(this.selectedTabId).subscribe(
+      (data) => {
+        this.categories = data; // Assign the fetched data to the categories array
+        console.log(this.categories); // Log the categories to the console for debugging
+      },
+      (error) => {
+        console.error('Error fetching categories:', error); // Handle error
+      }
+    );
+  }
+  populateFormForEdit(): void {
+    if (this.editProductData) {
+      this.title = this.editProductData.slug || '';
+      this.description = this.editProductData.description || '';
+      this.selectedCategoryId = this.editProductData.category_id || '';
+      this.selectedSubCategoryId = JSON.parse(this.editProductData.attributes).sub_category_id || '';
+   this.getSubcategories(this.selectedCategoryId);
+      // Populate images
+      this.selectedFiles = this.editProductData.photo.map((photo: any) => {
+        return { src: photo.url }; // Adjust the URL path as needed
+      });
+
+    }
   }
   showOtp(){
     this.showOTPBox =  true
@@ -663,6 +688,7 @@ export class ProfilePageComponent {
   selectTab(tab: string) {
     debugger
     this.selectedTab = tab;
+    localStorage.setItem('currentTab',this.selectedTab)
     this.showDiv = false;
     this.showMore = false
   }
@@ -785,21 +811,48 @@ export class ProfilePageComponent {
       console.log(res)
     })
   }
-  updateProductImage() {
-
-    this.loading = true
+  async  updateProductImage() {
+    this.loading = true;
+    
     let formData = new FormData();
+    
+    // Append image files to formData
     this.imageFilesAbc.forEach((file, index) => {
       formData.append(`src[]`, file, file.name);
     });
-    formData.append('product_id', ((this.productId) ? Number(this.productId) : 0).toString());
-    this.http.post('https://www.ttoffer.com/backend/public/api/upload-image', formData, { headers: this.getHeaders() }).subscribe(res => {
+    
+    // Append product ID
+    formData.append('product_id', this.productId ? Number(this.productId).toString() : '0');
+  
+    try {
+      const token = localStorage.getItem('authToken');
 
-      this.loading = false
-      res
-      console.log(res)
-    })
+      // Fetch request to upload the image
+      const response = await fetch('https://www.ttoffer.com/backend/public/api/upload-image', {
+        method: 'POST',
+        body: formData,
+          headers: {
+            // 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`      // Include the token in the Authorization header
+        },
+      });
+  
+      // Check if the request was successful
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Image upload successful', data);
+      } else {
+        console.error('Image upload failed', await response.json());
+      }
+  
+    } catch (error) {
+      // Handle fetch error
+      console.error('Image upload failed', error);
+    } finally {
+      this.loading = false;
+    }
   }
+  
 
 
 
@@ -1183,7 +1236,7 @@ console.log(this.selectedFile);
       formData.append('img', this.selectedFile);
       const url = `https://ttoffer.com/backend/public/api/update/user`;  
       const token = localStorage.getItem('authToken');
-      
+      this.loading=true;
    
       
       fetch(url, {
@@ -1205,7 +1258,8 @@ console.log(this.selectedFile);
       {
         this.imageUrl=data.data.img;
         this.service.changeImageUrl(this.imageUrl)
-        this.UpdateLocalUserData(data.data)
+        this.UpdateLocalUserData(data.data);
+        this.loading=false;
 
       }
       )
@@ -1299,34 +1353,8 @@ console.log(this.selectedFile);
       'Authorization': `Bearer ${token}`
     });
   }
-  AddProductFirstStep() {
-
-    this.loading = true
-    let formData = new FormData();
-    // this.filesabc.forEach(file => formData.append('video', file, file.name));
-    this.videoFilesAbc.forEach((file, index) => {
-      formData.append(`video[]`, file, file.name);
-    });
-    formData.append('user_id', ((this.currentUserId) ? Number(this.currentUserId) : 0).toString());
-    formData.append('title', this.title);
-    formData.append('description', this.description);
-debugger
-    this.http.post('https://www.ttoffer.com/backend/public/api/add-product-first-step', formData, { headers: this.getHeaders() }).subscribe(
-      (response: any) => {
-
-        console.log('File upload successful', response);
-        this.productId = response.product_id
-        this.updateProductImage()
-        this.attributes()
-        this.addProductSeccondStep();
-        this.loading = false
-      },
-      error => {
-        console.error('File upload failed', error);
-      }
-    );
-  }
-  EditProductFirstStep() {
+ 
+    EditProductFirstStep() {
 
     let formData = new FormData();
     // this.filesabc.forEach(file => formData.append('video', file, file.name));
@@ -1343,7 +1371,7 @@ debugger
 
         // console.log('File upload successful', response);
         this.productId = response.product_id
-        this.attributes()
+        // this.attributes()
         this.EditProductSeccondStep();
       },
       error => {
@@ -1352,32 +1380,125 @@ debugger
     );
   }
 
+  async AddProductFirstStep() {
+    let formData = new FormData();
+    
+    // Append video files to formData
+    this.videoFilesAbc.forEach((file) => {
+        formData.append(`video[]`, file, file.name);
+    });
 
-  addProductSeccondStep() {
+    // Append other fields
+    formData.append('user_id', this.currentUserId ? Number(this.currentUserId).toString() : '0');
+    formData.append('title', this.title);
+    formData.append('description', this.description);
 
-    this.loading = true
-    let input = {
-      product_id: this.productId,
-      category_id: this.selectedCategoryId,
-      sub_category_id:this.selectedSubCategoryId,
-      condition: this.conditionId,
-      make_and_model: this.makeAndModelId,
-      mileage: this.mileage,
-      color: this.colorId,
-      brand: this.brandId,
-      model: this.modelId,
-      edition: "",
-      authenticity: "",
-      attributes: this.jSonAttributes,
+    try {
+        const token = localStorage.getItem('authToken');
+        this.loading = true;
+
+        // Fetch request to send formData
+        const response = await fetch('https://www.ttoffer.com/backend/public/api/add-product-first-step', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+            },
+        });
+
+        // Parse JSON response
+        const data = await response.json();
+
+        if (response.ok) {
+            this.productId = data.product_id;
+            await this.updateProductImage();
+            this.attributes();
+            await this.addProductSeccondStep();
+        } else {
+            throw new Error(data.message || 'File upload failed');
+        }
+    } catch (error) {
+        this.handleError(error);
+    } finally {
+        this.loading = false;
     }
-    this.mainServices.addProductSecondStep(input).subscribe(res => {
+}
 
-      res
-      this.loading = false
-      this.addProductThirdStep()
-      console.log(res);
-    })
-  }
+async addProductSeccondStep() {
+    let input = {
+        product_id: this.productId,
+        category_id: this.selectedCategoryId,
+        sub_category_id: this.selectedSubCategoryId,
+        condition: this.conditionId,
+        make_and_model: this.makeAndModelId,
+        mileage: this.mileage,
+        color: this.colorId,
+        brand: this.brandId,
+        model: this.modelId,
+        edition: "",
+        authenticity: "",
+        attributes: this.jSonAttributes,
+    };
+
+    try {
+        const res = await this.mainServices.addProductSecondStep(input).toPromise();
+        await this.addProductThirdStep();
+    } catch (error) {
+        this.handleError(error);
+    }
+}
+
+async addProductThirdStep() {
+    let input;
+
+    if (this.pricingCatId === "Auction") {
+        input = {
+            product_id: this.productId,
+            auction_price: this.startingPrice,
+            starting_date: this.startingDate,
+            starting_time: this.startingTime,
+            ending_date: this.endingDate,
+            ending_time: this.endingTime,
+            final_price: this.final_price,
+        };
+    } else if (this.pricingCatId === "FixedPrice") {
+        input = {
+            product_id: this.productId,
+            fix_price: this.price,
+        };
+    } else {
+        input = { product_id: this.productId };
+    }
+
+    try {
+        const res = await this.mainServices.addProductThirdStep(input).toPromise();
+        await this.addProductLastStep();
+    } catch (error) {
+        this.handleError(error);
+    }
+}
+
+async addProductLastStep() {
+    let input = {
+        product_id: this.productId,
+        location: this.locationId,
+    };
+
+    try {
+        const res :any= await this.mainServices.addProductLastStep(input).toPromise();
+        this.showSuccessMessage(res.msg);
+        this.router.navigate(['']);
+    } catch (error) {
+        this.handleError(error);
+    }
+}
+
+// Centralized error handling
+handleError(error:any) {
+  this.loading=false;
+    alert(error.message || 'An error occurred, please try again.');
+}
+
   EditProductSeccondStep() {
 
     this.loading = true
@@ -1400,48 +1521,6 @@ debugger
 
       res
       this.EditProductThirdStep()
-      console.log(res);
-      this.loading = false
-    })
-  }
-  addProductThirdStep() {
-
-    this.loading = true
-    let input
-    if (this.pricingCatId == "Auction") {
-      input = {
-        product_id: this.productId,
-        auction_price: this.startingPrice,
-        starting_date: this.startingDate,
-        // starting_time: '12:16',
-        starting_time: this.startingTime,
-        ending_date: this.endingDate,
-        // ending_time: '12:16',
-        ending_time: this.endingTime,
-        // fix_price: null,
-
-      }
-    }
-    else if (this.pricingCatId == "FixedPrice") {
-
-      input = {
-        product_id: this.productId,
-        fix_price: this.price,
-        // auction_price: null,
-      }
-    }
-    else {
-
-      input = {
-        product_id: this.productId,
-        // fix_price: this.price,
-      }
-    }
-    this.mainServices.addProductThirdStep(input).subscribe((res: any) => {
-
-      res
-      // this.showSuccessMessage(res.message)
-      this.addProductLastStep();
       console.log(res);
       this.loading = false
     })
@@ -1484,22 +1563,6 @@ debugger
       this.loading = false
     })
   }
-  addProductLastStep() {
-    this.loading = true
-    let input = {
-      product_id: this.productId,
-      location: this.locationId,
-    }
-    this.mainServices.addProductLastStep(input).subscribe((res: any) => {
-
-      res
-      this.showSuccessMessage(res.msg)
-      console.log(res);
-      this.loading = false
-      this.router.navigate([''])
-    })
-  }
-
   editProductLastStep() {
 
     this.loading = true
@@ -1521,6 +1584,7 @@ debugger
     this.mainServices.getSelling().subscribe({
       next: (res: any) => {
         this.sellingList = res;
+        console.log(res)
         this.purchaseListTemp = res.data?.purchase || [];
         this.sellingListTemp = res.data?.selling || [];
   
@@ -1554,7 +1618,7 @@ debugger
                   this.brandId = parsedAttributes?.brand || null;
                   this.selectedCategoryId = parsedAttributesAttributes?.category_id || null;
                   this.selectedSubCategoryId = parsedAttributesAttributes?.sub_category_id || null;
-                  this.subCategoriesId = this.getSubCategoryName(this.selectedCategoryId, this.selectedSubCategoryId);
+                  // this.subCategoriesId = this.getSubCategoryName(this.selectedCategoryId, this.selectedSubCategoryId);
                   this.conditionId = parsedAttributes?.condition || null;
                   this.makeAndModelId = parsedAttributes?.makeAndModel || null;
                   this.mileage = parsedAttributes?.milage || null;
@@ -1635,165 +1699,103 @@ debugger
       this.loading = false
     })
   }
-  getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
-    // Combine all subcategories into one array
-    const allSubCategories = [
-      ...this.subCatMobile,
-      ...this.subCatPropertyForSales,
-      ...this.subCatVehicles,
-      ...this.subCatPropertyRent,
-      ...this.subCatElectronics,
-      ...this.subCatBike,
-      ...this.subCatJob,
-      ...this.subCatServices,
-      ...this.subCatAnimal,
-      ...this.subCatFurniture,
-      ...this.subCatFashion,
-      ...this.subCatKid,
-    ];
+  // getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
+  //   // Combine all subcategories into one array
+  //   const allSubCategories = [
+  //     ...this.subCatMobile,
+  //     ...this.subCatPropertyForSales,
+  //     ...this.subCatVehicles,
+  //     ...this.subCatPropertyRent,
+  //     ...this.subCatElectronics,
+  //     ...this.subCatBike,
+  //     ...this.subCatJob,
+  //     ...this.subCatServices,
+  //     ...this.subCatAnimal,
+  //     ...this.subCatFurniture,
+  //     ...this.subCatFashion,
+  //     ...this.subCatKid,
+  //   ];
 
-    // Find the subcategory that matches both categoryId and subCategoryId
-    const foundSubCategory = allSubCategories.find(
-      subCat => subCat.category_id === categoryId && subCat.id === subCategoryId
-    );
+  //   // Find the subcategory that matches both categoryId and subCategoryId
+  //   const foundSubCategory = allSubCategories.find(
+  //     subCat => subCat.category_id === categoryId && subCat.id === subCategoryId
+  //   );
 
-    // Return the name of the found subcategory, or undefined if not found
-    return foundSubCategory ? foundSubCategory.name : "";
-  }
+  //   // Return the name of the found subcategory, or undefined if not found
+  //   return foundSubCategory ? foundSubCategory.name : "";
+  // }
 
   getCurrentUser() {
     if (typeof window !== 'undefined' && window.localStorage) {
       const jsonStringGetData = localStorage.getItem('key');
       if (jsonStringGetData) {
         this.currentUserProfile = JSON.parse(jsonStringGetData);
+        this.userSettings();
        this.allowRating= this.currentUserProfile.Id==this.currentUserId;
-        console.log(this.currentUserProfile)
-        this.imageUrl = this.currentUserProfile.img
+        this.imageUrl = this.currentUserProfile.img;
+
       } else {
         console.warn('localStorage is not available.');
       }
     }
   }
-  updateUserName = () => {
-    let input = {
-      name: this.currentUserProfile.name
-    };
-    this.loading = true;
-    this.isDisabled = true;
-
-    this.mainServices.updateUserName(input).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        const jsonString = JSON.stringify(res.data);
-        localStorage.setItem("key", jsonString);
-        this.getCurrentUser();
-        this.loading = false;
-        this.isDisabled = false;
-        this.closeUserNameModal();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.loading = false;
-        this.isDisabled = false;
-      }
+  userSettings(){
+    this.userSetting = [
+      { key: 'name', value: this.currentUserProfile.name, icon: 'assets/images/profile-circle.svg', placeholder: 'User Name' },
+      { key: 'phone', value: this.currentUserProfile.phone, icon: 'assets/images/call-calling.svg', placeholder: 'Number' },
+      { key: 'email', value: this.currentUserProfile.email, icon: 'assets/images/sms.svg', placeholder: 'Email' },
+      { key: 'password', value: '********', icon: 'assets/images/password-check.svg', placeholder: 'Password' },
+      { key: 'location', value: this.currentUserProfile.location, icon: 'assets/images/location.svg', placeholder: 'Location' }
+    ];
+  }
+  openDialog(key: string,placeholder:any): void {
+    const dialogRef = this.dialog.open(AccountSettingDialogeComponent, {
+      width:'470px',
+      height:'322px',
+      data: { placeholder,key, currentUserProfile: this.currentUserProfile }
     });
-  };
 
-  updateUserNumber = () => {
-    let input = {
-      phone: this.currentUserProfile.phone
-    };
-    this.isDisabled = true;
-
-    this.mainServices.updateNumber(input).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        const jsonString = JSON.stringify(res.data);
-        localStorage.setItem("key", jsonString);
-        this.getCurrentUser();
-        this.loading = false;
-        this.isDisabled = false;
-        this.closeNumberModal();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.loading = false;
-        this.isDisabled = false;
-      }
-    });
-  };
-
-  updateUserEmail = () => {
-    this.closeModal();
-    this.loading = true;
-    let input = {
-      email: this.currentUserProfile.email
-    };
-    this.isDisabled = true;
-
-    this.mainServices.updateEmail(input).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        const jsonString = JSON.stringify(res.data);
-        localStorage.setItem("key", jsonString);
-        this.getCurrentUser();
-        this.showSuccessMessage(res.message);
-        this.loading = false;
-        this.isDisabled = false;
-        this.closeEmailModal();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.loading = false;
-        this.isDisabled = false;
-      }
-    });
-  };
-
-  updateUserPassword = () => {
-    let input = {
-      password: this.currentUserProfile.password
-    };
-    this.isDisabled = true;
-
-    this.mainServices.updatePassword(input).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        const jsonString = JSON.stringify(res.data);
-        localStorage.setItem("key", jsonString);
-        this.getCurrentUser();
-        this.loading = false;
-        this.isDisabled = false;
-        this.closePasswordModal();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.loading = false;
-        this.isDisabled = false;
-      }
-    });
-  };
-  updateUserLocation = () => {
-    let input = {
-      location: this.currentUserProfile.location
-    };
-    this.isDisabled = true;
-
-    this.mainServices.updateLocation(input).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        const jsonString = JSON.stringify(res.data);
-        localStorage.setItem("key", jsonString);
-        this.getCurrentUser();
-        this.isDisabled = false;
-        this.closeLocationModal();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.isDisabled = false;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateUserInfo(result.key,result.value)
       }
     });
   }
+  updateUserInfo(field: string, value: any) {
+    this.isDisabled = true;
+    this.loading = true;
+    const input = { [field]: value };
+    const updateMethods:any = {
+      phone: () => this.mainServices.updateNumber(input),
+      email: () => this.mainServices.updateEmail(input),
+      password: () => this.mainServices.updatePassword(input),
+      location: () => this.mainServices.updateLocation(input),
+      name:()=> this.mainServices.updateUserName(input)
+    };
+    if (updateMethods[field]) {
+      updateMethods[field]().subscribe({
+        next: (res: any) => {
+          console.log(res);
+          const jsonString = JSON.stringify(res.data);
+          localStorage.setItem("key", jsonString);
+          this.getCurrentUser();
+          this.loading = false;
+          this.isDisabled = false;
+          this.showSuccessMessage( 'Updated successfully!');
+        },
+        error: (error: any) => {
+          console.error(error);
+          this.loading = false;
+          this.isDisabled = false;
+        }
+      });
+    } else {
+      console.error(`No method found for updating ${field}`);
+      this.loading = false;
+      this.isDisabled = false;
+    }
+  }
+
   wishListProduct() {
 
     // this.loading = true
@@ -1967,255 +1969,57 @@ parseSTime(event: any): void {
 
   attributes() {
     const subCategoryList = this.categoryLookup[this.selectedCategoryId];
-    const matchingCategories = this.categories.filter((cat: any) => cat.id == this.selectedCategoryId);
-    const category = matchingCategories.length > 0 ? matchingCategories[0] : null;
-    const categoryName = category?.name ?? '';
-    // const subCategoryName = subCategoryList ? subCategoryList[this.selectedSubCategoryId]?.name ?? '' : '';
-    const matchingSubCategories = subCategoryList ? subCategoryList.filter((subCat: any) => subCat.id == this.selectedSubCategoryId) : [];
-    const subCategory = matchingSubCategories.length > 0 ? matchingSubCategories[0] : null;
-
-    // Get the subcategory name
-    const subCategoryName = subCategory?.name ?? '';
-    this.subCategoriesId = subCategory?.Id;
-    if (this.selectedCategoryId == "1") {
-
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        // sub_category_id:this.selectedSubCategoryId,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        brand: this.brandId ?? '',
-        condition: this.conditionId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        storage: this.storageId ?? '',
-        color: this.colorId ?? '',
-        location: this.locationId
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "3") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        type: this.typeId ?? '',
-        bedrooms: this.bedRoomId ?? '',
-        area: this.areaSizeId ?? '',
-        condition: this.conditionId,
-        yearBuilt: this.yearBuiltId ?? '',
-        feature: this.feartureId ?? '',
-        Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        storage: this.storageId ?? '',
-        location: this.locationId ?? '',
-        bathRoom: this.bathRoomId
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "5") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        makeAndModel: this.makeAndModelId ?? '',
-        year: this.yearBuiltId ?? '',
-        condition: this.conditionId ?? '',
-        mileage: this.mileage ?? '',
-        fuelType: this.fuelTypeId ?? '',
-        color: this.colorId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        location: this.locationId ?? ''
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "4") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        type: this.typeId ?? '',
-        bedrooms: this.bedRoomId ?? '',
-        area: this.areaSizeId ?? '',
-        condition: this.conditionId,
-        yearBuilt: this.yearBuiltId ?? '',
-        feature: this.feartureId ?? '',
-        Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        storage: this.storageId ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "2") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        // type: this.typeId ?? '',
-        // bedrooms: this.bedRoomId ?? '',
-        // area: this.areaSizeId ?? '',
-        condition: this.conditionId,
-        color: this.colorId ?? '',
-        // yearBuilt: this.yearBuiltId ?? '',
-        // feature: this.feartureId ?? '',
-        // Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        // storage: this.storageId ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "6") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-
-        subCatId: this.subCategoriesId ?? '',
-        condition: this.conditionId,
-        engineCapacity: this.engineCapacityId ?? '',
-        model: this.modelId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "7") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        type: this.jobtypeId ?? '',
-        experience: this.experienceId ?? '',
-        education: this.educationId ?? '',
-        salary: this.salaryId ?? '',
-        condition: this.conditionId,
-        salaryPeriod: this.salaryPeriodId ?? '',
-        companyName: this.companyNameId ?? '',
-        possitionType: this.positionTypeId ?? '',
-        carrierLevel: this.careerLevelId ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "8") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        subcategory: this.subCategoriesId ?? '',
-        condition: this.conditionId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        car: this.carId ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "12") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        condition: this.conditionId,
-        subcategory: this.subCategoriesId ?? '',
-        age: this.ageId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        breed: this.breedId ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "9") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        subcategory: this.subCategoriesId ?? '',
-        type: this.fashionTypeId ?? '',
-        condition: this.conditionId ?? '',
-        color: this.colorId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "10") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        subcategory: this.subCategoriesId ?? '',
-        condition: this.conditionId,
-        fabric: this.fabricId ?? '',
-        suitType: this.suitTypeId ?? '',
-        price: this.price ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
-    else if (this.selectedCategoryId == "11") {
-      const jsonData = {
-        category_id: this.selectedCategoryId ?? '',
-        category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
-        product_id: this.productId,
-        subcategory: this.subCategoriesId ?? '',
-        condition: this.conditionId ?? '',
-        toy: this.toyId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
-        location: this.locationId ?? '',
-
-      };
-      this.jSonAttributes = JSON.stringify(jsonData);
-    }
+    const category = this.categories.find((cat: any) => cat.id === this.selectedCategoryId) || {};
+    const subCategory = subCategoryList ? subCategoryList.find((subCat: any) => subCat.id === this.selectedSubCategoryId) : {};
+    const categoryName = category.name || '';
+    const subCategoryName = subCategory?.name || '';
+  
+    // Define a mapping object for category-specific fields
+    const categoryFieldMapping: any = {
+      '1': { brand: this.brandId, condition: this.conditionId, storage: this.storageId, color: this.colorId },
+      '2': { condition: this.conditionId, color: this.colorId },
+      '3': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId, bathRoom: this.bathRoomId },
+      '4': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId },
+      '5': { makeAndModel: this.makeAndModelId, year: this.yearBuiltId, condition: this.conditionId, mileage: this.mileage, fuelType: this.fuelTypeId, color: this.colorId },
+      '6': { subCatId: this.subCategoriesId, condition: this.conditionId, engineCapacity: this.engineCapacityId, model: this.modelId },
+      '7': { type: this.jobtypeId, experience: this.experienceId, education: this.educationId, salary: this.salaryId, salaryPeriod: this.salaryPeriodId, companyName: this.companyNameId, possitionType: this.positionTypeId, carrierLevel: this.careerLevelId },
+      '8': { subcategory: this.subCategoriesId, condition: this.conditionId, car: this.carId },
+      '9': { subcategory: this.subCategoriesId, type: this.fashionTypeId, condition: this.conditionId, color: this.colorId },
+      '10': { subcategory: this.subCategoriesId, condition: this.conditionId, fabric: this.fabricId, suitType: this.suitTypeId },
+      '11': { subcategory: this.subCategoriesId, condition: this.conditionId, toy: this.toyId },
+      '12': { subcategory: this.subCategoriesId, condition: this.conditionId, age: this.ageId, breed: this.breedId },
+    };
+  
+    const jsonData: any = {
+      category_id: this.selectedCategoryId || '',
+      category_name: categoryName,
+      sub_category_id: this.selectedSubCategoryId || '',
+      sub_category_name: subCategoryName,
+      product_id: this.productId || '',
+      price: this.price?.trim() || null,
+      location: this.locationId || '',
+    };
+  
+    Object.assign(jsonData, categoryFieldMapping[this.selectedCategoryId] || {});
+  
+    this.jSonAttributes = JSON.stringify(jsonData);
   }
-  onchange() {
-    console.log('this is the selected categorie Id', this.selectedCategoryId);
+  
+  getSubcategories(categoryId:any): void {
+    if (categoryId) {
+      this.mainServices.getSubCategories(this.selectedCategoryId).subscribe(
+        (data) => {
+          this.subCategory = data; // Assume the API returns an array of subcategories
+        },
+        (error) => {
+        }
+      );
+    } else {
+      this.subCategory = []; // Clear subcategories if no category is selected
+    }
   }
   markAsSold(prodictId: any) {
     this.router.navigate(['/markAsSold/',prodictId]);
-    // this.loading = true
-    // console.log('sold out ', prodictId)
-    // this.mainServices.markAsSold(prodictId).subscribe((res: any) => {
-
-    //   res
-    //   this.getSelling();
-    //   this.showSuccessMessage(res.message)
-    //   this.loading = false
-    // })
   }
   // getNotification() {
   //

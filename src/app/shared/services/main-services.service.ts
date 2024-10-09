@@ -182,4 +182,14 @@ export class MainServicesService {
     const url = `${this.geocodeUrl}?latlng=${lat},${lng}&key=AIzaSyBuEU8bWRV3H-xNGOUCvCH4R3PMPveyGlI`;
     return this.http.get(url).toPromise();
   }
+  getCategories(data:any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}` + 'api/categories',data);
+  }
+  getSubCategories(categoryId:any){
+    const data={
+      category_id:categoryId
+    }
+    return this.http.post<any[]>(`${this.apiUrl}` + 'api/sub-categories',data);
+
+  }
 }

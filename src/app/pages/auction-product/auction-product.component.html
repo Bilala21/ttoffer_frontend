@@ -72,15 +72,15 @@
                 <div class="row align-items-center">
                   <div class="col-7">
                     <a
-                      style="text-decoration: none; color: black"
-                      href="/auctionUserProfile/{{
-                        auctionProduct[0]?.user.id
-                      }}"
-                    >
+                    style="text-decoration: none; color: black"
+                    [routerLink]="['/auctionUserProfile', auctionProduct[0]?.user?.id]"
+                  >
+                    <!-- Add the text or content inside the link here -->
+                  
                       <div class="row align-items-center">
                         <div class="col-4">
                           <img
-                            [src]="auctionProduct[0].user.img"
+                            [src]="auctionProduct[0]?.user.img"
                             class="w-100"
                             style="height: 42px; border-radius: 10px"
                             alt=""
@@ -107,7 +107,7 @@
                   <div class="col-11 col-md-12" style="text-align: end">
                     <span style="font-size: 10px" class="sm-cat-text3"
                       >Member since
-                      {{ auctionProduct[0].user.created_at | date }}</span
+                      {{ auctionProduct[0]?.user.created_at | date }}</span
                     >
                   </div>
                 </div>

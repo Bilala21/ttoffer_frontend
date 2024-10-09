@@ -104,17 +104,7 @@
             </div>
             <div class="row mt-4">
               <h4>My Posts</h4>
-              <!-- <div class="col-12 mt-3 p-2 onHover pointer"
-                                [ngClass]="{'active': selectedTab === 'editPost'}" (click)="selectTab('editPost')">
-                                <div class="row align-items-center">
-                                    <div class="col-2">
-                                        <img src="assets/images/gallery-edit.png" class="w-100" alt="">
-                                    </div>
-                                    <div class="col-10">
-                                        <h6>Edit Post</h6>
-                                    </div>
-                                </div>
-                            </div> -->
+             
               <div
                 class="col-12 mt-3 p-2 onHover pointer"
                 [ngClass]="{ active: selectedTab === 'addPost' }"
@@ -223,7 +213,7 @@
                           style="
                             width: 100px;
                             height: 100px;
-                            border-radius: 50%;
+                            border-radius: 2%;
                             cursor: pointer;
                             border: 1px solid black;
                           "
@@ -648,114 +638,66 @@
                       sellingListTemp.length > 0
                     "
                   >
-                    <div
-                      class="row mt-4 align-items-center justify-content-between"
-                      *ngFor="let data of sellingListTemp"
-                    >
-                      <div class="col-md-10">
-                        <div class="row align-items-center">
-                          <div class="col-3">
-                            <a
-                              href="/selling/{{ data.id }}"
-                              style="text-decoration: none; color: #1b2028"
+                    <div class="container mt-4">
+                      <div
+                        class="card-container"
+                        *ngFor="let data of sellingListTemp"
+                        routerLink="/selling/{{ data.id }}"
+                        style="cursor: pointer"
+                      >
+                        <!-- Image -->
+                        <img
+                          src="{{
+                            data.photo && data.photo.length > 0
+                              ? data.photo[0].src
+                              : 'assets/images/default-img.jpg'
+                          }}"
+                          alt="Item Image"
+                          style="width: 70px; height: 70px; border-radius: 5px"
+                        />
+                        <!-- Content -->
+                        <div class="ms-3 flex-grow-1 custom-margin-left">
+                          <!-- Add a custom class here -->
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <span class="card-title">{{ data.title }}</span>
+                            <span class="view-count"
+                              >{{ data.view_count || 0 }} Views</span
                             >
-                              <img
-                                class="w-100 sm-h-50"
-                                [src]="
-                                  data.photo && data.photo.length > 0
-                                    ? data.photo[0].src
-                                    : 'assets/images/default-img.jpg'
-                                "
-                              />
-                            </a>
                           </div>
-                          <div class="col-9">
-                            <div>
-                              <a
-                                href="/selling/{{ data.id }}"
-                                style="text-decoration: none; color: #1b2028"
-                              >
-                                <h5 class="sm-cat-text4" class="m-0">
-                                  {{ data.title }}
-                                </h5>
-                              </a>
+                          <div
+                            class="d-flex justify-content-start align-items-center"
+                          >
+                            <!-- Avatars -->
+                            <div class="avatars d-flex">
+                              <img
+                                src="https://via.placeholder.com/30"
+                                alt="User 1"
+                              />
+                              <img
+                                src="https://via.placeholder.com/30"
+                                alt="User 2"
+                              />
+                              <img
+                                src="https://via.placeholder.com/30"
+                                alt="User 3"
+                              />
                             </div>
-                            <div class="row">
-                              <div
-                                class="col-5 sm-cat-text3"
-                                style="font-size: 12px; padding-top: 3px"
-                              >
-                                Sell fast
-                              </div>
-                              <div class="col-2 sm-cat-text3">|</div>
-                              <div
-                                class="col-5 sm-cat-text3"
-                                (click)="markAsSold(data.id)"
-                                style="
-                                  cursor: pointer;
-                                  font-size: 12px;
-                                  text-align: center;
-                                  padding-top: 3px;
-                                "
-                              >
-                                Mark as sold
-                              </div>
-                            </div>
+                          </div>
+                          <div class="action-text">
+                            Sell faster <span>|</span>
+                            <span
+                              class="mark-as-sold"
+                              (click)="markAsSold(data.id)"
+                              style="cursor: pointer"
+                              >Mark as sold</span
+                            >
                           </div>
                         </div>
                       </div>
-
-                      <!-- <div class="col-md-10">
-                                                <div class="row align-items-center">
-
-                                                    <div class="col-4">
-                                                        <a href="/selling/{{data.id}}"
-                                                            style="text-decoration: none; color: #1B2028;">
-
-                                                            <img style="border-radius:25px; height: 70px; width:70px"
-                                                                *ngIf="data.photo && data.photo.length > 0"
-                                                                [src]="data.photo[0].src" alt="">
-
-                                                        </a>
-
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <div>
-                                                            <a href="/selling/{{data.id}}"
-                                                                style="text-decoration: none; color: #1B2028;">
-                                                                <h5 style="font-size:16px" class="m-0">{{data.title}}</h5>
-                                                            </a>
-                                                        </div>
-                                                        <div class="position-relative">
-                                                            <img src="{{data.elipsImg1}}" alt="">
-                                                            <img src="{{data.elipsImg2}}" class="position-absolute"
-                                                                style="left: 18px; z-index: -1; top: 1px;" alt="">
-                                                            <img src="{{data.elipsImg3}}" class="position-absolute"
-                                                                style="left: 35px; z-index: -3; top: 1px;" alt="">
-                                                            <img src="{{data.elipsImg4}}" class="position-absolute"
-                                                                style="left: 53px; z-index: -6; top: 1px;" alt="">
-                                                        </div>
-                                                        <div class="d-flex justify-content-between mt-2 sm-mt-0">
-                                                            <span>{{data.subHeading1}}</span>
-                                                            <span>{{data.subHeading2}}</span>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-5 sm-cat-text3" style="font-size:12px">Sell fast
-                                                            </div> |
-                                                            <div class="col-6 sm-cat-text3" (click)="markAsSold(data.id)"
-                                                                style="cursor:pointer; font-size:12px">Mark as sold</div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                      <div class="col-2">
-                        <span class="text-end sm-cat-text1">{{
-                          data.view_count
-                        }}</span>
-                      </div>
-                      <hr />
                     </div>
+
                     <div class="row mt-5" *ngIf="sellingList.length == 0">
                       <div class="col-12 text-center mx-auto">
                         <img src="assets/images/best-selling.png" alt="" />
@@ -834,98 +776,66 @@
                             class="col-md-10 mx-auto"
                             *ngIf="activeButton === 2"
                           >
-                            <div
-                              class="row mt-3 align-items-center justify-content-between"
-                              *ngFor="let data of purchaseListTemp"
-                            >
-                              <div class="col-md-10">
-                                <div class="row align-items-center">
-                                  <div class="col-3">
-                                    <a
-                                      href="/selling/{{ data.id }}"
-                                      style="
-                                        text-decoration: none;
-                                        color: #1b2028;
-                                      "
+                            <div class="container mt-4">
+                              <div
+                                class="card-container"
+                                *ngFor="let data of purchaseListTemp"
+                                routerLink="/selling/{{ data.id }}"
+                                style="cursor: pointer"
+                              >
+                                <!-- Image -->
+                                <img
+                                  src="{{
+                                    data.photo && data.photo.length > 0
+                                      ? data.photo[0].src
+                                      : 'assets/images/default-img.jpg'
+                                  }}"
+                                  alt="Item Image"
+                                  style="
+                                    width: 70px;
+                                    height: 70px;
+                                    border-radius: 5px;
+                                  "
+                                />
+                                <!-- Content -->
+                                <div
+                                  class="ms-3 flex-grow-1 custom-margin-left"
+                                >
+                                  <!-- Add a custom class here -->
+                                  <div
+                                    class="d-flex justify-content-between align-items-center"
+                                  >
+                                    <span class="card-title">{{
+                                      data.title
+                                    }}</span>
+                                    <span class="view-count"
+                                      >{{ data.view_count || 0 }} Views</span
                                     >
-                                      <img
-                                        class="w-100"
-                                        [src]="
-                                          data.photo && data.photo.length > 0
-                                            ? data.photo[0].src
-                                            : 'assets/images/default-img.jpg'
-                                        "
-                                      />
-                                    </a>
                                   </div>
-                                  <div class="col-9">
-                                    <div>
-                                      <a
-                                        href="/selling/{{ data.id }}"
-                                        style="
-                                          text-decoration: none;
-                                          color: #1b2028;
-                                        "
-                                      >
-                                        <h5 class="sm-cat-text4" class="m-0">
-                                          {{ data.title }}
-                                        </h5>
-                                      </a>
+                                  <div
+                                    class="d-flex justify-content-start align-items-center"
+                                  >
+                                    <!-- Avatars -->
+                                    <div class="avatars d-flex">
+                                      <img
+                                        src="https://via.placeholder.com/30"
+                                        alt="User 1"
+                                      />
+                                      <img
+                                        src="https://via.placeholder.com/30"
+                                        alt="User 2"
+                                      />
+                                      <img
+                                        src="https://via.placeholder.com/30"
+                                        alt="User 3"
+                                      />
                                     </div>
                                   </div>
+                                  
                                 </div>
                               </div>
                             </div>
-                            <!-- <div  class="row mt-3 align-items-center justify-content-between"
-                                      *ngFor="let data of purchaseListTemp">
-                                      <div class="col-md-10">
-                                          <div class="row align-items-center">
-                                              <div class="col-4">
-                                                  <a href="/selling/{{data.id}}"
-                                                      style="text-decoration: none; color: #1B2028;">
 
-                                                      <img style="border-radius:25px; height: 70px; width:70px"
-                                                          *ngIf="data.photo && data.photo.length > 0"
-                                                          [src]="data.photo[0].src" alt="">
-
-                                                  </a>
-
-                                              </div>
-                                              <div class="col-8">
-                                                  <div>
-                                                      <a href="/selling/{{data.id}}"
-                                                          style="text-decoration: none; color: #1B2028;">
-                                                          <h5 style="font-size:16px" class="m-0">{{data.title}}</h5>
-                                                      </a>
-                                                  </div>
-                                                  <div class="position-relative">
-                                                      <img src="{{data.elipsImg1}}" alt="">
-                                                      <img src="{{data.elipsImg2}}" class="position-absolute"
-                                                          style="left: 18px; z-index: -1; top: 1px;" alt="">
-                                                      <img src="{{data.elipsImg3}}" class="position-absolute"
-                                                          style="left: 35px; z-index: -3; top: 1px;" alt="">
-                                                      <img src="{{data.elipsImg4}}" class="position-absolute"
-                                                          style="left: 53px; z-index: -6; top: 1px;" alt="">
-                                                  </div>
-                                                  <div class="d-flex justify-content-between mt-2 sm-mt-0">
-                                                      <span>{{data.subHeading1}}</span>
-                                                      <span>{{data.subHeading2}}</span>
-                                                  </div>
-                                                  <div class="row">
-                                                      <div class="col-5 sm-cat-text3" style="font-size:12px">Sell fast
-                                                      </div> |
-                                                      <div class="col-6 sm-cat-text3" (click)="markAsSold(data.id)"
-                                                          style="cursor:pointer; font-size:12px">Mark as sold</div>
-                                                  </div>
-
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-2">
-                                          <span class="text-end sm-cat-text1">{{data.view_count}}</span>
-                                      </div>
-                                      <hr>
-                                  </div> -->
                           </div>
                         </div>
                       </div>
@@ -1254,7 +1164,7 @@
                     *ngFor="let data of notificationList"
                   >
                     <a
-                      href="/review/{{ data.user_id }}"
+                      routerLink="/review/{{ data.user_id }}"
                       style="text-decoration: none; color: #1b2028"
                     >
                       <div class="row align-items-center">
@@ -1590,7 +1500,7 @@
                     class="form-select form-control"
                     style="border-radius: 2vh"
                     [(ngModel)]="selectedCategoryId"
-                    (change)="attributes()"
+                  
                     aria-label="Default select example"
                   >
                     <option
@@ -1602,7 +1512,7 @@
                   </select>
                 </div>
                 <!-- Mobile Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '1'">
+                <div class="col-6">
                   <label>Subcategory(required)</label>
                   <select
                     class="form-select form-control"
@@ -1611,7 +1521,7 @@
                     aria-label="Default select example"
                   >
                     <option
-                      *ngFor="let category of subCatMobile"
+                      *ngFor="let category of subCategory"
                       [value]="category.id"
                     >
                       {{ category.name }}
@@ -2646,13 +2556,25 @@
                     [(ngModel)]="startingPrice"
                     style="padding: 3vh; border-radius: 2vh"
                   />
+                  <label>Lowest Price</label>
+                  <input
+                    type="text"
+                    class="form-control w-100"
+                    placeholder="Lowest amount for your item"
+                    [(ngModel)]="final_price"
+                    style="padding: 3vh; border-radius: 2vh"
+                  />
                 </div>
-                <!-- <div class="col-6 p-3">
-                                    <label>Lowest Price</label>
-                                    <input type="text" class="form-control w-100"
-                                        placeholder="Lowest amount for your item" [(ngModel)]="lowestPrice"
-                                        style="padding: 3vh; border-radius: 2vh;">
-                                </div> -->
+                <div class="col-12 p-3">
+                  <label>Lowest Price</label>
+                  <input
+                    type="text"
+                    class="form-control w-100"
+                    placeholder="Lowest amount for your item"
+                    [(ngModel)]="final_price"
+                    style="padding: 3vh; border-radius: 2vh"
+                  />
+                </div>
                 <!-- <div class="row col-12 p-3">
                                     <div class="col-3">
                                         <label>Starting Time</label>
@@ -2844,7 +2766,7 @@
               <label> Upload Image</label>
               <div *ngIf="selectedFiles.length > 0">
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-12 mb-3 image-container">
                     <img
                       (click)="selectImage(0)"
                       [class.selected]="0 === selectedImageIndex"
@@ -2854,7 +2776,7 @@
                     />
                   </div>
                   <div
-                    class="col-md-2 col-6 mb-3"
+                    class="col-md-2 col-6 mb-3 image-container-2"
                     *ngFor="let file of selectedFiles.slice(1); let i = index"
                     [class.selected]="i + 1 === selectedImageIndex"
                     (click)="selectImage(i + 1)"
@@ -3014,241 +2936,40 @@
                   </div>
                 </div>
               </div>
-              <!--
-                            **************************************
-                            **************************************
-                            ****************Start**********************
-                            **************************************
-                            **************************************
-                            **************************************
-                              -->
-              <div class="row mt-3">
-                <div class="col-6">
-                  <label>Category(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedCategoryId"
-                    (change)="cat(selectedCategoryId)"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of categories"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Mobile Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '1'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    (change)="subcat(selectedSubCategoryId)"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatMobile"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Property For Sale Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '3'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatPropertyForSales"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Vehicles Sub-->
-                <div class="col-6" *ngIf="selectedCategoryId == '5'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatVehicles"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Property For Rent Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '4'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatPropertyRent"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Electronic Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '2'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatElectronics"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Bike Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '6'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatBike"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Job Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '7'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatJob"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Service Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '8'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatServices"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Animal Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '12'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatAnimal"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Furniture and home decor Sub -->
-                <div class="col-6" *ngIf="selectedCategoryId == '9'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatFurniture"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-
-                <!-- Fashion (dress) and beauty-->
-                <div class="col-6" *ngIf="selectedCategoryId == '10'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatFashion"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <!-- Kids-->
-                <div class="col-6" *ngIf="selectedCategoryId == '11'">
-                  <label>Subcategory(required)</label>
-                  <select
-                    class="form-select form-control"
-                    style="border-radius: 2vh"
-                    [(ngModel)]="selectedSubCategoryId"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      *ngFor="let category of subCatKid"
-                      [value]="category.id"
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
+                              <div class="row mt-3">
+                                <div class="col-6">
+                                  <label>Category (required)</label>
+                                  <select
+                                    class="form-select form-control"
+                                    style="border-radius: 2vh"
+                                    [(ngModel)]="selectedCategoryId"
+                                    (change)="getSubcategories(selectedCategoryId)" 
+                                    aria-label="Default select example"
+                                  >
+                                    <option *ngFor="let category of categories" [value]="category.id">
+                                      {{ category.name }}
+                                    </option>
+                                  </select>
+                                </div>
+                              
+                                <div class="col-6" >
+                                  <label>Subcategory (required)</label>
+                                  <select
+                                    class="form-select form-control"
+                                    style="border-radius: 2vh"
+                                    [(ngModel)]="selectedSubCategoryId"
+                                    aria-label="Default select example"
+                                  >
+                                    <option *ngFor="let subCategory of subCategory" [value]="subCategory.id">
+                                      {{ subCategory.name }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                              
               <hr />
               <!-- ******************************Mobile****************************** -->
+               
               <div class="row mt-3" *ngIf="selectedCategoryId == '1'">
                 <div class="col-6">
                   <label>Brand</label>
@@ -3967,33 +3688,6 @@
                     style="padding: 3vh; border-radius: 2vh"
                   />
                 </div>
-                <!-- <div class="row col-12 p-3">
-                                    <div class="col-3">
-                                        <label>Starting Time</label>
-                                        <input type="time" class="form-control" id="startTime" name="startTime"
-                                            style="width:140px;" [value]="startingTime" (input)="parseSTime($event)"
-                                            placeholder="Start Time" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Time</label>
-                                        <input type="time" class="form-control" id="endingTime" name="endingTime"
-                                            [value]="endingTime" (input)="parseETime($event)" placeholder="Ending Time"
-                                            required>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <label>Starting Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="startingDate | date:'yyyy-MM-dd'"
-                                            (input)="startingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="endingDate | date:'yyyy-MM-dd'"
-                                            (input)="endingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                </div> -->
                 <div class="row col-12 p-3">
                   <!-- Starting Time Field -->
                   <div class="col-3">
@@ -4117,582 +3811,7 @@
               <div *ngIf="locationId">
                 <p>Received Location: {{ locationId }}</p>
               </div>
-              <!--
-                            ***********************************
-                            ***********************************
-                            ***********************************
-                            ***********************************
-                            ***********************************
-                            ***********************************
-                            **************END*********************
-                            -->
-              <!-- <div class="row mt-3">
-                                <div class="col-6">
-                                    <label>Category(required)</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="selectedCategoryId" (change)="atributes()"
-                                        aria-label="Default select example">
-                                        <option *ngFor="let category of categories" [value]="category.id">{{
-                                            category.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <label>Pricing Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="pricingCatId" aria-label="Default select example">
-                                        <option *ngFor="let pricingCat of pricingCategories" [value]="pricingCat.id">{{
-                                            pricingCat.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3" *ngIf="pricingCatId == 'Auction'"
-                                style="border: 1px solid gainsboro; border-radius: 5px;">
-                                <div class="col-6 p-3">
-                                    <label>Starting Bid</label>
-                                    <input type="text" class="form-control w-100" placeholder="Starting Price"
-                                        [(ngModel)]="startingPrice" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6 p-3">
-                                    <label>Lowest Price</label>
-                                    <input type="text" class="form-control w-100"
-                                        placeholder="Lowest amount for your item" [(ngModel)]="lowestPrice"
-                                        style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="row col-12 p-3">
-                                    <div class="col-3">
-                                        <label>Starting Time</label>
-                                        <input type="time" class="form-control" id="startTime" name="startTime"
-                                            style="width:140px;" [value]="startingTime" (input)="parseSTime($event)"
-                                            placeholder="Start Time" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Time</label>
-                                        <input type="time" class="form-control" id="endingTime" name="endingTime"
-                                            [value]="endingTime" (input)="parseETime($event)" placeholder="Ending Time"
-                                            required>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <label>Starting Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="startingDate | date:'yyyy-MM-dd'"
-                                            (input)="startingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="endingDate | date:'yyyy-MM-dd'"
-                                            (input)="endingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Brand</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="brandId" aria-label="Default select example">
-                                        <option *ngFor="let data of brandList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="typeId" aria-label="Default select example">
-                                        <option *ngFor="let data of typeList" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Make and Model</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="makeAndModelId" aria-label="Default select example">
-                                        <option *ngFor="let data of makeAndModelList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Bike'">
-                                    <label>Sub Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="subCategoriesId" aria-label="Default select example">
-                                        <option *ngFor="let data of subCategoriesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Services'">
-                                    <label>Sub Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="subCategoriesId" aria-label="Default select example">
-                                        <option *ngFor="let data of subCategoriesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="typeId" aria-label="Default select example">
-                                        <option *ngFor="let data of jobtypeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Animals'">
-                                    <label>Sub Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="subCategoriesId" aria-label="Default select example">
-                                        <option *ngFor="let data of subCategoriesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Furniture and home decor'">
-                                    <label>Choose Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="fashionTypeId" aria-label="Default select example">
-                                        <option *ngFor="let data of fashionTypeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Fashion (dress) and beauty'">
-                                    <label>Sub Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="subCategoriesId" aria-label="Default select example">
-                                        <option *ngFor="let data of subCategoriesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Kids'">
-                                    <label>Sub Categories</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="subCategoriesId" aria-label="Default select example">
-                                        <option *ngFor="let data of subCategoriesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Condition</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="conditionId" aria-label="Default select example">
-                                        <option *ngFor="let data of conditionList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Bed Rooms</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="bedRoomId" aria-label="Default select example">
-                                        <option *ngFor="let data of bedRoomList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Year</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="yearId" aria-label="Default select example">
-                                        <option *ngFor="let data of yearList" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Condition</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="conditionId" aria-label="Default select example">
-                                        <option *ngFor="let data of conditionList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Bike'">
-                                    <label>Engine Capacity</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="engineCapacityId" aria-label="Default select example">
-                                        <option *ngFor="let data of engineCapacityList" [value]="data.id">{{ data.name
-                                            }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Bike'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Services'">
-                                    <label>Condition</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="conditionId" aria-label="Default select example">
-                                        <option *ngFor="let data of conditionList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Services'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Experience</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="experienceId" aria-label="Default select example">
-                                        <option *ngFor="let data of experiencelist" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Education</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="educationId" aria-label="Default select example">
-                                        <option *ngFor="let data of educationlist" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Animals'">
-                                    <label>Age</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="ageId" aria-label="Default select example">
-                                        <option *ngFor="let data of ageList" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Animals'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Furniture and home decor'">
-                                    <label>Condition</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="conditionId" aria-label="Default select example">
-                                        <option *ngFor="let data of conditionList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Furniture and home decor'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Fashion (dress) and beauty'">
-                                    <label>Fabric</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="fabricId" aria-label="Default select example">
-                                        <option *ngFor="let data of fabricList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Fashion (dress) and beauty'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Kids'">
-                                    <label>Condition</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="conditionId" aria-label="Default select example">
-                                        <option *ngFor="let data of conditionList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Kids'">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control w-100" placeholder="Price"
-                                        [(ngModel)]="price" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Storage Capacity</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="storageId" aria-label="Default select example">
-                                        <option *ngFor="let data of storageList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Color</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="colorId" aria-label="Default select example">
-                                        <option *ngFor="let data of colorList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Area/Size</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="areaSizeId" aria-label="Default select example">
-                                        <option *ngFor="let data of areaSizeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Year Built</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="yearBuiltId" aria-label="Default select example">
-                                        <option *ngFor="let data of yearBuilt" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Price Range</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        aria-label="Default select example">
-                                        <option *ngFor="let data of rawData" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Mileage</label>
-                                    <input type="text" class="form-control w-100" placeholder="Mileage"
-                                        [(ngModel)]="mileage" style="padding: 3vh; border-radius: 2vh;">
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Bike'">
-                                    <label>Model</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="modelId" aria-label="Default select example">
-                                        <option *ngFor="let data of modelList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Bike'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Services'">
-                                    <label>Car</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="carId" aria-label="Default select example">
-                                        <option *ngFor="let data of carList" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Services'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Salay</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="salaryId" aria-label="Default select example">
-                                        <option *ngFor="let data of salaryList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Salary Period</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="salaryPeriodId" aria-label="Default select example">
-                                        <option *ngFor="let data of salaryPeriodList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Animals'">
-                                    <label>Breed</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="breedId" aria-label="Default select example">
-                                        <option *ngFor="let data of breedList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Animals'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Furniture and home decor'">
-                                    <label>Color</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="colorId" aria-label="Default select example">
-                                        <option *ngFor="let data of colorList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Furniture and home decor'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Fashion (dress) and beauty'">
-                                    <label>Suit Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="suitTypeId" aria-label="Default select example">
-                                        <option *ngFor="let data of suitTypeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Fashion (dress) and beauty'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Kids'">
-                                    <label>Toy</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="toyId" aria-label="Default select example">
-                                        <option *ngFor="let data of toyList" [value]="data.id">{{ data.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Kids'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Mobiles'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Features</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="feartureId" aria-label="Default select example">
-                                        <option *ngFor="let data of feartureBuilt" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Amenities</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="amenitiesId" aria-label="Default select example">
-                                        <option *ngFor="let data of amenitiesList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Fuel Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="fuelTypeId" aria-label="Default select example">
-                                        <option *ngFor="let data of fuelTypeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Color</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        aria-label="Default select example">
-                                        <option *ngFor="let data of colorList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Company Name</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="companyNameId" aria-label="Default select example">
-                                        <option *ngFor="let data of comanNameList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Position Type</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="positionTypeId" aria-label="Default select example">
-                                        <option *ngFor="let data of positioinTypeList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId == 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Vehicles'">
-                                    <label>Location</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="locationId" aria-label="Default select example">
-                                        <option *ngFor="let data of locationList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-6" *ngIf="selectedCategoryId == 'Job'">
-                                    <label>Career Level</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="careerLevelId" aria-label="Default select example">
-                                        <option *ngFor="let data of careerLevelList" [value]="data.id">{{ data.name }}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="col-6" *ngIf="selectedCategoryId== 'Property for Sale'">
-                                    <label>Compbitan status</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="compStatusId" aria-label="Default select example">
-                                        <option *ngFor="let data of CombitanStatusList" [value]="data.id">{{ data.name
-                                            }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId== 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Furnished</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="furnisheableId" aria-label="Default select example">
-                                        <option *ngFor="let data of FurnishableList" [value]="data.id">{{ data.name
-                                            }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6"
-                                    *ngIf="selectedCategoryId== 'Property for Sale' || selectedCategoryId == 'Property for Rent'">
-                                    <label>Bath Room</label>
-                                    <select class="form-select form-control" style="border-radius: 2vh;"
-                                        [(ngModel)]="bathRoomId" aria-label="Default select example">
-                                        <option *ngFor="let data of BathRoomList" [value]="data.id">{{ data.name
-                                            }}</option>
-                                    </select>
-                                </div>
-                            </div> -->
+    
               <div class="row mt-3">
                 <div class="col-md-6 mx-auto">
                   <button
@@ -4719,56 +3838,20 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div
-              (click)="openUserNameModal()"
-              class="col-12 mt-5 pointer onHover p-2"
-            >
+          <div class="row" style="margin-top:100px">
+            <div *ngFor="let item of userSetting" (click)="openDialog(item.key,item.placeholder)" class="col-12  pointer onHover p-2">
               <div class="row justify-content-between">
                 <div class="col-md-6 col-10">
                   <div class="row">
                     <div class="col-2">
-                      <img
-                        src="assets/images/profile-circle.svg"
-                        class="w-100"
-                        alt=""
-                      />
+                      <img [src]="item.icon" class="w-100" alt="" />
                     </div>
                     <div class="col-10">
-                      <h6 class="sm-cat-text4 account-Setting">
-                        {{ currentUserProfile.name }}
+                      <h6 class="sm-cat-text4 account-Setting" *ngIf="item.value; else addPlaceholder">
+                        {{ item.value }}
                       </h6>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-1">
-                  <img src="assets/images/arrow-left.svg" class="w-75" alt="" />
-                </div>
-              </div>
-              <hr />
-            </div>
-            <div (click)="openNumberModal()" class="col-12 pointer onHover p-2">
-              <div class="row justify-content-between">
-                <div class="col-md-6 col-10">
-                  <div class="row">
-                    <div class="col-2">
-                      <img
-                        src="assets/images/call-calling.svg"
-                        class="w-100"
-                        alt=""
-                      />
-                    </div>
-                    <div class="col-10">
-                      <h6
-                        class="sm-cat-text4 account-Setting"
-                        *ngIf="currentUserProfile.phone; else addPhone"
-                      >
-                        {{ currentUserProfile.phone }}
-                      </h6>
-                      <ng-template #addPhone>
-                        <h6 class="sm-cat-text4 account-Setting">
-                          Add Phone Number
-                        </h6>
+                      <ng-template #addPlaceholder>
+                        <h6 class="sm-cat-text4 account-Setting">{{ item.placeholder }}</h6>
                       </ng-template>
                     </div>
                   </div>
@@ -4779,97 +3862,8 @@
               </div>
               <hr />
             </div>
-            <div (click)="openEmailModal()" class="col-12 pointer onHover p-2">
-              <div class="row justify-content-between">
-                <div class="col-md-6 col-10">
-                  <div class="row">
-                    <div class="col-2">
-                      <img src="assets/images/sms.svg" class="w-100" alt="" />
-                    </div>
-                    <div class="col-10">
-                      <h6 class="sm-cat-text4 account-Setting">
-                        {{ currentUserProfile.email }}
-                      </h6>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-1">
-                  <img src="assets/images/arrow-left.svg" class="w-75" alt="" />
-                </div>
-              </div>
-              <hr />
-            </div>
-            <div
-              (click)="openPasswordModal()"
-              class="col-12 pointer onHover p-2"
-            >
-              <div class="row justify-content-between">
-                <div class="col-md-6 col-10">
-                  <div class="row">
-                    <div class="col-2">
-                      <img
-                        src="assets/images/password-check.svg"
-                        class="w-100"
-                        alt=""
-                      />
-                    </div>
-                    <div class="col-10">
-                      <h6
-                        class="sm-cat-text4 account-Setting"
-                        *ngIf="currentUserProfile.password; else maskedPassword"
-                      >
-                        {{ "*".repeat(currentUserProfile.password.length) }}
-                      </h6>
-                      <ng-template #maskedPassword>
-                        <h6 class="sm-cat-text4 account-Setting">
-                          ******************
-                        </h6>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-1">
-                  <img src="assets/images/arrow-left.svg" class="w-75" alt="" />
-                </div>
-              </div>
-              <hr />
-            </div>
-            <div
-              (click)="openLocationModal()"
-              class="col-12 pointer onHover p-2"
-            >
-              <div class="row justify-content-between">
-                <div class="col-md-6 col-10">
-                  <div class="row">
-                    <div class="col-2">
-                      <img
-                        src="assets/images/location.svg"
-                        class="w-100"
-                        alt=""
-                      />
-                    </div>
-                    <div class="col-10">
-                      <!-- {{ currentUserProfile.location ? currentUserProfile.location : 'Add Location' }} -->
-                      <h6
-                        class="sm-cat-text4 account-Setting"
-                        *ngIf="currentUserProfile.location; else addLocation"
-                      >
-                        {{ currentUserProfile.location }}
-                      </h6>
-                      <ng-template #addLocation>
-                        <h6 class="sm-cat-text4 account-Setting">
-                          Add Location
-                        </h6>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-1">
-                  <img src="assets/images/arrow-left.svg" class="w-75" alt="" />
-                </div>
-              </div>
-              <hr />
-            </div>
+          </div>
+          
             <div
               class="col-12 pointer onHover p-2"
               *ngIf="
@@ -4970,7 +3964,13 @@
                   <button
                     (click)="openPage()"
                     class="btn btn-dark w-100"
-                    style="border-radius: 20px; padding: 10px; margin-top: 10vh"
+                    style="
+                      border-radius: 20px;
+                      padding: 10px;
+                      margin-top: 10vh;
+                      background-color: #ffd33c;
+                      color: black;
+                    "
                   >
                     Next
                   </button>
@@ -5219,7 +4219,6 @@
     </div>
   </div>
   <!-- <app-footer></app-footer> -->
-</div>
 
 <div
   class="modal fade"
@@ -5646,293 +4645,6 @@
 
 <div
   class="modal fade"
-  id="userNameModal"
-  tabindex="-3"
-  role="dialog"
-  aria-labelledby="userNameModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius: 20px">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closeUserNameModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-11 mx-auto">
-            <div class="text-center">
-              <h5>User Name</h5>
-            </div>
-            <div class="row">
-              <div class="col-10 mx-auto mt-4">
-                <label> Your Name</label>
-                <input
-                  type="text"
-                  style="border-radius: 10px; padding: 20px"
-                  class="form-control"
-                  [(ngModel)]="currentUserProfile.name"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div class="col-10 mx-auto mt-3">
-                <button
-                  [disabled]="isDisabled"
-                  class="btn btn-dark w-100"
-                  style="border-radius: 20px; padding: 10px"
-                  (click)="updateUserName()"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-          `
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="numberModal"
-  tabindex="-4"
-  role="dialog"
-  aria-labelledby="numberModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius: 20px">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closeNumberModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-11 mx-auto">
-            <div class="text-center">
-              <h5>Number</h5>
-            </div>
-            <div class="row">
-              <div class="col-10 mx-auto mt-4">
-                <label> Your Number</label>
-                <input
-                  type="text"
-                  style="border-radius: 10px; padding: 20px"
-                  class="form-control"
-                  [(ngModel)]="currentUserProfile.phone"
-                  placeholder="Your Number"
-                />
-              </div>
-              <div class="col-10 mx-auto mt-3">
-                <button
-                  [disabled]="isDisabled"
-                  class="btn btn-dark w-100"
-                  style="border-radius: 20px; padding: 10px"
-                  (click)="updateUserNumber()"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="emailModal"
-  tabindex="-5"
-  role="dialog"
-  aria-labelledby="emailModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius: 20px">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closeEmailModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-11 mx-auto">
-            <div class="text-center">
-              <h5>Email</h5>
-            </div>
-            <div class="row">
-              <div class="col-10 mx-auto mt-4">
-                <label> Your Email</label>
-                <input
-                  type="text"
-                  style="border-radius: 10px; padding: 20px"
-                  class="form-control"
-                  [(ngModel)]="currentUserProfile.email"
-                  placeholder="Your Email"
-                />
-              </div>
-              <div class="col-10 mx-auto mt-3">
-                <button
-                  [disabled]="isDisabled"
-                  class="btn btn-dark w-100"
-                  style="border-radius: 20px; padding: 10px"
-                  (click)="updateUserEmail()"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="passwordModal"
-  tabindex="-6"
-  role="dialog"
-  aria-labelledby="passwordModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius: 20px">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closePasswordModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-11 mx-auto">
-            <div class="text-center">
-              <h5>Passwrord</h5>
-            </div>
-            <div class="row">
-              <div class="col-10 mx-auto mt-4">
-                <label> Your Passwrod</label>
-                <input
-                  type="password"
-                  style="border-radius: 10px; padding: 20px"
-                  class="form-control"
-                  [(ngModel)]="currentUserProfile.password"
-                  placeholder="Your Passwrod"
-                />
-              </div>
-              <div class="col-10 mx-auto mt-3">
-                <button
-                  [disabled]="isDisabled"
-                  class="btn btn-dark w-100"
-                  style="border-radius: 20px; padding: 10px"
-                  (click)="updateUserPassword()"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="locationModal"
-  tabindex="-7"
-  role="dialog"
-  aria-labelledby="locationModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius: 20px">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closeLocationModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-11 mx-auto">
-            <div class="text-center">
-              <h5>Location</h5>
-            </div>
-            <div class="row">
-              <div class="col-10 mx-auto mt-4">
-                <label> Your Location</label>
-                <input
-                  type="text"
-                  style="border-radius: 10px; padding: 20px"
-                  [(ngModel)]="currentUserProfile.location"
-                  class="form-control position-relative"
-                  placeholder="Your Location"
-                />
-                <img
-                  src="assets/images/location.svg"
-                  class="position-absolute"
-                  style="right: 20px; top: 40px"
-                  alt=""
-                />
-              </div>
-              <div class="col-10 mx-auto mt-3">
-                <button
-                  [disabled]="isDisabled"
-                  class="btn btn-dark w-100"
-                  style="border-radius: 20px; padding: 10px"
-                  (click)="updateUserLocation()"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
   id="boostPlusModal"
   tabindex="-8"
   role="dialog"
@@ -6030,33 +4742,45 @@
               <h5>Boost 3 Days</h5>
             </div>
             <div class="row mt-3">
-              <app-payment></app-payment>
-              <!-- <div class="col-9 mx-auto text-center">
-                                <img src="assets/images/boost-plan.svg" class="w-100" alt="">
-                                <span class="mt-3">Get an average of 20x more views each day</span>
-                                <h5 class="mt-3">$19.99/mo after 3 day trial period</h5>
-                                <span class="mt-3">No obligation, cancel anytime</span>
-                                <span class="mt-3">Learn more</span>
-                            </div>
-                            <div class="col-5 mt-4 mx-auto text-center">
-                                <button class="btn btn-dark w-100" style="border-radius: 15px; padding: 10px;">Start
-                                    Free Trial!
-                                </button>
-                                <span class="mt-3">Restore subscription</span>
-                            </div>
-                            <div class="col-11 text-center mx-auto mt-4">
-                                <span>Your iTunes account will be charged !19.99 per month for the Boost Plus
-                                    Subscription at the end of your 3-day free trail unless you cancel the subscription
-                                    at least 24 hours before the end of the trial period. If you do not have a free
-                                    trail period, your iTunes account will be charged when you complete your purchase.
-                                    Your subscription will automatically renew each month unless you turn off auto-renew
-                                    in your iTunes account at least 24 hours before the end of the current billing
-                                    period.</span>
-                            </div>
-                            <div class="col-11 text-center mx-auto">
-                                <span>By Purchasing the Boost Plus Subscription you agree to Classified Online Market
-                                    Place App Terms and Privacy Policy.</span>
-                            </div> -->
+              <!-- <app-payment></app-payment> -->
+              <div class="col-9 mx-auto text-center">
+                <img src="assets/images/boost-plan.svg" class="w-100" alt="" />
+                <span class="mt-3"
+                  >Get an average of 20x more views each day</span
+                >
+                <h5 class="mt-3">$19.99/mo after 3 day trial period</h5>
+                <span class="mt-3">No obligation, cancel anytime</span>
+                <span class="mt-3">Learn more</span>
+              </div>
+              <div class="col-5 mt-4 mx-auto text-center">
+                <button
+                  class="btn btn-dark w-100"
+                  style="border-radius: 15px; padding: 10px"
+                >
+                  Start Free Trial!
+                </button>
+                <span class="mt-3">Restore subscription</span>
+              </div>
+              <div class="col-11 text-center mx-auto mt-4">
+                <span
+                  >Your iTunes account will be charged !19.99 per month for the
+                  Boost Plus Subscription at the end of your 3-day free trail
+                  unless you cancel the subscription at least 24 hours before
+                  the end of the trial period. If you do not have a free trail
+                  period, your iTunes account will be charged when you complete
+                  your purchase. Your subscription will automatically renew each
+                  month unless you turn off auto-renew in your iTunes account at
+                  least 24 hours before the end of the current billing
+                  period.</span
+                >
+              </div>
+              <div class="col-11 text-center mx-auto">
+                <span
+                  >By Purchasing the Boost Plus Subscription you agree to
+                  Classified Online Market Place App Terms and Privacy
+                  Policy.</span
+                >
+              </div>
             </div>
           </div>
         </div>

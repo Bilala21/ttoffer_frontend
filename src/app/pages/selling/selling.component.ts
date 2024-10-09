@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../../shared/shared-components/header/header.component";
 import { FooterComponent } from "../../shared/shared-components/footer/footer.component";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 
@@ -12,7 +12,7 @@ import { Extension } from '../../helper/common/extension/extension';
     standalone: true,
     templateUrl: './selling.component.html',
     styleUrl: './selling.component.scss',
-    imports: [FormsModule, CommonModule, HeaderComponent, FooterComponent]
+    imports: [FormsModule, CommonModule, HeaderComponent, FooterComponent,RouterModule]
 })
 export class SellingComponent {
   showPerformance:boolean = false;
@@ -37,13 +37,14 @@ export class SellingComponent {
     private route: ActivatedRoute,
     private mainServices: MainServicesService,
     private extension: Extension,
+    private router:Router,
   ){
     this.currentUserid = extension.getUserId()
   }
   ngOnInit():void{
     this.sellingId = this.route.snapshot.paramMap.get('id')!;
     this.getSelling();
-    this.getAllChatsOfUser();
+    // this.getAllChatsOfUser();
     this.whoBought();
   }
   openTab(){
@@ -67,16 +68,16 @@ export class SellingComponent {
       res
     })
   }
-  getAllChatsOfUser = () => {
+  // getAllChatsOfUser = () => {
 
-    this.loading = true
-    this.mainServices.getAllChatsOfUser(this.currentUserid).subscribe((res:any) =>{
+  //   this.loading = true
+  //   this.mainServices.getAllChatsOfUser(this.currentUserid).subscribe((res:any) =>{
 
-      this.message = res.data
-      console.log(this.message)
-      this.loading = false
-    });
-  }
+  //     this.message = res.data
+  //     console.log(this.message)
+  //     this.loading = false
+  //   });
+  // }
   whoBought(){
     let input = {
       user_id: this.currentUserid
@@ -88,4 +89,9 @@ export class SellingComponent {
       console.log('who bought',this.whoBouthList)
     })
   }
+  redirectToEditSection(){
+  const sellinList=JSON.stringify(this.sellingList[0])
+  localStorage.setItem('editProduct',sellinList);
+  this.router.navigate([`profilePage/${this.sellingList[0].id}`]);
+}
 }
