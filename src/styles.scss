@@ -418,7 +418,8 @@ body {
 }
 
 .archive img {
-  width: 333px;
+  max-width: 250px;
+  width: 100%;
 }
 
 .text-decoration-none {
@@ -478,6 +479,9 @@ body {
   .selling-tab {
     min-width: 179px;
   }
+  .archive img {
+    max-width: 333px;
+  }
 }
 
 @media(max-width:576px) {
@@ -508,5 +512,9 @@ body {
   }
   .post-items-container{
     column-gap: 10px !important;
+  }
+ body .archive h2{
+    padding-left: 20px ;
+    padding-right: 20px ;
   }
 }
