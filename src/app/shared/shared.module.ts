@@ -4,6 +4,7 @@ import { SliderComponent } from './shared-components/slider/slider.component';
 import { PromotionSliderComponent } from './shared-components/promotion-slider/promotion-slider.component';
 import { UserStarRatingComponent } from './shared-components/user-star-rating/user-star-rating.component';
 import { PostCategoriesComponent } from './shared-components/post-categories/post-categories.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     SliderComponent,
@@ -12,7 +13,8 @@ import { PostCategoriesComponent } from './shared-components/post-categories/pos
     PostCategoriesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
  exports:[
   SliderComponent,
