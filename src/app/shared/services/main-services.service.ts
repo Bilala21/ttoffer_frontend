@@ -98,7 +98,7 @@ export class MainServicesService {
     }).pipe(
       map((result: any) => {
         return result;
-      })
+    })
     );
   }
   addProductSecondStep(input: any) {
@@ -128,7 +128,6 @@ export class MainServicesService {
   getSelling() {
     return this.http.get(`${this.apiUrl}` + 'api/selling-screen').pipe();
   }
-
   wishListProduct(input: any) {
     return this.http.post(`${this.apiUrl}` + 'api/wishlist-products', input).pipe();
   }
@@ -162,19 +161,19 @@ export class MainServicesService {
   customLink(input: any) {
     return this.http.post(`${this.apiUrl}` + 'api/update/custom/link', input).pipe();
   }
-  whoBought(input: any) {
+  whoBought(input: any){
     return this.http.post(`${this.apiUrl}` + 'api/who-bought', input).pipe();
   }
-  reviewToSeller(input: any) {
+  reviewToSeller(input: any){
     return this.http.post(`${this.apiUrl}` + 'api/user-review', input).pipe();
   }
-  reportUser(input: any) {
+  reportUser(input: any){
     return this.http.post(`${this.apiUrl}` + 'api/report-a-user', input).pipe();
   }
-  forgetPassword(input: any) {
+  forgetPassword(input: any){
     return this.http.post(`${this.apiUrl}` + 'api/forgot-password', input).pipe();
   }
-  loginWithPhone(input: any) {
+  loginWithPhone(input: any){
     return this.http.post(`${this.apiUrl}` + 'api/login-phone', input).pipe();
   }
   private geocodeUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
@@ -183,10 +182,4 @@ export class MainServicesService {
     const url = `${this.geocodeUrl}?latlng=${lat},${lng}&key=AIzaSyBuEU8bWRV3H-xNGOUCvCH4R3PMPveyGlI`;
     return this.http.get(url).toPromise();
   }
-  deleteAccount(id:any) {
-    return this.http.get(`${this.apiUrl}api/account/deactivate/${id}`, {
-      headers: this.getHeaders() // Correctly pass the headers here
-    }).pipe();
-  }
-
 }

@@ -27,8 +27,8 @@ import { category } from '../../Models/Product/category';
     CommonModule,
     NotificationComponent,
     RouterModule,
-    UserModule
-  ]
+        UserModule
+    ]
 })
 
 export class HeaderComponent {
@@ -71,9 +71,9 @@ export class HeaderComponent {
   dropdownVisible = false;
   private intervalId: any;
   loading = false;
-  currentUserId: string = "";
-  errorMessage!: string;
-  categories: category[] = []
+  currentUserId:string="";
+  errorMessage!:string;
+  categories! : category []
 
   async ngOnDestroy() {
     if (this.intervalId) {
@@ -176,20 +176,20 @@ export class HeaderComponent {
       password: this.password
     }
     this.mainServices.getSignUp(input).pipe(
-      catchError((error) => {
+        catchError((error) => {
 
 
-        this.errorMessage = error.error.message.username != undefined ? error.error.message.username[0] : error.error.message.password != undefined ? error.error.message.password[0] : error.error.message;
-        return '';
-      })
+        this.errorMessage = error.error.message.username!=undefined ?error.error.message.username[0]:error.error.message.password!=undefined?error.error.message.password[0]:error.error.message ;
+          return '';
+        })
     ).subscribe((res: any) => {
 
-      if (res != null) {
-        this.showRegisterBox = false;
-        this.showSuccessMessage("Account Registered Successfully");
+        if (res != null) {
+          this.showRegisterBox = false;
+          this.showSuccessMessage("Account Registered Successfully");
 
-      }
-    });
+        }
+      });
   }
   googleSignIn() {
     this.authService.signInWithGoogle().subscribe({
@@ -203,7 +203,7 @@ export class HeaderComponent {
             email: user.email,
             password: user.email
           }
-          this.googleAccountRegister(input, user);
+          this.googleAccountRegister(input,user);
           console.log('User signed in:', user);
         }
       },
@@ -213,59 +213,59 @@ export class HeaderComponent {
       }
     });
   }
-  googleAccountRegister(input: any, user: any) {
+  googleAccountRegister(input: any,user:any) {
     this.mainServices.getSignUp(input).pipe(
-      catchError((error: any) => {
+        catchError((error: any) => {
 
         if (error.error.message === "Email address already taken.") {
-          let loginInput = {
-            email: user.email,
+            let loginInput = {
+              email: user.email,
             password: user.email
           }
 
-          this.Login(loginInput);
+            this.Login(loginInput);
         }
-        else {
+        else{
           this.showSuccessMessage(error.error.error)
-          this.loading = false;
-        }
+          this.loading=false;
+          }
 
-        return of(null);
-      })
+          return of(null);
+        })
     ).subscribe(res => {
-      if (res != null) {
-        let loginInput = {
-          email: user.email,
+        if (res != null) {
+          let loginInput = {
+            email: user.email,
           password: user.password
         }
-        this.Login(loginInput);
-      }
-    });
+          this.Login(loginInput);
+        }
+      });
   }
   Login(loginInput: any) {
     this.mainServices.getAuthByLogin(loginInput).pipe(
-      catchError((error: any) => {
+        catchError((error: any) => {
         this.showSuccessMessage(error.error.error)
-        this.loading = false
-        return of(null);
-      })
+      this.loading=false
+          return of(null);
+        })
     ).subscribe(res => {
-      if (res) {
-        // Proceed with login processing if response is not null
-        localStorage.setItem('authToken', res.data.token);
-        const jsonString = JSON.stringify(res.data.user);
+        if (res) {
+          // Proceed with login processing if response is not null
+          localStorage.setItem('authToken', res.data.token);
+          const jsonString = JSON.stringify(res.data.user);
         localStorage.setItem("key", jsonString);
-        const jsonStringGetData = localStorage.getItem('key');
+          const jsonStringGetData = localStorage.getItem('key');
         this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
-        this.loading = false;
-        this.location.go(this.location.path());
-        window.location.reload();
-        this.closeModal();
-      }
-    });
+          this.loading = false;
+          this.location.go(this.location.path());
+          window.location.reload();
+          this.closeModal();
+        }
+      });
   }
   constructor(
-    private lookupService: LookupService,
+    private lookupService:LookupService,
     private router: Router, private mainServices: MainServicesService, private extention: Extension,
     private location: Location,
     private snackBar: MatSnackBar,
@@ -297,14 +297,14 @@ export class HeaderComponent {
       this.isDropdownOpen = false;
     }
     if (this.dropdownVisible && !this.isClickInsideDropdown(event)) {
-      this.dropdownVisible = false;
+      this.dropdownVisible=false;
     }
   }
 
-  backButton() {
-    this.showRegisterBox = false;
-    this.showPhoneBox = false;
-    this.showEmailBox = false;
+  backButton(){
+    this.showRegisterBox=false;
+    this.showPhoneBox=false;
+    this.showEmailBox=false;
   }
   private isClickInsideDropdown(event: MouseEvent): boolean {
     // Check if the click target is the dropdown or a child of it
@@ -316,42 +316,42 @@ export class HeaderComponent {
       this.showCarousel = false;
     }
     else
-      if (url === '/profilePage') {
-        this.showBanner = false;
-        this.showCarousel = false;
-        this.hideHeader = false;
-      }
-      else
-        if (url === '/chatBox') {
-          this.showBanner = false;
-          this.showCarousel = false;
-        }
-        else if (url === '/selling') {
-          this.showBanner = false;
-          this.showCarousel = false;
-        }
-        else if (url === '/whoBoughtAd') {
-          this.showBanner = false;
-          this.showCarousel = false;
-        }
-        else
-          if (url === '/reviewPage') {
-            this.showBanner = false;
-            this.showCarousel = false;
-          }
-          else if (url === '/auctionProduct') {
-            this.showBanner = false;
-            this.showCarousel = false;
-          }
-          else if (url === '/auctionUserProfile') {
-            this.showBanner = false;
-            this.showCarousel = false;
-          }
-          else {
-            this.showBanner = true;
-            this.showCarousel = true;
-            this.hideHeader = true;
-          }
+     if (url === '/profilePage') {
+      this.showBanner = false;
+      this.showCarousel = false;
+      this.hideHeader = false;
+    }
+    else
+     if (url === '/chatBox') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else if (url === '/selling') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else if (url === '/whoBoughtAd') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else
+     if (url === '/reviewPage') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else if (url === '/auctionProduct') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else if (url === '/auctionUserProfile') {
+      this.showBanner = false;
+      this.showCarousel = false;
+    }
+    else {
+      this.showBanner = true;
+      this.showCarousel = true;
+      this.hideHeader = true;
+    }
   }
   showSuccessMessage(message: string) {
     this.snackBar.open(message, '', {
@@ -372,21 +372,21 @@ export class HeaderComponent {
     this.closeModal();
     this.mainServices.getAuthByLogin(input).subscribe(res => {
       res
-      localStorage.setItem('authToken', res.data.token);
-      const jsonString = JSON.stringify(res.data.user);
+        localStorage.setItem('authToken', res.data.token);
+        const jsonString = JSON.stringify(res.data.user);
       localStorage.setItem("key", jsonString);
-      const jsonStringGetData = localStorage.getItem('key');
+        const jsonStringGetData = localStorage.getItem('key');
       this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
-      this.loading = false;
-      this.location.go(this.location.path());
-      window.location.reload();
+        this.loading = false;
+      this.location.go  (this.location.path());
+        window.location.reload();
       this.closeModal()
-    },
-      (err: any) => {
-        this.showSuccessMessage(err.error.message)
-        this.loading = false
+      },
+    (err:any)=>{
+      this.showSuccessMessage(err.error.message)
+      this.loading=false
       }
-    )
+  )
   }
   getAuthPhone() {
     this.loading = true
@@ -395,21 +395,21 @@ export class HeaderComponent {
       password: this.password
     }
     this.closeModal();
-    this.mainServices.loginWithPhone(input).subscribe((res: any) => {
+    this.mainServices.loginWithPhone(input).subscribe((res:any) => {
       res
-      localStorage.setItem('authToken', res.data.token);
-      const jsonString = JSON.stringify(res.data.user);
+        localStorage.setItem('authToken', res.data.token);
+        const jsonString = JSON.stringify(res.data.user);
       localStorage.setItem("key", jsonString);
-      const jsonStringGetData = localStorage.getItem('key');
+        const jsonStringGetData = localStorage.getItem('key');
       this.currentUser = jsonStringGetData ? JSON.parse(jsonStringGetData) : [];
       this.loading = false
-    },
-      (err: any) => {
+      },
+    (err:any)=>{
 
-        this.showSuccessMessage(err.error.message)
-        this.loading = false
+      this.showSuccessMessage(err.error.message)
+      this.loading=false
       }
-    )
+  )
   }
   openEmail() {
     this.showEmailBox = true
@@ -420,9 +420,9 @@ export class HeaderComponent {
   openOTP() {
 
     let input = {
-      email: this.email
+      email:this.email
     }
-    this.mainServices.forgetPassword(input).subscribe((res: any) => {
+    this.mainServices.forgetPassword(input).subscribe((res:any) => {
 
       this.otpVerify = res.otp
       console.log(this.otpVerify)
@@ -430,13 +430,13 @@ export class HeaderComponent {
       this.showOTPBox = true
       this.showForgotPhoneBox = false
       this.showForgotBox = false
-    },
-      (err: any) => {
+      },
+    (err:any)=>{
 
-        this.showSuccessMessage(err.error.msg)
-        this.loading = false
+      this.showSuccessMessage(err.error.msg)
+      this.loading = false
       }
-    )
+  )
   }
   openForgot() {
     this.showForgotPhoneBox = true
