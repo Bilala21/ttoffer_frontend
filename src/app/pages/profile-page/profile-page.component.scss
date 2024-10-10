@@ -284,5 +284,10 @@ margin: 5px 0 5px 0;
   object-fit: contain;
   border-radius: 5px;
 }
-
+.is-invalid {
+  border-color: red !important;
+}
+.text-danger {
+  color: red;
+}
 

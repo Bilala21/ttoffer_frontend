@@ -25,6 +25,15 @@ interface ImageSnippet {
   file: File | null;
   url: string | ArrayBuffer | null;
 }
+// category-fields.model.ts
+export interface CategoryField {
+  label: string;
+  type: 'select' | 'input';
+  model: string;
+  options?: { id: string; name: string }[];
+  placeholder?: string;
+}
+
 @Component({
   selector: 'app-profile-page',
   standalone: true,
@@ -51,6 +60,8 @@ interface ImageSnippet {
 })
 
 export class ProfilePageComponent {
+  validationErrors: { [key: string]: string } = {};
+  attributes: { [key: string]: any } = {};
   showOTPBox: boolean = false;
   progress!: number;
   defaultProfileUrl: string = 'assets/images/updateImage.png'; 
@@ -70,6 +81,7 @@ export class ProfilePageComponent {
   title: string = "";
   description: string = "";
   // productImage:any = [];
+
   userImage: any;
   profilePhoto: File | null = null;
   selectedCategoryId: any;
@@ -564,6 +576,70 @@ export class ProfilePageComponent {
     { id: '2', name: '2' },
     { id: '3', name: '3' },
   ]
+  categoryFields: { [key: string]: CategoryField[] } = {
+    '1': [
+      { label: 'Brand', type: 'select', model: 'brand', options: this.brandList },
+      { label: 'Condition', type: 'select', model: 'condition', options: this.conditionList },
+      { label: 'Storage Capacity', type: 'select', model: 'storage', options: this.storageList },
+      { label: 'Color', type: 'select', model: 'color', options: this.colorList },
+    ],
+    '2': [
+      { label: 'Brand', type: 'select', model: 'brand', options: this.brandElectornicsList },
+      { label: 'Condition', type: 'select', model: 'condition', options: this.conditionList },
+      { label: 'Color', type: 'select', model: 'color', options: this.colorList },
+    ],
+    '3': [
+      { label: 'Bed Rooms', type: 'select', model: 'bedrooms', options: this.bedRoomList },
+      { label: 'Area/Size', type: 'input', model: 'area', placeholder: 'Area/Size in Sqft' },
+      { label: 'Bath Room', type: 'select', model: 'bathRoom', options: this.BathRoomList },
+      { label: 'Year Built', type: 'input', model: 'yearBuilt', placeholder: 'Year Built' },
+      { label: 'Completion', type: 'select', model: 'compStatus', options: this.CombitanStatusList },
+    ],
+    '4': [
+      { label: 'Bed Rooms', type: 'select', model: 'bedrooms', options: this.bedRoomList },
+      { label: 'Area/Size', type: 'input', model: 'area', placeholder: 'Area/Size in Sqft' },
+      { label: 'Bath Room', type: 'select', model: 'bathRoom', options: this.BathRoomList },
+      { label: 'Year Built', type: 'input', model: 'yearBuilt', placeholder: 'Year Built' },
+      { label: 'Features', type: 'select', model: 'fearture', options: this.feartureBuilt },
+      { label: 'Furnished', type: 'select', model: 'furnisheable', options: this.FurnishableList },
+    ],
+    '5': [
+      { label: 'Make and Model', type: 'select', model: 'make_and_model', options: this.makeAndModelList },
+      { label: 'Year', type: 'input', model: 'year', placeholder: 'Year' },
+      { label: 'Condition', type: 'select', model: 'condition', options: this.conditionList },
+      { label: 'Mileage', type: 'input', model: 'mileage', placeholder: 'Mileage' },
+      { label: 'Fuel Type', type: 'select', model: 'fuelType', options: this.fuelTypeList },
+      { label: 'Color', type: 'select', model: 'color', options: this.colorList },
+    ],
+    '6': [
+      { label: 'Engine Capacity', type: 'select', model: 'engineCapacity', options: this.engineCapacityList },
+      { label: 'Model', type: 'input', model: 'model', placeholder: 'Model' },
+    ],
+    '7': [
+      { label: 'Type', type: 'select', model: 'type', options: this.jobtypeList },
+      { label: 'Experience', type: 'select', model: 'experience', options: this.experiencelist },
+      { label: 'Education', type: 'select', model: 'education', options: this.educationlist },
+      { label: 'Salary', type: 'select', model: 'salary', options: this.salaryList },
+      { label: 'Salary Period', type: 'select', model: 'salaryPeriod', options: this.salaryPeriodList },
+      { label: 'Company Name', type: 'select', model: 'companyName', options: this.comanNameList },
+      { label: 'Position Type', type: 'select', model: 'positionType', options: this.positioinTypeList },
+      { label: 'Career Level', type: 'select', model: 'careerLevel', options: this.careerLevelList },
+    ],
+    '9': [
+      { label: 'Choose Type', type: 'select', model: 'type', options: this.fashionTypeList },
+      { label: 'Condition', type: 'select', model: 'condition', options: this.conditionList },
+      { label: 'Color', type: 'select', model: 'color', options: this.colorList },
+    ],
+    '11': [
+      { label: 'Condition', type: 'select', model: 'condition', options: this.conditionKidsList },
+      { label: 'Toy', type: 'input', model: 'toy', placeholder: 'Toy' },
+    ],
+    '12': [
+      { label: 'Age', type: 'select', model: 'age', options: this.ageList },
+      { label: 'Breed', type: 'select', model: 'breed', options: this.breedList },
+    ],
+  };
+  
   // selectedFile: File | null = null;
   selectedFile: any;
   loading = false;
@@ -621,8 +697,9 @@ export class ProfilePageComponent {
   loadCategories(): void {
     this.mainServices.getCategories(this.selectedTabId).subscribe(
       (data) => {
-        this.categories = data; // Assign the fetched data to the categories array
-        console.log(this.categories); // Log the categories to the console for debugging
+        debugger
+        this.categories = data; 
+        this.getSubcategories(this.categories[0].id);
       },
       (error) => {
         console.error('Error fetching categories:', error); // Handle error
@@ -954,19 +1031,7 @@ export class ProfilePageComponent {
     }
   }
 
-  openUserNameModal() {
-    const modal = document.getElementById('userNameModal');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      modal.setAttribute('aria-modal', 'true');
-      modal.removeAttribute('aria-hidden');
-      document.body.classList.add('modal-open');
-      const backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop fade show';
-      document.body.appendChild(backdrop);
-    }
-  }
+ 
 
   closeUserNameModal() {
     const modal = document.getElementById('userNameModal');
@@ -1379,8 +1444,37 @@ console.log(this.selectedFile);
       }
     );
   }
-
+  validateForm(): boolean {
+    this.validationErrors = {}; // Clear existing errors before validation
+  
+    if (!this.selectedCategoryId) {
+      this.validationErrors['category'] = 'Please select a category.';
+    }
+  
+    if (!this.selectedSubCategoryId) {
+      this.validationErrors['subCategory'] = 'Please select a sub-category.';
+    }
+  
+    // Validate attributes for the selected category
+    const requiredFields = this.categoryFields[this.selectedCategoryId] || [];
+    requiredFields.forEach((field) => {
+      if (!this.attributes[field.model]) {
+        this.validationErrors[field.model] = `${field.label} is required.`;
+      }
+    });
+  
+    return Object.keys(this.validationErrors).length === 0; // Return true if no errors
+  }
+  onFieldChange(fieldModel: string): void {
+    if (this.validationErrors[fieldModel]) {
+      delete this.validationErrors[fieldModel]; 
+    }
+  }
   async AddProductFirstStep() {
+    if (!this.validateForm()) {
+      // Display error messages if form is invalid
+      return;
+    }
     let formData = new FormData();
     
     // Append video files to formData
@@ -1412,8 +1506,8 @@ console.log(this.selectedFile);
         if (response.ok) {
             this.productId = data.product_id;
             await this.updateProductImage();
-            this.attributes();
-            await this.addProductSeccondStep();
+            // this.attributes();
+            await this.addProductSecondStep();
         } else {
             throw new Error(data.message || 'File upload failed');
         }
@@ -1423,29 +1517,44 @@ console.log(this.selectedFile);
         this.loading = false;
     }
 }
+getCategoryNameById(categoryId: number): string {
+  const category = this.categories.find((cat:any) => cat.id == categoryId);
+  return category ? category.name : '';
+}
 
-async addProductSeccondStep() {
-    let input = {
-        product_id: this.productId,
-        category_id: this.selectedCategoryId,
-        sub_category_id: this.selectedSubCategoryId,
-        condition: this.conditionId,
-        make_and_model: this.makeAndModelId,
-        mileage: this.mileage,
-        color: this.colorId,
-        brand: this.brandId,
-        model: this.modelId,
-        edition: "",
-        authenticity: "",
-        attributes: this.jSonAttributes,
-    };
+getSubCategoryNameById(subCategoryId: number): string {
+  const subCategory = this.subCategory.find((subCat:any) => subCat.id == subCategoryId);
+  return subCategory ? subCategory.name : '';
+}
 
-    try {
-        const res = await this.mainServices.addProductSecondStep(input).toPromise();
-        await this.addProductThirdStep();
-    } catch (error) {
-        this.handleError(error);
-    }
+async addProductSecondStep() {
+  // Adding category and subcategory details to attributes
+  this.attributes['category_id'] = this.selectedCategoryId;
+  this.attributes['category_name'] = this.getCategoryNameById(this.selectedCategoryId);
+  this.attributes['sub_category_id'] = this.selectedSubCategoryId;
+  this.attributes['sub_category_name'] = this.getSubCategoryNameById(this.selectedSubCategoryId);
+debugger
+  let input = {
+      product_id: this.productId,
+      category_id: this.selectedCategoryId,
+      sub_category_id: this.selectedSubCategoryId,
+      condition: this.attributes['condition'], // Extract condition from attributes
+      make_and_model: this.attributes['make_and_model'], // Extract make and model from attributes
+      mileage: this.attributes['mileage'], // Extract mileage from attributes
+      color: this.attributes['color'], // Extract color from attributes
+      brand: this.attributes['brand'], // Extract brand from attributes
+      model: this.attributes['model'], // Extract model from attributes
+      edition: "",
+      authenticity: "",
+      attributes: JSON.stringify(this.attributes), // Convert attributes to JSON string
+  };
+
+  try {
+      const res = await this.mainServices.addProductSecondStep(input).toPromise();
+      await this.addProductThirdStep();
+  } catch (error) {
+      this.handleError(error);
+  }
 }
 
 async addProductThirdStep() {
@@ -1967,43 +2076,43 @@ parseSTime(event: any): void {
     return '00:00'; // Fallback default value
   }
 
-  attributes() {
-    const subCategoryList = this.categoryLookup[this.selectedCategoryId];
-    const category = this.categories.find((cat: any) => cat.id === this.selectedCategoryId) || {};
-    const subCategory = subCategoryList ? subCategoryList.find((subCat: any) => subCat.id === this.selectedSubCategoryId) : {};
-    const categoryName = category.name || '';
-    const subCategoryName = subCategory?.name || '';
+  // attributes() {
+  //   const subCategoryList = this.categoryLookup[this.selectedCategoryId];
+  //   const category = this.categories.find((cat: any) => cat.id === this.selectedCategoryId) || {};
+  //   const subCategory = subCategoryList ? subCategoryList.find((subCat: any) => subCat.id === this.selectedSubCategoryId) : {};
+  //   const categoryName = category.name || '';
+  //   const subCategoryName = subCategory?.name || '';
   
-    // Define a mapping object for category-specific fields
-    const categoryFieldMapping: any = {
-      '1': { brand: this.brandId, condition: this.conditionId, storage: this.storageId, color: this.colorId },
-      '2': { condition: this.conditionId, color: this.colorId },
-      '3': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId, bathRoom: this.bathRoomId },
-      '4': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId },
-      '5': { makeAndModel: this.makeAndModelId, year: this.yearBuiltId, condition: this.conditionId, mileage: this.mileage, fuelType: this.fuelTypeId, color: this.colorId },
-      '6': { subCatId: this.subCategoriesId, condition: this.conditionId, engineCapacity: this.engineCapacityId, model: this.modelId },
-      '7': { type: this.jobtypeId, experience: this.experienceId, education: this.educationId, salary: this.salaryId, salaryPeriod: this.salaryPeriodId, companyName: this.companyNameId, possitionType: this.positionTypeId, carrierLevel: this.careerLevelId },
-      '8': { subcategory: this.subCategoriesId, condition: this.conditionId, car: this.carId },
-      '9': { subcategory: this.subCategoriesId, type: this.fashionTypeId, condition: this.conditionId, color: this.colorId },
-      '10': { subcategory: this.subCategoriesId, condition: this.conditionId, fabric: this.fabricId, suitType: this.suitTypeId },
-      '11': { subcategory: this.subCategoriesId, condition: this.conditionId, toy: this.toyId },
-      '12': { subcategory: this.subCategoriesId, condition: this.conditionId, age: this.ageId, breed: this.breedId },
-    };
+  //   // Define a mapping object for category-specific fields
+  //   const categoryFieldMapping: any = {
+  //     '1': { brand: this.brandId, condition: this.conditionId, storage: this.storageId, color: this.colorId },
+  //     '2': { condition: this.conditionId, color: this.colorId },
+  //     '3': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId, bathRoom: this.bathRoomId },
+  //     '4': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId },
+  //     '5': { makeAndModel: this.makeAndModelId, year: this.yearBuiltId, condition: this.conditionId, mileage: this.mileage, fuelType: this.fuelTypeId, color: this.colorId },
+  //     '6': { subCatId: this.subCategoriesId, condition: this.conditionId, engineCapacity: this.engineCapacityId, model: this.modelId },
+  //     '7': { type: this.jobtypeId, experience: this.experienceId, education: this.educationId, salary: this.salaryId, salaryPeriod: this.salaryPeriodId, companyName: this.companyNameId, possitionType: this.positionTypeId, carrierLevel: this.careerLevelId },
+  //     '8': { subcategory: this.subCategoriesId, condition: this.conditionId, car: this.carId },
+  //     '9': { subcategory: this.subCategoriesId, type: this.fashionTypeId, condition: this.conditionId, color: this.colorId },
+  //     '10': { subcategory: this.subCategoriesId, condition: this.conditionId, fabric: this.fabricId, suitType: this.suitTypeId },
+  //     '11': { subcategory: this.subCategoriesId, condition: this.conditionId, toy: this.toyId },
+  //     '12': { subcategory: this.subCategoriesId, condition: this.conditionId, age: this.ageId, breed: this.breedId },
+  //   };
   
-    const jsonData: any = {
-      category_id: this.selectedCategoryId || '',
-      category_name: categoryName,
-      sub_category_id: this.selectedSubCategoryId || '',
-      sub_category_name: subCategoryName,
-      product_id: this.productId || '',
-      price: this.price?.trim() || null,
-      location: this.locationId || '',
-    };
+  //   const jsonData: any = {
+  //     category_id: this.selectedCategoryId || '',
+  //     category_name: categoryName,
+  //     sub_category_id: this.selectedSubCategoryId || '',
+  //     sub_category_name: subCategoryName,
+  //     product_id: this.productId || '',
+  //     price: this.price?.trim() || null,
+  //     location: this.locationId || '',
+  //   };
   
-    Object.assign(jsonData, categoryFieldMapping[this.selectedCategoryId] || {});
+  //   Object.assign(jsonData, categoryFieldMapping[this.selectedCategoryId] || {});
   
-    this.jSonAttributes = JSON.stringify(jsonData);
-  }
+  //   this.jSonAttributes = JSON.stringify(jsonData);
+  // }
   
   getSubcategories(categoryId:any): void {
     if (categoryId) {
