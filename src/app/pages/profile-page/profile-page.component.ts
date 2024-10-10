@@ -2,7 +2,6 @@ import { CommonModule, NgFor, NgIf, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../../shared/shared-components/header/header.component";
 import { FooterComponent } from "../../shared/shared-components/footer/footer.component";
-import { SellingComponent } from "../selling/selling.component";
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification/notification.component';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CurrentLocationComponent } from '../current-location/current-location.component';
+import { SellingComponent } from '../selling/selling.component';
 
 interface ImageSnippet {
   file: File | null;
@@ -120,9 +120,9 @@ export class ProfilePageComponent {
   showNotification: boolean = false
   notificationList: any
   customLink: any;
-  allowRating:boolean=false;
-  isDisabled:boolean = false;
-  isEditPost:boolean = false;
+  allowRating: boolean = false;
+  isDisabled: boolean = false;
+  isEditPost: boolean = false;
 
   showNotif() {
     this.showNotification = true
@@ -268,13 +268,13 @@ export class ProfilePageComponent {
     { id: 'Gas', name: 'Gas' },
     { id: 'Other', name: 'Other' },
   ]
-  subCatMobile:any=[
-    { id:0, category_id: 1, name: "Mobile Phones" },
-    { id:1, category_id: 1, name: "Accessories" },
-    { id:2, category_id: 1, name: "Smart Watches" },
-    { id:3, category_id: 1, name: "Tablets" },
+  subCatMobile: any = [
+    { id: 0, category_id: 1, name: "Mobile Phones" },
+    { id: 1, category_id: 1, name: "Accessories" },
+    { id: 2, category_id: 1, name: "Smart Watches" },
+    { id: 3, category_id: 1, name: "Tablets" },
   ]
-  subCatPropertyForSales:any=[
+  subCatPropertyForSales: any = [
     { id: 5, category_id: 3, name: "Lands & Plots" },
     { id: 6, category_id: 3, name: "Houses" },
     { id: 7, category_id: 3, name: "Apartments & Flats" },
@@ -282,7 +282,7 @@ export class ProfilePageComponent {
     { id: 9, category_id: 3, name: "Portions & Floors" },
     { id: 10, category_id: 3, name: "Others" },
   ]
-  subCatVehicles:any=[
+  subCatVehicles: any = [
     { id: 11, category_id: 5, name: "Cars" },
     { id: 12, category_id: 5, name: "Cars Accessories" },
     { id: 13, category_id: 5, name: "Spare Parts" },
@@ -293,151 +293,151 @@ export class ProfilePageComponent {
     { id: 18, category_id: 5, name: "Other Vehicles" },
     { id: 19, category_id: 5, name: "Boats" },
   ]
-  subCatPropertyRent:any=[
-    { id:20, category_id: 4, name: "Portions & Floors" },
-    { id:21, category_id: 4, name: "Houses" },
-    { id:22, category_id: 4, name: "Apartments & Flats" },
-    { id:23, category_id: 4, name: "Shops - Offices - Commercial Space " },
-    { id:24, category_id: 4, name: "Rooms" },
-    { id:25, category_id: 4, name: "Vacation Rentals - Guest Houses" },
-    { id:26, category_id: 4, name: "Roommates & Paying Guests" },
+  subCatPropertyRent: any = [
+    { id: 20, category_id: 4, name: "Portions & Floors" },
+    { id: 21, category_id: 4, name: "Houses" },
+    { id: 22, category_id: 4, name: "Apartments & Flats" },
+    { id: 23, category_id: 4, name: "Shops - Offices - Commercial Space " },
+    { id: 24, category_id: 4, name: "Rooms" },
+    { id: 25, category_id: 4, name: "Vacation Rentals - Guest Houses" },
+    { id: 26, category_id: 4, name: "Roommates & Paying Guests" },
   ]
-  subCatElectronics:any=[
-    { id:28, category_id: 2, name: "Computer & Accessories" },
-    { id:29, category_id: 2, name: "Television & Accessories" },
-    { id:30, category_id: 2, name: "AC & Coolers" },
-    { id:31, category_id: 2, name: "Generators, UPS & Power Solutions" },
-    { id:32, category_id: 2, name: "Refrigerators & Freezers" },
-    { id:33, category_id: 2, name: "Air Purifiers & Humidifiers" },
-    { id:34, category_id: 2, name: "Cameras & Accessories" },
-    { id:35, category_id: 2, name: "Games & Entertainment" },
-    { id:36, category_id: 2, name: "Kitchen Appliances" },
-    { id:37, category_id: 2, name: "Fans" },
-    { id:38, category_id: 2, name: "Video-Audios" },
-    { id:39, category_id: 2, name: "Washing Machines & Dryers" },
-    { id:40, category_id: 2, name: "Microwaves & Ovens" },
-    { id:41, category_id: 2, name: "Sewing Machines" },
-    { id:42, category_id: 2, name: "Water Dispensers" },
-    { id:43, category_id: 2, name: "Heater & Geysers" },
-    { id:44, category_id: 2, name: "Irons & Steamers" },
-    { id:45, category_id: 2, name: "Other Home Appliances" },
+  subCatElectronics: any = [
+    { id: 28, category_id: 2, name: "Computer & Accessories" },
+    { id: 29, category_id: 2, name: "Television & Accessories" },
+    { id: 30, category_id: 2, name: "AC & Coolers" },
+    { id: 31, category_id: 2, name: "Generators, UPS & Power Solutions" },
+    { id: 32, category_id: 2, name: "Refrigerators & Freezers" },
+    { id: 33, category_id: 2, name: "Air Purifiers & Humidifiers" },
+    { id: 34, category_id: 2, name: "Cameras & Accessories" },
+    { id: 35, category_id: 2, name: "Games & Entertainment" },
+    { id: 36, category_id: 2, name: "Kitchen Appliances" },
+    { id: 37, category_id: 2, name: "Fans" },
+    { id: 38, category_id: 2, name: "Video-Audios" },
+    { id: 39, category_id: 2, name: "Washing Machines & Dryers" },
+    { id: 40, category_id: 2, name: "Microwaves & Ovens" },
+    { id: 41, category_id: 2, name: "Sewing Machines" },
+    { id: 42, category_id: 2, name: "Water Dispensers" },
+    { id: 43, category_id: 2, name: "Heater & Geysers" },
+    { id: 44, category_id: 2, name: "Irons & Steamers" },
+    { id: 45, category_id: 2, name: "Other Home Appliances" },
   ]
 
-  subCatBike:any=[
-    { id:46, category_id: 6, name: "Motorcycles" },
-    { id:47, category_id: 6, name: "Bicycles" },
-    { id:48, category_id: 6, name: "Spare Parts" },
-    { id:49, category_id: 6, name: "Bikes Accessories" },
-    { id:50, category_id: 6, name: "Scooters" },
-    { id:51, category_id: 6, name: "ATV & Quads" },
-    { id:52, category_id: 6, name: "Other Bikes" },
+  subCatBike: any = [
+    { id: 46, category_id: 6, name: "Motorcycles" },
+    { id: 47, category_id: 6, name: "Bicycles" },
+    { id: 48, category_id: 6, name: "Spare Parts" },
+    { id: 49, category_id: 6, name: "Bikes Accessories" },
+    { id: 50, category_id: 6, name: "Scooters" },
+    { id: 51, category_id: 6, name: "ATV & Quads" },
+    { id: 52, category_id: 6, name: "Other Bikes" },
   ]
-  subCatJob:any=[
-    { id:53, category_id: 7, name: "Online" },
-    { id:54, category_id: 7, name: "Architecture & Interior Design" },
-    { id:55, category_id: 7, name: "Education" },
-    { id:56, category_id: 7, name: "Content Writing" },
-    { id:57, category_id: 7, name: "Part time" },
-    { id:58, category_id: 7, name: "Sales" },
-    { id:59, category_id: 7, name: "Marketing" },
-    { id:60, category_id: 7, name: "Customer Service" },
-    { id:61, category_id: 7, name: "Restaurants & Hospitality" },
-    { id:62, category_id: 7, name: "Domestic Staff" },
-    { id:63, category_id: 7, name: "Medical" },
-    { id:64, category_id: 7, name: "Graphic Design" },
-    { id:65, category_id: 7, name: "Accounting & Finance" },
-    { id:66, category_id: 7, name: "IT & Networking" },
-    { id:67, category_id: 7, name: "Delivery Riders" },
-    { id:68, category_id: 7, name: "Hotel & Tourism" },
-    { id:69, category_id: 7, name: "Engineering" },
-    { id:70, category_id: 7, name: "Security" },
-    { id:71, category_id: 7, name: "Manufacturing" },
-    { id:72, category_id: 7, name: "Clerical & Administration" },
-    { id:73, category_id: 7, name: "Human Resources" },
-    { id:74, category_id: 7, name: "Real Estate" },
-    { id:75, category_id: 7, name: "Advertising & PR" },
-    { id:76, category_id: 7, name: "Internships" },
-    { id:77, category_id: 7, name: "Other Jobs" },
+  subCatJob: any = [
+    { id: 53, category_id: 7, name: "Online" },
+    { id: 54, category_id: 7, name: "Architecture & Interior Design" },
+    { id: 55, category_id: 7, name: "Education" },
+    { id: 56, category_id: 7, name: "Content Writing" },
+    { id: 57, category_id: 7, name: "Part time" },
+    { id: 58, category_id: 7, name: "Sales" },
+    { id: 59, category_id: 7, name: "Marketing" },
+    { id: 60, category_id: 7, name: "Customer Service" },
+    { id: 61, category_id: 7, name: "Restaurants & Hospitality" },
+    { id: 62, category_id: 7, name: "Domestic Staff" },
+    { id: 63, category_id: 7, name: "Medical" },
+    { id: 64, category_id: 7, name: "Graphic Design" },
+    { id: 65, category_id: 7, name: "Accounting & Finance" },
+    { id: 66, category_id: 7, name: "IT & Networking" },
+    { id: 67, category_id: 7, name: "Delivery Riders" },
+    { id: 68, category_id: 7, name: "Hotel & Tourism" },
+    { id: 69, category_id: 7, name: "Engineering" },
+    { id: 70, category_id: 7, name: "Security" },
+    { id: 71, category_id: 7, name: "Manufacturing" },
+    { id: 72, category_id: 7, name: "Clerical & Administration" },
+    { id: 73, category_id: 7, name: "Human Resources" },
+    { id: 74, category_id: 7, name: "Real Estate" },
+    { id: 75, category_id: 7, name: "Advertising & PR" },
+    { id: 76, category_id: 7, name: "Internships" },
+    { id: 77, category_id: 7, name: "Other Jobs" },
   ]
-  subCatServices:any=[
-    { id:78, category_id: 8, name: "Insurance Services" },
-    { id:79, category_id: 8, name: "Tuitions & Academies" },
-    { id:80, category_id: 8, name: "Home & Office Repair" },
-    { id:81, category_id: 8, name: "Car Rental" },
-    { id:82, category_id: 8, name: "Domestic Help" },
-    { id:83, category_id: 8, name: "Web Development" },
-    { id:84, category_id: 8, name: "Travel & Visa" },
-    { id:85, category_id: 8, name: "Electronics & Computer Repair" },
-    { id:86, category_id: 8, name: "Movers & Packers" },
-    { id:87, category_id: 8, name: "Drivers & Taxi" },
-    { id:88, category_id: 8, name: "Health & Beauty" },
-    { id:89, category_id: 8, name: "Event Services" },
-    { id:90, category_id: 8, name: "Construction Services" },
-    { id:91, category_id: 8, name: "Farm & Fresh Food" },
-    { id:92, category_id: 8, name: "Consultancy Services" },
-    { id:93, category_id: 8, name: "Architecture & Interior Design" },
-    { id:94, category_id: 8, name: "Video & Photography" },
-    { id:95, category_id: 8, name: "Renting Services" },
-    { id:96, category_id: 8, name: "Catering & Restaurant" },
-    { id:97, category_id: 8, name: "Car Services" },
-    { id:98, category_id: 8, name: "Tailor Services" },
-    { id:99, category_id: 8, name: "Other Services" },
+  subCatServices: any = [
+    { id: 78, category_id: 8, name: "Insurance Services" },
+    { id: 79, category_id: 8, name: "Tuitions & Academies" },
+    { id: 80, category_id: 8, name: "Home & Office Repair" },
+    { id: 81, category_id: 8, name: "Car Rental" },
+    { id: 82, category_id: 8, name: "Domestic Help" },
+    { id: 83, category_id: 8, name: "Web Development" },
+    { id: 84, category_id: 8, name: "Travel & Visa" },
+    { id: 85, category_id: 8, name: "Electronics & Computer Repair" },
+    { id: 86, category_id: 8, name: "Movers & Packers" },
+    { id: 87, category_id: 8, name: "Drivers & Taxi" },
+    { id: 88, category_id: 8, name: "Health & Beauty" },
+    { id: 89, category_id: 8, name: "Event Services" },
+    { id: 90, category_id: 8, name: "Construction Services" },
+    { id: 91, category_id: 8, name: "Farm & Fresh Food" },
+    { id: 92, category_id: 8, name: "Consultancy Services" },
+    { id: 93, category_id: 8, name: "Architecture & Interior Design" },
+    { id: 94, category_id: 8, name: "Video & Photography" },
+    { id: 95, category_id: 8, name: "Renting Services" },
+    { id: 96, category_id: 8, name: "Catering & Restaurant" },
+    { id: 97, category_id: 8, name: "Car Services" },
+    { id: 98, category_id: 8, name: "Tailor Services" },
+    { id: 99, category_id: 8, name: "Other Services" },
   ]
-  subCatAnimal:any=[
-    { id:100, category_id: 12, name: "Hens" },
-    { id:101, category_id: 12, name: "Parrots" },
-    { id:102, category_id: 12, name: "Livestock" },
-    { id:103, category_id: 12, name: "Cats" },
-    { id:104, category_id: 12, name: "Dogs" },
-    { id:105, category_id: 12, name: "Pet Food & Accessories" },
-    { id:106, category_id: 12, name: "Pigeons" },
-    { id:107, category_id: 12, name: "Rabbits" },
-    { id:108, category_id: 12, name: "Fish" },
-    { id:109, category_id: 12, name: "Other Birds" },
-    { id:110, category_id: 12, name: "Doves" },
-    { id:111, category_id: 12, name: "Fertile Eggs" },
-    { id:112, category_id: 12, name: "Ducks" },
-    { id:113, category_id: 12, name: "Peacocks" },
-    { id:114, category_id: 12, name: "Horses" },
-    { id:115, category_id: 12, name: "Other Animal" },
+  subCatAnimal: any = [
+    { id: 100, category_id: 12, name: "Hens" },
+    { id: 101, category_id: 12, name: "Parrots" },
+    { id: 102, category_id: 12, name: "Livestock" },
+    { id: 103, category_id: 12, name: "Cats" },
+    { id: 104, category_id: 12, name: "Dogs" },
+    { id: 105, category_id: 12, name: "Pet Food & Accessories" },
+    { id: 106, category_id: 12, name: "Pigeons" },
+    { id: 107, category_id: 12, name: "Rabbits" },
+    { id: 108, category_id: 12, name: "Fish" },
+    { id: 109, category_id: 12, name: "Other Birds" },
+    { id: 110, category_id: 12, name: "Doves" },
+    { id: 111, category_id: 12, name: "Fertile Eggs" },
+    { id: 112, category_id: 12, name: "Ducks" },
+    { id: 113, category_id: 12, name: "Peacocks" },
+    { id: 114, category_id: 12, name: "Horses" },
+    { id: 115, category_id: 12, name: "Other Animal" },
   ]
-  subCatFurniture:any=[
-    { id:116, category_id: 9, name: "Sofa & Chairs" },
-    { id:117, category_id: 9, name: "Beds & Wardrobes" },
-    { id:118, category_id: 9, name: "Bathroom & Accessories" },
-    { id:119, category_id: 9, name: "Tables & Dining" },
-    { id:120, category_id: 9, name: "Home Decoration" },
-    { id:121, category_id: 9, name: "Office Furniture" },
-    { id:122, category_id: 9, name: "Garden & Outdoor" },
-    { id:123, category_id: 9, name: "Painting & Mirrors" },
-    { id:124, category_id: 9, name: "Curtain & Blinds" },
-    { id:125, category_id: 9, name: "Rugs & Carpets" },
-    { id:126, category_id: 9, name: "Other" },
+  subCatFurniture: any = [
+    { id: 116, category_id: 9, name: "Sofa & Chairs" },
+    { id: 117, category_id: 9, name: "Beds & Wardrobes" },
+    { id: 118, category_id: 9, name: "Bathroom & Accessories" },
+    { id: 119, category_id: 9, name: "Tables & Dining" },
+    { id: 120, category_id: 9, name: "Home Decoration" },
+    { id: 121, category_id: 9, name: "Office Furniture" },
+    { id: 122, category_id: 9, name: "Garden & Outdoor" },
+    { id: 123, category_id: 9, name: "Painting & Mirrors" },
+    { id: 124, category_id: 9, name: "Curtain & Blinds" },
+    { id: 125, category_id: 9, name: "Rugs & Carpets" },
+    { id: 126, category_id: 9, name: "Other" },
   ]
   subCatFashion: any = [
-    { id:127, category_id: 10, name: "Clothes" },
-    { id:128, category_id: 10, name: "Watches" },
-    { id:129, category_id: 10, name: "Wedding" },
-    { id:130, category_id: 10, name: "Footwear" },
-    { id:131, category_id: 10, name: "Skin & Hair" },
-    { id:132, category_id: 10, name: "Jewellery" },
-    { id:133, category_id: 10, name: "Bags" },
-    { id:134, category_id: 10, name: "Makeup" },
-    { id:135, category_id: 10, name: "Fragrance" },
-    { id:136, category_id: 10, name: "Fashion Accessories" },
-    { id:137, category_id: 10, name: "Other Fashion" },
+    { id: 127, category_id: 10, name: "Clothes" },
+    { id: 128, category_id: 10, name: "Watches" },
+    { id: 129, category_id: 10, name: "Wedding" },
+    { id: 130, category_id: 10, name: "Footwear" },
+    { id: 131, category_id: 10, name: "Skin & Hair" },
+    { id: 132, category_id: 10, name: "Jewellery" },
+    { id: 133, category_id: 10, name: "Bags" },
+    { id: 134, category_id: 10, name: "Makeup" },
+    { id: 135, category_id: 10, name: "Fragrance" },
+    { id: 136, category_id: 10, name: "Fashion Accessories" },
+    { id: 137, category_id: 10, name: "Other Fashion" },
   ]
 
   subCatKid: any = [
-    { id:138, category_id: 11, name: "Toys" },
-    { id:139, category_id: 11, name: "Kids Vehicles" },
-    { id:140, category_id: 11, name: "Baby Gear" },
-    { id:141, category_id: 11, name: "Kids Furniture" },
-    { id:142, category_id: 11, name: "Swings & Slides" },
-    { id:143, category_id: 11, name: "Kids Accessories" },
-    { id:144, category_id: 11, name: "Kids Clothings" },
-    { id:145, category_id: 11, name: "Bath & Diapers" },
-    { id:146, category_id: 11, name: "Others" },
+    { id: 138, category_id: 11, name: "Toys" },
+    { id: 139, category_id: 11, name: "Kids Vehicles" },
+    { id: 140, category_id: 11, name: "Baby Gear" },
+    { id: 141, category_id: 11, name: "Kids Furniture" },
+    { id: 142, category_id: 11, name: "Swings & Slides" },
+    { id: 143, category_id: 11, name: "Kids Accessories" },
+    { id: 144, category_id: 11, name: "Kids Clothings" },
+    { id: 145, category_id: 11, name: "Bath & Diapers" },
+    { id: 146, category_id: 11, name: "Others" },
   ]
 
   subCategoriesList: any = [
@@ -579,7 +579,7 @@ export class ProfilePageComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    private router:Router
+    private router: Router
   ) {
     this.currentUserId = this.extension.getUserId();
     this.categoryLookup = {
@@ -614,8 +614,8 @@ export class ProfilePageComponent {
     this.getCurrentUser();
     this.wishListProduct();
   }
-  showOtp(){
-    this.showOTPBox =  true
+  showOtp() {
+    this.showOTPBox = true
   }
   showSuccessMessage(message: string) {
     this.snackBar.open(message, '', {
@@ -632,7 +632,7 @@ export class ProfilePageComponent {
       verticalPosition: 'top',
       panelClass: ['error-snackbar']
     });
-}
+  }
   openPage() {
     this.showDiv = true;
   }
@@ -641,13 +641,13 @@ export class ProfilePageComponent {
     console.log(event);
     this.imagesFiles.push(...event.addedFiles);
   }
-    copyCustomLink() {
-      navigator.clipboard.writeText(this.customLink).then(() => {
-        this.showSuccessMessage(`Profile link ${this.customLink} copied to clipboard!`);
-      }).catch(err => {
-        console.error('Could not copy text: ', err);
-      });
-    }
+  copyCustomLink() {
+    navigator.clipboard.writeText(this.customLink).then(() => {
+      this.showSuccessMessage(`Profile link ${this.customLink} copied to clipboard!`);
+    }).catch(err => {
+      console.error('Could not copy text: ', err);
+    });
+  }
 
   // handleInputChange() {
   //   console.log('Starting Time:', this.startingTime);
@@ -1218,7 +1218,7 @@ export class ProfilePageComponent {
     const jsonString = JSON.stringify(data);
     localStorage.setItem("key", jsonString);
     this.getCurrentUser();
-  }
+  }
   // onImageUpload(event: any): void {
   //
   //   const input = event.target as HTMLInputElement;
@@ -1333,7 +1333,7 @@ export class ProfilePageComponent {
     let input = {
       product_id: this.productId,
       category_id: this.selectedCategoryId,
-      sub_category_id:this.selectedSubCategoryId,
+      sub_category_id: this.selectedSubCategoryId,
       condition: this.conditionId,
       make_and_model: this.makeAndModelId,
       mileage: this.mileage,
@@ -1359,7 +1359,7 @@ export class ProfilePageComponent {
       user_id: this.currentUserId,
       product_id: this.productId,
       category_id: this.selectedCategoryId,
-      sub_category_id:this.selectedSubCategoryId,
+      sub_category_id: this.selectedSubCategoryId,
       condition: this.conditionId,
       make_and_model: this.makeAndModelId,
       mileage: this.mileage,
@@ -1506,19 +1506,20 @@ export class ProfilePageComponent {
         this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
           // return item.id == this.selectedTabId;
           return this.selectedTabItem == null
-          ? item.user_id == this.selectedTabId
-          : item.id == this.selectedTabId;        });
+            ? item.user_id == this.selectedTabId
+            : item.id == this.selectedTabId;
+        });
         // this.readFileAsDataURL(this.sellingListTemp[0].video[0].src)
         console.log('this is temp file:', this.sellingListTemp)
         // this.convertLinksToBase64(this.sellingListTemp[0].video)
 
-        if(this.selectedTabItem == 'editPost'){
+        if (this.selectedTabItem == 'editPost') {
           this.isEditPost = true
           this.locationId = this.sellingListTemp[0].location
           this.productId = this.sellingListTemp[0].id
           this.title = this.sellingListTemp[0].title
           this.description = this.sellingListTemp[0].description
-        }else{
+        } else {
           this.locationId = this.currentUserProfile.location
         }
 
@@ -1590,10 +1591,10 @@ export class ProfilePageComponent {
 
     })
   }
-  getNotification(){
+  getNotification() {
 
     this.loading = true;
-    this.mainServices.getNotification(this.currentUserId).subscribe((res:any) => {
+    this.mainServices.getNotification(this.currentUserId).subscribe((res: any) => {
 
       // this.notificationList = res.data
       this.notificationList = res.data.sort((a: any, b: any) => {
@@ -1634,7 +1635,7 @@ export class ProfilePageComponent {
       const jsonStringGetData = localStorage.getItem('key');
       if (jsonStringGetData) {
         this.currentUserProfile = JSON.parse(jsonStringGetData);
-       this.allowRating= this.currentUserProfile.Id==this.currentUserId;
+        this.allowRating = this.currentUserProfile.Id == this.currentUserId;
         console.log(this.currentUserProfile)
         this.imageUrl = this.currentUserProfile.img
       } else {
@@ -1813,22 +1814,22 @@ export class ProfilePageComponent {
     selectedDate.setHours(0, 0, 0, 0);
 
     if (selectedDate < today) {
-        this.showErrorMessage('Selected date cannot be in the past.');
-        event.target.value = ''; // Clear the input field
-        return new Date(); // Return the current date as a fallback
+      this.showErrorMessage('Selected date cannot be in the past.');
+      event.target.value = ''; // Clear the input field
+      return new Date(); // Return the current date as a fallback
     }
 
     return selectedDate;
-}
+  }
 
   parseETime(event: any): void {
     const selectedEndingTime = event.target.value;
     const selectedStartingTime = this.startingTime;
 
     if (!this.startingDate || !this.endingDate) {
-        this.showErrorMessage('Invalid date selected.');
-        setTimeout(() => this.endingTime = "", 1); // Clear the ending time input
-        return;
+      this.showErrorMessage('Invalid date selected.');
+      setTimeout(() => this.endingTime = "", 1); // Clear the ending time input
+      return;
     }
 
     const selectedEndingDate = new Date(this.endingDate);
@@ -1840,24 +1841,24 @@ export class ProfilePageComponent {
 
     // Check if ending time is less than starting time on the same date
     if (selectedStartingDate.toDateString() === selectedEndingDate.toDateString()) {
-        if (endTime < startTime) {
-            this.showErrorMessage('Ending time cannot be less than starting time.');
-            setTimeout(() => this.endingTime = "", 1); // Clear the ending time input
-            return;
-        }
+      if (endTime < startTime) {
+        this.showErrorMessage('Ending time cannot be less than starting time.');
+        setTimeout(() => this.endingTime = "", 1); // Clear the ending time input
+        return;
+      }
     }
 
     // Update the endingTime if valid
     this.endingTime = selectedEndingTime;
-}
+  }
 
-parseSTime(event: any): void {
+  parseSTime(event: any): void {
     const selectedStartingTime = event.target.value;
 
     if (!this.startingDate) {
-        this.showErrorMessage('Invalid date selected.');
-        setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
-        return;
+      this.showErrorMessage('Invalid date selected.');
+      setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
+      return;
     }
 
     const selectedStartingDate = new Date(this.startingDate);
@@ -1866,16 +1867,16 @@ parseSTime(event: any): void {
 
     // Check if starting time is less than current time on the same date
     if (selectedStartingDate.toDateString() === currentDateTime.toDateString()) {
-        if (startTime < currentDateTime) {
-            this.showErrorMessage('Starting time cannot be in the past.');
-            setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
-            return;
-        }
+      if (startTime < currentDateTime) {
+        this.showErrorMessage('Starting time cannot be in the past.');
+        setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
+        return;
+      }
     }
 
     // Update the startingTime if valid
     this.startingTime = selectedStartingTime;
-}
+  }
 
 
 
@@ -1884,20 +1885,20 @@ parseSTime(event: any): void {
   formatDate(date: any): string {
     // If the input is a string, convert it to a Date object
     if (typeof date === 'string') {
-        date = new Date(date);
+      date = new Date(date);
     }
 
     // Check if date is a valid Date object
     if (!(date instanceof Date) || isNaN(date.getTime())) {
-        console.error("Invalid date object passed:", date);
-        return ""; // Return an empty string or a default value
+      console.error("Invalid date object passed:", date);
+      return ""; // Return an empty string or a default value
     }
 
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
-}
+  }
 
   // Example method to get today's date as 'yyyy-MM-dd'
   getTodayDate(): string {
@@ -1951,12 +1952,12 @@ parseSTime(event: any): void {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
         // sub_category_id:this.selectedSubCategoryId,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         brand: this.brandId ?? '',
         condition: this.conditionId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         storage: this.storageId ?? '',
         color: this.colorId ?? '',
         location: this.locationId
@@ -1967,8 +1968,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         type: this.typeId ?? '',
         bedrooms: this.bedRoomId ?? '',
@@ -1977,7 +1978,7 @@ parseSTime(event: any): void {
         yearBuilt: this.yearBuiltId ?? '',
         feature: this.feartureId ?? '',
         Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         storage: this.storageId ?? '',
         location: this.locationId ?? '',
         bathRoom: this.bathRoomId
@@ -1989,8 +1990,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         makeAndModel: this.makeAndModelId ?? '',
         year: this.yearBuiltId ?? '',
@@ -1998,7 +1999,7 @@ parseSTime(event: any): void {
         mileage: this.mileage ?? '',
         fuelType: this.fuelTypeId ?? '',
         color: this.colorId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         location: this.locationId ?? ''
 
       };
@@ -2008,8 +2009,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         type: this.typeId ?? '',
         bedrooms: this.bedRoomId ?? '',
@@ -2018,7 +2019,7 @@ parseSTime(event: any): void {
         yearBuilt: this.yearBuiltId ?? '',
         feature: this.feartureId ?? '',
         Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         storage: this.storageId ?? '',
         location: this.locationId ?? '',
 
@@ -2029,8 +2030,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         // type: this.typeId ?? '',
         // bedrooms: this.bedRoomId ?? '',
@@ -2040,7 +2041,7 @@ parseSTime(event: any): void {
         // yearBuilt: this.yearBuiltId ?? '',
         // feature: this.feartureId ?? '',
         // Amenities: this.amenitiesId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         // storage: this.storageId ?? '',
         location: this.locationId ?? '',
 
@@ -2051,15 +2052,15 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
 
         subCatId: this.subCategoriesId ?? '',
         condition: this.conditionId,
         engineCapacity: this.engineCapacityId ?? '',
         model: this.modelId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         location: this.locationId ?? '',
 
       };
@@ -2069,8 +2070,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         type: this.jobtypeId ?? '',
         experience: this.experienceId ?? '',
@@ -2090,12 +2091,12 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         subcategory: this.subCategoriesId ?? '',
         condition: this.conditionId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         car: this.carId ?? '',
         location: this.locationId ?? '',
 
@@ -2106,13 +2107,13 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         condition: this.conditionId,
         subcategory: this.subCategoriesId ?? '',
         age: this.ageId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         breed: this.breedId ?? '',
         location: this.locationId ?? '',
 
@@ -2123,14 +2124,14 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         subcategory: this.subCategoriesId ?? '',
         type: this.fashionTypeId ?? '',
         condition: this.conditionId ?? '',
         color: this.colorId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         location: this.locationId ?? '',
 
       };
@@ -2140,8 +2141,8 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         subcategory: this.subCategoriesId ?? '',
         condition: this.conditionId,
@@ -2157,13 +2158,13 @@ parseSTime(event: any): void {
       const jsonData = {
         category_id: this.selectedCategoryId ?? '',
         category_name: categoryName,
-        sub_category_id:this.selectedSubCategoryId,
-        sub_category_name:subCategoryName,
+        sub_category_id: this.selectedSubCategoryId,
+        sub_category_name: subCategoryName,
         product_id: this.productId,
         subcategory: this.subCategoriesId ?? '',
         condition: this.conditionId ?? '',
         toy: this.toyId ?? '',
-        price: (this.price == null)?null:this.price.trim() ?? '',
+        price: (this.price == null) ? null : this.price.trim() ?? '',
         location: this.locationId ?? '',
 
       };
@@ -2174,7 +2175,7 @@ parseSTime(event: any): void {
     console.log('this is the selected categorie Id', this.selectedCategoryId);
   }
   markAsSold(prodictId: any) {
-    this.router.navigate(['/markAsSold/',prodictId]);
+    this.router.navigate(['/markAsSold/', prodictId]);
     // this.loading = true
     // console.log('sold out ', prodictId)
     // this.mainServices.markAsSold(prodictId).subscribe((res: any) => {
@@ -2221,13 +2222,29 @@ parseSTime(event: any): void {
 
     this.locationId = location;
   }
-  cat(cat:any){
+  cat(cat: any) {
 
     cat
   }
-  subcat(subCat:any){
+  subcat(subCat: any) {
 
     subCat
+  }
+
+  deleteId: any = null
+  isConfirmed: boolean = false
+  captcha: string = ""
+
+  confirmAccountDeletion(id: number) {
+    if (this.captcha) {
+      this.deleteId = null
+      this.isConfirmed = false
+    }
+  }
+
+  accountDelete(id: number) {
+    alert(id)
+    this.deleteId = id
   }
 
 }

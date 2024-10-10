@@ -16,6 +16,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
 import { TokenizedInterceptor } from './shared/services/security/tokenized-Interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZft6faojDE1C5Q-UmMnUS7LLAtUIzDJo",
@@ -32,9 +34,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:TokenizedInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenizedInterceptor,
+      multi: true
     },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
@@ -50,6 +52,8 @@ export const appConfig: ApplicationConfig = {
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    provideAnimations(),
+    provideToastr(),
   ]
 };

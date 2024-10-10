@@ -165,8 +165,7 @@
                                             <h6>{{currentUserProfile.name}}</h6>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="flex-grow-1 text-center">
-                                                    <app-star-rating
-                                                        [rating]="currentUserProfile.review_percentage"
+                                                    <app-star-rating [rating]="currentUserProfile.review_percentage"
                                                         [allowRating]="this.allowRating"></app-star-rating>
                                                 </div>
                                                 <div style="margin-left: auto;">
@@ -179,30 +178,39 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center text-center justify-content-center mt-3 text-center">
-                                <div style="margin-right:20px" class="pointer" style="margin: 0 10px;" (click)="openVerifyEmailModal()">
+                                <div style="margin-right:20px" class="pointer" style="margin: 0 10px;"
+                                    (click)="openVerifyEmailModal()">
                                     <img [class.bg-success]="currentUserProfile.email_verified_at != null"
-                                    [class.bg-danger-blue]="currentUserProfile.email_verified_at == null" class=" rounded-circle p-2" src="assets/images/E-sms.svg"
-                                        style="height: 15%;" alt="">
+                                        [class.bg-danger-blue]="currentUserProfile.email_verified_at == null"
+                                        class=" rounded-circle p-2" src="assets/images/E-sms.svg" style="height: 15%;"
+                                        alt="">
                                     <h6 style="font-size: 10px;" class="p-0 m-0">Email </h6>
-                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.email_verified_at != null ? 'Verified' : 'Not Verified' }}</h6>
+                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.email_verified_at
+                                        != null ? 'Verified' : 'Not Verified' }}</h6>
                                 </div>
-                                <div  style="margin: 0 10px;">
+                                <div style="margin: 0 10px;">
                                     <img [class.bg-success]="currentUserProfile.image_verified_at != null"
-                                    [class.bg-danger-blue]="currentUserProfile.image_verified_at == null" class=" rounded-circle p-2" src="assets/images/gallery.svg"
-                                        style="height: 15%;" alt="">
+                                        [class.bg-danger-blue]="currentUserProfile.image_verified_at == null"
+                                        class=" rounded-circle p-2" src="assets/images/gallery.svg" style="height: 15%;"
+                                        alt="">
                                     <h6 style="font-size: 10px;" class="p-0 m-0">Image</h6>
-                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.image_verified_at != null ? 'Verified' : 'Not Verified' }}</h6>
+                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.image_verified_at
+                                        != null ? 'Verified' : 'Not Verified' }}</h6>
                                 </div>
                                 <div style="margin: 0 10px;" class="pointer" (click)="openVerifyPhoneModal()">
                                     <img [class.bg-success]="currentUserProfile.phone_verified_at != null"
-                                    [class.bg-danger-blue]="currentUserProfile.phone_verified_at == null" class=" rounded-circle p-2" src="assets/images/call.svg"
-                                        style="height: 15%;" alt="">
+                                        [class.bg-danger-blue]="currentUserProfile.phone_verified_at == null"
+                                        class=" rounded-circle p-2" src="assets/images/call.svg" style="height: 15%;"
+                                        alt="">
                                     <h6 style="font-size: 10px;" class="p-0 m-0">Phone</h6>
-                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.phone_verified_at != null ? 'Verified' : 'Not Verified' }}</h6>
+                                    <h6 style="font-size: 10px;" class="p-0 m-0">{{ currentUserProfile.phone_verified_at
+                                        != null ? 'Verified' : 'Not Verified' }}</h6>
                                 </div>
-                                <div class="pointer" style="margin: 0 10px;" *ngIf="currentUserProfile.image_verified_at != null && currentUserProfile.email_verified_at != null && currentUserProfile.phone_verified_at != null">
+                                <div class="pointer" style="margin: 0 10px;"
+                                    *ngIf="currentUserProfile.image_verified_at != null && currentUserProfile.email_verified_at != null && currentUserProfile.phone_verified_at != null">
                                     <img [class.bg-success]="currentUserProfile.is_true_you == '1'"
-                                    [class.bg-danger-blue]="currentUserProfile.is_true_you == '0'" class=" rounded-circle p-2" src="assets/images/E-verify.svg"
+                                        [class.bg-danger-blue]="currentUserProfile.is_true_you == '0'"
+                                        class=" rounded-circle p-2" src="assets/images/E-verify.svg"
                                         style="height: 15%;" alt="">
                                     <h6 style="font-size: 10px;" class="p-0 m-0" class="p-0 m-0">Join </h6>
                                     <h6 style="font-size: 10px;" class="p-0 m-0" class="p-0 m-0">TruYou</h6>
@@ -241,8 +249,7 @@
                             </div>
                             <div class="row mt-4">
                                 <h4>Save</h4>
-                                <div class="col-12 mt-3 p-2 onHover pointer"
-                                    [ngClass]="{'active': selectedTab === ''}"
+                                <div class="col-12 mt-3 p-2 onHover pointer" [ngClass]="{'active': selectedTab === ''}"
                                     (click)="selectTab('savedItems')">
                                     <div class="row align-items-center">
                                         <div class="col-2">
@@ -388,8 +395,9 @@
                         <div class="sidebar-selling mt-5">
                             <div class="sidebar-content">
                                 <div class="row">
-                                    <div class="col-md-10 mx-auto" *ngIf="activeButton === 1 && sellingListTemp && sellingListTemp.length >0">
-                                        <div  class="row mt-4 align-items-center justify-content-between"
+                                    <div class="col-md-10 mx-auto"
+                                        *ngIf="activeButton === 1 && sellingListTemp && sellingListTemp.length >0">
+                                        <div class="row mt-4 align-items-center justify-content-between"
                                             *ngFor="let data of sellingListTemp">
 
                                             <div class="col-md-10">
@@ -400,7 +408,7 @@
                                                             style="text-decoration: none; color: #1B2028;">
 
                                                             <img class="w-100 sm-h-50"
-                                                            [src]="data.photo && data.photo.length > 0 ? data.photo[0].src : 'assets/images/default-img.jpg'">
+                                                                [src]="data.photo && data.photo.length > 0 ? data.photo[0].src : 'assets/images/default-img.jpg'">
 
                                                         </a>
 
@@ -413,9 +421,13 @@
                                                             </a>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-5 sm-cat-text3" style="font-size:12px; padding-top:3px">Sell fast</div>
-                                                            <div class="col-2 sm-cat-text3" >|</div>
-                                                            <div class="col-5 sm-cat-text3" (click)="markAsSold(data.id)" style="cursor:pointer; font-size:12px; text-align:center;padding-top:3px">Mark as sold</div>
+                                                            <div class="col-5 sm-cat-text3"
+                                                                style="font-size:12px; padding-top:3px">Sell fast</div>
+                                                            <div class="col-2 sm-cat-text3">|</div>
+                                                            <div class="col-5 sm-cat-text3"
+                                                                (click)="markAsSold(data.id)"
+                                                                style="cursor:pointer; font-size:12px; text-align:center;padding-top:3px">
+                                                                Mark as sold</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -485,7 +497,8 @@
                                                                     style="background-color: #FFFFFF; border: 1px solid #EBEEF7;">
                                                                     <div class="row align-items-center p-1">
                                                                         <div class="col-3">
-                                                                            <img src="assets/images/google-play.png" alt="">
+                                                                            <img src="assets/images/google-play.png"
+                                                                                alt="">
                                                                         </div>
                                                                         <div class="col-9">
                                                                             <span style="font-size: 1.8vh;">Get it
@@ -500,7 +513,8 @@
                                                                     style="background-color: #FFFFFF;  border: 1px solid #EBEEF7;">
                                                                     <div class="row align-items-center p-1">
                                                                         <div class="col-3">
-                                                                            <img src="assets/images/app-store.png" alt="">
+                                                                            <img src="assets/images/app-store.png"
+                                                                                alt="">
                                                                         </div>
                                                                         <div class="col-9">
                                                                             <span style="font-size: 1.8vh;">Get it
@@ -520,35 +534,36 @@
                                         <div class="sidebar-selling mt-5">
                                             <div class="sidebar-content">
                                                 <div class="row">
-                                    <div class="col-md-10 mx-auto" *ngIf="activeButton === 2">
-                                       <div  class="row mt-3 align-items-center justify-content-between"
-                                      *ngFor="let data of purchaseListTemp">
-                                      <div class="col-md-10">
-                                        <div class="row align-items-center">
+                                                    <div class="col-md-10 mx-auto" *ngIf="activeButton === 2">
+                                                        <div class="row mt-3 align-items-center justify-content-between"
+                                                            *ngFor="let data of purchaseListTemp">
+                                                            <div class="col-md-10">
+                                                                <div class="row align-items-center">
 
-                                            <div class="col-3">
-                                                <a href="/selling/{{data.id}}"
-                                                    style="text-decoration: none; color: #1B2028;">
+                                                                    <div class="col-3">
+                                                                        <a href="/selling/{{data.id}}"
+                                                                            style="text-decoration: none; color: #1B2028;">
 
-                                                    <img class="w-100"
-                                                    [src]="data.photo && data.photo.length > 0 ? data.photo[0].src : 'assets/images/default-img.jpg'">
+                                                                            <img class="w-100"
+                                                                                [src]="data.photo && data.photo.length > 0 ? data.photo[0].src : 'assets/images/default-img.jpg'">
 
-                                                </a>
+                                                                        </a>
 
-                                            </div>
-                                            <div class="col-9">
-                                                <div>
-                                                    <a href="/selling/{{data.id}}"
-                                                        style="text-decoration: none; color: #1B2028;">
-                                                        <h5 class="sm-cat-text4" class="m-0">{{data.title}}</h5>
-                                                    </a>
-                                                </div>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                        <div>
+                                                                            <a href="/selling/{{data.id}}"
+                                                                                style="text-decoration: none; color: #1B2028;">
+                                                                                <h5 class="sm-cat-text4" class="m-0">
+                                                                                    {{data.title}}</h5>
+                                                                            </a>
+                                                                        </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                      </div>
-                                        <!-- <div  class="row mt-3 align-items-center justify-content-between"
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div  class="row mt-3 align-items-center justify-content-between"
                                       *ngFor="let data of purchaseListTemp">
                                       <div class="col-md-10">
                                           <div class="row align-items-center">
@@ -599,10 +614,10 @@
                                       <hr>
                                   </div> -->
 
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-10 mx-auto" *ngIf="activeButton === 3">
@@ -634,7 +649,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-2 ">
-                                              <span class="text-end sm-cat-text1">{{data.view_count}}</span>
+                                                <span class="text-end sm-cat-text1">{{data.view_count}}</span>
 
                                                 <!-- <span class="text-end">21 View</span> -->
                                             </div>
@@ -767,9 +782,9 @@
                             <div class="row">
                                 <div class="col-md-10 mx-auto">
                                     <div class="row mt-3 align-items-center justify-content-between"
-                                            *ngFor="let data of savedItems">
-                                    <a [routerLink]="data.fix_price == null ? ['/auctionProduct', data.product.id] : ['/productDetails', data.product.id]"
-                                    style="text-decoration: none; color: #1B2028;">
+                                        *ngFor="let data of savedItems">
+                                        <a [routerLink]="data.fix_price == null ? ['/auctionProduct', data.product.id] : ['/productDetails', data.product.id]"
+                                            style="text-decoration: none; color: #1B2028;">
 
                                             <div class="row align-items-center">
                                                 <div class="col-3">
@@ -781,16 +796,18 @@
                                                         <h5 class="sm-cat-text4">{{data.product.title}}</h5>
                                                     </div>
                                                     <div class="mt-2 d-flex justify-content-between">
-                                                        <span class="sm-cat-text3" style="max-width:70%">{{data.product.location}}</span>
-                                                        <div >
-                                                            <span class="text-end sm-cat-text3" style="font-size:10px">{{data.created_at | date}}</span>
+                                                        <span class="sm-cat-text3"
+                                                            style="max-width:70%">{{data.product.location}}</span>
+                                                        <div>
+                                                            <span class="text-end sm-cat-text3"
+                                                                style="font-size:10px">{{data.created_at | date}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-</a>
-                                            <hr>
-                                        </div>
+                                        </a>
+                                        <hr>
+                                    </div>
 
                                 </div>
                             </div>
@@ -816,14 +833,17 @@
                             <div class="row">
                                 <div class="col-md-10 mx-auto">
                                     <div class="row mt-3 align-items-center justify-content-between"
-                                            *ngFor="let data of notificationList">
-                                    <a href="/review/{{data.user_id}}" style="text-decoration: none; color: #1B2028;">
+                                        *ngFor="let data of notificationList">
+                                        <a href="/review/{{data.user_id}}"
+                                            style="text-decoration: none; color: #1B2028;">
 
                                             <div class="row align-items-center">
                                                 <div class="col-3">
-                                                    <img *ngIf="data.user?.img; else defaultImage" src="{{data.user?.img}}" class="w-100 sm-h-50" alt="">
+                                                    <img *ngIf="data.user?.img; else defaultImage"
+                                                        src="{{data.user?.img}}" class="w-100 sm-h-50" alt="">
                                                     <ng-template #defaultImage>
-                                                        <img src="assets/images/default-img.jpg" class="w-100 sm-h-50" alt="Default Image">
+                                                        <img src="assets/images/default-img.jpg" class="w-100 sm-h-50"
+                                                            alt="Default Image">
                                                     </ng-template>
                                                 </div>
                                                 <div class="col-9">
@@ -831,16 +851,18 @@
                                                         <h5 class="sm-cat-text4">{{data.text}}</h5>
                                                     </div>
                                                     <div class="mt-2 d-flex justify-content-between">
-                                                        <span class="sm-cat-text3" style="max-width:70%">{{data.status}}</span>
-                                                        <div >
-                                                            <span class="text-end sm-cat-text3" style="font-size:10px">{{data.created_at | date}}</span>
+                                                        <span class="sm-cat-text3"
+                                                            style="max-width:70%">{{data.status}}</span>
+                                                        <div>
+                                                            <span class="text-end sm-cat-text3"
+                                                                style="font-size:10px">{{data.created_at | date}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-</a>
-                                            <hr>
-                                        </div>
+                                        </a>
+                                        <hr>
+                                    </div>
 
                                 </div>
                             </div>
@@ -918,7 +940,8 @@
                     <div class="row">
                         <div class="col-12 mx-auto mt-5" *ngIf="activeButton === 1">
                             <label> Edit Image</label>
-                            <div *ngIf="sellingListTemp.length > 0 && sellingListTemp[0].photo && sellingListTemp[0].photo.length > 0">
+                            <div
+                                *ngIf="sellingListTemp.length > 0 && sellingListTemp[0].photo && sellingListTemp[0].photo.length > 0">
                                 <div class="row">
                                     <div class="col-md-2 col-6 mb-3"
                                         *ngFor="let file of sellingListTemp[0].photo; let i = index">
@@ -1641,74 +1664,42 @@
                                     </div>
                                 </div> -->
                                 <div class="row col-12 p-3">
-                                  <!-- Starting Time Field -->
-                                  <div class="col-3">
-                                    <label for="startTime">Starting Time</label>
-                                    <input
-                                    [disabled]="isEditPost"
-                                      type="time"
-                                      class="form-control"
-                                      id="startTime"
-                                      name="startTime"
-                                      style="width:140px;"
-                                      [(ngModel)]="startingTime"
-                                      (input)="parseSTime($event)"
-                                      placeholder="Start Time"
-                                      required
-                                      [min]="getMinTime('start')"
-                                    />
-                                  </div>
+                                    <!-- Starting Time Field -->
+                                    <div class="col-3">
+                                        <label for="startTime">Starting Time</label>
+                                        <input [disabled]="isEditPost" type="time" class="form-control" id="startTime"
+                                            name="startTime" style="width:140px;" [(ngModel)]="startingTime"
+                                            (input)="parseSTime($event)" placeholder="Start Time" required
+                                            [min]="getMinTime('start')" />
+                                    </div>
 
-                                  <!-- Ending Time Field -->
-                                  <div class="col-3">
-                                    <label for="endingTime">Ending Time</label>
-                                    <input
-                                      type="time"
-                                      class="form-control"
-                                      id="endingTime"
-                                      name="endingTime"
-                                      [(ngModel)]="endingTime"
-                                      (input)="parseETime($event)"
-                                      placeholder="Ending Time"
-                                      required
-                                      [min]="getMinTime('end')"
-                                    />
-                                  </div>
+                                    <!-- Ending Time Field -->
+                                    <div class="col-3">
+                                        <label for="endingTime">Ending Time</label>
+                                        <input type="time" class="form-control" id="endingTime" name="endingTime"
+                                            [(ngModel)]="endingTime" (input)="parseETime($event)"
+                                            placeholder="Ending Time" required [min]="getMinTime('end')" />
+                                    </div>
 
-                                  <!-- Starting Date Field -->
-                                  <div class="col-3">
-                                    <label for="startDate">Starting Date</label>
-                                    <input
-                                    [disabled]="isEditPost"
-                                      type="date"
-                                      class="form-control"
-                                      id="startDate"
-                                      name="startDate"
-                                      style="width:140px;"
-                                      [value]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                      (input)="startingDate=parseDate($event)"
-                                      placeholder="Start Date"
-                                      required
-                                      [min]="getTodayDate()"
-                                    />
-                                  </div>
+                                    <!-- Starting Date Field -->
+                                    <div class="col-3">
+                                        <label for="startDate">Starting Date</label>
+                                        <input [disabled]="isEditPost" type="date" class="form-control" id="startDate"
+                                            name="startDate" style="width:140px;"
+                                            [value]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
+                                            (input)="startingDate=parseDate($event)" placeholder="Start Date" required
+                                            [min]="getTodayDate()" />
+                                    </div>
 
-                                  <!-- Ending Date Field -->
-                                  <div class="col-3">
-                                    <label for="endDate">Ending Date</label>
-                                    <input
-                                      type="date"
-                                      class="form-control"
-                                      id="endDate"
-                                      name="endDate"
-                                      style="width:140px;"
-                                      [value]="endingDate ? (endingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                      (input)="endingDate=parseDate($event)"
-                                      placeholder="End Date"
-                                      required
-                                      [min]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                    />
-                                  </div>
+                                    <!-- Ending Date Field -->
+                                    <div class="col-3">
+                                        <label for="endDate">Ending Date</label>
+                                        <input type="date" class="form-control" id="endDate" name="endDate"
+                                            style="width:140px;"
+                                            [value]="endingDate ? (endingDate | date:'yyyy-MM-dd') : getTodayDate()"
+                                            (input)="endingDate=parseDate($event)" placeholder="End Date" required
+                                            [min]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mt-3" *ngIf="pricingCatId == 'FixedPrice'"
@@ -2451,74 +2442,42 @@
                                     </div>
                                 </div> -->
                                 <div class="row col-12 p-3">
-                                  <!-- Starting Time Field -->
-                                  <div class="col-3">
-                                    <label for="startTime">Starting Time</label>
-                                    <input
-                                    [disabled]="isEditPost"
-                                      type="time"
-                                      class="form-control"
-                                      id="startTime"
-                                      name="startTime"
-                                      style="width:140px;"
-                                      [(ngModel)]="startingTime"
-                                      (input)="parseSTime($event)"
-                                      placeholder="Start Time"
-                                      required
-                                      [min]="getMinTime('start')"
-                                    />
-                                  </div>
+                                    <!-- Starting Time Field -->
+                                    <div class="col-3">
+                                        <label for="startTime">Starting Time</label>
+                                        <input [disabled]="isEditPost" type="time" class="form-control" id="startTime"
+                                            name="startTime" style="width:140px;" [(ngModel)]="startingTime"
+                                            (input)="parseSTime($event)" placeholder="Start Time" required
+                                            [min]="getMinTime('start')" />
+                                    </div>
 
-                                  <!-- Ending Time Field -->
-                                  <div class="col-3">
-                                    <label for="endingTime">Ending Time</label>
-                                    <input
-                                      type="time"
-                                      class="form-control"
-                                      id="endingTime"
-                                      name="endingTime"
-                                      [(ngModel)]="endingTime"
-                                      (input)="parseETime($event)"
-                                      placeholder="Ending Time"
-                                      required
-                                      [min]="getMinTime('end')"
-                                    />
-                                  </div>
+                                    <!-- Ending Time Field -->
+                                    <div class="col-3">
+                                        <label for="endingTime">Ending Time</label>
+                                        <input type="time" class="form-control" id="endingTime" name="endingTime"
+                                            [(ngModel)]="endingTime" (input)="parseETime($event)"
+                                            placeholder="Ending Time" required [min]="getMinTime('end')" />
+                                    </div>
 
-                                  <!-- Starting Date Field -->
-                                  <div class="col-3">
-                                    <label for="startDate">Starting Date</label>
-                                    <input
-                                    [disabled]="isEditPost"
-                                      type="date"
-                                      class="form-control"
-                                      id="startDate"
-                                      name="startDate"
-                                      style="width:140px;"
-                                      [value]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                      (input)="startingDate=parseDate($event)"
-                                      placeholder="Start Date"
-                                      required
-                                      [min]="getTodayDate()"
-                                    />
-                                  </div>
+                                    <!-- Starting Date Field -->
+                                    <div class="col-3">
+                                        <label for="startDate">Starting Date</label>
+                                        <input [disabled]="isEditPost" type="date" class="form-control" id="startDate"
+                                            name="startDate" style="width:140px;"
+                                            [value]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
+                                            (input)="startingDate=parseDate($event)" placeholder="Start Date" required
+                                            [min]="getTodayDate()" />
+                                    </div>
 
-                                  <!-- Ending Date Field -->
-                                  <div class="col-3">
-                                    <label for="endDate">Ending Date</label>
-                                    <input
-                                      type="date"
-                                      class="form-control"
-                                      id="endDate"
-                                      name="endDate"
-                                      style="width:140px;"
-                                      [value]="endingDate ? (endingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                      (input)="endingDate=parseDate($event)"
-                                      placeholder="End Date"
-                                      required
-                                      [min]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()"
-                                    />
-                                  </div>
+                                    <!-- Ending Date Field -->
+                                    <div class="col-3">
+                                        <label for="endDate">Ending Date</label>
+                                        <input type="date" class="form-control" id="endDate" name="endDate"
+                                            style="width:140px;"
+                                            [value]="endingDate ? (endingDate | date:'yyyy-MM-dd') : getTodayDate()"
+                                            (input)="endingDate=parseDate($event)" placeholder="End Date" required
+                                            [min]="startingDate ? (startingDate | date:'yyyy-MM-dd') : getTodayDate()" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mt-3" *ngIf="pricingCatId == 'FixedPrice'"
@@ -3165,10 +3124,12 @@
                                             <img src="assets/images/call-calling.svg" class="w-100" alt="">
                                         </div>
                                         <div class="col-10">
-                                            <h6 class="sm-cat-text4 account-Setting" *ngIf="currentUserProfile.phone; else addPhone">{{currentUserProfile.phone}}</h6>
+                                            <h6 class="sm-cat-text4 account-Setting"
+                                                *ngIf="currentUserProfile.phone; else addPhone">
+                                                {{currentUserProfile.phone}}</h6>
                                             <ng-template #addPhone>
                                                 <h6 class="sm-cat-text4 account-Setting">Add Phone Number</h6>
-                                              </ng-template>
+                                            </ng-template>
                                         </div>
                                     </div>
                                 </div>
@@ -3204,12 +3165,13 @@
                                             <img src="assets/images/password-check.svg" class="w-100" alt="">
                                         </div>
                                         <div class="col-10">
-                                            <h6 class="sm-cat-text4 account-Setting" *ngIf="currentUserProfile.password; else maskedPassword">
+                                            <h6 class="sm-cat-text4 account-Setting"
+                                                *ngIf="currentUserProfile.password; else maskedPassword">
                                                 {{ '*'.repeat(currentUserProfile.password.length) }}
-                                              </h6>
-                                              <ng-template #maskedPassword>
+                                            </h6>
+                                            <ng-template #maskedPassword>
                                                 <h6 class="sm-cat-text4 account-Setting">******************</h6>
-                                              </ng-template>
+                                            </ng-template>
 
                                         </div>
                                     </div>
@@ -3229,10 +3191,12 @@
                                         </div>
                                         <div class="col-10">
                                             <!-- {{ currentUserProfile.location ? currentUserProfile.location : 'Add Location' }} -->
-                                            <h6 class="sm-cat-text4 account-Setting" *ngIf="currentUserProfile.location; else addLocation">{{currentUserProfile.location}}</h6>
+                                            <h6 class="sm-cat-text4 account-Setting"
+                                                *ngIf="currentUserProfile.location; else addLocation">
+                                                {{currentUserProfile.location}}</h6>
                                             <ng-template #addLocation>
                                                 <h6 class="sm-cat-text4 account-Setting">Add Location</h6>
-                                              </ng-template>
+                                            </ng-template>
                                         </div>
                                     </div>
                                 </div>
@@ -3242,7 +3206,14 @@
                             </div>
                             <hr>
                         </div>
-                        <div class="col-12 pointer onHover p-2" *ngIf="currentUserProfile.image_verified_at != null && currentUserProfile.email_verified_at != null && currentUserProfile.phone_verified_at != null">
+
+                        <div class="text-dark-850 pl-1 ml-1">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg" style="opacity:0.80"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
+                            <a routerLink="/user/delete-account/{{currentUserProfile.id}}" class="text-dark-850 fw-normal pl-4 text-decoration-none ml-1">Account Deletion</a>
+                        </div>
+                      
+                        <div class="col-12 pointer onHover p-2"
+                            *ngIf="currentUserProfile.image_verified_at != null && currentUserProfile.email_verified_at != null && currentUserProfile.phone_verified_at != null">
                             <div class="row justify-content-between">
                                 <div class="col-md-6 col-10">
                                     <div class="row">
@@ -3772,7 +3743,8 @@
                                     [(ngModel)]="currentUserProfile.name" placeholder="Your Name">
                             </div>
                             <div class="col-10 mx-auto mt-3">
-                                <button [disabled]="isDisabled" class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
+                                <button [disabled]="isDisabled" class="btn btn-dark w-100"
+                                    style="border-radius: 20px; padding: 10px;"
                                     (click)="updateUserName()">Update</button>
                             </div>
                         </div>
@@ -3806,7 +3778,8 @@
                                     [(ngModel)]="currentUserProfile.phone" placeholder="Your Number">
                             </div>
                             <div class="col-10 mx-auto mt-3">
-                                <button [disabled]="isDisabled" class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
+                                <button [disabled]="isDisabled" class="btn btn-dark w-100"
+                                    style="border-radius: 20px; padding: 10px;"
                                     (click)="updateUserNumber()">Update</button>
                             </div>
                         </div>
@@ -3840,7 +3813,8 @@
                                     [(ngModel)]="currentUserProfile.email" placeholder="Your Email">
                             </div>
                             <div class="col-10 mx-auto mt-3">
-                                <button [disabled]="isDisabled" class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
+                                <button [disabled]="isDisabled" class="btn btn-dark w-100"
+                                    style="border-radius: 20px; padding: 10px;"
                                     (click)="updateUserEmail()">Update</button>
                             </div>
                         </div>
@@ -3874,7 +3848,8 @@
                                     [(ngModel)]="currentUserProfile.password" placeholder="Your Passwrod">
                             </div>
                             <div class="col-10 mx-auto mt-3">
-                                <button [disabled]="isDisabled" class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
+                                <button [disabled]="isDisabled" class="btn btn-dark w-100"
+                                    style="border-radius: 20px; padding: 10px;"
                                     (click)="updateUserPassword()">Update</button>
                             </div>
                         </div>
@@ -3911,7 +3886,8 @@
                                     style="right: 20px; top: 40px;" alt="">
                             </div>
                             <div class="col-10 mx-auto mt-3">
-                                <button [disabled]="isDisabled" class="btn btn-dark w-100" style="border-radius: 20px; padding: 10px;"
+                                <button [disabled]="isDisabled" class="btn btn-dark w-100"
+                                    style="border-radius: 20px; padding: 10px;"
                                     (click)="updateUserLocation()">Update</button>
                             </div>
                         </div>
@@ -4043,4 +4019,6 @@
             </div>
         </div>
     </div>
+
+
 </div>

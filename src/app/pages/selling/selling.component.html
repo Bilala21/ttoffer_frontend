@@ -2,186 +2,76 @@
 <div *ngIf="loading" class="loader-overlay">
     <div class="loader"></div>
 </div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-10 mx-auto">
-            <div class="row justify-content-between">
-                <div class="col-xl-5 col-md-7 mx-auto">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <!-- <img src="assets/images/light-clothes-img.svg" class="w-100" alt=""> -->
-                            <img *ngIf="sellingList[0].photo.length > 0" style="border-radius:10px; height: 70px;"
-                                [src]="sellingList[0].photo[0].src" class="w-100 " alt="">
-                            <!-- <img *ngIf="sellingList[0].video.length > 0"
-                                [src]="sellingList[0].video[0].src" class="w-100" alt=""> -->
 
-                            <!-- <img [src]="sellingList[0].photo[0].src" class="w-100" alt=""> -->
-                        </div>
-                        <div class="col-8">
-                            <h4 style="font-size:16px">{{sellingList[0].title}}</h4>
-                            <!-- <span>{{sellingList[0].fix_price}}</span> -->
-                            <span style="font-size:12px">{{sellingList[0].auction_price}}</span>
-                        </div>
-                    </div>
-                    <div class="row align-items-center justify-content-between mt-5">
-                        <div class="col-3 sm-p-0 text-center">
-                            <div class="sm-p-0 sm-h"
-                                style="height: 13vh; background-color: #414141;color: #FFFFFF; border-radius: 4vh; padding: 1vh;">
-                                <div>
-                                    <img src="assets/images/eye.svg" class="sm-img2" style="height: 3vh;" alt="">
-                                </div>
-                                <a style="text-decoration: none; color:white"
-                                    href="/productDetails/{{sellingList[0].id}}">
-                                    <div class="mt-2">
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">View </h6>
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Post</h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-3 sm-p-0 text-center">
-                            <a href="profilePageBy/{{sellingList[0].id}}/editPost">
-                                <div class="sm-p-0 sm-h"
-                                    style="height: 13vh; background-color: #414141;color: #FFFFFF; border-radius: 4vh; padding: 1vh;">
-                                    <div>
-                                        <img src="assets/images/editPost.svg" class="sm-img2" style="height: 3vh;"
-                                            alt="">
-                                    </div>
-                                    <div class="mt-2">
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Edit </h6>
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Post</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-3 sm-p-0 text-center">
-                            <a style="text-decoration: none;" href="/markAsSold/{{sellingId}}">
-                                <div class="sm-p-0 sm-h"
-                                    style="height: 13vh; background-color: #414141;color: #FFFFFF; border-radius: 4vh; padding: 1vh;">
-                                    <div>
-                                        <img src="assets/images/bookmark-2.svg" class="sm-img2" style="height: 3vh;"
-                                            alt="">
-                                    </div>
-                                    <div class="mt-2">
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Mark as </h6>
-                                        <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Sold</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-3 sm-p-0 text-center">
-                            <div class="sm-p-0 sm-h"
-                                style="height: 13vh; background-color: #414141;color: #FFFFFF; border-radius: 4vh; padding: 1vh;">
-                                <div>
-                                    <img src="assets/images/trend-up.svg" class="sm-img2" style="height: 3vh;" alt="">
-                                </div>
-                                <div class="mt-2">
-                                    <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Sell </h6>
-                                    <h6 style="font-size: 2vh;" class="m-0 p-0 sm-cat-text3">Faster</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-7 mx-auto">
-                    <hr>
-                    <div (click)="openTab()" style="cursor: pointer;"
-                        class="row justify-content-between align-items-center">
-                        <div class="col-9">
-                            <div class="row align-items-center">
-                                <div class="col-1">
-                                    <img src="assets/images/status-up.svg" alt="">
-                                </div>
-                                <div class="col-9">
-                                    <h5 class="m-0 p-0 sm-cat-text4" style="font-size:16px">Item Performance</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <img src="assets/images/arrow-left.svg" alt="">
-                        </div>
-                    </div>
-                    <hr>
-                    <div *ngIf="showPerformance">
-                        <div class="row align-items-center">
-                            <div class="col-2">
-                                <img [src]="sellingList[0].photo[0].src" class="w-100 rounded-circle" style="border-radius:10px" alt="">
-                                <!-- <img src="assets/images/light-clothes-img.svg" class="w-100" alt=""> -->
-                            </div>
-                            <div class="col-8">
-                                <h4 class="sm-cat-text4" style="font-size:16px">{{sellingList[0].title}}</h4>
-                                <span class="sm-cat-text3" style="font-size:12px" *ngIf="sellingList[0].is_sold<=0">Not Sold</span>
-                                <span class="sm-cat-text3" style="font-size:12px" *ngIf="sellingList[0].is_sold>0">Sold</span>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-5">
-                                <span class="sm-cat-text3"
-                                    style="font-size: 3vh; font-weight: bold;margin-right: 1vh;" style="font-size:12px">Total Views:</span>
-                                <span class="sm-cat-text3">{{sellingList[0].views_count}}</span>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <img src="assets/images/chart.svg" class="w-100" alt="">
-                                <button class="btn btn-dark w-100 mt-5 p-3" style="border-radius: 4vh;">Boost
-                                    Plus</button>
-                                <span style="margin-top: 3vh;">Get an average of 20x more views each day</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngIf="!showPerformance">
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <h5 class="sm-cat-text4">Message</h5>
-                            </div>
-                        </div>
-                        <div class="sidebar">
-                            <div class="sidebar-content">
-                                <div *ngFor="let data of message">
-                                    <div class="row mt-4 align-items-center">
-                                        <div class="col-md-10">
-                                            <div class="row align-items-center">
-                                                <div class="col-2">
-                                                    <img src="{{data.sender.img}}" class="imageSize" alt="">
-                                                </div>
-                                                <div class="col-8">
-                                                    <h5 style="font-size:16px">{{data.sender.name}}</h5>
-                                                    <span style="font-size:12px">{{data.message}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <span style="font-size:12px">{{data.created_at | date}}</span>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="row justify-content-between">
-                                    <div class="col-5">
-                                        <h4 class="sm-cat-text4" style="font-size:14px">Sell faster with promotions</h4>
-                                        <span class="sm-cat-text3" style="font-size:12px">Get an average of 20x more
-                                            views each day</span>
-                                    </div>
-                                    <div class="col-4" style="text-align: end;">
-                                        <img src="assets/images/close-circle.svg" alt="">
-                                        <button class="btn btn-dark w-100 mt-3 p-2"
-                                            style="border-radius: 16px; margin-left: 1vh; font-size:10px"><img
-                                                src="assets/images/trend-up.svg" alt=""> Sell Faster</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- BILAL -->
+<div class="container selling-container" *ngIf="!loading">
+    <div class="row justify-content-center">
+        <div class="mt-5 w-100">
+            <h3 class="text-dark-800 text-center fs-32">Purchases & Sales</h3>
+            <hr>
         </div>
+        <div class="w-100 d-flex justify-content-center mt-2 mb-2">
+            <app-tabs class="w-100 md-px-0 app-tabs" [tabData]="tabs"
+                ulClass="d-flex selling-tab-container rounded-pill overflow-hidden" [activeTab]="activeTab"
+                tabClass="selling-tab fs-14 rounded-0" />
+        </div>
+        @if (!apiData[activeTab].length) {
+        <div class="w-100 selling-notfound notfound d-flex justify-content-center {{notFoundData[activeTab].tabName}}">
+            <app-selling-notfound image="{{notFoundData[activeTab].image}}"
+                heading="{{notFoundData[activeTab].heading}}" text="{{notFoundData[activeTab].text}}">
+                @if (activeTab=='selling') {
+                <div>
+                    <p class="fs-19 text-dark-400">Download our app</p>
+                    <div class="d-flex align-items-center justify-content-center app-icon">
+                        <a routerLink="#"
+                            class="d-flex align-items-center justify-content-center text-decoration-none app-box mr-3">
+                            <img src="/assets\images\google-play-icon.png" alt="Play store" loading="lazy" width="24"
+                                class="object-fit-contain">
+                            <div class="ml-2 icon-text">
+                                <p class="mb-0">Get it now</p>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                        <a routerLink="#"
+                            class="d-flex align-items-center justify-content-center text-decoration-none app-box">
+                            <img src="/assets\images\apple-store-icon.png" alt="Apple store" loading="lazy" width="24"
+                                class="object-fit-contain">
+                            <div class="ml-2 icon-text">
+                                <p class="mb-0">Get it now</p>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                }
+            </app-selling-notfound>
+        </div>
+        }
+        @else {
+        <section class="w-100 post-section pl-5">
+            @for (item of cardData[activeTab]; track $index) {
+            <a routerLink="{{activeTab=='selling'?'/selling-detail/1':'#'}}" class="text-decoration-none d-block pl-4"
+                [ngClass]="activeTab !=='selling'?'cursor-default':''">
+                <app-card [data]="item">
+                    <div slot="users" class="users d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            <img *ngFor="let user of item.users ; let i=index" [src]="user?.image" alt="images"
+                                width="30" height="30" class="rounded-pill" [ngStyle]="{'z-index': -i}">
+                        </div>
+                        <span class="text-gray-400 fs-12 views">{{item?.views}}</span>
+                    </div>
+                    <div slot="extra" class="d-flex fs-12 align-items-center pt-1 footer text-dark-450">
+                        <span>{{item?.sold}}</span>
+                        <span>{{item?.status}}</span>
+                    </div>
+                </app-card>
+                <div class="d-flex justify-content-center my-2 line-img">
+                    <img src="\assets\images\line-img.png" alt="line" width="350">
+                </div>
+            </a>
+            }
+        </section>
+        }
     </div>
     <hr class="mt-5">
-    <!-- <app-footer></app-footer> -->
 </div>
