@@ -1,0 +1,52 @@
+// Variables for banner heights
+$banner-height-desktop-1: 227px;
+$banner-height-desktop-2: 200px;
+$banner-height-tablet-1: 190px;
+$banner-height-tablet-2: 150px;
+$banner-height-mobile-1: 150px;
+$banner-height-mobile-2: 120px;
+$border-radius: 20px;
+
+// Mixin for common banner styles
+@mixin banner-styles($max-height) {
+  max-height: $max-height;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  img {
+    width: 100%; /* Makes the image take the full width of its container */
+    max-height: 100%; /* Ensure the image does not exceed its container's height */
+    height: auto; /* Maintains the aspect ratio of the image */
+    border-radius: $border-radius; /* Same border-radius for the image */
+    object-fit: cover; /* Ensures the image covers the entire area without distortion */
+  }
+}
+
+// Promotion banners
+.prom-banner-1 {
+  @include banner-styles($banner-height-desktop-1); /* Default for larger screens */
+}
+
+.prom-banner-2 {
+  @include banner-styles($banner-height-desktop-2); /* Default for larger screens */
+}
+
+/* Media query for tablet devices */
+@media (max-width: 1024px) {
+  .prom-banner-1 {
+    max-height: $banner-height-tablet-1; /* Adjust max-height for tablet screens */
+  }
+  .prom-banner-2 {
+    max-height: $banner-height-tablet-2; /* Adjust max-height for tablet screens */
+  }
+}
+
+/* Media query for small screens */
+@media (max-width: 576px) {
+  .prom-banner-1 {
+    max-height: $banner-height-mobile-1; /* Adjust max-height for mobile */
+  }
+  .prom-banner-2 {
+    max-height: $banner-height-mobile-2; /* Adjust max-height for mobile */
+  }
+}

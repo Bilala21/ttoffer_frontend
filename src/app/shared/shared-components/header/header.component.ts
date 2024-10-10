@@ -15,6 +15,7 @@ import { catchError, of, throwError } from 'rxjs';
 import { UserModule } from '../../../user/user.module';
 import { LookupService } from '../../services/lookup/lookup.service';
 import { category } from '../../Models/Product/category';
+import { SharedModule } from '../../shared.module';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -27,16 +28,56 @@ import { category } from '../../Models/Product/category';
     CommonModule,
     NotificationComponent,
     RouterModule,
-        UserModule
-    ]
+    UserModule,
+    SharedModule,
+],
 })
-
 export class HeaderComponent {
   isMenuDropdownOpen = false;
   sideBarVale = false;
   sideBar() {
-    this.sideBarVale = true;
+    console.log('check');
+    this.sideBarVale = !this.sideBarVale;
+
+    if (this.sideBarVale) {
+      document.body.style.overflow = 'hidden';
+    }else{
+      document.body.style.overflow = '';
+    }
   }
+  
+
+  // haroon-start-code
+  isMobileSubMenuVisible = false;
+  isDesktop = true;
+  maxCategoriesToShow = 8; // Default for desktop
+
+ 
+
+  toggleMobileSubMenu() {
+    this.isMobileSubMenuVisible = !this.isMobileSubMenuVisible;
+  }
+
+  getVisibleCategories() {
+    return this.categories;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateScreenSize(event.target.innerWidth);
+  }
+
+  updateScreenSize(width: number) {
+    if (width < 992) { // Tablet/Mobile screen sizes
+      this.isDesktop = false;
+      this.maxCategoriesToShow = 4; // Show fewer categories on smaller screens
+    } else {
+      this.isDesktop = true;
+      this.maxCategoriesToShow = 8; // Show more categories on larger screens
+    }
+  }
+
+  // haroon-end-code
   @ViewChild('inputFields')
   isMobileMenuVisible: boolean = false;
   inputFields: ElementRef[] = [];
@@ -73,8 +114,20 @@ export class HeaderComponent {
   loading = false;
   currentUserId:string="";
   errorMessage!:string;
-  categories! : category []
-
+  categories: any = [
+    { imgSrc: '/assets/catImage/mobile.png', title: 'Mobile', id: 1 },
+    { imgSrc: '/assets/catImage/electronics.png', title: 'Electronic & Appliances',id: 2 },
+    { imgSrc: '/assets/catImage/propertySale.png', title: 'Property For Sale', id: 3 },
+    { imgSrc: '/assets/catImage/vahicel.png', title: 'Vahicels',id: 4 },
+    { imgSrc: '/assets/catImage/bike.png', title: 'Bikes',id: 5 },
+    { imgSrc: '/assets/catImage/jobs.png', title: 'Jobs',id: 6 },
+    { imgSrc: '/assets/catImage/service.png', title: 'Services',id: 7 },
+    { imgSrc: '/assets/catImage/furniture.png', title: 'Furniture & Home',id: 8 },
+    { imgSrc: '/assets/catImage/fashion.png', title: 'Fashion & Beauty', id: 9 },
+    { imgSrc: '/assets/catImage/kids.png', title: 'Kids', id: 10},
+    { imgSrc: '/assets/catImage/animals.png', title: 'Animals',id: 11 },
+    { imgSrc: '/assets/catImage/bit-coin.png', title: 'Crypto Market', subTitle:'Coming Soon'}
+  ];
   async ngOnDestroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);

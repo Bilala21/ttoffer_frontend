@@ -1,204 +1,178 @@
+// Variables
+$carousel-height-desktop: 500px;
+$carousel-height-tablet: 350px;
+$carousel-height-mobile: 200px;
+$btn-background: #f7b924;
+$btn-hover-background: #d4a617;
+$caption-color: #fff;
+$border-radius: 20px;
+
+// General Carousel Item Styles
 .carousel-inner {
-    .carousel-item {
-      height: 100vh;
-      img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        // opacity: 0.8;
-      }
-    }
-    .custom-caption {
-      position: absolute;
-      top: 30%;
-      left: 10%;
-      right: 10%;
-      bottom: 15%;
-      text-align: left;
-      color: #fff;
-    }
-    .custom-caption h2 {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-    .custom-caption p {
-      font-size: 1rem;
-      margin-top: 0.5rem;
-    }
-    .btn-start {
-      margin-top: 1rem;
-      padding: 0.8rem 1.5rem;
-      background-color: #f7b924;
-      color: #000;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .btn-start:hover {
-      background-color: #d4a617;
+  .carousel-item {
+    max-height: $carousel-height-desktop;
+    height: 100%;
+    
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: $carousel-height-desktop;
+      border-radius: $border-radius;
     }
   }
-  .carousel-indicators [data-target]{
-    background-color: #d3cec1;
+}
+
+// Custom Caption Styling
+.custom-caption {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 15%;
+  text-align: left;
+  color: $caption-color;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+// Button Styling
+.btn-start {
+  padding: 0.8rem 1.5rem;
+  background-color: $btn-background;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $btn-hover-background;
+  }
+}
+
+// Carousel Indicators
+.carousel-indicators {
+  margin-bottom: 6px;
+
+  [data-target] {
+    background-color: #fff;
     width: 10px !important;
     height: 10px !important;
     border-radius: 50% !important;
   }
-  .carousel-indicators .active {
-    background-color: #c1af7d;
+
+  .active {
+    background-color: $btn-background;
     min-width: 38px !important;
     min-height: 10px !important;
-    border: .5 solid #c1af7d;
+    border: 0.1px solid $btn-background;
     border-radius: 10px !important;
+    margin-top: 8px;
   }
-  @media (max-width: 768px) {
-    .carousel-inner .carousel-item {
-      height: 70vh;
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .carousel-inner {
+    .carousel-item {
+      max-height: $carousel-height-tablet;
+      height: $carousel-height-tablet;
+
+      img {
+        height: $carousel-height-tablet;
+        border-radius: 15px;
+      }
     }
+
     .custom-caption {
-      top: 20%;
+      top: 10%;
+      left: 8%;
+      right: 8%;
+      bottom: 10%;
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
     }
-    .custom-caption h2 {
-      font-size: 2rem;
-    }
-    .custom-caption p {
+    
+    .btn-start {
+      padding: 0.6rem 1.2rem;
       font-size: 0.9rem;
     }
   }
-  @media (max-width: 576px) {
-    .carousel-inner .carousel-item {
-      height: 60vh;
+}
+
+@media (max-width: 576px) {
+  .carousel-inner {
+    .carousel-item {
+      max-height: $carousel-height-mobile;
+
+      img {
+        border-radius: 10px;
+        max-height: 100%;
+      }
     }
+
     .custom-caption {
-      top: 15%;
+      top: 5%;
+      left: 5%;
+      right: 5%;
+      bottom: 5%;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
     }
-    .custom-caption h2 {
-      font-size: 1.5rem;
-    }
-    .custom-caption p {
+
+    .btn-start {
+      padding: 0.5rem 1rem;
       font-size: 0.8rem;
     }
   }
-  @media (min-width: 1200px) {
-    .carousel-inner .carousel-item {
-      height: calc(100vh - 50px);
+}
+
+@media (min-width: 1200px) {
+  .carousel-inner {
+    .carousel-item {
+      max-height: $carousel-height-desktop;
+
+      img {
+        height: auto;
+        border-radius: $border-radius;
+        max-height: $carousel-height-desktop;
+      }
+    }
+
+    .custom-caption {
+      top: 35%;
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+    }
+
+    .btn-start {
+      padding: 1rem 2rem;
+      font-size: 1rem;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .carousel {
-//   .carousel-inner {
-//     .carousel-item {
-//       height: 100vh; /* Full height for large screens */
-//       img {
-//         object-fit: cover;
-//         width: 100%;
-//         height: 100%;
-//         border-radius: 20px;
-//         opacity: 0.8;
-//       }
-
-//       .custom-caption {
-//         position: absolute;
-//         top: 30%;
-//         left: 10%;
-//         right: 10%;
-//         bottom: 15%;
-//         text-align: left;
-//         color: #fff;
-
-//         h2 {
-//           font-size: 2.5rem;
-//           font-weight: bold;
-//         }
-
-//         p {
-//           font-size: 1rem;
-//           margin-top: 0.5rem;
-//         }
-
-//         .btn-start {
-//           margin-top: 1rem;
-//           padding: 0.8rem 1.5rem;
-//           background-color: #f7b924;
-//           color: #000;
-//           border: none;
-//           border-radius: 5px;
-//           font-weight: bold;
-//           &:hover {
-//             background-color: #d4a617;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   .bullet [data-bs-target] {
-//     background-color: #d3cec1; /* Bullet color */
-//     width: 10px !important;
-//     height: 10px !important;
-//     border-radius: 20px !important;
-//   }
-
-//   .bullet .active {
-//     background-color: #c1af7d; /* Active bullet color */
-//     width: 38px !important;
-//     height: 10px !important;
-//     border-radius: 8px !important;
-//   }
-
-//   /* Media Queries for responsive adjustments */
-//   @media (max-width: 768px) {
-//     .carousel-inner .carousel-item {
-//       height: 70vh; /* Reduced height for tablets */
-//     }
-
-//     .custom-caption {
-//       top: 20%;
-//       h2 {
-//         font-size: 2rem;
-//       }
-//       p {
-//         font-size: 0.9rem;
-//       }
-//     }
-//   }
-
-//   @media (max-width: 576px) {
-//     .carousel-inner .carousel-item {
-//       height: 60vh; /* Reduced height for mobiles */
-//     }
-
-//     .custom-caption {
-//       top: 15%;
-//       h2 {
-//         font-size: 1.5rem;
-//       }
-//       p {
-//         font-size: 0.8rem;
-//       }
-//     }
-//   }
-
-//   /* For extra-large screens */
-//   @media (min-width: 1200px) {
-//     .carousel-inner .carousel-item {
-//       height: calc(100vh - 50px); /* Full height */
-//     }
-//   }
-// }
+}
