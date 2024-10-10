@@ -1482,6 +1482,90 @@
                   </div>
                 </div>
               </div>
+              <div class="row mt-3">
+                <div class="col-6">
+                  <label>Category (required)</label>
+                  <select
+                    class="form-select form-control"
+                    [ngClass]="{'is-invalid': validationErrors['category']}"
+                    style="border-radius: 2vh"
+                    [(ngModel)]="selectedCategoryId"
+                    (change)="getSubcategories(selectedCategoryId); onFieldChange('category')"
+                    aria-label="Default select example"
+                  >
+                    <option value="" disabled selected>Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.id">
+                      {{ category.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="validationErrors['category']" class="text-danger mt-1">
+                    {{ validationErrors['category'] }}
+                  </div>
+                </div>
+              
+                <div class="col-6">
+                  <label>Subcategory (required)</label>
+                  <select
+                    class="form-select form-control"
+                    [ngClass]="{'is-invalid': validationErrors['subcategory']}"
+                    style="border-radius: 2vh"
+                    [(ngModel)]="selectedSubCategoryId"
+                    (change)="onFieldChange('subcategory')"
+                    aria-label="Default select example"
+                  >
+                    <option value="" disabled selected>Select a subcategory</option>
+                    <option *ngFor="let subCategory of subCategory" [value]="subCategory.id">
+                      {{ subCategory.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="validationErrors['subcategory']" class="text-danger mt-1">
+                    {{ validationErrors['subcategory'] }}
+                  </div>
+                </div>
+              </div>
+              
+              <hr />
+              <!-- ******************************Mobile****************************** -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; row-gap: 0px; column-gap: 35px;">
+                <div class="row mt-3" *ngFor="let field of categoryFields[selectedCategoryId]">
+                  <div class="col-md-6" *ngIf="field.type === 'select'" style="max-width:100%; flex: 0 0 100%">
+                    <label>{{ field.label }}</label>
+                    <select
+                      class="form-select form-control"
+                      [ngClass]="{'is-invalid': validationErrors[field.model]}"
+                      style="border-radius: 2vh"
+                      [(ngModel)]="attributes[field.model]"
+                      (change)="onFieldChange(field.model)"  
+                      aria-label="Default select example"
+                    >
+                      <option *ngFor="let option of field.options" [value]="option.id">
+                        {{ option.name }}
+                      </option>
+                    </select>
+                    <!-- Error message for select fields -->
+                    <div *ngIf="validationErrors[field.model]" class="text-danger mt-1">
+                      {{ validationErrors[field.model] }}
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6" *ngIf="field.type === 'input'" style="max-width:100%; flex: 0 0 100%">
+                    <label>{{ field.label }}</label>
+                    <input
+                      type="text"
+                      class="form-control w-100"
+                      [ngClass]="{'is-invalid': validationErrors[field.model]}"
+                      [(ngModel)]="attributes[field.model]"
+                      (input)="onFieldChange(field.model)"  
+                      [placeholder]="field.placeholder"
+                      style="padding: 3vh; border-radius: 2vh"
+                    />
+                    <!-- Error message for input fields -->
+                    <div *ngIf="validationErrors[field.model]" class="text-danger mt-1">
+                      {{ validationErrors[field.model] }}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <hr />
               <div class="row mt-3">
                 <div class="col-12">
@@ -1697,9 +1781,8 @@
                 <div class="col-md-6 mx-auto">
                   <button
                     class="btn btn-dark w-100"
-                    (click)="EditProductFirstStep()"
                   >
-                    Post
+                    Update
                   </button>
                 </div>
               </div>
@@ -2229,8 +2312,7 @@
             <hr />
           </div>
         </div>
-      </div>
-      <div
+        <div
         *ngIf="selectedTab === 'boostPlus' && !showDiv"
         class="col-xl-7 col-md-7"
       >
@@ -2309,54 +2391,102 @@
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="selectedTab === 'customLinks'" class="col-xl-7 col-md-7">
-        <div class="row">
-          <div class="col-md-9 mx-auto" style="margin-top: 20vh">
-            <div class="row align-items-center">
-              <div class="col-2">
-                <img src="assets/images/link.svg" class="w-100" alt="" />
+        </div>
+        <div *ngIf="selectedTab === 'helpCenter'" class="col-xl-7 col-md-7">
+          <div class="row">
+            <div class="col-md-9 mx-auto" style="margin-top: 20vh">
+              <div class="row align-items-center">
+                <div class="col-2">
+                  <img
+                    src="assets/images/message-question.svg"
+                    class="w-100"
+                    alt=""
+                  />
+                </div>
+                <div class="col-10 m-0 p-0">
+                  <h1>Help Center</h1>
+                </div>
               </div>
-              <div class="col-10 m-0 p-0">
-                <h1 class="sm-cat-text4">Custom Link</h1>
+              <hr />
+              <div class="row">
+                <div class="col-12" style="height: 90vh">
+                  <div style="margin-top: 90vh">
+                    <input
+                      type="text"
+                      class="form-control w-100"
+                      style="
+                        border-radius: 10px;
+                        position: relative;
+                        padding: 4vh;
+                      "
+                      placeholder="Type a message"
+                    />
+                    <img
+                      src="assets/images/send-icon.png"
+                      style="
+                        height: 3vh;
+                        right: 5vh;
+                        bottom: -6vh;
+                        position: absolute;
+                      "
+                      alt=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <hr />
-        <div class="row">
-          <div class="col-12 mt-5 pointer p-2">
-            <h5 style="font-size: 14px">
-              This is your profile link. You can copy by clicking on this
-            </h5>
-            <input
-              [disabled]="true"
-              type="text"
-              placeholder="ttoffer.com/profile/your profile name"
-              [(ngModel)]="customLink"
-              class="form-control w-100 p-3 mt-2"
-              style="border-radius: 1vh"
-            />
-            <!-- <p style="font-size:16px; color:#939699" class="mt-3">Please do not use special characters,
-                                Offensive language, or copy righted
-                                content that
-                                you do not own. We reserve the custom profile link ar any time. By tapping “Create
-                                Custom link”, you agree toTT Offer <a href=""
-                                    style=" color: black; font-weight: bold;">Terms of Services</a></p> -->
-            <button
-              class="btn w-100 mt-2"
-              (click)="copyCustomLink()"
-              style="
-                background-color: #1e293b;
-                color: white;
-                border-radius: 2vh;
-              "
-            >
-              Copy Profile Link
-            </button>
+        <div *ngIf="selectedTab === 'customLinks'" class="col-xl-7 col-md-7">
+          <div class="row">
+            <div class="col-md-9 mx-auto" style="margin-top: 20vh">
+              <div class="row align-items-center">
+                <div class="col-2">
+                  <img src="assets/images/link.svg" class="w-100" alt="" />
+                </div>
+                <div class="col-10 m-0 p-0">
+                  <h1 class="sm-cat-text4">Custom Link</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12 mt-5 pointer p-2">
+              <h5 style="font-size: 14px">
+                This is your profile link. You can copy by clicking on this
+              </h5>
+              <input
+                [disabled]="true"
+                type="text"
+                placeholder="ttoffer.com/profile/your profile name"
+                [(ngModel)]="customLink"
+                class="form-control w-100 p-3 mt-2"
+                style="border-radius: 1vh"
+              />
+              <!-- <p style="font-size:16px; color:#939699" class="mt-3">Please do not use special characters,
+                                  Offensive language, or copy righted
+                                  content that
+                                  you do not own. We reserve the custom profile link ar any time. By tapping “Create
+                                  Custom link”, you agree toTT Offer <a href=""
+                                      style=" color: black; font-weight: bold;">Terms of Services</a></p> -->
+              <button
+                class="btn w-100 mt-2"
+                (click)="copyCustomLink()"
+                style="
+                  background-color: #1e293b;
+                  color: white;
+                  border-radius: 2vh;
+                "
+              >
+                Copy Profile Link
+              </button>
+            </div>
           </div>
         </div>
       </div>
+    
+      
       <div *ngIf="showDiv" class="col-xl-7 col-md-7">
         <div class="row">
           <div class="col-9 text-center mx-auto" style="margin-top: 20vh">
@@ -2499,51 +2629,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="selectedTab === 'helpCenter'" class="col-xl-7 col-md-7">
-        <div class="row">
-          <div class="col-md-9 mx-auto" style="margin-top: 20vh">
-            <div class="row align-items-center">
-              <div class="col-2">
-                <img
-                  src="assets/images/message-question.svg"
-                  class="w-100"
-                  alt=""
-                />
-              </div>
-              <div class="col-10 m-0 p-0">
-                <h1>Help Center</h1>
-              </div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-12" style="height: 90vh">
-                <div style="margin-top: 90vh">
-                  <input
-                    type="text"
-                    class="form-control w-100"
-                    style="
-                      border-radius: 10px;
-                      position: relative;
-                      padding: 4vh;
-                    "
-                    placeholder="Type a message"
-                  />
-                  <img
-                    src="assets/images/send-icon.png"
-                    style="
-                      height: 3vh;
-                      right: 5vh;
-                      bottom: -6vh;
-                      position: absolute;
-                    "
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>
