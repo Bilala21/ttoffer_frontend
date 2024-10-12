@@ -144,6 +144,8 @@ export class HeaderComponent {
     this.isMobileMenuVisible = !this.isMobileMenuVisible;
   }
   async ngOnInit(): Promise<void> {
+    // Set the screen size on component initialization
+    this.updateScreenSize(window.innerWidth);
     if (!localStorage.getItem('key')) {
       this.openModal()
     }

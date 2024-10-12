@@ -5,7 +5,7 @@
     </p>
     <div class="row" *ngIf="postList.length > 0">
       <div [ngClass]="cols" *ngFor="let post of postList">
-        <app-post-card class="post" />
+        <app-post-card class="post" [Special]="Special" />
       </div>
     </div>
   </ng-container>

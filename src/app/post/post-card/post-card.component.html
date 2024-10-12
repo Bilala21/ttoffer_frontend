@@ -6,14 +6,14 @@
       alt="Product Image"
       loading="lazy"
     />
-    <div class="offer-sticker">Special Offer</div>
+    <div *ngIf="Special" class="offer-sticker">Special Offer</div>
     <div class="wish-list">
       <img src="assets/images/fav.png" alt="Wishlist" loading="lazy" />
     </div>
 
     <div class="card-details">
       <b class="price">AED 15000</b>
-      <div class="remaning-timer">15:50 Remaining</div>
+      <div *ngIf="Special" class="remaning-timer">15:50 Remaining</div>
     </div>
 
     <h5 class="card-title ellipsis">HYUNDAI GRAND | 10 1.3 CRDI</h5>

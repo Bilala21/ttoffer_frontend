@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PostComponent implements OnInit {
   //  @Input() cols = "col-12 col-md-6 col-lg-6 col-xl-4";
   @Input() cols!:string
+  @Input() Special?:boolean
   loaded = true;
   postList = [
     {

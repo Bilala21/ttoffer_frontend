@@ -569,6 +569,7 @@
 }
 @media (max-width: 450px) {
   .navbar-desktop {
+    flex: 1;
     .logo {
       width: 40.36px !important;
       height: 40.79px !important;
@@ -594,7 +595,8 @@
   }
   // search-input
   .search-box {
-    width: 130px;
+    // width: 130px;
+    flex: 1;
     border-radius: 13px;
     padding: 1px 3px;
     .search-input {
@@ -622,6 +624,7 @@
 
 @media (max-width: 320px) {
   .navbar-desktop {
+
     .logo {
       width: 30.36px !important;
       height: 30.79px !important;

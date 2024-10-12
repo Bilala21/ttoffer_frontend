@@ -3,8 +3,8 @@
   margin-bottom: 60px;
 }
 .footer-logo {
-  width: 133.36px;
-  height: 35.79px;
+  width: 50px;
+  height: 50px;
 }
 
 .footer-logo img {
@@ -25,7 +25,7 @@
 }
 
 .margin-top-class {
-  margin-top: 36px !important;
+  margin-top: 50px !important;
 }
 
 .footer-headings {
@@ -129,7 +129,7 @@
   .support-heading{
     margin-top: 0px;
   }
-  // /////==========================down-footer============================///////
+  ///////==========================down-footer============================///////
   .down-footer {
     background: transparent;
     padding-top: 0px;
@@ -149,8 +149,26 @@
     margin-top: 10px;
   }
 }
-// ////=========================== 768 ================================ /////
+//////=========================== 768 ================================ /////
 @media (max-width: 768px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+  .support-heading{
+    margin-top: -8px;
+  }
+  .footer-google-app-store-btn{
+    width: 115px;
+  }
+}
+
+///////======================================= 300px ==============================/////
+@media (max-width: 767px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
   .support-heading{
     margin-top: 20px;
   }
@@ -159,86 +177,14 @@
   }
 }
 ///////======================================= 300px ==============================/////
-@media (max-width:300px) {
+@media (max-width:400px) {
+  .footer-logo {
+    width: 30px;
+    height: 30px;
+  }
   .low-300{
     margin-top: 5px;
   }
 }
-
-// .footer-content {
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: space-around;
-//   padding: 20px;
-// }
-
-// .footer-section {
-//   flex: 1;
-//   min-width: 200px;
-//   margin: 20px;
-// }
-
-// .footer-section h3 {
-//   font-size: 1.2em;
-//   margin-bottom: 10px;
-// }
-
-// .footer-section p,
-// .footer-section ul {
-//   margin: 5px 0;
-// }
-
-// .footer-section ul {
-//   list-style-type: none;
-//   padding: 0;
-// }
-
-// .footer-section ul li {
-//   margin: 5px 0;
-// }
-
-// .footer-section ul li a {
-//   text-decoration: none;
-//   color: #333;
-// }
-
-// .app-links img {
-//   width: 120px;
-//   margin: 10px 5px;
-// }
-
-// .social-links a {
-//   margin: 0 10px;
-//   font-size: 1.5em;
-//   color: #333;
-// }
-
-// .footer-bottom {
-//   background-color: #e9ecef;
-//   padding: 10px 0;
-//   font-size: 0.9em;
-// }
-
-// .footer-bottom p {
-//   margin: 5px 0;
-// }
-
-// .footer-bottom .footer-links {
-//   margin: 10px 0;
-// }
-
-// .footer-bottom .footer-links a {
-//   text-decoration: none;
-//   color: #333;
-//   margin: 0 5px;
-// }
-
-// .pointer {
-//   cursor: pointer;
-// }
-
-// .col-2 p:hover {
-//   color: blue !important;
-// }
 
 

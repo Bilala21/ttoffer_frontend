@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PostCardComponent implements OnInit {
   location = "2972 Westheimer Rd. Santa Ana, Illinois 85486";
+  @Input() Special?:boolean
   constructor() { }
 
   ngOnInit() {

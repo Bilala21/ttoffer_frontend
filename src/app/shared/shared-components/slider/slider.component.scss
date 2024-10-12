@@ -1,6 +1,6 @@
 // Variables
-$carousel-height-desktop: 500px;
-$carousel-height-tablet: 350px;
+$carousel-height-desktop: 370px;
+$carousel-height-tablet: 270px;
 $carousel-height-mobile: 200px;
 $btn-background: #f7b924;
 $btn-hover-background: #d4a617;
@@ -59,23 +59,23 @@ $border-radius: 20px;
 
 // Carousel Indicators
 .carousel-indicators {
-  margin-bottom: 6px;
+  // margin-bottom: 6px;
+  display: none;
+  // [data-target] {
+  //   background-color: #fff;
+  //   width: 10px !important;
+  //   height: 10px !important;
+  //   border-radius: 50% !important;
+  // }
 
-  [data-target] {
-    background-color: #fff;
-    width: 10px !important;
-    height: 10px !important;
-    border-radius: 50% !important;
-  }
-
-  .active {
-    background-color: $btn-background;
-    min-width: 38px !important;
-    min-height: 10px !important;
-    border: 0.1px solid $btn-background;
-    border-radius: 10px !important;
-    margin-top: 8px;
-  }
+  // .active {
+  //   background-color: $btn-background;
+  //   min-width: 38px !important;
+  //   min-height: 10px !important;
+  //   border: 0.1px solid $btn-background;
+  //   border-radius: 10px !important;
+  //   margin-top: 8px;
+  // }
 }
 
 // Responsive Styles
