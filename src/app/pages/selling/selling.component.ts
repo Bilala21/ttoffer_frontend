@@ -46,108 +46,6 @@ export class SellingComponent {
       heading: "When you archive an item, it’ll appear here",
     }
   }
-  cardData: any = {
-    1: [
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold",
-        status: "Unarchive",
-        views: "100 View",
-        users: [
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-        ]
-      },
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold"
-      },
-    ],
-    2: [
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold",
-        status: "Unarchive",
-        views: "40 View",
-        users: [
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-        ]
-      },
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold"
-      },
-    ],
-    3: [
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold",
-        status: "Unarchive",
-        views: "60 View",
-        users: [
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img1.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-          {
-            image: "/assets/images/tempImage/img2.jpeg",
-          },
-        ]
-      },
-      {
-        tabName: "selling",
-        image: "/assets/images/tempImage/img2.jpeg",
-        heading: "Begin Selling Items 12!",
-        sold: "Sold"
-      },
-    ],
-  };
-
   constructor(
     private globalStateService: GlobalStateService, private mainServicesService: MainServicesService
   ) {
@@ -172,5 +70,6 @@ export class SellingComponent {
       this.activeTab = state.tab.tabName;
     });
     this.getData()
+    
   }
 }

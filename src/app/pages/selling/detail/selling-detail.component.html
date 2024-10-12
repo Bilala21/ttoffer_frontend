@@ -1,10 +1,14 @@
 <main>
+
     <div class="container post-detail-container pb-5">
-        <div class="row justify-content-between">
+        <div *ngIf="loading" class="text-center">
+            <app-loader />
+        </div>
+        <div class="row justify-content-between" *ngIf="!loading">
             <div class="pr-4 pt-2">
-                <app-card [data]="{image:'/assets/images/tempImage/img2.jpeg',heading:'Modern light clothes'}">
+                <app-card [data]="{image:postData?.photo[0].src,title:postData.title}">
                     <div slot="extra" class="d-flex fs-12 align-items-center pt-1 footer">
-                        <span>$500</span>
+                        <span>{{postData.fix_price}}</span>
                     </div>
                 </app-card>
                 <div class="post-items-container d-flex">
@@ -20,7 +24,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <img src="/assets/images/icons/status-up.png" alt="image" loading="lazy" width="20">
-                        <a routerLink="/post-performance/12" class="pl-3 text-decoration-none text-dark-800">Item
+                        <a routerLink='/post-performance/{{postData.id}}' class="pl-3 text-decoration-none text-dark-800">Item
                             Performance</a>
                     </div>
                     <i class="fa fa-angle-right"></i>

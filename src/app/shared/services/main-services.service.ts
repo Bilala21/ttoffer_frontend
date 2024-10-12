@@ -183,9 +183,16 @@ export class MainServicesService {
     const url = `${this.geocodeUrl}?latlng=${lat},${lng}&key=AIzaSyBuEU8bWRV3H-xNGOUCvCH4R3PMPveyGlI`;
     return this.http.get(url).toPromise();
   }
-  deleteAccount(id:any) {
+  // BILAL
+  getPostById(data: any) {
+    return this.http.post(`${this.apiUrl}api/product-detail`, data, {
+      headers: this.getHeaders(),
+    }).pipe();
+  }
+
+  deleteAccount(id: any) {
     return this.http.get(`${this.apiUrl}api/account/deactivate/${id}`, {
-      headers: this.getHeaders() // Correctly pass the headers here
+      headers: this.getHeaders()
     }).pipe();
   }
 

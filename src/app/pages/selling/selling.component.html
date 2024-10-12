@@ -48,21 +48,25 @@
         </div>
         }
         @else {
-        <section class="w-100 post-section pl-5">
-            @for (item of cardData[activeTab]; track $index) {
-            <a routerLink="{{activeTab=='selling'?'/selling-detail/1':'#'}}" class="text-decoration-none d-block pl-4"
-                [ngClass]="activeTab !=='selling'?'cursor-default':''">
-                <app-card [data]="item">
-                    <div slot="users" class="users d-flex justify-content-between align-items-center">
+        <section class="w-100 post-section">
+            @for (item of apiData[activeTab]; track $index) {
+            <a [routerLink]="activeTab === 'selling' ? '/selling-detail/' + item.id : null"
+                class="text-decoration-none d-block pl-4" [ngClass]="activeTab !== 'selling' ? 'cursor-default' : ''">
+                <app-card [data]="{title:item.title,image:item.photo[0].src}">
+                    <div slot="users" class="users d-flex justify-content-between align-items-center"
+                        *ngIf="item?.views_count">
                         <div class="d-flex">
                             <img *ngFor="let user of item.users ; let i=index" [src]="user?.image" alt="images"
                                 width="30" height="30" class="rounded-pill" [ngStyle]="{'z-index': -i}">
                         </div>
-                        <span class="text-gray-400 fs-12 views">{{item?.views}}</span>
+
                     </div>
                     <div slot="extra" class="d-flex fs-12 align-items-center pt-1 footer text-dark-450">
-                        <span>{{item?.sold}}</span>
-                        <span>{{item?.status}}</span>
+                        <button type="button" class="btn p-0 fs-12">Sell faster</button>
+                        <button type="button" class="btn p-0 ml-3 fs-12">Mark as sold</button>
+                        <span class="text-gray-400 fs-12 views">{{item?.views_count??0}} views</span>
+                        <!-- <span>{{item?.sold}}</span>
+                        <span>{{item?.status}}</span> -->
                     </div>
                 </app-card>
                 <div class="d-flex justify-content-center my-2 line-img">

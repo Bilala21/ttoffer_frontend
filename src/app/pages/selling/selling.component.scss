@@ -77,6 +77,13 @@
     max-width: 424px;
   }
 
+  .views {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .users {
     img:not(:first-child) {
       position: relative;
@@ -91,11 +98,11 @@
       border: 2px solid #fff;
     }
 
-   @media (min-width:576px) {
-    span {
-      padding-left: 110px;
+    @media (min-width:576px) {
+      span {
+        padding-left: 110px;
+      }
     }
-   }
   }
 
   .footer span:last-child {
