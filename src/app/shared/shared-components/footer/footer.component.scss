@@ -1,41 +1,50 @@
-.footer-container {
-    background-color: #f8f9fa;
-    padding: 20px 0;
-    text-align: center;
+.first-footer {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.footer-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.footer-points {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #767e94;
+  p{
+    margin: 0px;
+    padding: 0px;
   }
+}
+
+.margin-top-class {
+  margin-top: 50px !important;
+}
+
+.footer-headings {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-icons {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #767e94;
+  display: flex;
+  gap: 5px;
+  margin-top: 15px;
   
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-  }
-  
-  .footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 20px;
-  }
-  
-  .footer-section h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
-  .footer-section p, .footer-section ul {
-    margin: 5px 0;
-  }
-  
-  .footer-section ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin: 5px 0;
-  }
-  
-  .footer-section ul li a {
+  a {
+    color: #767e94;
     text-decoration: none;
     color: #333;
   }
@@ -70,9 +79,10 @@
     color: #333;
     margin: 0 5px;
   }
-
-  .pointer{
-    cursor: pointer;
+  ///////==========================down-footer============================///////
+  .down-footer {
+    background: transparent;
+    padding-top: 0px;
   }
 
   .btnHover:hover{
@@ -80,28 +90,47 @@
     cursor: pointer;
   }
 
-  .col-2 p:hover{
-    color: blue !important;
+  .down-footer-text-second {
+    justify-content: center;
+    margin-top: 10px;
   }
-  
-  @media (max-width: 1030px) {
-    .footer-content {
-      flex-direction: column;
-    }
+}
+//////=========================== 768 ================================ /////
+@media (max-width: 768px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
   }
+  .support-heading{
+    margin-top: -8px;
+  }
+  .footer-google-app-store-btn{
+    width: 115px;
+  }
+}
 
-  @media (width < 1030px) {
-    .sm-mt-5{
-      margin-top: 15px;
-    }
-    .sm-footer-text{
-      font-size: 1.6vh !important;
-    }
+///////======================================= 300px ==============================/////
+@media (max-width: 767px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
   }
-  .quick-link{
-    color: black;
-    text-decoration: none;
+  .support-heading{
+    margin-top: 20px;
   }
-  .logo-img{
-    max-width: 50px;
+  .footer-google-app-store-btn{
+    width: 115px;
   }
+}
+///////======================================= 300px ==============================/////
+@media (max-width:400px) {
+  .footer-logo {
+    width: 30px;
+    height: 30px;
+  }
+  .low-300{
+    margin-top: 5px;
+  }
+}
+
+

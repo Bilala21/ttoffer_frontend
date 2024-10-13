@@ -28,7 +28,7 @@ export class BodyComponent {
   showText:string = 'Crypto Market';
   calculateRemaningTime!:string;
   IsBit:boolean=false;
-  postCols = "col-12 col-md-6 col-lg-6 col-xl-3"
+  postCols = "col-12 col-md-6 col-lg-4 col-xl-3"
   firstRowItems =  [
     { imgSrc: '/assets/catImage/mobile.png', title: 'Mobile', id: 1 },
     { imgSrc: '/assets/catImage/electronics.png', title: 'Electronic & Appliances',id: 2 },

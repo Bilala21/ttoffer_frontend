@@ -1,34 +1,19 @@
 <div class="col-11 mx-auto text-center mt-5 sm-mt-3">
-  <h1 class="sm-cat-text5">All Categories</h1>
-  <div class="row sm-mt-3 mt-5">
-    <div
-      class="col-xl-1 col-md-2 col-3 mt-3 sm-m-0"
-      style="margin: 0 1.2vw"
-      *ngFor="let item of firstRowItems; let last = last"
-    >
-      <a
-        class="aHover pointer"
-        style="text-decoration: none; color: #1e293b"
-        routerLink="/catagories/{{ item.id }}"
-        [queryParams]="{ title: item.title }"
-      >
-        <img class="w-100 sm-w-75" [src]="item.imgSrc" />
-        <h6 class="mt-2 sm-cat-text3" style="font-size: 1.8vh">
-          {{ item.title }}
-        </h6>
-        <h6
-          class="smm-cat-text"
-          *ngIf="last"
-          style="
-            font-size: 1.6vh;
-            background-color: #ffd33c;
-            border-radius: 5px;
-            padding: 0.5vh 1vh 0.5vh 1vh;
-          "
-        >
-          {{ item.subTitle }}
-        </h6>
-      </a>
+    <h1 class="category-title">All Categories</h1>
+    <div class="row justify-content-between justify-content-md-start sm-mt-3 mt-5">
+        <div class="col-xl-1 col-md-2 col-3  mt-3 sm-m-3" 
+             *ngFor="let item of firstRowItems; let last = last">
+            <a class="category-link" 
+               href="/categories/{{ item.id }}">
+                <img class="category-image" 
+                     [src]="item.imgSrc" 
+                     alt="{{ item.title }}">
+                <h6 class="category-title-text mt-2">{{ item.title }}</h6>
+                <h6 class="coming-soon-text" *ngIf="last">
+                    {{ item.subTitle }}
+                </h6>
+            </a>
+        </div>
     </div>
-  </div>
 </div>
+

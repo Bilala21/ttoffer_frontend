@@ -31,7 +31,6 @@ import { SharedDataService } from '../../services/shared-data.service';
     UserModule
   ]
 })
-
 export class HeaderComponent {
 
 
