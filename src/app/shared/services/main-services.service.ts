@@ -184,6 +184,11 @@ export class MainServicesService {
     return this.http.get(url).toPromise();
   }
   // BILAL
+  getCategories() {
+    return this.http.post(`${this.apiUrl}api/categories`, {
+      headers: this.getHeaders(),
+    }).pipe();
+  }
   getPostById(data: any) {
     return this.http.post(`${this.apiUrl}api/product-detail`, data, {
       headers: this.getHeaders(),

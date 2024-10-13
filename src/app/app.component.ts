@@ -11,13 +11,14 @@ import { WhoBoughtAdComponent } from "./pages/who-bought-ad/who-bought-ad.compon
 import { HeaderComponent } from "./shared/shared-components/header/header.component";
 import { FooterComponent } from "./shared/shared-components/footer/footer.component";
 import { SellingComponent } from './pages/selling/selling.component';
+import { HeaderNavigationComponent } from './components/header/header.component';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    imports: [HeaderComponent,FooterComponent,RouterOutlet, ChatBoxComponent, ProfilePageComponent, ProductDetailsComponent, SellingComponent, WhoBoughtAdComponent, ReviewPageComponent, HeaderComponent, FooterComponent]
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  imports: [HeaderComponent, HeaderNavigationComponent, FooterComponent, RouterOutlet, ChatBoxComponent, ProfilePageComponent, ProductDetailsComponent, SellingComponent, WhoBoughtAdComponent, ReviewPageComponent, HeaderComponent, FooterComponent]
 })
 export class AppComponent {
   title = 'tt-offer';

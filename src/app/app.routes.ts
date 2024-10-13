@@ -63,6 +63,10 @@ export const routes: Routes = [
         component: CategoriesComponent
     },
     {
+        path: 'catagory/:id',
+        component: CategoriesComponent
+    },
+    {
         path: 'chatBox/:id',
         component: ChatBoxComponent
     },
