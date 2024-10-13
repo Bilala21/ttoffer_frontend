@@ -48,7 +48,7 @@ export class MainServicesService {
   //   return this.http.post(`${this.apiUrl}api/featured-products`, null, { headers: this.getHeaders() });
   // }
   getFeatureProduct(): Observable<any> {
-    // debugger
+    debugger
     return this.http.post(`${this.apiUrl}api/featured-products`, null);
   }
   getAuctionProduct(): Observable<any> {
@@ -79,7 +79,7 @@ export class MainServicesService {
     return this.http.post(`${this.apiUrl}` + 'api/get-placed-bids', input).pipe();
   }
   makeOffer(input: any) {
-    return this.http.post(`${this.apiUrl}` + 'api/make-offer', input``).pipe();
+    return this.http.post(`${this.apiUrl}` + 'api/make-offer', input).pipe();
   }
   getAllChatsOfUser(currentUserid: number) {
     return this.http.get(`${this.apiUrl}` + 'api/get/user/all/chats/' + currentUserid).pipe();
@@ -189,4 +189,14 @@ export class MainServicesService {
     }).pipe();
   }
 
+  getCategories(data:any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}` + 'api/categories',data);
+  }
+  getSubCategories(categoryId:any){
+    const data={
+      category_id:categoryId
+    }
+    return this.http.post<any[]>(`${this.apiUrl}` + 'api/sub-categories',data);
+
+  }
 }

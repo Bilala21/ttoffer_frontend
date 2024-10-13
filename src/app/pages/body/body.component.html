@@ -1,20 +1,15 @@
-
-
 <div class="container-fluid">
-
-
-		<div class="col-xl-11 mx-auto mt-3 ">
-            <div>
-                <app-slider></app-slider>
-                </div>
-                <div class="mt-3 ">
-
-                    <app-promotion-slider></app-promotion-slider>
-                </div>
-		</div>
-	</div>
-    <div class="row m-0">
-        <!-- <div class="col-11 mx-auto text-center mt-5 sm-mt-3">
+  <div class="col-xl-11 mx-auto mt-3">
+    <div>
+      <app-slider></app-slider>
+    </div>
+    <div class="mt-3">
+      <app-promotion-slider></app-promotion-slider>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!-- <div class="col-11 mx-auto text-center mt-5 sm-mt-3">
             <h1 class="sm-cat-text5">All Categories</h1>
             <div class="row sm-mt-3 mt-5">
                 <div class="col-xl-1 col-md-2 col-3 mt-3 sm-m-0" style="margin: 0 1.2vw;"
@@ -33,39 +28,45 @@
             </div>
 
         </div> -->
-        <app-post-categories></app-post-categories>
+  <app-post-categories></app-post-categories>
+</div>
+<div class="text-center mt-4 sm-mt-3">
+  <h1 class="sm-cat-text5">Auction Product</h1>
+  <h6 class="sm-cat-text4">Hurry up! The auction is ending soon</h6>
+  <div class="row">
+    <div class="col-xl-11 mx-auto mt-3">
+      <div style="text-align: right; cursor: pointer">
+        <a
+          style="color: #292d32; text-decoration: none"
+          class="aHover"
+          href="/post/post-category"
+        >
+          <h6>View All</h6>
+        </a>
+      </div>
+
+      <app-post [cols]="postCols"></app-post>
     </div>
-    <div class="text-center mt-4 sm-mt-3">
-        <h1 class="sm-cat-text5">Auction Product</h1>
-        <h6 class="sm-cat-text4">Hurry up! The auction is ending soon</h6>
-        <div class="row m-0">
-            <div class="col-xl-11 mx-auto mt-3">
-
-                <div style="text-align: right; cursor:pointer">
-                    <a style="color: #292D32; text-decoration: none;" class="aHover" href="/post/post-category">
-                        <h6>View All</h6>
-                    </a>
-                </div>
-
-                <app-post [cols]="postCols"></app-post>
-
-
-            </div>
-        </div>
+  </div>
+</div>
+<div class="text-center mt-4 sm-mt-3">
+  <h1 class="sm-cat-text5">Feature Product</h1>
+  <span class="sm-cat-text4"
+    >Act fast! These featured products won't last long</span
+  >
+  <div class="row">
+    <div class="col-xl-11 mx-auto">
+      <div class="" style="text-align: right; cursor: pointer">
+        <a
+          style="color: #292d32; text-decoration: none"
+          class="aHover"
+          href="/post/post-category"
+        >
+          <h6>View All</h6>
+        </a>
+      </div>
+      <app-post [cols]="postCols"></app-post>
     </div>
-    <div class="text-center mt-4 sm-mt-3">
-        <h1 class="sm-cat-text5">Feature Product</h1>
-        <span class="sm-cat-text4">Act fast! These featured products won't last long</span>
-        <div class="row m-0">
-            <div class="col-xl-11 mx-auto">
-                <div class="" style="text-align: right; cursor:pointer">
-                    <a style="color: #292D32; text-decoration: none;" class="aHover" href="/post/post-category">
-                        <h6>View All</h6>
-                    </a>
-                </div>
-                <app-post [cols]="postCols"></app-post>
-            </div>
-        </div>
-    </div>
-    <hr>
-
+  </div>
+</div>
+<hr />

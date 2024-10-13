@@ -28,12 +28,12 @@ export class ProfileComponent implements OnInit {
     this.getCurrentUser();
   }
   getCurrentUser() {
-    // debugger;
+    debugger;
     if (typeof window !== 'undefined' && window.localStorage) {
       const jsonStringGetData = localStorage.getItem('key');
       if (jsonStringGetData) {
         this.currentUserProfile = JSON.parse(jsonStringGetData);
-        // debugger
+        debugger
        this.allowRating= this.currentUserProfile.Id==this.currentUserId;
         console.log(this.currentUserProfile)
         this.imageUrl = this.currentUserProfile.img
