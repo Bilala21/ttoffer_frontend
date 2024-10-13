@@ -1,8 +1,10 @@
 import { NgFor } from '@angular/common';
 import { Component, OnInit, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { LoaderComponent } from "../loader/loader.component";
+import { AuthService } from '../../shared/services/authentication/Auth.service';
+
 
 @Component({
   selector: 'app-header-navigation',
@@ -21,7 +23,7 @@ export class HeaderNavigationComponent implements OnInit {
   screenWidth: number = window.innerWidth;
   screenHeight: number = window.innerHeight;
 
-  constructor(private mainServicesService: MainServicesService) {
+  constructor(private mainServicesService: MainServicesService,private authService: AuthService,private router: Router) {
     this.currentUser = JSON.parse(localStorage.getItem('key') as string);
   }
   @HostListener('window:resize', ['$event'])
@@ -46,6 +48,17 @@ export class HeaderNavigationComponent implements OnInit {
   showSearchBar() {
     this.showSearch = !this.showSearch;
   }
+
+  logout() {
+    this.loading = true;
+    localStorage.clear();
+    this.authService.signOut();
+    this.router.navigate(['/body']).then(() => {
+      window.location.reload();
+    });
+    this.loading = false;
+  }
+
 
   ngOnInit(): void {
     this.loading = true;
