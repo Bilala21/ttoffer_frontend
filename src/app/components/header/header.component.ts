@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { LoaderComponent } from "../loader/loader.component";
-
 @Component({
   selector: 'app-header-navigation',
   standalone: true,
