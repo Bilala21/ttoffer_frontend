@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SliderComponent } from './shared-components/slider/slider.component';
 import { PromotionSliderComponent } from './shared-components/promotion-slider/promotion-slider.component';
 import { UserStarRatingComponent } from './shared-components/user-star-rating/user-star-rating.component';
@@ -11,8 +11,6 @@ import { RouterModule } from '@angular/router';
     PromotionSliderComponent,
     UserStarRatingComponent,
     PostCategoriesComponent,
-    HeaderGrayLinksComponent,
-    HeaderYellowBlackBtnComponent,
   ],
   imports: [
     CommonModule,
@@ -23,8 +21,6 @@ import { RouterModule } from '@angular/router';
   PromotionSliderComponent,
   UserStarRatingComponent,
   PostCategoriesComponent,
-  HeaderGrayLinksComponent,
-  HeaderYellowBlackBtnComponent,
  ]
 })
 export class SharedModule { }
