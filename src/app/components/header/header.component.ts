@@ -1,38 +1,63 @@
 import { NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { LoaderComponent } from "../loader/loader.component";
+
 @Component({
   selector: 'app-header-navigation',
   standalone: true,
-  imports: [RouterLink, NgFor, LoaderComponent, LoaderComponent],
+  imports: [RouterLink, NgFor, LoaderComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderNavigationComponent implements OnInit {
-  currentUser: any = {}
-  loading: boolean = false
-  apiData: any = []
-  categoryLimit: number = 2
-  categories: any = []
-  showSearch: boolean = false
+  currentUser: any = {};
+  loading: boolean = false;
+  apiData: any = [];
+  categoryLimit: number = 8;
+  categories: any = [];
+  showSearch: boolean = false;
+  screenWidth: number = window.innerWidth;
+  screenHeight: number = window.innerHeight;
+
   constructor(private mainServicesService: MainServicesService) {
-    this.currentUser = JSON.parse(localStorage.getItem('key') as string)
+    this.currentUser = JSON.parse(localStorage.getItem('key') as string);
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.getScreenSize();
+  }
+
+  getScreenSize() {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+    if (this.screenWidth < 1024) {
+      this.categoryLimit = 4;
+    }
+    if (this.screenWidth < 576) {
+      this.categoryLimit = 2;
+    }
+    else {
+      this.categoryLimit = 8;
+    }
+  }
+
   showSearchBar() {
-    this.showSearch = !this.showSearch
+    this.showSearch = !this.showSearch;
   }
+
   ngOnInit(): void {
-    this.loading = true
+    this.loading = true;
+    this.getScreenSize();
     this.mainServicesService.getCategories().subscribe({
       next: (res: any) => {
-        this.categories = res
-        this.loading = false
+        this.categories = res;
+        this.loading = false;
       },
       error: (err) => {
         console.log(err);
-        this.loading = false
+        this.loading = false;
       },
     });
   }

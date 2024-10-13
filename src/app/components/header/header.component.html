@@ -3,35 +3,36 @@
         <div class="container">
             <div class="row nowrap justify-content-between position-relative">
                 <ul class="list-unstyled d-flex align-items-center flex-grow-1 pointer-default">
-                    <li><a href=""><img src="/assets/images/logo-1.png" alt="App logo" loading="lazy"></a></li>
+                    <li class="xs-pl-16"><a href=""><img src="/assets/images/LOGO.png" alt="App logo" loading="lazy" width="50" class="header-logo"></a></li>
                     <li class="d-flex align-items-center flex-grow-1 search-bar {{showSearch?'show-search':''}}">
                         <input type="text" placeholder="Search" class="w-100 fs-18 border-1">
-                        <button class="search-btn position-relative border-0 bg-dark-850 text-white"                           ><i class="fas fa-search"></i></button>
+                        <button class="search-btn position-relative border-0 bg-dark-850 text-white"><i
+                                class="fas fa-search"></i></button>
                     </li>
-                    <li>
-                        <button class="search-btn position-relative border-0 p-0 pt-1 bg-transparent text-white"  (click)="showSearchBar()"><i
-                                class="fas fa-search fs-20 text-slate-400"></i></button>
+                    <li class="d-none">
+                        <button class="search-btn position-relative border-0 p-0 pt-1 bg-transparent text-white"
+                            (click)="showSearchBar()"><i class="fas fa-search fs-20 text-slate-400"></i></button>
                     </li>
                     <li class="fs-14 d-flex align-items-center ml-2 text-slate-400 location-item">
                         <i class="fa fa-map-marker-alt fs-20 mr-2"></i>
                         Belarus
                     </li>
                 </ul>
-                <ul class="list-unstyled d-flex align-items-center flex-grow-1 justify-content-end pl-3 fs-14">
-                    <li>
-                        <a routerLink="/#" class="text-slate-400 text-decoration-none link">
+                <ul class="list-unstyled d-flex align-items-center flex-grow-1 justify-content-end pl-3 fs-14 xs-pr-16">
+                    <li class="xs-d-none">
+                        <a routerLink="#" class="text-slate-400 text-decoration-none link">
                             <i class="far fa-heart fs-20 text-center d-block mb-1"></i>
                             Saved
                         </a>
                     </li>
-                    <li>
-                        <a routerLink="/#" class="text-slate-400 text-decoration-none link">
+                    <li class="xs-d-none">
+                        <a routerLink="/chatBox/39767" class="text-slate-400 text-decoration-none link">
                             <i class="fa fa-comments fs-20 text-center d-block mb-1"></i>
                             Chat
                         </a>
                     </li>
-                    <li>
-                        <a routerLink="/#" class="text-slate-400 text-decoration-none link">
+                    <li class="pt-1">
+                        <a routerLink="/selling/39767" class="text-slate-400 text-decoration-none link">
                             <i class="fa fa-tags fs-18 text-center d-block mb-1 pt-1"></i>
                             <span>Selling</span>
                         </a>
@@ -53,7 +54,7 @@
                     </li>
                     }
                     @if (currentUser) {
-                    <li class="ml-4 user-profile cursor-pointer position-relative">
+                    <li class="user-profile cursor-pointer position-relative">
                         <button class="btn dropdown-toggle text-slate-400 fs-14 text-uppercase fw-semibold"
                             type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -63,13 +64,20 @@
                         </button>
                         <div class="dropdown-menu white-space-nowrap p-0 bg-white user-profile-drow-donw pt-3 shadow-md"
                             aria-labelledby="userDropdown">
-                            @for (item of [1,2,3,4,5]; track $index) {
-                            <a routerLink="/catagory/"
+                            <a routerLink="#"
                                 class="text-slate-400 text-decoration-none hover-able py-2 fs-14 px-3 d-flex align-items-center w-100">
-                                <i class="fa fa-tags fs-18 text-center d-block mr-3"></i><span>Payment & Deposit
-                                    method</span>
+                                <i class="fas fa-user fs-18 text-center d-block mr-3"></i>
+                                <span>
+                                    Profile
+                                </span>
                             </a>
-                            }
+                            <a routerLink="#"
+                                class="text-slate-400 text-decoration-none hover-able py-2 fs-14 px-3 d-flex align-items-center w-100">
+                                <i class="fas fa-sign-out-alt fs-18 text-center d-block mr-3"></i>
+                                <span>
+                                    Logout
+                                </span>
+                            </a>
                         </div>
                     </li>
                     }
@@ -85,7 +93,7 @@
             @else {
             <ul class="list-unstyled d-flex align-items-center justify-content-center fs-14 w-100 mb-0 categories">
                 <li *ngFor="let category of categories.slice(0, categoryLimit)">
-                    <a routerLink="/catagory/{{category.id}}"
+                    <a routerLink="/category/{{category.id}}"
                         class="text-slate-400 text-decoration-none">{{category.name}}</a>
                 </li>
                 <li class="position-relative catagory-parent">
@@ -98,7 +106,7 @@
                         <div class="dropdown-menu white-space-nowrap pb-0 right-0 shadow-md rounded-0"
                             aria-labelledby="moreCategoriesDropdown">
                             <a *ngFor="let category of categories.slice(categoryLimit)"
-                                routerLink="/catagory/{{category.id}}"
+                                routerLink="/category/{{category.id}}"
                                 class="text-slate-400 text-decoration-none hover-able py-2 fs-14 px-3 d-block w-100">{{category.name}}</a>
                         </div>
                     </div>
