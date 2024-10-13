@@ -8,7 +8,9 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 // Define the theme object.
 $tt-offer-theme: mat.define-theme((color: (theme-type: light,
@@ -224,7 +226,7 @@ $tt-offer-theme: mat.define-theme((color: (theme-type: light,
 html,
 body {
   height: 100%;
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
@@ -233,8 +235,8 @@ body {
   margin: 0;
 }
 
-.poppins-regular {
-  font-family: "Poppins", sans-serif;
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
@@ -289,8 +291,6 @@ body {
   }
 }
 
-
-
 //new Css
 
 .skel-pro {
@@ -327,6 +327,10 @@ body {
   font-size: 22px;
 }
 
+.fs-24 {
+  font-size: 24px;
+}
+
 .fs-20 {
   font-size: 20px;
 }
@@ -351,8 +355,24 @@ body {
   background: #414141;
 }
 
+.bg-yellow-800 {
+  background: #ffc107;
+}
+
+.bg-dark-850 {
+  background: #002f34;
+}
+
 .text-dark-400 {
   color: #191F33;
+}
+
+.text-slate-400 {
+  color: #A2A2A2;
+}
+
+.text-dark-350 {
+  color: #A2A2A2;
 }
 
 .text-dark-800 {
@@ -425,11 +445,17 @@ body {
 }
 
 .text-decoration-none {
-  text-decoration: none;
-
   &hove {
     text-decoration: none;
   }
+}
+
+.pointer-default {
+  cursor: default;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .fw-bold {
@@ -481,6 +507,7 @@ body {
   .selling-tab {
     min-width: 179px;
   }
+
   .archive img {
     max-width: 333px;
   }
@@ -500,6 +527,7 @@ body {
   .post-detail-container {
     padding-left: 20px;
     padding-right: 20px;
+
     div.pr-4 {
       padding-right: 0 !important;
     }
@@ -507,16 +535,60 @@ body {
     .row {
       justify-content: center !important;
     }
-    .detail-right-side{
+
+    .detail-right-side {
       padding-left: 20px;
       padding-right: 20px;
     }
   }
-  .post-items-container{
+
+  .post-items-container {
     column-gap: 10px !important;
   }
- body .archive h2{
-    padding-left: 20px ;
-    padding-right: 20px ;
+
+  body .archive h2 {
+    padding-left: 20px;
+    padding-right: 20px;
   }
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+
+.border-1 {
+  border: 1px solid #d8dfe0;
+}
+
+.border-b-1 {
+  border-bottom: 1px solid #d8dfe0;
+}
+
+.rounded-5 {
+  border-radius: 5px;
+}
+
+.rounded-20 {
+  border-radius: 20px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap !important;
+}
+
+.mt-16 {
+  margin-top: 10rem;
+}
+
+.shadow-md {
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, .12), 0 6px 6px 0 rgba(0, 0, 0, .24) !important;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .12), 0 6px 6px 0 rgba(0, 0, 0, .24) !important;
+}
+
+.hover-able:hover{
+  background: #00e4ea;
+  color: #000;
+}
+.right-0{
+  right: 0 !important;
 }
