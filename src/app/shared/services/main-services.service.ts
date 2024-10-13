@@ -79,7 +79,7 @@ export class MainServicesService {
     return this.http.post(`${this.apiUrl}` + 'api/get-placed-bids', input).pipe();
   }
   makeOffer(input: any) {
-    return this.http.post(`${this.apiUrl}` + 'api/make-offer', input``).pipe();
+    return this.http.post(`${this.apiUrl}` + 'api/make-offer', input).pipe();
   }
   getAllChatsOfUser(currentUserid: number) {
     return this.http.get(`${this.apiUrl}` + 'api/get/user/all/chats/' + currentUserid).pipe();

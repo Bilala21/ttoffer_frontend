@@ -5,7 +5,7 @@ import { FooterComponent } from '../../shared/shared-components/footer/footer.co
 import { SellingComponent } from '../selling/selling.component';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
@@ -51,7 +51,7 @@ export interface CategoryField {
     FooterComponent,
     SellingComponent,
     FormsModule,
-    NgIf,
+    ReactiveFormsModule,
     RouterModule,
     NgFor,
     NotificationComponent,
@@ -63,6 +63,7 @@ export interface CategoryField {
   ],
 })
 export class ProfilePageComponent {
+  categoryForm: FormGroup;
   validationErrors: { [key: string]: string } = {};
   attributes: { [key: string]: any } = {};
   showOTPBox: boolean = false;
@@ -103,11 +104,11 @@ export class ProfilePageComponent {
   lowestPrice: string = '';
   defaultsImage: string = 'assets/images/best-selling.png';
   public imagesFiles: File[] = [];
-  filesabc!: File[];
+  filesabc: File[]=[];
   imageFilesAbc: File[] = [];
   videoFilesAbc: File[] = [];
   showNotification: boolean = false;
-  notificationList: any;
+  notificationList: any=[]
   customLink: any;
   allowRating: boolean = false;
   isDisabled: boolean = false;
@@ -592,6 +593,7 @@ export class ProfilePageComponent {
     private extension: Extension,
     private route: ActivatedRoute,
     private http: HttpClient,
+    private fb:FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
     public dialog: MatDialog,
@@ -599,6 +601,7 @@ export class ProfilePageComponent {
     public service: SharedDataService
   ) {
     this.currentUserId = this.extension.getUserId();
+    this.categoryForm = this.fb.group({});
   }
   ngOnInit() {
     this.getNotification();
@@ -606,7 +609,8 @@ export class ProfilePageComponent {
     this.endingDate = new Date();
     this.customLink = window.location.href;
     this.selectedTabItem = this.route.snapshot.paramMap.get('name')!;
-    this.selectedTabId = this.route.snapshot.paramMap.get('id')!; 
+    this.selectedTabId = this.route.snapshot.paramMap.get('id'); 
+    this.editProductData=localStorage.getItem('editProduct');
     const currentTab: any = localStorage.getItem('currentTab');
     this.selectTab(currentTab);
     this.loadCategories();
@@ -619,14 +623,42 @@ export class ProfilePageComponent {
       (data) => {
         debugger;
         this.categories = data;
-        this.getSubcategories(this.categories[0].id);
+        if(this.editProductData){
+          debugger
+          this.editProductData=JSON.parse(this.editProductData);
+          this.cd.detectChanges();
+          this.selectedCategoryId=this.editProductData.category_id;
+          this.selectedSubCategoryId=this.editProductData.sub_category_id;
+          this.title=this.editProductData.title;
+          this.productId=JSON.parse(this.editProductData.attributes).product_id;
+          this.description=this.editProductData.description;
+          this.getSubcategories(this.selectedCategoryId);
+        }else{
+          this.selectedCategoryId=this.categories[0].id;
+
+          this.getSubcategories(this.categories[0].id);
+        }
+        this.initializeForm();
+        this.categoryForm.patchValue(JSON.parse(this.editProductData.attributes))
       },
       (error) => {
         console.error('Error fetching categories:', error); // Handle error
       }
     );
   }
+  initializeForm() {
+    debugger
+    // Initialize form controls dynamically based on the selected category
+    const fields = this.categoryFields[this.selectedCategoryId];
+    fields.forEach(field => {
+      this.categoryForm.addControl(field.model, this.fb.control('', Validators.required));
+    });
+  }
 
+showfor(){
+  debugger
+  console.log(this.categoryForm.value)
+}
   showOtp() {
     this.showOTPBox = true;
   }
@@ -697,14 +729,8 @@ export class ProfilePageComponent {
     // { img: 'assets/images/light-img3.svg', heading: 'Modern light clothes', elipsImg1: 'assets/images/Ellipse1.svg', elipsImg2: 'assets/images/Ellipse2.svg', elipsImg3: 'assets/images/Ellipse3.svg', elipsImg4: 'assets/images/Ellipse4.svg', subHeading1: 'Sale Faster', subHeading2: 'Mark As Sold' },
   ];
 
-  savedItems: any;
-  // = [
-  //   // {img: 'assets/images/product2.svg', heading:'Modern light clothes', location:'Dhaka Bangladesh', time:'34m Ago', },
-  //   // {img: 'assets/images/product2.svg', heading:'Modern light clothes', location:'Dhaka Bangladesh', time:'34m Ago', },
-  //   // {img: 'assets/images/product2.svg', heading:'Modern light clothes', location:'Dhaka Bangladesh', time:'34m Ago', },
-  //   // {img: 'assets/images/product2.svg', heading:'Modern light clothes', location:'Dhaka Bangladesh', time:'34m Ago', },
-  //   // {img: 'assets/images/product2.svg', heading:'Modern light clothes', location:'Dhaka Bangladesh', time:'34m Ago', },
-  // ]
+  savedItems: any=[];
+  
 
   paymentDeposit: any[] = [
     {
@@ -815,8 +841,9 @@ export class ProfilePageComponent {
       id: file.id,
       product_id: file.product_id,
     };
+    debugger
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      res;
+      this.editProductData.photo=null
       console.log(res);
     });
   }
@@ -1362,41 +1389,41 @@ export class ProfilePageComponent {
     });
   }
 
-  // EditProductFirstStep() {
-  //   let formData = new FormData();
-  //   this.filesabc.forEach(file => formData.append('video', file, file.name));
-  //   this.imageFilesAbc.forEach((file, index) => {
-  //     formData.append(`video[]`, file, file.name);
-  //   });
-  //   formData.append(
-  //     'user_id',
-  //     (this.currentUserId ? Number(this.currentUserId) : 0).toString()
-  //   );
-  //   formData.append('title', this.title);
-  //   formData.append('description', this.description);
-  //   formData.append(
-  //     'product_id',
-  //     (this.productId ? Number(this.productId) : 0).toString()
-  //   );
+  EditProductFirstStep() {
+    let formData = new FormData();
+    this.filesabc.forEach(file => formData.append('video', file, file.name));
+    this.imageFilesAbc.forEach((file, index) => {
+      formData.append(`video[]`, file, file.name);
+    });
+    formData.append(
+      'user_id',
+      (this.currentUserId ? Number(this.currentUserId) : 0).toString()
+    );
+    formData.append('title', this.title);
+    formData.append('description', this.description);
+    formData.append(
+      'product_id',
+      (this.productId ? Number(this.productId) : 0).toString()
+    );
+    const token = localStorage.getItem('authToken');
 
-  //   this.http
-  //     .post(
-  //       'https://www.ttoffer.com/backend/public/api/edit-product-first-step',
-  //       formData,
-  //       { headers: this.getHeaders() }
-  //     )
-  //     .subscribe(
-  //       (response: any) => {
-  //         // console.log('File upload successful', response);
-  //         this.productId = response.product_id;
-  //         // this.attributes()
-  //         // this.EditProductSeccondStep();
-  //       },
-  //       (error) => {
-  //         console.error('File upload failed', error);
-  //       }
-  //     );
-  // }
+    fetch('https://www.ttoffer.com/backend/public/api/edit-product-first-step', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+      },  })
+  .then(response => response.json()) // Convert the response to JSON
+  .then(data => {
+      console.log('File upload successful', data);
+      this.productId = data.product_id;
+      this.EditProductSeccondStep(); // Call the next step if upload is successful
+  })
+  .catch(error => {
+      console.error('File upload failed', error);
+  });
+  }
   validateForm(): boolean {
     this.validationErrors = {}; // Clear existing errors before validation
 
@@ -1579,30 +1606,30 @@ export class ProfilePageComponent {
     alert(error.message || 'An error occurred, please try again.');
   }
 
-  // EditProductSeccondStep() {
-  //   this.loading = true;
-  //   let input = {
-  //     user_id: this.currentUserId,
-  //     product_id: this.productId,
-  //     category_id: this.selectedCategoryId,
-  //     sub_category_id: this.selectedSubCategoryId,
-  //     condition: this.conditionId,
-  //     make_and_model: this.makeAndModelId,
-  //     mileage: this.mileage,
-  //     color: this.colorId,
-  //     brand: this.brandId,
-  //     model: this.modelId,
-  //     edition: '',
-  //     authenticity: '',
-  //     attributes: this.jSonAttributes,
-  //   };
-  //   this.mainServices.editProductSecondStep(input).subscribe((res) => {
-  //     res;
-  //     this.EditProductThirdStep();
-  //     console.log(res);
-  //     this.loading = false;
-  //   });
-  // }
+  EditProductSeccondStep() {
+    this.loading = true;
+    let input = {
+      user_id: this.currentUserId,
+      product_id: this.productId,
+      category_id: this.selectedCategoryId,
+      sub_category_id: this.selectedSubCategoryId,
+      condition: this.categoryForm.get('condition')?.value,
+      make_and_model: this.categoryForm.get('make_and_model')?.value,
+      mileage: this.categoryForm.get('mileage')?.value,
+      color: this.categoryForm.get('color')?.value,
+      brand: this.categoryForm.get('brand')?.value,
+      model: this.categoryForm.get('model')?.value,
+      edition: '',
+      authenticity: '',
+      attributes: JSON.stringify(this.categoryForm.value),
+    };
+    this.mainServices.editProductSecondStep(input).subscribe((res) => {
+      res;
+      this.EditProductThirdStep();
+      console.log(res);
+      this.loading = false;
+    });
+  }
   EditProductThirdStep() {
     this.loading = true;
     let input;
@@ -1650,83 +1677,84 @@ export class ProfilePageComponent {
     };
     this.mainServices.editProductLastStep(input).subscribe((res: any) => {
       res;
-
-      this.showSuccessMessage(res.msg);
+localStorage.removeItem('editProduct')
+      this.showSuccessMessage('Product updated Successfully');
       console.log(res);
       this.loading = false;
       this.router.navigate(['']);
     });
   }
   getSelling() {
-    // this.loading = true;
+    this.loading = true;
     this.mainServices.getSelling().subscribe({
       next: (res: any) => {
         this.sellingList = res;
         console.log(res);
-        this.purchaseListTemp = res.data?.purchase || [];
-        this.sellingListTemp = res.data?.selling || [];
+        this.purchaseListTemp = res.data?.purchase ;
+        this.sellingListTemp = res.data?.selling ;
+        this.cd.detectChanges()
+this.loading=false
+        // if (this.selectedTab !== '') {
+        //   this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
+        //     return this.selectedTabItem == null
+        //       ? item.user_id === this.selectedTabId
+        //       : item.id === this.selectedTabId;
+        //   });
 
-        if (this.selectedTab !== '') {
-          this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
-            return this.selectedTabItem == null
-              ? item.user_id === this.selectedTabId
-              : item.id === this.selectedTabId;
-          });
+          // if (this.sellingListTemp?.[0]) {
+          //   if (this.selectedTabItem === 'editPost') {
+          //     this.isEditPost = true;
+          //     this.locationId = this.sellingListTemp[0]?.location || null;
+          //     this.productId = this.sellingListTemp[0]?.id || null;
+          //     this.title = this.sellingListTemp[0]?.title || '';
+          //     this.description = this.sellingListTemp[0]?.description || '';
+          //   } else {
+          //     this.locationId = this.currentUserProfile?.location || null;
+          //   }
 
-          if (this.sellingListTemp?.[0]) {
-            if (this.selectedTabItem === 'editPost') {
-              this.isEditPost = true;
-              this.locationId = this.sellingListTemp[0]?.location || null;
-              this.productId = this.sellingListTemp[0]?.id || null;
-              this.title = this.sellingListTemp[0]?.title || '';
-              this.description = this.sellingListTemp[0]?.description || '';
-            } else {
-              this.locationId = this.currentUserProfile?.location || null;
-            }
+          //   const attributesString = this.sellingListTemp[0]?.attributes;
+          //   if (attributesString) {
+          //     try {
+          //       const parsedAttributes = JSON.parse(attributesString);
+          //       const parsedAttributesAttributesString =
+          //         parsedAttributes?.attributes;
 
-            const attributesString = this.sellingListTemp[0]?.attributes;
-            if (attributesString) {
-              try {
-                const parsedAttributes = JSON.parse(attributesString);
-                const parsedAttributesAttributesString =
-                  parsedAttributes?.attributes;
-
-                if (parsedAttributesAttributesString) {
-                  const parsedAttributesAttributes = JSON.parse(
-                    parsedAttributesAttributesString
-                  );
+          //       if (parsedAttributesAttributesString) {
+          //         const parsedAttributesAttributes = JSON.parse(
+          //           parsedAttributesAttributesString
+          //         );
 
                  
-                } else {
-                  console.error(
-                    "Parsed attributes object does not contain 'attributes'."
-                  );
-                }
-              } catch (error) {
-                console.error('Error parsing attributes:', error);
-              }
-            }
+          //       } else {
+          //         console.error(
+          //           "Parsed attributes object does not contain 'attributes'."
+          //         );
+          //       }
+          //     } catch (error) {
+          //       console.error('Error parsing attributes:', error);
+          //     }
+          //   }
 
-            // Handle pricing information
-            this.startingTime = this.sellingListTemp[0]?.starting_time || null;
-            this.endingTime = this.sellingListTemp[0]?.ending_time || null;
-            this.startingDate = this.sellingListTemp[0]?.starting_date || null;
-            this.endingDate = this.sellingListTemp[0]?.ending_date || null;
-            this.startingPrice = this.sellingListTemp[0]?.auction_price || null;
-            this.price = this.sellingListTemp[0]?.fix_price || null;
+          //   // Handle pricing information
+          //   this.startingTime = this.sellingListTemp[0]?.starting_time || null;
+          //   this.endingTime = this.sellingListTemp[0]?.ending_time || null;
+          //   this.startingDate = this.sellingListTemp[0]?.starting_date || null;
+          //   this.endingDate = this.sellingListTemp[0]?.ending_date || null;
+          //   this.startingPrice = this.sellingListTemp[0]?.auction_price || null;
+          //   this.price = this.sellingListTemp[0]?.fix_price || null;
 
-            // Determine pricing category
-            if (this.sellingListTemp[0]?.fix_price != null) {
-              this.pricingCatId = 'FixedPrice';
-            } else if (this.sellingListTemp[0]?.auction_price != null) {
-              this.pricingCatId = 'Auction';
-            } else {
-              this.pricingCatId = 'SellToTTOffer';
-            }
-          }
-        }
+          //   // Determine pricing category
+          //   if (this.sellingListTemp[0]?.fix_price != null) {
+          //     this.pricingCatId = 'FixedPrice';
+          //   } else if (this.sellingListTemp[0]?.auction_price != null) {
+          //     this.pricingCatId = 'Auction';
+          //   } else {
+          //     this.pricingCatId = 'SellToTTOffer';
+          //   }
+          // }
+        // }
 
-        this.loading = false;
+        // this.loading = false;
         console.log(this.sellingList);
       },
       error: (err: any) => {
@@ -1742,13 +1770,13 @@ export class ProfilePageComponent {
       .getNotification(this.currentUserId)
       .subscribe((res: any) => {
         // this.notificationList = res.data
-        this.notificationList = res.data.sort((a: any, b: any) => {
-          return (
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          );
-        });
+        // this.notificationList = res.data.sort((a: any, b: any) => {
+        //   return (
+        //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        //   );
+        // });
         console.log('Notification:', this.notificationList);
-        this.loading = false;
+        // this.loading = false;
       });
   }
   // getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
@@ -1879,11 +1907,11 @@ export class ProfilePageComponent {
     };
     this.mainServices.wishListProduct(input).subscribe(
       (res: any) => {
-        this.savedItems = res.data;
+        // this.savedItems = res.data;
 
         // this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
         console.log('SAVED ITEMS', this.savedItems);
-        this.loading = false;
+        // this.loading = false;
       },
       (err: any) => {
         this.loading = false;
@@ -2093,7 +2121,7 @@ export class ProfilePageComponent {
     if (categoryId) {
       this.mainServices.getSubCategories(this.selectedCategoryId).subscribe(
         (data) => {
-          this.subCategory = data; // Assume the API returns an array of subcategories
+          this.subCategory = data; 
         },
         (error) => {}
       );

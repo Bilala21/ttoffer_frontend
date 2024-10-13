@@ -90,6 +90,7 @@ export class SellingComponent {
     })
   }
   redirectToEditSection(){
+    debugger
   const sellinList=JSON.stringify(this.sellingList[0])
   localStorage.setItem('editProduct',sellinList);
   this.router.navigate([`profilePage/${this.sellingList[0].id}`]);
