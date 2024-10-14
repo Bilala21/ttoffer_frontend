@@ -229,6 +229,7 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
+  color: #222;
 }
 
 body {
@@ -319,6 +320,10 @@ body {
 }
 
 // BILAL
+.fs-40 {
+  font-size: 40px;
+}
+
 .fs-32 {
   font-size: 32px;
 }
@@ -355,8 +360,16 @@ body {
   background: #414141;
 }
 
+.bg-dark-650 {
+  background: #1E293B;
+}
+
 .bg-yellow-800 {
   background: #ffc107;
+}
+
+.bg-yellow-700 {
+  background: #FFD33C;
 }
 
 .bg-dark-850 {
@@ -365,6 +378,10 @@ body {
 
 .text-dark-400 {
   color: #191F33;
+}
+
+.text-dark-650 {
+  color: #222;
 }
 
 .text-slate-400 {
@@ -577,7 +594,7 @@ body {
 }
 
 .mt-16 {
-  margin-top: 10rem;
+  margin-top: 8.5rem;
 }
 
 .shadow-md {
@@ -585,10 +602,57 @@ body {
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, .12), 0 6px 6px 0 rgba(0, 0, 0, .24) !important;
 }
 
-.hover-able:hover{
+.hover-able:hover {
   background: #00e4ea;
   color: #000;
 }
-.right-0{
+
+.right-0 {
   right: 0 !important;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.product-card {
+  width: 312px;
+  // height: 395px;
+
+  .card-top {
+    height: 180px;
+
+    img {
+      object-fit: cover;
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .card-icons {
+    column-gap: 20px;
+  }
+
+  button:hover {
+    background: #FFD33C;
+  }
+}
+
+.rounded-2 {
+  border-radius: 10px;
+}
+
+.custom-shadow {
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.row-gap-20 {
+  row-gap: 20px;
+}
+
+.falback-css {
+  background: #f1f1f1;
 }

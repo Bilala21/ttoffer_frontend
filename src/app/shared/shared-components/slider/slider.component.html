@@ -1,16 +1,16 @@
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
+  <!-- <ol class="carousel-indicators">
     <li *ngFor="let slide of slides; let i = index" [attr.data-target]="'#carouselExampleCaptions'" [attr.data-slide-to]="i" [class.active]="i === 0"></li>
-  </ol>
+  </ol> -->
   
   <div class="carousel-inner">
     <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i === 0">
-      <img [src]="slide.image" class="d-block w-100 img-fluid" [alt]="slide.title" loading="lazy">
-      <div class="carousel-caption custom-caption">
+      <img [src]="slide.image" class="rounded" alt="image" loading="lazy">
+      <!-- <div class="carousel-caption custom-caption">
         <h2>{{ slide.title }}</h2>
         <p [innerHTML]="slide.description"></p>
         <button class="btn btn-start">{{ slide.buttonText }}</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

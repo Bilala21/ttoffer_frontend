@@ -1,3 +1,5 @@
+@for (item of banners; track $index) {
 <div class="col-xl-12 p-0 mt-3 promotion-banner" [ngClass]="bannerClass">
-  <img [src]="banner" class="w-100" alt="banner" />
+  <img [src]="item.banner" class="w-100" alt="banner" />
 </div>
+}

@@ -8,23 +8,13 @@ import { Component } from '@angular/core';
 export class SliderComponent {
   slides = [
     {
-      image: '/assets/images/silder-1.jpg',
-      title: 'Revamp Your Space',
-      description:
-        'Enjoy up to <strong>40% off</strong> on stylish and comfortable furniture.',
-      buttonText: 'Start Shopping Now',
+      image: 'https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/9d56fb9fb543451d.jpg?q=20',
     },
     {
-      image: '/assets/images/silder-2.jpg',
-      title: 'Elegant Designs',
-      description: 'Transform your home with our latest collection.',
-      buttonText: 'Browse Collection',
+      image: 'https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/9d56fb9fb543451d.jpg?q=20',
     },
     {
-      image: '/assets/images/slider-3.jpg',
-      title: 'Luxury Comfort',
-      description: 'Discover furniture that matches your style.',
-      buttonText: 'Shop Now',
+      image: 'https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/9d56fb9fb543451d.jpg?q=20',
     },
   ];
 }
