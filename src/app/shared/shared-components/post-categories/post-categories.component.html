@@ -4,7 +4,7 @@
         <div class="col-xl-1 col-md-2 col-3  mt-3 sm-m-3" 
              *ngFor="let item of firstRowItems; let last = last">
             <a class="category-link" 
-               href="/category/{{ item.id }}">
+               routerLink="/category/{{ item.id }}/{{item.title}}">
                 <img class="category-image" 
                      [src]="item.imgSrc" 
                      alt="{{ item.title }}">

@@ -43,7 +43,7 @@ export const routes: Routes = [
     // },
 
     {
-        path: 'productDetails/:id',
+        path: 'productDetails/:id/:name',
         component: ProductDetailsComponent
     },
     {
@@ -59,7 +59,7 @@ export const routes: Routes = [
         component: ProfilePageComponent
     },
     {
-        path: 'category/:id',
+        path: 'category/:id/:title',
         component: CategoriesComponent
     },
     {
@@ -95,7 +95,11 @@ export const routes: Routes = [
         component: ReviewPageComponent
     },
     {
-        path: 'auctionProduct/:id',
+        path: 'auction-product-detail/:id/:name',
+        component: AuctionProductComponent
+    },
+    {
+        path: 'auction-product-detail',
         component: AuctionProductComponent
     },
     {

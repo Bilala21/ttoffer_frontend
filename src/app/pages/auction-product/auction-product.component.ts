@@ -10,6 +10,7 @@ import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
   selector: 'app-auction-product',
@@ -26,10 +27,16 @@ import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
     CommonModule,
     FormsModule,
     NgxSpinnerComponent,
-    RouterModule
-  ]
+    RouterModule,
+    SharedModule
+]
 })
 export class AuctionProductComponent {
+  promotionBanners: any = [
+    {
+      banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
+    },
+  ]
   showBid: boolean = false;
   allowedToBid: boolean = false;
   isVerified:boolean=false;
@@ -37,17 +44,10 @@ export class AuctionProductComponent {
     { elipsImg1: 'assets/images/Ellipse1.svg', elipsImg2: 'assets/images/Ellipse2.svg', elipsImg3: 'assets/images/Ellipse3.svg', elipsImg4: 'assets/images/Ellipse4.svg', subHeading1: 'Sale Faster', subHeading2: 'Mark As Sold' }
   ]
 
-  liveAuction: any[] = [
-    // {elipsImg:'assets/images/liveProfile1.svg', name:'Ronald Richards', time:'20s',price:'$24.5k'},
-    // {elipsImg:'assets/images/liveProfile2.svg',name:'Cameron Williamson', time:'1m', price:'$20k'},
-    // {elipsImg:'assets/images/liveProfile3.svg', name:'Guy Hawkins', time:'5m', price:'$15k'},
-    // {elipsImg:'assets/images/liveProfile4.svg',name:'Darrell Steward', time:'7m',price:'$12.5k'},
-    // {elipsImg:'assets/images/liveProfile5.svg',name:'Wade Warren', time:'10m', price:'$10k'}
-  ]
-  productId: any;
+  liveAuction: any[] = []
+  productId: any = '1027';
   auctionProduct: any[] = [];
   auctionProductTemp: any[] = [];
-  // featuredProducts: any[] = []
   currentUserid: number = 0
   offerPrice: number = 0;
   center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };
@@ -65,20 +65,14 @@ export class AuctionProductComponent {
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService
   ) {
-    this.currentUserid = extension.getUserId()
+    // this.currentUserid = extension.getUserId()
   }
   ngOnInit(): void {
-
-    this.productId = this.route.snapshot.paramMap.get('id')!;
+    // this.productId = this.route.snapshot.paramMap.get('id')!;
     this.getAuctionProduct();
     this.getBid();
-    // this.spinner.show();
-
-    // // Example: Hide spinner after 3 seconds
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 3000);
   }
+
   showSuccessMessage(message:string) {
     this.snackBar.open(message, '', {
       duration: 3000,
@@ -87,13 +81,15 @@ export class AuctionProductComponent {
       panelClass: ['success-snackbar']
     });
   }
-  getUserId() {
-    const jsonStringGetData = localStorage.getItem('key');
-    if (jsonStringGetData) {
-      const user = JSON.parse(jsonStringGetData);
-      this.currentUserid = user.id;
-    }
-  }
+  
+  // getUserId() {
+  //   const jsonStringGetData = localStorage.getItem('key');
+  //   if (jsonStringGetData) {
+  //     const user = JSON.parse(jsonStringGetData);
+  //     this.currentUserid = user.id;
+  //   }
+  // }
+
   showInput() {
     this.showBid = !this.showBid
   }
@@ -127,29 +123,20 @@ export class AuctionProductComponent {
     }
   }
 
-
-
   getAuctionProduct() {
-
     this.loading = true;
     this.mainServices.getAuctionProduct().subscribe(res => {
       console.log("Auction Response ",res.data);
       this.auctionProduct = res.data
       this.auctionProductTemp = res.data
       this.auctionProduct = this.auctionProduct.filter((item) => {
-
-        if((item.user.email_verified_at!=null ||item.user.email_verified_at!=undefined)&& (item.user.image_verified_at!=null || item.user.image_verified_at !=undefined) &&(item.user.phone_verified_at!=null || item.user.phone_verified_at !=undefined))
-          {
-            this.isVerified=true;
-          }
-          else{
-            this.isVerified=false;
-          }
+      console.log(item)
           return item.id == this.productId;
       });
-      this.allowedToBid = this.auctionProduct.filter((item) => {
-        return item.user_id == this.currentUserid;
-      }).length <= 0;
+      console.log("data",this.auctionProduct)
+      // this.allowedToBid = this.auctionProduct.filter((item) => {
+      //   return item.user_id == this.currentUserid;
+      // }).length <= 0;
 
       this.loading = false;
       this.auctionProduct = this.auctionProduct.map((item) => {
@@ -171,14 +158,12 @@ export class AuctionProductComponent {
       console.log(this.auctionProduct)
     })
   }
+
   startCountdowns() {
     this.auctionProduct.forEach((item, index) => {
-      // const endingDateTimeString = `${item.ending_date.split(' ')[0]} ${item.ending_time}`;
-      // const endingDateTime = new Date(endingDateTimeString).getTime();
-
-      const datePart = item.ending_date.split('T')[0]; // Extract the date part
-      const endingDateTimeString = `${datePart}T${item.ending_time}:00.000Z`; // Combine with the time and format it
-      const endingDateTime = new Date(endingDateTimeString).getTime(); // Parse and get the timestamp
+      const datePart = item.ending_date.split('T')[0]; 
+      const endingDateTimeString = `${datePart}T${item.ending_time}:00.000Z`; 
+      const endingDateTime = new Date(endingDateTimeString).getTime(); 
       const intervalId = setInterval(() => {
         const nowUTC = Date.now();
         const timeDifference = endingDateTime - nowUTC;
@@ -186,15 +171,14 @@ export class AuctionProductComponent {
           clearInterval(intervalId);
           this.calculateRemaningTime='Bid Time Finished';
           this.IsBit=false
-          // this.auction.splice(index, 1); // Remove the item from auction
         } else {
           this.calculateRemaningTime= this.formatTimeDifference(timeDifference)+ ' remaining';
-          // item.remainingTime = this.formatTimeDifference(timeDifference)+ ' remaining';
           this.IsBit=true;
         }
       }, 1000); // Update every second
     });
   }
+
   formatTimeDifference(timeDifference: number): string {
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -215,6 +199,7 @@ export class AuctionProductComponent {
 
     return formattedTime;
   }
+
   placeBid() {
     this.loading = true;
     if (this.price<this.maxPrice) {
@@ -233,6 +218,7 @@ export class AuctionProductComponent {
       console.log(res)
     })
   }
+
   getBid() {
     this.loading = true;
     let input = {
@@ -258,6 +244,7 @@ export class AuctionProductComponent {
       this.loading = false;
     })
   }
+
   bid26() {
     this.price = "26000"
   }

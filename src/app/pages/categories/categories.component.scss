@@ -1,10 +1,28 @@
+.side-filter-title {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #191f33;
+}
+.result-found {
+  color: #636a80;
+  margin-left: 5px;
+  font-size: 20px;
+  line-height: 28px;
+  h4 {
+    font-weight: 600;
+    color: #191F33;
+  }
+  span {
+    font-weight: 400;
+  }
+}
+
 .accordion {
   width: 100%;
   max-width: auto;
   margin: 0 auto;
 }
-
-
 
 .accordion-header {
   padding: 15px;
@@ -15,11 +33,9 @@
 }
 
 .accordion-item {
-  border: 1px solid #EBEEF7;
+  border: 1px solid #ebeef7;
   border-radius: 10px;
 }
-
-
 
 .accordion-body {
   max-height: 0;
@@ -29,7 +45,7 @@
 }
 
 .bidButton {
-  background-color: #1E293B;
+  background-color: #1e293b;
   border-radius: 50px;
   color: white;
   border: none;
@@ -82,7 +98,7 @@
   transform: translate(-50%, -50%);
   width: 20px;
   height: 20px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 50%;
   border: 1px solid #414141;
   z-index: 999;
@@ -106,7 +122,7 @@
 }
 
 .sidebar {
-  height: 95%; 
+  height: 95%;
   overflow-y: auto;
 }
 
@@ -120,36 +136,36 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px; 
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #88888884; 
+  background: #88888884;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
-.btn-group{
+.btn-group {
   background-color: transparent !important;
   color: black;
 }
 .btngroup.active {
-  background-color: #343a40; 
+  background-color: #343a40;
   color: white;
 }
 .hidden {
   visibility: hidden;
 }
 .visible {
-  visibility: visible; 
+  visibility: visible;
 }
 .truncate {
   display: inline-block;

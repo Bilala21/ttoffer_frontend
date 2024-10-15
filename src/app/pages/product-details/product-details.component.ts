@@ -4,12 +4,13 @@ import { FooterComponent } from "../../shared/shared-components/footer/footer.co
 import { ProductCarouselComponent } from "../carousels/product-carousel/product-carousel.component";
 import { RelatedCarouselComponent } from "../carousels/related-carousel/related-carousel.component";
 import { CommonModule, NgIf } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
     selector: 'app-product-details',
@@ -17,17 +18,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.scss',
     imports: [
-      HeaderComponent,
-      FooterComponent,
-      ProductCarouselComponent,
-      RelatedCarouselComponent,
-      NgIf,
-      FormsModule,
-      GoogleMapsModule,
-      CommonModule
-    ]
+    HeaderComponent,
+    FooterComponent,
+    ProductCarouselComponent,
+    RelatedCarouselComponent,
+    NgIf,
+    FormsModule,
+    GoogleMapsModule,
+    CommonModule,
+    SharedModule,
+    RouterModule
+]
 })
 export class ProductDetailsComponent {
+  promotionBanners: any = [
+    {
+      banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
+    },
+  ]
   productId:any;
   // auctionProduct: any[] = [];
   featuredProducts: any[] = []
