@@ -5,13 +5,14 @@ import { FooterComponent } from "./shared/shared-components/footer/footer.compon
 import { CommonModule } from '@angular/common';
 import { AuthModalComponent } from './components/modals/auth-modal/auth-modal.component';
 import { HeaderNavigationComponent } from "./components/header/header.component";
+import { LoginModalComponent } from "./pages/login-modal/login-modal.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [HeaderComponent, FooterComponent, AuthModalComponent, RouterOutlet, CommonModule, HeaderNavigationComponent]
+    imports: [HeaderComponent, FooterComponent, AuthModalComponent, RouterOutlet, CommonModule, HeaderNavigationComponent, LoginModalComponent]
     // imports: [HeaderComponent,FooterComponent,FooterComponent,RouterOutlet, ChatBoxComponent, ProfilePageComponent, ProductDetailsComponent, SellingComponent, WhoBoughtAdComponent, ReviewPageComponent, HeaderComponent, ,CommonModule]
 })
 export class AppComponent {

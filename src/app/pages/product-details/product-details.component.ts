@@ -4,13 +4,15 @@ import { FooterComponent } from "../../shared/shared-components/footer/footer.co
 import { ProductCarouselComponent } from "../carousels/product-carousel/product-carousel.component";
 import { RelatedCarouselComponent } from "../carousels/related-carousel/related-carousel.component";
 import { CommonModule, NgIf } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedModule } from "../../shared/shared.module";
+import { AuthService } from '../../shared/services/authentication/Auth.service';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
     selector: 'app-product-details',
@@ -27,7 +29,8 @@ import { SharedModule } from "../../shared/shared.module";
     GoogleMapsModule,
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    LoginModalComponent
 ]
 })
 export class ProductDetailsComponent {
@@ -52,8 +55,10 @@ export class ProductDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private mainServices: MainServicesService,
+    private authService:AuthService,
     private extension: Extension,
     private snackBar: MatSnackBar,
+    private router:Router,
   ){
     this.currentUserid = extension.getUserId()
   }
@@ -96,6 +101,10 @@ export class ProductDetailsComponent {
     }
   }
     openModal() {
+      if (!localStorage.getItem('key')) {
+        debugger
+        this.authService.triggerOpenModal();
+      }
         const modal = document.getElementById('offerModal');
         if (modal) {
           modal.classList.add('show');
@@ -123,6 +132,18 @@ export class ProductDetailsComponent {
           }
         }
       }
+      openChat() {
+        if (!localStorage.getItem('key')) {
+          debugger
+          this.authService.triggerOpenModal();
+          return
+        }
+        else{
+          const userId = this.featuredProducts[0].user.id;
+          this.router.navigate([`/chatBox/${userId}`]);
+        }
+       
+      }
       // getAuctionProduct(){
       //
       //   this.mainServices.getAuctionProduct().subscribe(res =>{
@@ -136,7 +157,7 @@ export class ProductDetailsComponent {
       //   console.log(this.auctionProduct)
       //   })
       // }
-
+    
     makeOffer(){
       this.idSendOfferDisabled = true;
       let input = {

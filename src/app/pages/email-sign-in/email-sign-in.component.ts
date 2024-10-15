@@ -2,10 +2,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Location } from '@angular/common'; // Ensure you import Location from @angular/common
+import { CommonModule, Location } from '@angular/common'; // Ensure you import Location from @angular/common
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-email-sign-in',
-  standalone: false,
+  standalone: true,
+  imports:[FormsModule,CommonModule],
   templateUrl: './email-sign-in.component.html',
   styleUrl: './email-sign-in.component.scss'
 })
