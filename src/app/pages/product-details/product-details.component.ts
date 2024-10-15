@@ -31,7 +31,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 })
 export class ProductDetailsComponent {
   productId:any;
-  // auctionProduct: any[] = [];
+  auctionProduct: any[] = [];
   featuredProducts: any[] = []
   featuredProductsTemp: any[] = []
   currentUserid: number = 0
@@ -55,7 +55,7 @@ export class ProductDetailsComponent {
   }
   ngOnInit(){
     this.productId = this.route.snapshot.paramMap.get('id')!;
-    // this.getAuctionProduct();
+    this.getAuctionProduct();
     this.getCurrentLocation();
     this.getFeatcherdProduct();
     this.loadMap();
@@ -135,19 +135,19 @@ export class ProductDetailsComponent {
         }
        
       }
-      // getAuctionProduct(){
-      //
-      //   this.mainServices.getAuctionProduct().subscribe(res =>{
-      //
-      //     this.auctionProduct = res.data
-      //     // this.auctionProduct.filter(item => this.auctionProduct.includes(this.productId))
-      //     // console.log(this.auctionProduct)
-      //     this.auctionProduct = this.auctionProduct.filter((item) => {
-      //       return item.id == this.productId;
-      //   });
-      //   console.log(this.auctionProduct)
-      //   })
-      // }
+      getAuctionProduct(){
+      
+        this.mainServices.getAuctionProduct().subscribe(res =>{
+      
+          this.auctionProduct = res.data
+          this.auctionProduct.filter(item => this.auctionProduct.includes(this.productId))
+          // console.log(this.auctionProduct)
+          this.auctionProduct = this.auctionProduct.filter((item) => {
+            return item.id == this.productId;
+        });
+        console.log(this.auctionProduct)
+        })
+      }
     
     makeOffer(){
       this.idSendOfferDisabled = true;
@@ -174,7 +174,7 @@ export class ProductDetailsComponent {
           return item.user_id == this.currentUserid;
         }).length <= 0;
         this.attributesObject = JSON.parse(this.featuredProducts[0].attributes);
-        // this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
+        this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
         console.log(this.featuredProducts)
         this.loading = false;
       },
