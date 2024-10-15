@@ -95,7 +95,7 @@ export const routes: Routes = [
         component: ReviewPageComponent
     },
     {
-        path: 'auctionProduct/:id',
+        path: 'auction-product-detail/:id/:name',
         component: AuctionProductComponent
     },
     {

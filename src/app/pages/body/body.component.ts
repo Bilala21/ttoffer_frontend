@@ -6,6 +6,7 @@ import { ProductCarouselComponent } from "../carousels/product-carousel/product-
 import { SharedModule } from '../../shared/shared.module';
 import { ProductCardComponent } from "../../components/product-card/product-card.component";
 import { forkJoin } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-body',
@@ -13,7 +14,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './body.component.html',
   styleUrl: './body.component.scss',
 
-  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule]
+  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule, RouterLink]
 })
 export class BodyComponent {
   loading = false;
