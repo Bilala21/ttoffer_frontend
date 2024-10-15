@@ -217,7 +217,7 @@ export class RelatedCarouselComponent {
     }
   }
 
-  items:any
+  items:any=[]
   // = [
   //   // {id:1, price:"$2,94,000", title:"HYUNDAI GRAND | 10 1.3 CRDI", year:"2024", km:"2452Km", petrol:"Petrol", location:"2972 Westheimer Rd. Santa Ana, Illinois 85486", imageName:"car-img.png"},
   //   // {id:2, price:"$3,00,000", title:"Tourch Light", year:"2024", km:"2452Km", petrol:"Petrol", location:"2972 Westheimer Rd. Santa Ana, Illinois 85486", imageName:"house-img.png"},

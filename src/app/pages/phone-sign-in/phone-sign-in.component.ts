@@ -3,10 +3,12 @@ import { MainServicesService } from '../../shared/services/main-services.service
 import { Extension } from '../../helper/common/extension/extension';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common'; // Ensure you import Location from @angular/common
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-phone-sign-in',
-  standalone: false,
+  standalone: true,
+  imports:[FormsModule],
   templateUrl: './phone-sign-in.component.html',
   styleUrl: './phone-sign-in.component.scss'
 })

@@ -1765,18 +1765,18 @@ this.loading=false
   }
 
   getNotification() {
-    // this.loading = true;
+    this.loading = true;
     this.mainServices
       .getNotification(this.currentUserId)
       .subscribe((res: any) => {
-        // this.notificationList = res.data
-        // this.notificationList = res.data.sort((a: any, b: any) => {
-        //   return (
-        //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        //   );
-        // });
+        this.notificationList = res.data
+        this.notificationList = res.data.sort((a: any, b: any) => {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        });
         console.log('Notification:', this.notificationList);
-        // this.loading = false;
+        this.loading = false;
       });
   }
   // getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
@@ -1907,9 +1907,9 @@ this.loading=false
     };
     this.mainServices.wishListProduct(input).subscribe(
       (res: any) => {
-        // this.savedItems = res.data;
+        this.savedItems = res.data;
 
-        // this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
+        this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
         console.log('SAVED ITEMS', this.savedItems);
         // this.loading = false;
       },

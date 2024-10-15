@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, UserCredential } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,5 +13,11 @@ signInWithGoogle(): Observable<UserCredential> {
 signOut() {
   return from(this.auth.signOut());
 }
+private openModalSource = new Subject<void>();
+openModal$ = this.openModalSource.asObservable();
 
+triggerOpenModal() {
+  debugger
+  this.openModalSource.next();
+}
 }
