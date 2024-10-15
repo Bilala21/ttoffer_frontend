@@ -5,12 +5,13 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [NgIf,RouterLink],
+  imports: [NgIf, RouterLink],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })
 export class ProductCardComponent implements OnInit {
   @Input() postData: any = {}
+  @Input({ required: true }) postDetialUrl: string = ""
   getYear(date: string) {
     return new Date(date).getFullYear();
   }

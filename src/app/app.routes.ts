@@ -43,7 +43,7 @@ export const routes: Routes = [
     // },
 
     {
-        path: 'productDetails/:id',
+        path: 'product-detail/:id/:name',
         component: ProductDetailsComponent
     },
     {
