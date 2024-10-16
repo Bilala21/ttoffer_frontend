@@ -4,15 +4,18 @@
   line-height: 28px;
   color: #191f33;
 }
+
 .result-found {
   color: #636a80;
   margin-left: 5px;
   font-size: 20px;
   line-height: 28px;
+
   h4 {
     font-weight: 600;
     color: #191F33;
   }
+
   span {
     font-weight: 400;
   }
@@ -46,10 +49,15 @@
 
 .bidButton {
   background-color: #1e293b;
-  border-radius: 50px;
+  border-radius: 10px;
   color: white;
   border: none;
   text-align: center;
+
+  &:hover {
+    text-decoration: none;
+    background: #FFD33C;
+  }
 }
 
 .accordion-body.active {
@@ -157,16 +165,20 @@
   background-color: transparent !important;
   color: black;
 }
+
 .btngroup.active {
   background-color: #343a40;
   color: white;
 }
+
 .hidden {
   visibility: hidden;
 }
+
 .visible {
   visibility: visible;
 }
+
 .truncate {
   display: inline-block;
   max-width: 90%;
@@ -174,6 +186,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .skeleton-img {
   background: linear-gradient(90deg, #e0e0e0 20%, #f0f0f0 50%, #e0e0e0 80%);
   background-size: 200% 100%;
@@ -200,6 +213,7 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: 0 0;
   }
