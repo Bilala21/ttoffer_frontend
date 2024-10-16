@@ -165,10 +165,10 @@ export class RelatedCarouselComponent {
   }
   getVisibleItems() {
     let endIndex = this.currentIndex + 4;
-    if (endIndex > this.items.length) {
-      endIndex = this.items.length;
+    if (endIndex > this.items?.length) {
+      endIndex = this.items?.length;
     }
-    return this.items.slice(this.currentIndex, endIndex);
+    return this.items?.slice(this.currentIndex, endIndex);
   }
 
   trackById(index: number, item: any) {

@@ -1,6 +1,6 @@
 <div class="carousel-container">
     <div class="main-image-container">
-        <img [src]="selectedImage.src" style="height: 532px;" class="main-image w-100 carousel-h">
+        <img [src]="selectedImage?.src" style="height: 532px;" class="main-image w-100 carousel-h">
     </div>
     <div class="thumbnail-container mt-3 d-flex justify-content-center align-items-center">
         <button class="carousel-control-prev" (click)="previousImage()">
@@ -8,7 +8,7 @@
         </button>
         <div class="thumbnail-row d-flex">
             <div class="thumbnail-item" *ngFor="let image of media">
-                <img [src]="image.src" class="thumbnail-image img-fluid" sty [class.selected]="image === selectedImage"
+                <img [src]="image?.src" class="thumbnail-image img-fluid" sty [class.selected]="image === selectedImage"
                     (click)="selectImage(image)">
                 <!-- <img [src]="image.src" class="thumbnail-image img-fluid" [class.selected]="image === selectedImage"
                     (click)="selectImage(image)"> -->

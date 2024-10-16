@@ -74,7 +74,7 @@ export class CategoriesComponent {
   ) { }
   ngOnInit(): void {
     this.categorieId = this.route.snapshot.paramMap.get('id')!;
-    this.title = this.route.snapshot.paramMap.get('title')!;
+    this.title = this.route.snapshot.paramMap.get('slug')!;
 
     // this.route.queryParams.subscribe(params => {
     //   this.title = params['title'];

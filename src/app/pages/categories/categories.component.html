@@ -23,7 +23,7 @@
               {{ title }}
             </h3>
             <div class="d-flex result-found">
-              <h4 class="sm-cat-text mr-2">
+              <h4 class="sm-cat-text mr-2 mb-0">
                 {{ categories.length }}
               </h4>
               <span class="sm-cat-text">Results Founds</span>
@@ -41,7 +41,6 @@
                         src="assets/images/up-chevron.png"
                         alt="chevron"
                         class="chevron-icon"
-
                       />
                     </div>
                     <div class="p-3">
@@ -195,10 +194,10 @@
                             [style.width.%]="progress"
                           ></div>
                         </div>
-                        <div
+                        <!-- <div
                           class="progress-dot"
                           [style.left.%]="progress"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </div>
@@ -257,7 +256,31 @@
               </div>
             </div>
           </div>
-          <!-- right-side-end -->
+          <div class="mobile-filter-result d-block d-xl-none">
+            <!-- right-side-end -->
+            <h2 class="side-filter-title">{{ title }}</h2>
+            <!-- mobile-result-found -->
+            <div
+              class="px-0 d-flex justify-content-between"
+            >
+              <div class="result-found">
+                <h4 class="mr-2 mb-0">
+                  {{ categories.length }}
+                </h4>
+                <span class="">Results Founds</span>
+              </div>
+              <!-- for mobile view filter side btn -->
+              <div class="col-2 d-block d-xl-none px-0">
+                <img
+                  (click)="openfilter()"
+                  src="assets/images/filter-icon.svg"
+                  class="filter-image sm-img4"
+                  alt=""
+                  style="width: 40px;float: right;"
+                />
+              </div>
+            </div>
+          </div>
 
           <!-- left-side-start -->
           <div class="col-xl-9">
@@ -265,15 +288,6 @@
               class="row sm-mt-0 align-items-center justify-content-between sm-pe-0"
               style="padding-right: 30px"
             >
-            <!-- mobile-result-found -->
-              <div class="col-4 d-block d-xl-none">
-                <div class="d-flex result-found">
-                  <h4 class="sm-cat-text mr-2">
-                    {{ categories.length }}
-                  </h4>
-                  <span class="sm-cat-text">Results Founds</span>
-                </div>
-              </div>
               <!-- desktop-btn-auction-feature -->
               <div class="col-md-5 d-none d-xl-block">
                 <div
@@ -301,19 +315,8 @@
                   </button>
                 </div>
               </div>
-              
 
-              <!-- for mobile view filter side btn -->
-              <div class="col-2 d-block d-xl-none">
-                <img
-                  (click)="openfilter()"
-                  src="assets/images/filter-icon.svg"
-                  class="filter-image sm-img4"
-                  alt=""
-                  style="width:40px;float: right;"
-                />
-              </div>
-              <!-- btn-feature-auction -->
+              <!-- mobile-btn-feature-auction -->
               <div class="col-xl-5 d-block d-xl-none mt-3">
                 <div
                   class="btn-group w-100"
@@ -340,10 +343,10 @@
                   </button>
                 </div>
               </div>
-              <!-- mobile view filter side  -->
+              <!-- mobile view filter side-start  -->
               <div
                 *ngIf="show"
-                style="background-color: #ffffff"
+                style="background-color: #ffffff; flex: 1; margin: 0px 10px"
                 class="d-block d-xl-none"
               >
                 <div class="accordion">
@@ -475,10 +478,10 @@
                               [style.width.%]="progress"
                             ></div>
                           </div>
-                          <div
+                          <!-- <div
                             class="progress-dot"
                             [style.left.%]="progress"
-                          ></div>
+                          ></div> -->
                         </div>
                       </div>
                     </div>
@@ -533,20 +536,19 @@
                               [style.width.%]="progress"
                             ></div>
                           </div>
-                          <div
+                          <!-- <div
                             class="progress-dot"
                             [style.left.%]="progress"
-                          ></div>
+                          ></div> -->
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
+              <!-- mobile view filter side-end  -->
             </div>
             <!-- desktop view  -->
-
             <div
               class="sidebar d-none d-xl-block"
               *ngIf="activeButton != 1 && activeButton != 2"
@@ -802,7 +804,7 @@
                 </div>
               </div>
             </div>
-            <!-- desktop view auction product  -->
+            <!-- desktop view auction product start -->
             <div
               class="sidebar mt-3 d-none d-xl-block"
               *ngIf="activeButton === 1"
@@ -1051,8 +1053,11 @@
                               >{{ item.location }}</span
                             >
                           </div>
+                          <!-- auction-product-detail/:id/:name -->
                           <a
-                            routerLink="/auctionProduct/{{ item.id }}"
+                            routerLink="/auction-product-detail/{{ item.id }}/{{
+                              item.slug
+                            }}"
                             [ngStyle]="{
                            'visibility': item.IsBit && item.IsBit != '' ? 'visible' : 'hidden',
                            'opacity': item.IsBit && item.IsBit != '' ? '1' : '0',
@@ -1069,7 +1074,8 @@
                 </div>
               </div>
             </div>
-            <!-- desktop view feature product  -->
+            <!-- desktop view auction product  end-->
+            <!-- desktop view feature product  start-->
             <div
               class="sidebar mt-3 d-none d-xl-block"
               *ngIf="activeButton === 2"
@@ -1313,8 +1319,8 @@
                 </div>
               </div>
             </div>
-
-            <!-- mobile view auction product  -->
+            <!-- desktop view feature product  end-->
+            <!-- mobile view auction product start -->
             <div class="mt-5 d-block d-xl-none" *ngIf="activeButton === 1">
               <div class="content">
                 <div class="row mt-3">
@@ -1322,259 +1328,269 @@
                     class="col-xl-4 col-md-4"
                     *ngFor="let item of auction; trackBy: trackById"
                   >
-                    <div
-                      class="card mb-2 w-100 p-2"
-                      style="border-radius: 10px !important"
+                    <a
+                      style="text-decoration: none; color: #1e293b"
+                      routerLink="/auction-product-detail/{{ item.id }}/{{
+                        item.slug
+                      }}"
                     >
-                      <div class="m-2 card border-0">
-                        <img
-                          class="position-relative sm-card-h"
-                          style="height: 13vh; border-radius: 1vh"
-                          [src]="
-                            item.photo && item.photo.length > 0
-                              ? item.photo[0].src
-                              : 'assets/images/default-img.jpg'
-                          "
-                        />
-                        <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
+                      <div
+                        class="card mb-2 w-100 p-2"
+                        style="border-radius: 10px !important"
+                      >
+                        <div class="m-2 card border-0">
+                          <img
+                            class="position-relative sm-card-h"
+                            style="height: 13vh; border-radius: 1vh"
+                            [src]="
+                              item.photo && item.photo.length > 0
+                                ? item.photo[0].src
+                                : 'assets/images/default-img.jpg'
+                            "
+                          />
+                          <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                        <div
-                          class="position-absolute bg-warning p-1"
-                          style="border-radius: 5px; top: 10px; left: 5px"
-                        >
-                          <!-- <span class="m-0 p-2">Special Offer</span> -->
-                        </div>
-                        <div
-                          class="position-absolute"
-                          style="top: 10px; right: 5px"
-                        >
-                          <img
-                            *ngIf="item.wishlist.length <= 0"
-                            src="assets/images/fav.png"
-                            alt=""
-                            (click)="addWishLst(item)"
-                          />
-                          <img
-                            *ngIf="item.wishlist.length > 0"
-                            src="assets/images/fav-added.png"
-                            alt=""
-                            (click)="removeWishLst(item)"
-                          />
-                        </div>
-                        <div class="d-flex justify-content-between mt-2">
-                          <b style="text-align: left">{{ item.price }}</b>
                           <div
-                            style="
-                              background-color: #ffd33c;
-                              border-radius: 5px;
-                            "
-                            *ngIf="
-                              item.calculateRemaningTime &&
-                              item.calculateRemaningTime != ''
-                            "
+                            class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px"
                           >
-                            <span class="p-1">{{
-                              item.calculateRemaningTime
-                            }}</span>
+                            <!-- <span class="m-0 p-2">Special Offer</span> -->
                           </div>
-                        </div>
-                        <span
-                          class="ellipsis sm-cat-text4"
-                          style="text-align: left; font-size: 15px"
-                          >{{ item.title }}</span
-                        >
-                        <div class="row mb-1 mt-1 d-flex">
-                          <!-- Vahecils -->
                           <div
-                            *ngIf="!(isVehicle(item) || isProperty(item))"
-                            style="text-align: left"
-                            class="col-6"
+                            class="position-absolute"
+                            style="top: 10px; right: 5px"
                           >
                             <img
-                              src="assets/images/date.svg"
-                              style="width: 12%; text-align: left"
+                              *ngIf="item.wishlist.length <= 0"
+                              src="assets/images/fav.png"
                               alt=""
+                              (click)="addWishLst(item)"
                             />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{
-                                opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            >
-                              {{ item.created_at | date }}
-                            </span>
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-5"
-                          >
                             <img
-                              src="assets/images/date.svg"
-                              style="width: 15%"
+                              *ngIf="item.wishlist.length > 0"
+                              src="assets/images/fav-added.png"
                               alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{
-                                opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ item.created_at | date }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-3"
-                          >
-                            <img
-                              src="assets/images/km.svg"
-                              style="width: 40%"
-                              alt=""
+                              (click)="removeWishLst(item)"
                             />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
+                          </div>
+                          <div class="d-flex justify-content-between mt-2">
+                            <b style="text-align: left">{{ item.price }}</b>
+                            <div
                               style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
+                                background-color: #ffd33c;
+                                border-radius: 5px;
+                              "
+                              *ngIf="
+                                item.calculateRemaningTime &&
+                                item.calculateRemaningTime != ''
                               "
                             >
-                              {{ Km(item) }}
-                            </span>
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              src="assets/images/petrol.svg"
-                              style="width: 25%"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: petrol(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            >
-                              {{ petrol(item) }}
-                            </span>
-                          </div>
-                          <!-- Property -->
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bath.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ bath(item) }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bed.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ bed(item) }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/dining.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            ></span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="d-flex">
-                              <img
-                                src="assets/images/location.svg"
-                                style="width: 10%"
-                                alt=""
-                              /><span
-                                class="sm-cat-text4"
-                                style="
-                                  font-size: 1.7vh;
-                                  color: 88eE8E;
-                                  margin-left: 5px;
-                                  text-overflow: ellipsis;
-                                  white-space: nowrap;
-                                  overflow: hidden;
-                                "
-                                >{{ item.location }}</span
-                              >
+                              <span class="p-1">{{
+                                item.calculateRemaningTime
+                              }}</span>
                             </div>
                           </div>
-                        </div>
-                        <a
-                          routerLink="/auctionProduct/{{ item.id }}"
-                          type="submit"
-                          [ngStyle]="{
+                          <span
+                            class="ellipsis sm-cat-text4"
+                            style="text-align: left; font-size: 15px"
+                            >{{ item.title }}</span
+                          >
+                          <div class="row mb-1 mt-1 d-flex">
+                            <!-- Vahecils -->
+                            <div
+                              *ngIf="!(isVehicle(item) || isProperty(item))"
+                              style="text-align: left"
+                              class="col-6"
+                            >
+                              <img
+                                src="assets/images/date.svg"
+                                style="width: 12%; text-align: left"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: item.created_at ? '1' : '0'
+                                }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ item.created_at | date }}
+                              </span>
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-5"
+                            >
+                              <img
+                                src="assets/images/date.svg"
+                                style="width: 15%"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: item.created_at ? '1' : '0'
+                                }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                                >{{ item.created_at | date }}</span
+                              >
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-3"
+                            >
+                              <img
+                                src="assets/images/km.svg"
+                                style="width: 40%"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ Km(item) }}
+                              </span>
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                src="assets/images/petrol.svg"
+                                style="width: 25%"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: petrol(item) ? '1' : '0'
+                                }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ petrol(item) }}
+                              </span>
+                            </div>
+                            <!-- Property -->
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/bath.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                                >{{ bath(item) }}</span
+                              >
+                            </div>
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/bed.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                                >{{ bed(item) }}</span
+                              >
+                            </div>
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/dining.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              ></span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/location.svg"
+                                  style="width: 10%"
+                                  alt=""
+                                /><span
+                                  class="sm-cat-text4"
+                                  style="
+                                    font-size: 1.7vh;
+                                    color: 88eE8E;
+                                    margin-left: 5px;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                  "
+                                  >{{ item.location }}</span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <a
+                            routerLink="/auctionProduct/{{ item.id }}"
+                            type="submit"
+                            [ngStyle]="{
                                                   'visibility': item.IsBit && item.IsBit != '' ? 'visible' : 'hidden',
                                                   'opacity': item.IsBit && item.IsBit != '' ? '1' : '0',
                                                 }"
-                          class="bidButton p-2 mt-2 sm"
-                          style="font-size: 14px"
-                          >Bid Now</a
-                        >
+                            class="bidButton p-2 mt-2 sm"
+                            style="font-size: 14px"
+                            >Bid Now</a
+                          >
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- mobile view feature product  -->
+            <!-- mobile view auction product end -->
+            <!-- mobile view feature product start -->
             <div class="mt-5 d-block d-xl-none" *ngIf="activeButton === 2">
               <div class="content">
                 <div class="row mt-3">
@@ -1582,236 +1598,244 @@
                     class="col-xl-4 col-md-4"
                     *ngFor="let item of feature; trackBy: trackById"
                   >
-                    <div
-                      class="card mb-2 w-100 p-2"
-                      style="border-radius: 10px !important"
+                    <a
+                      style="text-decoration: none; color: #1e293b"
+                      routerLink="/product-detail/{{ item.id }}/{{ item.slug }}"
                     >
-                      <div class="m-2 card border-0">
-                        <img
-                          class="position-relative"
-                          style="height: 13vh; border-radius: 1vh"
-                          [src]="
-                            item.photo && item.photo.length > 0
-                              ? item.photo[0].src
-                              : 'assets/images/default-img.jpg'
-                          "
-                        />
-                        <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
+                      <div
+                        class="card mb-2 w-100 p-2"
+                        style="border-radius: 10px !important"
+                      >
+                        <div class="m-2 card border-0">
+                          <img
+                            class="position-relative"
+                            style="height: 13vh; border-radius: 1vh"
+                            [src]="
+                              item.photo && item.photo.length > 0
+                                ? item.photo[0].src
+                                : 'assets/images/default-img.jpg'
+                            "
+                          />
+                          <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                        <div
-                          class="position-absolute bg-warning p-1"
-                          style="border-radius: 5px; top: 10px; left: 5px"
-                        >
-                          <!-- <span class="m-0 p-2">Special Offer</span> -->
-                        </div>
-                        <div
-                          class="position-absolute"
-                          style="top: 10px; right: 5px"
-                        >
-                          <img
-                            *ngIf="item.wishlist.length <= 0"
-                            src="assets/images/fav.png"
-                            alt=""
-                            (click)="addWishLst(item)"
-                          />
-                          <img
-                            *ngIf="item.wishlist.length > 0"
-                            src="assets/images/fav-added.png"
-                            alt=""
-                            (click)="removeWishLst(item)"
-                          />
-                        </div>
-                        <div class="d-flex justify-content-between mt-2">
-                          <b style="text-align: left">{{ item.price }}</b>
-                          <!-- <div style="background-color: #FFD33C; border-radius: 5px; ">
+                          <div
+                            class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px"
+                          >
+                            <!-- <span class="m-0 p-2">Special Offer</span> -->
+                          </div>
+                          <div
+                            class="position-absolute"
+                            style="top: 10px; right: 5px"
+                          >
+                            <img
+                              *ngIf="item.wishlist.length <= 0"
+                              src="assets/images/fav.png"
+                              alt=""
+                              (click)="addWishLst(item)"
+                            />
+                            <img
+                              *ngIf="item.wishlist.length > 0"
+                              src="assets/images/fav-added.png"
+                              alt=""
+                              (click)="removeWishLst(item)"
+                            />
+                          </div>
+                          <div class="d-flex justify-content-between mt-2">
+                            <b style="text-align: left">{{ item.price }}</b>
+                            <!-- <div style="background-color: #FFD33C; border-radius: 5px; ">
                                                     <span class="p-1 sm-cat-text3">01: 23s remaining</span>
                                                 </div> -->
-                        </div>
-                        <span
-                          class="ellipsis sm-cat-text4"
-                          style="text-align: left; font-size: 15px"
-                          >{{ item.title }}</span
-                        >
-                        <div class="row mb-1 mt-1 d-flex">
-                          <!-- Vahecils -->
-                          <div
-                            *ngIf="!(isVehicle(item) || isProperty(item))"
-                            style="text-align: left"
-                            class="col-6"
+                          </div>
+                          <span
+                            class="ellipsis sm-cat-text4"
+                            style="text-align: left; font-size: 15px"
+                            >{{ item.title }}</span
                           >
-                            <img
-                              src="assets/images/date.svg"
-                              style="width: 12%; text-align: left"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{
-                                opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
+                          <div class="row mb-1 mt-1 d-flex">
+                            <!-- Vahecils -->
+                            <div
+                              *ngIf="!(isVehicle(item) || isProperty(item))"
+                              style="text-align: left"
+                              class="col-6"
                             >
-                              {{ item.created_at | date }}
-                            </span>
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-5"
-                          >
-                            <img
-                              src="assets/images/date.svg"
-                              style="width: 15%"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{
-                                opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ item.created_at | date }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-3"
-                          >
-                            <img
-                              src="assets/images/km.svg"
-                              style="width: 40%"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            >
-                              {{ Km(item) }}
-                            </span>
-                          </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              src="assets/images/petrol.svg"
-                              style="width: 25%"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: petrol(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            >
-                              {{ petrol(item) }}
-                            </span>
-                          </div>
-                          <!-- Property -->
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bath.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ bath(item) }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bed.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                              >{{ bed(item) }}</span
-                            >
-                          </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/dining.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              style="
-                                margin-left: 5px;
-                                font-size: 1.5vh;
-                                color: #8e8e8e;
-                              "
-                            ></span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="d-flex">
                               <img
-                                src="assets/images/location.svg"
-                                style="width: 10%"
+                                src="assets/images/date.svg"
+                                style="width: 12%; text-align: left"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: item.created_at ? '1' : '0'
+                                }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ item.created_at | date }}
+                              </span>
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-5"
+                            >
+                              <img
+                                src="assets/images/date.svg"
+                                style="width: 15%"
                                 alt=""
                               /><span
-                                class="sm-cat-text4"
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: item.created_at ? '1' : '0'
+                                }"
                                 style="
-                                  font-size: 1.7vh;
-                                  color: 88eE8E;
                                   margin-left: 5px;
-                                  text-overflow: ellipsis;
-                                  white-space: nowrap;
-                                  overflow: hidden;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
                                 "
-                                >{{ item.location }}</span
+                                >{{ item.created_at | date }}</span
                               >
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-3"
+                            >
+                              <img
+                                src="assets/images/km.svg"
+                                style="width: 40%"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ Km(item) }}
+                              </span>
+                            </div>
+                            <div
+                              *ngIf="isVehicle(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                src="assets/images/petrol.svg"
+                                style="width: 25%"
+                                alt=""
+                              />
+                              <span
+                                class="sm-cat-text3"
+                                [ngStyle]="{
+                                  opacity: petrol(item) ? '1' : '0'
+                                }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              >
+                                {{ petrol(item) }}
+                              </span>
+                            </div>
+                            <!-- Property -->
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/bath.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                                >{{ bath(item) }}</span
+                              >
+                            </div>
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/bed.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                                >{{ bed(item) }}</span
+                              >
+                            </div>
+                            <div
+                              *ngIf="isProperty(item)"
+                              style="text-align: left"
+                              class="col-4"
+                            >
+                              <img
+                                style="width: 25%"
+                                src="assets/images/dining.png"
+                                alt=""
+                              /><span
+                                class="sm-cat-text3"
+                                style="
+                                  margin-left: 5px;
+                                  font-size: 1.5vh;
+                                  color: #8e8e8e;
+                                "
+                              ></span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/location.svg"
+                                  style="width: 10%"
+                                  alt=""
+                                /><span
+                                  class="sm-cat-text4"
+                                  style="
+                                    font-size: 1.7vh;
+                                    color: 88eE8E;
+                                    margin-left: 5px;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                  "
+                                  >{{ item.location }}</span
+                                >
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- mobile view feature product end -->
             <!-- mobile view  -->
             <div class="d-block d-xl-none border" *ngIf="isAuctionProduct">
               <div class="row mt-5">

@@ -1,6 +1,6 @@
-<!-- <div *ngIf="loading" class="loader-overlay">
+<div *ngIf="loading" class="loader-overlay">
   <div class="loader"></div>
-</div> -->
+</div>
 <main class="mt-16">
   <div class="container-fluid">
     <div class="col-xl-11 mx-auto mt-3">
@@ -14,28 +14,30 @@
       <div class="col-xl-11 mx-auto">
         <div class="row">
           <div class="col-xl-8">
-            <h2 class="product_title">{{ featuredProducts[0].title }}</h2>
+            <h2 class="product_title">{{ featuredProducts[0]?.title }}</h2>
             <div class="d-block basic-info-product">
               <div class="d-flex align-items-center">
                 <p class="sm-cat-text3 icons-plus-info">
                   <i class="fa fa-map-marker-alt fs-20 mr-2"></i>
-                  {{ featuredProducts[0].location }}
+                  {{ featuredProducts[0]?.location }}
                 </p>
                 <p class="mx-3 sm-cat-text3 icons-plus-info">
                   <i class="far fa-clock fs-20 mr-2"></i>
-                  {{ featuredProducts[0].updated_at | date }}
+                  {{ featuredProducts[0]?.updated_at | date }}
                 </p>
                 <p class="sm-cat-text3 icons-plus-info">
                   <i class="far fa-eye fs-20 mr-2"></i>
-                  {{ featuredProducts[0].views_count }} Viewed
+                  {{ featuredProducts[0]?.views_count }} Viewed
                 </p>
               </div>
             </div>
             <div class="col-12">
-              <app-product-carousel
-                [photo]="featuredProducts[0].photo"
-                [video]="featuredProducts[0].video"
+              @if(featuredProducts[0]?.photo.length > 0){
+                <app-product-carousel
+                [photo]="featuredProducts[0]?.photo"
+                [video]="featuredProducts[0]?.video"
               ></app-product-carousel>
+              }
             </div>
             <!-- small-screen -->
             <div class="d-block d-xl-none">
@@ -43,23 +45,23 @@
                 <div class="col-12 col-xl-6 col-md-6 mt-5">
                   <h2 class="sm-cat-text4 detail-des">Descriptions</h2>
                   <p class="sm-font des-in-detail">
-                    {{ featuredProducts[0].description }}
+                    {{ featuredProducts[0]?.description }}
                   </p>
                 </div>
                 <div class="col-12 col-xl-6 col-md-6 mt-5">
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <h3>AED {{ featuredProducts[0].fix_price }}</h3>
+                    <h3>AED {{ featuredProducts[0]?.fix_price }}</h3>
                     <div>
                       <img
-                        *ngIf="!featuredProducts[0].wishlist.length"
+                        *ngIf="!featuredProducts[0]?.wishlist.length"
                         src="assets/images/action.png"
                         alt="Add to Wishlist"
                         (click)="addWishLst(featuredProducts[0])"
                       />
                       <img
-                        *ngIf="featuredProducts[0].wishlist.length > 0"
+                        *ngIf="featuredProducts[0]?.wishlist.length > 0"
                         src="assets/images/action_filled.png"
                         alt="Added to Wishlist"
                         (click)="removeWishLst(featuredProducts[0])"
@@ -68,7 +70,7 @@
                   </div>
                   <hr />
 
-                  <a routerLink="/chatBox/{{ featuredProducts[0].user.id }}">
+                  <a routerLink="/chatBox/{{ featuredProducts[0]?.user?.id }}">
                     <button
                       class="btn btn-dark w-100 mt-3 send-message"
                       *ngIf="allowedToMakeOffer"
@@ -90,8 +92,8 @@
                         <div class="col-4">
                           <img
                             [src]="
-                              featuredProducts[0].user.img
-                                ? featuredProducts[0].user.img
+                              featuredProducts[0]?.user.img
+                                ? featuredProducts[0]?.user.img
                                 : './assets/images/profile-placeholder.png'
                             "
                             class="userImage"
@@ -102,12 +104,12 @@
                           <span class="add-by">Add by:</span>
                           <div class="d-flex align-items-center">
                             <h6 class="m-0 sm-font user-name">
-                              {{ featuredProducts[0].user.name }}
+                              {{ featuredProducts[0]?.user.name }}
                             </h6>
                             <img
                               [ngStyle]="{
-                              'visibility': featuredProducts[0].user.image_verified_at != null && featuredProducts[0].user.phone_verified_at != null && featuredProducts[0].user.email_verified_at != null ? 'visible' : 'hidden',
-                              'opacity': featuredProducts[0].user.image_verified_at != null && featuredProducts[0].user.phone_verified_at != null && featuredProducts[0].user.email_verified_at != null ? '1' : '0',
+                              'visibility': featuredProducts[0]?.user.image_verified_at != null && featuredProducts[0]?.user.phone_verified_at != null && featuredProducts[0]?.user.email_verified_at != null ? 'visible' : 'hidden',
+                              'opacity': featuredProducts[0]?.user.image_verified_at != null && featuredProducts[0]?.user.phone_verified_at != null && featuredProducts[0]?.user.email_verified_at != null ? '1' : '0',
                             }"
                               style="height: 3vh"
                               src="assets/images/check-circle.png"
@@ -120,7 +122,7 @@
                     <div class="col-4">
                       <a
                         routerLink="/auctionUserProfile/{{
-                          featuredProducts[0].user.id
+                          featuredProducts[0]?.user.id
                         }}"
                       >
                         <h6 class="pointer textHover sm-cat-text3 profile-link">
@@ -131,7 +133,7 @@
                     <div class="col-12 mt-4">
                       <h6 class="sm-cat-text3 color">
                         <i class="fa fa-map-marker-alt fs-20 mr-2"></i>
-                        {{ featuredProducts[0].user.location }}
+                        {{ featuredProducts[0]?.user.location }}
                       </h6>
                     </div>
                   </div>
@@ -141,13 +143,13 @@
                       <div class="d-flex">
                         <h6 class="sm-cat-text4 brand-detail">Condition:</h6>
                         <h6 class="sm-font1 brand-ans">
-                          {{ attributesObject.condition }}
+                          {{ attributesObject?.condition }}
                         </h6>
                       </div>
                       <div class="d-flex mt-3">
                         <h6 class="sm-cat-text4 brand-detail">Color:</h6>
                         <h6 class="sm-cat-text4 brand-ans">
-                          {{ attributesObject.color ?? "Null" }}
+                          {{ attributesObject?.color ?? "Null" }}
                         </h6>
                       </div>
                     </div>
@@ -155,13 +157,13 @@
                       <div class="d-flex">
                         <h6 class="sm-cat-text4 brand-detail">Brand:</h6>
                         <h6 class="sm-font1 brand-ans">
-                          {{ attributesObject.brand ?? "Null" }}
+                          {{ attributesObject?.brand ?? "Null" }}
                         </h6>
                       </div>
                       <div class="d-flex mt-3">
                         <h6 class="sm-cat-text4 brand-detail">Storage:</h6>
                         <h6 class="sm-cat-text4 branch-ans">
-                          {{ attributesObject.storage ?? "Null" }}
+                          {{ attributesObject?.storage ?? "N/A" }}
                         </h6>
                       </div>
                     </div>
@@ -188,7 +190,8 @@
                     <div class="col-12 mt-4">
                       <h4 class="sm-cat-text4 location-heading">Location</h4>
                       <div class="map-div">
-                        <google-map
+                        @if(featuredProducts.length > 0){
+                          <google-map
                           style="border-radius: 16px"
                           height="200px"
                           width="100%"
@@ -196,6 +199,7 @@
                           [zoom]="zoom"
                         >
                         </google-map>
+                        }
                       </div>
                       <!-- <img src="assets/images/map.png" class="w-100 mt-3" alt=""> -->
                     </div>
@@ -207,16 +211,16 @@
 
           <div class="col-xl-4 mt-4 d-none d-xl-block mt-5">
             <div class="d-flex justify-content-between align-items-center">
-              <h3>AED {{ featuredProducts[0].fix_price }}</h3>
+              <h3>AED {{ featuredProducts[0]?.fix_price }}</h3>
               <div>
                 <img
-                  *ngIf="!featuredProducts[0].wishlist.length"
+                  *ngIf="!featuredProducts[0]?.wishlist.length"
                   src="assets/images/action.png"
                   alt="Add to Wishlist"
                   (click)="addWishLst(featuredProducts[0])"
                 />
                 <img
-                  *ngIf="featuredProducts[0].wishlist.length > 0"
+                  *ngIf="featuredProducts[0]?.wishlist.length > 0"
                   src="assets/images/action_filled.png"
                   alt="Added to Wishlist"
                   (click)="removeWishLst(featuredProducts[0])"
@@ -225,7 +229,7 @@
             </div>
             <hr />
 
-            <a routerLink="/chatBox/{{ featuredProducts[0].user.id }}">
+            <a routerLink="/chatBox/{{ featuredProducts[0]?.user.id }}">
               <button
                 class="btn btn-dark w-100 mt-3 send-message"
                 *ngIf="allowedToMakeOffer"
@@ -247,8 +251,8 @@
                   <div class="col-4">
                     <img
                       [src]="
-                        featuredProducts[0].user.img
-                          ? featuredProducts[0].user.img
+                        featuredProducts[0]?.user.img
+                          ? featuredProducts[0]?.user.img
                           : './assets/images/profile-placeholder.png'
                       "
                       class="userImage"
@@ -259,12 +263,12 @@
                     <span class="add-by">Add by:</span>
                     <div class="d-flex align-items-center">
                       <h6 class="m-0 sm-font user-name">
-                        {{ featuredProducts[0].user.name }}
+                        {{ featuredProducts[0]?.user.name }}
                       </h6>
                       <img
                         [ngStyle]="{
-                      'visibility': featuredProducts[0].user.image_verified_at != null && featuredProducts[0].user.phone_verified_at != null && featuredProducts[0].user.email_verified_at != null ? 'visible' : 'hidden',
-                      'opacity': featuredProducts[0].user.image_verified_at != null && featuredProducts[0].user.phone_verified_at != null && featuredProducts[0].user.email_verified_at != null ? '1' : '0',
+                      'visibility': featuredProducts[0]?.user.image_verified_at != null && featuredProducts[0]?.user.phone_verified_at != null && featuredProducts[0]?.user.email_verified_at != null ? 'visible' : 'hidden',
+                      'opacity': featuredProducts[0]?.user.image_verified_at != null && featuredProducts[0]?.user.phone_verified_at != null && featuredProducts[0]?.user.email_verified_at != null ? '1' : '0',
                     }"
                         style="height: 3vh"
                         src="assets/images/check-circle.png"
@@ -278,7 +282,7 @@
                 <a
                   [routerLink]="[
                     '/auctionUserProfile',
-                    featuredProducts[0].user.id
+                    featuredProducts[0]?.user.id
                   ]"
                 >
                   <h6 class="pointer textHover sm-cat-text3 profile-link">
@@ -290,8 +294,8 @@
                 <h6 class="sm-cat-text3 color">
                   <i class="fa fa-map-marker-alt fs-20 mr-2"></i>
                   {{
-                    featuredProducts[0].user.location
-                      ? featuredProducts[0].user.location
+                    featuredProducts[0]?.user.location
+                      ? featuredProducts[0]?.user.location
                       : "N/A"
                   }}
                 </h6>
@@ -303,7 +307,7 @@
                 <div class="d-flex">
                   <h6 class="sm-cat-text4 brand-detail">Condition:</h6>
                   <h6 class="sm-font1 brand-ans">
-                    {{ attributesObject.condition ?? "Null" }}
+                    {{ attributesObject?.condition ?? "Null" }}
                   </h6>
                 </div>
                 <!-- <div class="d-flex mt-3 ">
@@ -317,7 +321,7 @@
                 <div class="d-flex mt-3">
                   <h6 class="sm-cat-text4 brand-detail">Color:</h6>
                   <h6 class="sm-cat-text4 brand-ans">
-                    {{ attributesObject.color ?? "Null" }}
+                    {{ attributesObject?.color ?? "Null" }}
                   </h6>
                 </div>
               </div>
@@ -325,13 +329,13 @@
                 <div class="d-flex">
                   <h6 class="sm-cat-text4 brand-detail">Brand:</h6>
                   <h6 class="sm-font1 brand-ans">
-                    {{ attributesObject.brand ?? "Null" }}
+                    {{ attributesObject?.brand ?? "Null" }}
                   </h6>
                 </div>
                 <div class="d-flex mt-3">
                   <h6 class="sm-cat-text4 brand-detail">Storage:</h6>
                   <h6 class="sm-cat-text4 branch-ans">
-                    {{ attributesObject.storage ?? "Null" }}
+                    {{ attributesObject?.storage ?? "Null" }}
                   </h6>
                 </div>
               </div>
@@ -358,7 +362,7 @@
           <div class="row container">
             <div class="col-8 mt-5">
               <h5 class="detail-des">Descriptions</h5>
-              <p class="des-in-detail">{{ featuredProducts[0].description }}</p>
+              <p class="des-in-detail">{{ featuredProducts[0]?.description }}</p>
             </div>
           </div>
         </div>
@@ -409,13 +413,13 @@
                   <!-- <img src="assets/images/light-clothes-img.svg" class="w-100" style="height: 94px; border-radius: 20px;" alt=""> -->
 
                   <img
-                    [src]="featuredProducts[0].photo[0].src"
+                    [src]="featuredProducts[0]?.photo[0].src"
                     class="w-100 modal-product-img"
                     alt="product-img"
                   />
                 </div>
                 <div class="col-8">
-                  <h6>{{ featuredProducts[0].title }}</h6>
+                  <h6>{{ featuredProducts[0]?.title }}</h6>
                   <div class="row align-items-center">
                     <div class="col-5">
                       <img src="assets/images/stars.png" class="w-100" alt="" />
