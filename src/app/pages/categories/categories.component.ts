@@ -163,7 +163,7 @@ this.loadSubCategories(this.categorieId)
   }
  
   loadSubCategories(categoryId: any): void {
-    debugger
+    
    this.subCategoryService.getDataByCategoryId(categoryId);
    
   }
@@ -189,7 +189,7 @@ this.loadSubCategories(this.categorieId)
       min_price: this.min_price,
       max_price: this.max_price
     }
-    debugger
+    
     this.mainServices.getAllProducts(input).subscribe((res: any) => {
 
       this.categories = res.data
@@ -667,7 +667,7 @@ formatTimeDifference(timeDifference: number): string {
 
   }
   getproductBySellerType(sellerType:any){
-    debugger
+    
 this.is_urgent=sellerType;
 this.getAllProducts();
   }

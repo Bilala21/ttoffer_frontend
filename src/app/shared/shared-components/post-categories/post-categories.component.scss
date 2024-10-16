@@ -1,118 +1,26 @@
-// post-card.component.scss
+.row {
+  margin-bottom: 4rem;
+  row-gap: 1.6rem;
+  column-gap: 2%;
 
-// General styles for the container
-.col-11 {
-  margin: 0 auto;
-  text-align: center;
-  margin-top: 5rem;
+  a {
+    color: #222;
 
-  // Style for the main heading
-  .category-title {
-    font-size: 40px;
-    font-weight: 600;
-    list-style: none; // Removed default list styles
-  }
-
-  // Row styling
-  .row {
-    margin-top: 5rem;
-
-    // Column styling for each item
-    .col-xl-1,
-    .col-md-2,
-    .col-3 {
-      margin: 0 1.2vw;
-      margin-top: 3rem;
-
-      // Style for links
-      .category-link {
-        text-decoration: none;
-        color: #1E293B;
-        transition: color 0.3s;
-
-        &:hover {
-          color: #007BFF; // Change color on hover
-        }
-
-        // Image styling
-        .category-image {
-          width: 100%;
-          @media (max-width: 576px) {
-            width: 75%; // Adjust for small screens
-          }
-        }
-
-        // Title styling
-        .category-title-text {
-          font-size: 16px;
-        }
-
-        // Subtitle styling for coming soon text
-        .coming-soon-text {
-          font-size: 12px;
-          background-color: #FFD33C;
-          border-radius: 5px;
-          padding: 0.5vh 1vh;
-          display: inline-block; // Ensures it only takes the necessary space
-        }
-      }
-    }
-  }
-}
-
-// Media queries for small and medium screens
-@media (max-width: 768px) { // Medium screens
-  .col-11 {
-    margin-top: 3rem;
-
-    .category-title {
-      font-size: 32px; // Smaller font size for medium screens
+    img {
+      min-width: 88px;
+      min-height: 88px;
+      max-width: 88px;
+      max-height: 88px;
+      object-fit: contain;
     }
 
-    .row {
-      .col-xl-1,
-      .col-md-2,
-      .col-3 {
-        margin: 0 1vw; // Reduced margin for medium screens
-
-        .category-link {
-          .category-title-text {
-            font-size: 14px; // Smaller title font for medium screens
-          }
-
-          .coming-soon-text {
-            font-size: 11px; // Smaller coming soon text for medium screens
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 576px) { // Small screens
-  .col-11 {
-    margin-top: 2rem;
-
-    .category-title {
-      font-size: 28px; // Smaller font size for small screens
+    &:hover {
+      text-decoration: none;
     }
 
-    .row {
-      .col-xl-1,
-      .col-md-2,
-      .col-3 {
-        margin: 0 0.5vw; // Further reduced margin for small screens
-
-        .category-link {
-          .category-title-text {
-            font-size: 12px; // Smaller title font for small screens
-          }
-
-          .coming-soon-text {
-            font-size: 10px; // Smaller coming soon text for small screens
-          }
-        }
-      }
+    span {
+      max-width: 88px;
+      line-height: 1.2;
     }
   }
 }

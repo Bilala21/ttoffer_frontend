@@ -16,7 +16,7 @@
                 ulClass="d-flex selling-tab-container rounded-pill overflow-hidden" [activeTab]="activeTab"
                 tabClass="selling-tab fs-14 rounded-0" />
         </div>
-        @if (!apiData[activeTab].length) {
+        @if (!apiData[activeTab]?.length) {
         <div class="w-100 selling-notfound notfound d-flex justify-content-center {{notFoundData[activeTab].tabName}}">
             <app-selling-notfound image="{{notFoundData[activeTab].image}}"
                 heading="{{notFoundData[activeTab].heading}}" text="{{notFoundData[activeTab].text}}">

@@ -48,7 +48,7 @@ export class MainServicesService {
   //   return this.http.post(`${this.apiUrl}api/featured-products`, null, { headers: this.getHeaders() });
   // }
   getFeatureProduct(): Observable<any> {
-    debugger
+    
     return this.http.post(`${this.apiUrl}api/featured-products`, null);
   }
   getAuctionProduct(): Observable<any> {

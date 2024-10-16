@@ -19,7 +19,7 @@ export class AccountSettingDialogeComponent {
     public dialogRef: MatDialogRef<AccountSettingDialogeComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    debugger
+    
     this.dialogDataCopy = { ...data};
     this.userInformation={...data.currentUserProfile}
   }
@@ -53,7 +53,7 @@ export class AccountSettingDialogeComponent {
       default:
         break;
     }
-debugger
+
     // Close the dialog and return the relevant data
     this.dialogRef.close(updatedData,);
   }

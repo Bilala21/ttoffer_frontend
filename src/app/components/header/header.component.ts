@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { LoaderComponent } from "../loader/loader.component";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
+import { GlobalStateService } from '../../shared/services/state/global-state.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HeaderNavigationComponent implements OnInit {
   screenWidth: number = window.innerWidth;
   screenHeight: number = window.innerHeight;
 
-  constructor(private mainServicesService: MainServicesService,private authService: AuthService,private router: Router) {
+  constructor(private globalStateService: GlobalStateService, private mainServicesService: MainServicesService, private authService: AuthService, private router: Router) {
     this.currentUser = JSON.parse(localStorage.getItem('key') as string);
   }
   @HostListener('window:resize', ['$event'])
@@ -67,6 +68,8 @@ export class HeaderNavigationComponent implements OnInit {
       next: (res: any) => {
         this.categories = res;
         this.loading = false;
+        this.globalStateService.setCategories(res)
+
       },
       error: (err) => {
         console.log(err);

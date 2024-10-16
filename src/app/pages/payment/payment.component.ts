@@ -20,7 +20,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   constructor(private stripeService: StripeServiceService) {}
 
   async ngOnInit(): Promise<void> {
-    debugger
+    
     this.stripe = this.stripeService.getStripe();
     if (this.stripe) {
       this.elements = this.stripe.elements();
@@ -67,7 +67,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   pay(amount: number): void {
-    debugger
+    
     if (this.stripe && this.card) {
       this.loading = true;
       this.stripe.createToken(this.card).then(({ token, error }) => {
