@@ -25,7 +25,7 @@ export class BodyComponent {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
     },
     {
-      banner: "https://www.ilaan.com/assets/images/pictures/p-upload.png?v=1.2"
+      banner: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/be2f29652ac02f60.jpeg?q=20"
     }
   ]
   constructor(

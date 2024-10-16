@@ -1,6 +1,6 @@
 <div>
-    <h1 class="fs-24 fw-bold">All Categories</h1>
-    <div class="row">
+    <h1 class="fs-24 fw-bold my-4 text-center pt-2">All Categories</h1>
+    <div class="d-flex overflow-auto category-list justify-content-between">
         <a *ngFor="let item of categories; let last = last" routerLink="/category/{{item.id}}/{{item.slug}}">
             <img src={{item.image}} alt={{item.name}} loading="lazy" class="rounded-pill border-1 p-3"
                 [ngStyle]="{'background-color': item.color}">
