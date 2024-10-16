@@ -206,7 +206,7 @@ export class ProductDetailsComponent {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    const map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapProperties);
+    // const map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapProperties);
     this.loading = false;
   }
   addWishLst(item:any){
