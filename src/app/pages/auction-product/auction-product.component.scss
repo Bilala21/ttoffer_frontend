@@ -1,172 +1,117 @@
-.product-detail-container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.product_title {
+  padding: 13px;
 }
-
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.basic-info-product {
+  padding-left: 13px;
+  .icons-plus-info {
+    font-size: 13.28px;
+    color: #767e94;
+    i,
+    img {
+      width: 19.93px;
+      height: 19.93px;
+    }
+  }
 }
-
-.title-and-location h1 {
-  font-size: 24px;
-  margin: 0;
+.send-message {
+  border-radius: 20px;
+  padding: 10px;
 }
-
-.pointer {
-  cursor: pointer;
-}
-
-.textHover:hover {
-  color: blue;
-}
-
-.location-and-date {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
-.location-and-date p {
-  margin: 5px 0;
-  display: flex;
-  align-items: center;
-}
-
-.location-and-date i {
-  margin-right: 5px;
-}
-
-.price {
-  font-size: 24px;
-  color: #333;
-}
-
-.product-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.product-actions {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-.send-message,
 .make-offer {
-  flex: 1;
-  margin: 0 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #ebeef7;
 }
-
-.seller-info {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
+.userImage {
+  width: 46px;
+  height: 46px;
+  border-radius: 57px;
 }
-
-.seller-profile {
-  display: flex;
-  align-items: center;
+.add-by {
+  color: #767e94;
+  font-size: 12px;
 }
-
-.seller-profile img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 19.93px;
 }
-
-.seller-details h3 {
-  margin: 0;
+.profile-link {
+  text-decoration: none;
+  color: #636a80;
 }
-
-.product-details p {
-  margin: 5px 0;
+.detail-des {
+  font-size: 19.93px;
+  font-weight: 19px;
+  line-height: 26px;
+  color: #191f33;
 }
-
-.product-description,
-.product-location {
-  margin: 20px 0;
+.des-in-detail {
+  word-wrap: break-word;
+  color: #767e94;
+  font-size: 2.2vh;
 }
-
-.product-description h2,
-.product-location h2 {
-  margin-bottom: 10px;
-}
-
-.product-location img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-/* Responsive Styles */
-@media (max-width: 1030px) {
-  .product-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .product-actions {
-    flex-direction: column;
-  }
-
-  .send-message,
-  .make-offer {
-    margin: 10px 0;
-  }
-
-  .seller-info {
-    flex-direction: column;
-  }
-}
-
-.modal-title {
+.right-side-heading {
   font-size: 24px;
-  font-weight: bold;
+  line-height: 31.2px;
+  font-weight: 600;
 }
+// Modal Styles
+#offerModal {
+  .modal-dialog-centered {
+    .modal-content {
+      border-radius: 20px;
 
-.sidebar {
-  height: auto; 
-  overflow-y: auto;
-}
+      .modal-header {
+        border: none;
 
-.sidebar-content {
-  padding: 20px;
-  width: 99%;
-}
+        .close {
+          // Style for close button if needed
+        }
+      }
 
-::-webkit-scrollbar {
-  width: 8px; 
-}
+      .modal-body {
+        margin-bottom: 5rem;
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-  border-radius: 10px;
-}
+        .row {
+          .col-9 {
+            margin: 0 auto;
 
-::-webkit-scrollbar-thumb {
-  background: #88888884; 
-  border-radius: 10px;
-}
+            .text-center {
+              h3 {
+                font-weight: bolder;
+              }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
+              span {
+                // Additional styles if needed
+              }
+            }
 
-.img-thumbnail {
-  width: 30px; /* Adjust width as needed */
-  height: 20px; /* Adjust height as needed */
-  object-fit: cover; /* Ensure image covers the box without distortion */
-  border-radius: 40px; /* Optional: adds rounded corners */
-  margin-right: 50px; /* Space between images */
+            .mt-4 {
+              button {
+                &.btn {
+                  &.btn-dark {
+                    width: 100%;
+                    border-radius: 20px;
+                    padding: 10px;
+
+                    // Additional button style for Yes
+                    &:first-child {
+                      // Specific to "Yes, Place My Bid"
+                    }
+
+                    // Additional button style for Cancel
+                    &:last-child {
+                      margin-top: 1.5rem;
+                      // Specific to "Cancel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

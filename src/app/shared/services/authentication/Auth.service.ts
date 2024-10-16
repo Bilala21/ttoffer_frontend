@@ -17,7 +17,7 @@ private openModalSource = new Subject<void>();
 openModal$ = this.openModalSource.asObservable();
 
 triggerOpenModal() {
-  debugger
+  // debugger
   this.openModalSource.next();
 }
 }

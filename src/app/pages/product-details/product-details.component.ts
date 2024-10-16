@@ -10,6 +10,7 @@ import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedModule } from "../../shared/shared.module";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 
@@ -19,17 +20,25 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.scss',
     imports: [
-      HeaderComponent,
-      FooterComponent,
-      ProductCarouselComponent,
-      RelatedCarouselComponent,
-      NgIf,LoginModalComponent,
-      FormsModule,
-      GoogleMapsModule,
-      CommonModule,RouterModule
-    ]
+    HeaderComponent,
+    FooterComponent,
+    ProductCarouselComponent,
+    RelatedCarouselComponent,
+    NgIf,
+    FormsModule,
+    GoogleMapsModule,
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    LoginModalComponent
+]
 })
 export class ProductDetailsComponent {
+  promotionBanners: any = [
+    {
+      banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
+    },
+  ]
   productId:any;
   auctionProduct: any[] = [];
   featuredProducts: any[] = []
@@ -93,7 +102,7 @@ export class ProductDetailsComponent {
   }
     openModal() {
       if (!localStorage.getItem('key')) {
-        debugger
+        // debugger
         this.authService.triggerOpenModal();
       }
         const modal = document.getElementById('offerModal');
@@ -125,7 +134,7 @@ export class ProductDetailsComponent {
       }
       openChat() {
         if (!localStorage.getItem('key')) {
-          debugger
+          // debugger
           this.authService.triggerOpenModal();
           return
         }
