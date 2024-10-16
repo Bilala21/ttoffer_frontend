@@ -621,10 +621,10 @@ export class ProfilePageComponent {
   loadCategories(): void {
     this.mainServices.getCategories(this.selectedTabId).subscribe(
       (data) => {
-        debugger;
+        // debugger;
         this.categories = data;
         if(this.editProductData){
-          debugger
+          // debugger
           this.editProductData=JSON.parse(this.editProductData);
           this.cd.detectChanges();
           this.selectedCategoryId=this.editProductData.category_id;
@@ -647,7 +647,7 @@ export class ProfilePageComponent {
     );
   }
   initializeForm() {
-    debugger
+    // debugger
     // Initialize form controls dynamically based on the selected category
     const fields = this.categoryFields[this.selectedCategoryId];
     fields.forEach(field => {
@@ -656,7 +656,7 @@ export class ProfilePageComponent {
   }
 
 showfor(){
-  debugger
+  // debugger
   console.log(this.categoryForm.value)
 }
   showOtp() {
@@ -706,7 +706,7 @@ showfor(){
   // }
 
   selectTab(tab: string) {
-    debugger;
+    // debugger;
     this.selectedTab = tab;
     localStorage.setItem('currentTab', this.selectedTab);
     this.showDiv = false;
@@ -841,7 +841,7 @@ showfor(){
       id: file.id,
       product_id: file.product_id,
     };
-    debugger
+    // debugger
     this.mainServices.deleteProductImage(input).subscribe((res) => {
       this.editProductData.photo=null
       console.log(res);
@@ -1282,7 +1282,7 @@ showfor(){
         body: formData,
       })
         .then((response: any) => {
-          debugger;
+          // debugger;
           if (!response.ok) {
             throw new Error(
               'Network response was not ok ' + response.statusText
@@ -1525,7 +1525,7 @@ showfor(){
     this.attributes['sub_category_name'] = this.getSubCategoryNameById(
       this.selectedSubCategoryId
     );
-    debugger;
+    // debugger;
     let input = {
       product_id: this.productId,
       category_id: this.selectedCategoryId,

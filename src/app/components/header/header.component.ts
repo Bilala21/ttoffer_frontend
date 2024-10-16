@@ -81,7 +81,7 @@ export class HeaderNavigationComponent implements OnInit {
       this.authService.triggerOpenModal();
       return;
     } else {
-      debugger
+      // debugger
       const userData = JSON.parse(storedData);
       const userId = userData?.id; 
       if (userId) {
@@ -95,7 +95,7 @@ export class HeaderNavigationComponent implements OnInit {
     this.authService.triggerOpenModal();
     return;
   } else {
-    debugger
+    // debugger
     const userData = JSON.parse(storedData);
     const userId = userData?.id; 
     if (userId) {

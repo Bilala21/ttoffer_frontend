@@ -64,7 +64,7 @@
                           </div>
                           <div class="col-8" style="font-size: 2vh">
                             <span style="font-size: 1.5vh">{{
-                              auctionProduct[0].user.name
+                              auctionProduct[0]?.user?.name
                             }}</span>
                           </div>
                         </div>
@@ -319,17 +319,17 @@
           </div>
           <!-- desktop-right-hand-side-section -->
           <div class="col-md-4 mt-5 d-none d-xl-block">
-            <h4 class="sm-cat-text4 mt-5">{{ auctionProduct[0].title }}</h4>
+            <h4 class="sm-cat-text4 right-side-heading">{{ auctionProduct[0]?.title }}</h4>
             <div class="row align-items-center">
               <div class="col-7">
                 <a
                   style="text-decoration: none; color: black"
-                  href="/auctionUserProfile/{{ auctionProduct[0].user.id }}"
+                  href="/auctionUserProfile/{{ auctionProduct[0]?.user?.id }}"
                 >
                   <div class="row align-items-center">
                     <div class="col-4">
                       <img
-                        [src]="auctionProduct[0].user.img"
+                        [src]="auctionProduct[0]?.user?.img"
                         class="w-100"
                         style="height: 42px; border-radius: 10px"
                         alt=""
@@ -338,7 +338,7 @@
                     </div>
                     <div class="col-8" style="font-size: 2vh">
                       <span class="sm-cat-text3">{{
-                        auctionProduct[0].user.name
+                        auctionProduct[0]?.user?.name
                       }}</span>
                     </div>
                   </div>
@@ -353,7 +353,7 @@
               <div class="col-md-12" style="text-align: end">
                 <span style="font-size: 10px" class="sm-cat-text3"
                   >Member since
-                  {{ auctionProduct[0].user.created_at | date }}</span
+                  {{ auctionProduct[0]?.user?.created_at | date }}</span
                 >
               </div>
             </div>
@@ -478,20 +478,20 @@
                   <div class="col-9">
                     <div class="row align-items-center">
                       <div class="col-3">
-                        <img [src]="data.user.img" class="w-100" alt="" />
+                        <img [src]="data?.user?.img" class="w-100" alt="" />
                       </div>
                       <div class="col-9">
                         <h6 class="sm-cat-text4" class="m-0 p-0">
-                          {{ data.user.name }}"
+                          {{ data?.user?.name }}"
                         </h6>
                         <span class="sm-cat-text">{{
-                          data.created_at | date
+                          data?.created_at | date
                         }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-2" style="text-align: end">
-                    <span class="sm-cat-text">{{ data.price }}</span>
+                    <span class="sm-cat-text">{{ data?.price }}</span>
                   </div>
                 </div>
               </div>
@@ -587,7 +587,7 @@
           <div class="row container">
             <div class="col-8 mt-5">
               <h5 class="detail-des">Descriptions</h5>
-              <p class="des-in-detail">{{ auctionProduct[0].description }}</p>
+              <p class="des-in-detail">{{ auctionProduct[0]?.description }}</p>
             </div>
           </div>
         </div>
@@ -640,4 +640,5 @@
       </div>
     </div>
   </div>
+
 </main>
