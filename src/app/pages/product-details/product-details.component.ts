@@ -206,8 +206,12 @@ export class ProductDetailsComponent {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    // const map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapProperties);
-    this.loading = false;
+    // Ensure the map div exists before initializing the map
+    const mapDiv = document.getElementById('map-div');
+    if (mapDiv) {
+      const map = new google.maps.Map(mapDiv as HTMLElement, mapProperties);
+      this.loading = false;
+    }
   }
   addWishLst(item:any){
     this.loading = true
