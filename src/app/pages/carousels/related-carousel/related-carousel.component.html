@@ -9,13 +9,13 @@
                     <div class="col-3">
                         <button class="carouselButton">
                             <img (click)="prevImage()" src="assets/images/left-sided-arrow.png" class="w-100"
-                                aria-hidden="true" alt="">
+                                aria-hidden="true" alt="left-arrow">
                         </button>
                     </div>
                     <div class="col-3 ">
                         <button class="carouselButton">
                             <img (click)="nextImage()" src="assets/images/right-sided-arrow.png" class="w-100"
-                                aria-hidden="true" alt="">
+                                aria-hidden="true" alt="right-arrow">
                         </button>
                     </div>
                 </div>
@@ -71,16 +71,16 @@
                         <div class="card mb-3 w-100 p-1" style=" border-radius: 12px !important;">
                             <div class="m-2 card border-0">
                                 <img class="position-relative" style="height: 28vh; border-radius: 12px;"
-                                    *ngIf="item.photo && item.photo.length > 0" [src]="item.photo[0].src">
+                                    *ngIf="item.photo && item?.photo?.length > 0" [src]="item.photo[0]?.src">
                                 <!-- <img class="position-relative" style="height: 25vh; border-radius: 2vh;" *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
                                 <div class="position-absolute bg-warning"
                                     style="border-radius: 2vh; top: 10px; left: 5px; padding: .5vh 4vh .5vh 4vh;">
                                     <span class="m-0" style="font-size: 2vh;">Special Offer</span>
                                 </div>
                                 <div class="position-absolute" style="top: 10px; right: 5px;">
-                                    <img *ngIf="item.wishlist.length<=0" src="assets/images/fav.png" alt=""
+                                    <img *ngIf="item?.wishlist?.length<=0" src="assets/images/fav.png" alt=""
                                         (click)="addWishLst(item)">
-                                    <img *ngIf="item.wishlist.length>0" src="assets/images/fav-added.png" alt=""
+                                    <img *ngIf="item?.wishlist?.length>0" src="assets/images/fav-added.png" alt=""
                                         (click)="removeWishLst(item)">
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
@@ -100,13 +100,13 @@
                                         <img src="assets/images/date.svg" style="width: 15%;" alt="">
                                         <span [ngStyle]="{'opacity': item.created_at ? '1' : '0'}"
                                             style="margin-left: 5px; font-size: 1.5vh; color: #8E8E8E;">
-                                            {{item.created_at | date}}
+                                            {{item?.created_at | date}}
                                         </span>
                                     </div>
                                     <div *ngIf="isVehicle(item)" class="d-flex align-items-center"
                                         style="margin-right:1vh;">
                                         <img src="assets/images/date.svg" style="width: 15%;" alt=""><span
-                                            [ngStyle]="{'opacity': item.created_at ? '1' : '0'}"
+                                            [ngStyle]="{'opacity': item?.created_at ? '1' : '0'}"
                                             style="margin-left: 5px; font-size: 1.5vh; color: #8E8E8E">{{item.created_at
                                             | date}}</span>
                                     </div>

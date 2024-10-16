@@ -692,7 +692,7 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   }
 
 showfor(){
-  debugger
+  
   console.log(this.categoryForm.value)
 }
   showOtp() {
@@ -742,7 +742,7 @@ showfor(){
   // }
 
   selectTab(tab: string) {
-    debugger;
+    ;
     this.selectedTab = tab;
     localStorage.setItem('currentTab', this.selectedTab);
     this.showDiv = false;
@@ -1328,7 +1328,7 @@ showfor(){
         body: formData,
       })
         .then((response: any) => {
-          debugger;
+          ;
           if (!response.ok) {
             throw new Error(
               'Network response was not ok ' + response.statusText
@@ -1496,7 +1496,7 @@ showfor(){
     this.attributes['sub_category_name'] = this.getSubCategoryNameById(
       this.selectedSubCategoryId
     );
-    debugger;
+    ;
     let input = {
       product_id: this.productId,
       category_id: this.selectedCategoryId,

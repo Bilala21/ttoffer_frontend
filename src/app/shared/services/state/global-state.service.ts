@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 interface AppState {
   tab: { index: number; tabName: string };
-  users: any[]; // You may want to define a specific type for users
+  users: any[];
+  categories: any[];
   isLoggedInd: any;
 }
 
@@ -14,6 +15,7 @@ export class GlobalStateService {
   private initialState: AppState = {
     tab: { index: 1, tabName: "selling" },
     users: [],
+    categories: [],
     isLoggedInd: false
   };
 
@@ -31,9 +33,18 @@ export class GlobalStateService {
     this.stateSubject.next(newState);
   }
 
+  setCategories(data: any) {
+    console.log(data,"setCategories state");
+    const currentState = this.stateSubject.value;
+    const newState = {
+      ...currentState,
+      categories: data
+    };
+    this.stateSubject.next(newState);
+  }
+
   // Method to show the auth modal
   showAuthModal(isAtuthicated: boolean) {
-    console.log(isAtuthicated, "isAtuthicated");
     this.updateState({ isLoggedInd: isAtuthicated });
   }
 

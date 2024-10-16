@@ -30,7 +30,8 @@ export class ProductCarouselComponent {
   ngOnInit():void{
     
     this.nextImage();
-    this.media = this.photo.length > 0 ? this.photo : this.video;
+    this.media = this.photo?.length > 0 ? this.photo : this.video;
+    console.log("media",this.media)
     this.selectedImage = this.media[0];
     this.selectedImage = this.media[0];
     

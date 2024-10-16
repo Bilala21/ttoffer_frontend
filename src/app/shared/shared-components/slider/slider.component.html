@@ -1,16 +1,7 @@
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-  <!-- <ol class="carousel-indicators">
-    <li *ngFor="let slide of slides; let i = index" [attr.data-target]="'#carouselExampleCaptions'" [attr.data-slide-to]="i" [class.active]="i === 0"></li>
-  </ol> -->
-  
+<a routerLink="/#" id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i === 0">
-      <img [src]="slide.image" class="rounded" alt="image" loading="lazy">
-      <!-- <div class="carousel-caption custom-caption">
-        <h2>{{ slide.title }}</h2>
-        <p [innerHTML]="slide.description"></p>
-        <button class="btn btn-start">{{ slide.buttonText }}</button>
-      </div> -->
+      <img [src]="slide.image" class="rounded xs-rounded-0" alt="image" loading="lazy">
     </div>
   </div>
-</div>
+</a>

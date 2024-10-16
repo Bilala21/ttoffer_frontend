@@ -6,6 +6,7 @@ import { ProductCarouselComponent } from "../carousels/product-carousel/product-
 import { SharedModule } from '../../shared/shared.module';
 import { ProductCardComponent } from "../../components/product-card/product-card.component";
 import { forkJoin } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-body',
@@ -13,7 +14,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './body.component.html',
   styleUrl: './body.component.scss',
 
-  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule]
+  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule, RouterLink]
 })
 export class BodyComponent {
   loading = false;
@@ -24,7 +25,7 @@ export class BodyComponent {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
     },
     {
-      banner: "https://www.ilaan.com/assets/images/pictures/p-upload.png?v=1.2"
+      banner: "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/be2f29652ac02f60.jpeg?q=20"
     }
   ]
   constructor(

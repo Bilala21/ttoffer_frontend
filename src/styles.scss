@@ -385,7 +385,7 @@ body {
 }
 
 .text-slate-400 {
-  color: #A2A2A2;
+  color: #A2A2A2 !important;
 }
 
 .text-dark-350 {
@@ -642,7 +642,7 @@ body {
 }
 
 .rounded-2 {
-  border-radius: 10px;
+  border-radius: 10px !important;
 }
 
 .custom-shadow {
@@ -655,4 +655,37 @@ body {
 
 .falback-css {
   background: #f1f1f1;
+}
+
+.permotion-banners:first-child {
+  display: none;
+}
+
+
+@media (max-width:576px) {
+  .xs-rounded-0 {
+    border-radius: 0px !important;
+  }
+
+  .xs-px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .xs-px-15 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .xs-mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .product-card {
+    width: 100%;
+  }
+  .xs-mr-0{
+    margin-right: 0px !important;
+  }
 }
