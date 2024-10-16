@@ -34,7 +34,7 @@
     <div class="col-xl-11 mx-auto">
       <div class="row">
         <div class="col-xl-8">
-          <h2 style="padding: 13px;">{{featuredProducts[0].title}}</h2>
+          <h2 style="padding: 13px;">{{featuredProducts[0]?.title}}</h2>
           <div class="d-none d-xl-block" style="padding-left: 13px;">
             <div class="d-flex align-items-center">
               <p class="sm-cat-text3" style="font-size: 2vh; color: #767E94;"><img src="assets/images/map-pin.png">{{featuredProducts[0].location}}</p>
@@ -71,9 +71,9 @@
                   </div>
                   <hr>
 
-                  <a href="/chatBox/{{featuredProducts[0].user.id}}">
-                    <button class="btn btn-dark w-100 mt-3" *ngIf="allowedToMakeOffer" style="border-radius: 20px; padding: 10px;">Send Message</button>
-                  </a>
+                  
+                    <button (click)="openChat()" class="btn btn-dark w-100 mt-3" *ngIf="allowedToMakeOffer" style="border-radius: 20px; padding: 10px;">Send Message</button>
+                  
                   <button (click)="openModal()" class="btn w-100 mt-3 mb-3" *ngIf="allowedToMakeOffer"
                     style="border-radius: 20px; padding: 10px; background-color: #EBEEF7;">Make
                     Offer</button>
@@ -99,7 +99,7 @@
                       </div>
                     </div>
                     <div class="col-4">
-                      <a href="/auctionUserProfile/{{featuredProducts[0].user.id}}">
+                      <a routerLink="/auctionUserProfile/{{featuredProducts[0].user.id}}">
                         <h6 class="pointer textHover sm-cat-text3" style="text-decoration: none; color: #636A80;">View Profile
                         </h6>
                       </a>
@@ -162,7 +162,7 @@
           </div>
           <hr>
 
-          <a href="/chatBox/{{featuredProducts[0].user.id}}">
+          <a (click)="openChat()">
             <button class="btn btn-dark w-100 mt-3" *ngIf="allowedToMakeOffer" style="border-radius: 20px; padding: 10px;">Send Message</button>
           </a>
           <button (click)="openModal()" class="btn w-100 mt-3 mb-3" *ngIf="allowedToMakeOffer"
@@ -318,4 +318,5 @@
     </div>
   </div>
 </div>
+<app-login-modal></app-login-modal>
 </main>

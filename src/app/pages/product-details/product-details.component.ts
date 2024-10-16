@@ -4,12 +4,14 @@ import { FooterComponent } from "../../shared/shared-components/footer/footer.co
 import { ProductCarouselComponent } from "../carousels/product-carousel/product-carousel.component";
 import { RelatedCarouselComponent } from "../carousels/related-carousel/related-carousel.component";
 import { CommonModule, NgIf } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../shared/services/authentication/Auth.service';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
     selector: 'app-product-details',
@@ -21,15 +23,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       FooterComponent,
       ProductCarouselComponent,
       RelatedCarouselComponent,
-      NgIf,
+      NgIf,LoginModalComponent,
       FormsModule,
       GoogleMapsModule,
-      CommonModule
+      CommonModule,RouterModule
     ]
 })
 export class ProductDetailsComponent {
   productId:any;
-  // auctionProduct: any[] = [];
+  auctionProduct: any[] = [];
   featuredProducts: any[] = []
   featuredProductsTemp: any[] = []
   currentUserid: number = 0
@@ -44,14 +46,16 @@ export class ProductDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private mainServices: MainServicesService,
+    private authService:AuthService,
     private extension: Extension,
     private snackBar: MatSnackBar,
+    private router:Router,
   ){
     this.currentUserid = extension.getUserId()
   }
   ngOnInit(){
     this.productId = this.route.snapshot.paramMap.get('id')!;
-    // this.getAuctionProduct();
+    this.getAuctionProduct();
     this.getCurrentLocation();
     this.getFeatcherdProduct();
     this.loadMap();
@@ -88,6 +92,10 @@ export class ProductDetailsComponent {
     }
   }
     openModal() {
+      if (!localStorage.getItem('key')) {
+        debugger
+        this.authService.triggerOpenModal();
+      }
         const modal = document.getElementById('offerModal');
         if (modal) {
           modal.classList.add('show');
@@ -115,20 +123,32 @@ export class ProductDetailsComponent {
           }
         }
       }
-      // getAuctionProduct(){
-      //
-      //   this.mainServices.getAuctionProduct().subscribe(res =>{
-      //
-      //     this.auctionProduct = res.data
-      //     // this.auctionProduct.filter(item => this.auctionProduct.includes(this.productId))
-      //     // console.log(this.auctionProduct)
-      //     this.auctionProduct = this.auctionProduct.filter((item) => {
-      //       return item.id == this.productId;
-      //   });
-      //   console.log(this.auctionProduct)
-      //   })
-      // }
-
+      openChat() {
+        if (!localStorage.getItem('key')) {
+          debugger
+          this.authService.triggerOpenModal();
+          return
+        }
+        else{
+          const userId = this.featuredProducts[0].user.id;
+          this.router.navigate([`/chatBox/${userId}`]);
+        }
+       
+      }
+      getAuctionProduct(){
+      
+        this.mainServices.getAuctionProduct().subscribe(res =>{
+      
+          this.auctionProduct = res.data
+          this.auctionProduct.filter(item => this.auctionProduct.includes(this.productId))
+          // console.log(this.auctionProduct)
+          this.auctionProduct = this.auctionProduct.filter((item) => {
+            return item.id == this.productId;
+        });
+        console.log(this.auctionProduct)
+        })
+      }
+    
     makeOffer(){
       this.idSendOfferDisabled = true;
       let input = {
@@ -154,7 +174,7 @@ export class ProductDetailsComponent {
           return item.user_id == this.currentUserid;
         }).length <= 0;
         this.attributesObject = JSON.parse(this.featuredProducts[0].attributes);
-        // this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
+        this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
         console.log(this.featuredProducts)
         this.loading = false;
       },

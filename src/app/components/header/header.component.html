@@ -27,13 +27,13 @@
                         </a>
                     </li>
                     <li class="xs-d-none">
-                        <a routerLink="/chatBox/39767" class="text-slate-400 text-decoration-none link">
+                        <a (click)="openChat()"  class="text-slate-400 text-decoration-none link">
                             <i class="fa fa-comments fs-20 text-center d-block mb-1"></i>
                             Chat
                         </a>
                     </li>
                     <li class="pt-1">
-                        <a routerLink="/selling/39767" class="text-slate-400 text-decoration-none link">
+                        <a (click)="openSelling()" class="text-slate-400 text-decoration-none link">
                             <i class="fa fa-tags fs-18 text-center d-block mb-1 pt-1"></i>
                             <span>Selling</span>
                         </a>
@@ -65,7 +65,7 @@
                         </button>
                         <div class="dropdown-menu white-space-nowrap p-0 bg-white user-profile-drow-donw pt-3 shadow-md"
                             aria-labelledby="userDropdown">
-                            <a routerLink="#"
+                            <a routerLink="/profilePage/{{currentUser.id}}"
                                 class="text-slate-400 text-decoration-none hover-able py-2 fs-14 px-3 d-flex align-items-center w-100">
                                 <i class="fas fa-user fs-18 text-center d-block mr-3"></i>
                                 <span>
@@ -116,4 +116,5 @@
             }
         </div>
     </nav>
+    <app-login-modal></app-login-modal>
 </header>

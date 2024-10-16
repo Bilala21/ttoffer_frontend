@@ -13,7 +13,7 @@ import { forkJoin, map, Observable } from 'rxjs';
 import { blob } from 'stream/consumers';
 import { ReviewPageComponent } from '../review-page/review-page.component';
 import { PaymentComponent } from '../payment/payment.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification/notification.component';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CurrentLocationComponent } from '../current-location/current-location.component';
@@ -54,6 +54,7 @@ export interface CategoryField {
     ReactiveFormsModule,
     RouterModule,
     NgFor,
+    MatSnackBarModule,
     NotificationComponent,
     NgxDropzoneModule,
     ReviewPageComponent,
@@ -604,15 +605,21 @@ export class ProfilePageComponent {
     this.categoryForm = this.fb.group({});
   }
   ngOnInit() {
+    const currentTab: any = localStorage.getItem('currentTab');
+    this.editProductData=localStorage.getItem('editProduct');
+
+    if(this.editProductData){
+      this.selectTab('editPost')
+
+    }
+    this.selectTab(currentTab);
+
     this.getNotification();
     this.startingDate = new Date();
     this.endingDate = new Date();
     this.customLink = window.location.href;
     this.selectedTabItem = this.route.snapshot.paramMap.get('name')!;
     this.selectedTabId = this.route.snapshot.paramMap.get('id'); 
-    this.editProductData=localStorage.getItem('editProduct');
-    const currentTab: any = localStorage.getItem('currentTab');
-    this.selectTab(currentTab);
     this.loadCategories();
     this.getSelling();
     this.getCurrentUser();
@@ -837,16 +844,32 @@ showfor(){
     }
   }
   deleteProductImage(file: any) {
-    let input = {
+    const input = {
       id: file.id,
       product_id: file.product_id,
     };
-    
+  
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      this.editProductData.photo=null
+      // Remove the photo with the matching ID from the editProductData array
+    
+  
+      // Retrieve the object stored in local storage
+  debugger
+      // Check if the product exists in the stored data
+      if (this.editProductData && this.editProductData.id == input.product_id ) {
+        // Update the photo array by removing the image with the matching ID
+        this.editProductData.photo = this.editProductData.photo.filter((photo: any) => photo.product_id !== input.product_id);
+  
+        // Save the updated object back to local storage
+        localStorage.setItem('editProduct', JSON.stringify(this.editProductData));
+      }
+  
       console.log(res);
     });
   }
+  
+  
+  
   async updateProductImage() {
     this.loading = true;
 
@@ -1593,7 +1616,7 @@ showfor(){
       const res: any = await this.mainServices
         .addProductLastStep(input)
         .toPromise();
-      this.showSuccessMessage(res.msg);
+      this.showSuccessMessage('Product added successfully');
       this.router.navigate(['']);
     } catch (error) {
       this.handleError(error);
@@ -1765,18 +1788,18 @@ this.loading=false
   }
 
   getNotification() {
-    // this.loading = true;
+    this.loading = true;
     this.mainServices
       .getNotification(this.currentUserId)
       .subscribe((res: any) => {
-        // this.notificationList = res.data
-        // this.notificationList = res.data.sort((a: any, b: any) => {
-        //   return (
-        //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        //   );
-        // });
+        this.notificationList = res.data
+        this.notificationList = res.data.sort((a: any, b: any) => {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        });
         console.log('Notification:', this.notificationList);
-        // this.loading = false;
+        this.loading = false;
       });
   }
   // getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
@@ -1907,9 +1930,9 @@ this.loading=false
     };
     this.mainServices.wishListProduct(input).subscribe(
       (res: any) => {
-        // this.savedItems = res.data;
+        this.savedItems = res.data;
 
-        // this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
+        this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
         console.log('SAVED ITEMS', this.savedItems);
         // this.loading = false;
       },

@@ -5,12 +5,13 @@ import { MainServicesService } from '../../shared/services/main-services.service
 import { LoaderComponent } from "../loader/loader.component";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
+import { LoginModalComponent } from "../../pages/login-modal/login-modal.component";
 
 
 @Component({
   selector: 'app-header-navigation',
   standalone: true,
-  imports: [RouterLink, NgFor, LoaderComponent],
+  imports: [RouterLink, NgFor, LoaderComponent, LoginModalComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -77,4 +78,33 @@ export class HeaderNavigationComponent implements OnInit {
       },
     });
   }
+  openChat() {
+    const storedData = localStorage.getItem('key');
+      if (!storedData) {
+      this.authService.triggerOpenModal();
+      return;
+    } else {
+      debugger
+      const userData = JSON.parse(storedData);
+      const userId = userData?.id; 
+      if (userId) {
+        this.router.navigate([`/chatBox/${userId}`]);
+      }
+    }
+  }
+  openSelling(){
+    const storedData = localStorage.getItem('key');
+    if (!storedData) {
+    this.authService.triggerOpenModal();
+    return;
+  } else {
+    debugger
+    const userData = JSON.parse(storedData);
+    const userId = userData?.id; 
+    if (userId) {
+      this.router.navigate([`/selling/${userId}`]);
+    }
+  }
+  }
+  
 }
