@@ -5,6 +5,8 @@ import { MainServicesService } from '../../shared/services/main-services.service
 import { LoaderComponent } from "../loader/loader.component";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
 import { LoginModalComponent } from "../../pages/login-modal/login-modal.component";
+import { SharedDataService } from '../../shared/services/shared-data.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,10 +23,11 @@ export class HeaderNavigationComponent implements OnInit {
   categoryLimit: number = 8;
   categories: any = [];
   showSearch: boolean = false;
+  private imageUrlSubscription: Subscription | undefined;
   screenWidth: number = window.innerWidth;
   screenHeight: number = window.innerHeight;
-
-  constructor(private mainServicesService: MainServicesService,private authService: AuthService,private router: Router) {
+  imgUrl: string | null = null;
+  constructor(private mainServicesService: MainServicesService,private authService: AuthService,private router: Router,private service:SharedDataService) {
     this.currentUser = JSON.parse(localStorage.getItem('key') as string);
   }
   @HostListener('window:resize', ['$event'])
@@ -62,6 +65,17 @@ export class HeaderNavigationComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.imageUrlSubscription = this.service.currentImageUrl.subscribe(
+      (url: string | null) => {
+        this.imgUrl = url;
+      }
+    );
+
+    // If currentUser is defined, set imgUrl based on currentUser's property
+    if (this.currentUser && this.currentUser.img) {
+      this.imgUrl = this.currentUser.img;
+    }
+    
     this.loading = true;
     this.getScreenSize();
     this.mainServicesService.getCategories().subscribe({

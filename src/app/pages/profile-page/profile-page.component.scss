@@ -28,9 +28,11 @@
   cursor: pointer;
 }
 
-.container {
+.container{
   max-width: 600px;
+  height: 100vh;
   margin: auto;
+  overflow-y: scroll;
 }
 
 .img-thumbnail {
@@ -92,7 +94,7 @@ cursor: pointer;
 color: red; /* Change color on hover */
 }
 
-.success-snackbar {
+::ng-deep .success-snackbar {
 background-color: green;
 color: white;
 }

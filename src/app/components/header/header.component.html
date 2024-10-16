@@ -59,8 +59,17 @@
                         <button class="btn dropdown-toggle text-slate-400 fs-14 text-uppercase fw-semibold"
                             type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img src="/assets/images/profile-placeholder.png" alt="user-profile" width="42" height="42"
-                                class="rounded-pill border-1">
+                            <img
+                            class="user-Profile"
+                            [src]="
+                              imgUrl
+                                ? imgUrl
+                                : '/assets/images/profile-placeholder.png'
+                            "
+                            loading="lazy"  width="42" height="42"   class="rounded-pill border-1"
+                          />
+                            <!-- <img src="/assets/images/profile-placeholder.png" alt="user-profile" width="42" height="42"
+                                class="rounded-pill border-1"> -->
                             <img src="/assets/images/icons/angleDown.svg" alt="angle down" class="ml-1">
                         </button>
                         <div class="dropdown-menu white-space-nowrap p-0 bg-white user-profile-drow-donw pt-3 shadow-md"
