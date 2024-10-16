@@ -3,15 +3,18 @@
   font-weight: 600;
   line-height: 28px;
   color: #191f33;
+  text-transform: capitalize;
 }
 .result-found {
+  display: flex;
+  align-items: center;
   color: #636a80;
-  margin-left: 5px;
   font-size: 20px;
   line-height: 28px;
   h4 {
     font-weight: 600;
-    color: #191F33;
+    color: #191f33;
+    margin-right: 5px;
   }
   span {
     font-weight: 400;
@@ -203,4 +206,34 @@
   100% {
     background-position: 0 0;
   }
+}
+@media (max-width: 768px) {
+  .mobile-filter-result{
+    width: 92%;
+    margin: 0px auto;
+  }
+}
+// ===============> 400px ============>
+@media (max-width: 1024px) {
+  .mobile-filter-result{
+    width: 96%;
+    margin: 0px auto;
+  }
+  
+  @media (max-width: 600px) {
+    .mobile-filter-result{
+      width: 88%;
+      margin: 0px auto;
+    }
+  }
+  // .result-found {
+  //   display: flex;
+  //   align-items: center;
+  //   width: 100%;
+  //   font-size: 15px;
+  // }
+  // .side-filter-title {
+  //   font-size: 19px;
+  //   margin: 0px 15px;
+  // }
 }

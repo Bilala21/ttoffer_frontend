@@ -116,6 +116,11 @@
     color: #767e94;
   }
 }
+.footer-google-app-store-btn{
+  i{
+    font-size: 25px !important;
+  }
+}
 ////============================ 992px================================= /////
 @media (max-width: 992px) {
   .footer-points{
@@ -142,5 +147,45 @@
   }
   .down-footer-text-first {
     text-align: center;
+  }
+}
+.down-footer-text-second {
+  display: flex;
+  justify-content: center;
+}
+//////=========================== 768 ================================ /////
+@media (max-width: 768px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+  .support-heading{
+    margin-top: -8px;
+  }
+  .footer-google-app-store-btn{
+    width: 115px;
+  }
+}
+///////======================================= 300px ==============================/////
+@media (max-width: 767px) {
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+  .support-heading{
+    margin-top: 20px;
+  }
+  .footer-google-app-store-btn{
+    width: 115px;
+  }
+}
+///////======================================= 300px ==============================/////
+@media (max-width:400px) {
+  .footer-logo {
+    width: 30px;
+    height: 30px;
+  }
+  .low-300{
+    // margin-top: 5px;
   }
 }

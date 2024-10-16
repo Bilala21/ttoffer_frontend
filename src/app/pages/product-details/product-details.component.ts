@@ -1,3 +1,4 @@
+import { LoginModalComponent } from './../login-modal/login-modal.component';
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/shared-components/header/header.component';
 import { FooterComponent } from "../../shared/shared-components/footer/footer.component";
@@ -12,7 +13,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedModule } from "../../shared/shared.module";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
     selector: 'app-product-details',
@@ -184,7 +184,7 @@ export class ProductDetailsComponent {
         }).length <= 0;
         this.attributesObject = JSON.parse(this.featuredProducts[0].attributes);
         this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
-        console.log(this.featuredProducts)
+        console.log("product",this.featuredProducts[0].photo)
         this.loading = false;
       },
       (error) => {
