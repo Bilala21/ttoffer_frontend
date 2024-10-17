@@ -1,7 +1,7 @@
 <header class="pt-3 fixed-top bg-white">
     <nav class="border-b-1 pb-1">
-        <div class="container">
-            <div class="d-flex justify-content-between position-relative">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between position-relative col-xl-11 mx-auto">
                 <ul class="list-unstyled d-flex align-items-center flex-grow-1 pointer-default">
                     <li class="xs-pl-16 mr-4 xs-mr-0"><a routerLink="/body"><img src="/assets/images/LOGO.png" alt="App logo" loading="lazy"
                                 width="50" class="header-logo"></a></li>
@@ -86,8 +86,8 @@
             </div>
         </div>
     </nav>
-    <nav class="container">
-        <div class="row">
+    <nav class="container-fluid">
+        <div class="row col-xl-11 mx-auto">
             @if(loading){
             <div class="mx-auto mt-1"><app-loader /></div>
             }
