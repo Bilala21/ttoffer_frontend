@@ -34,6 +34,10 @@ export class ProductCardComponent implements OnInit {
     // this.mainServices.addWishList(input).subscribe((res: any) => {
     // })
   }
+
+  toInteger(value: string | number): number {
+    return parseInt(value as string, 10);
+  }
   ngOnInit(): void {
 
     console.log(this.postData, "postData");
