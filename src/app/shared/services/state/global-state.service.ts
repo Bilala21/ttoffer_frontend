@@ -3,9 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 interface AppState {
   tab: { index: number; tabName: string };
-  users: any[];
+  users: any[]; // You might want to define a specific user type here
   categories: any[];
-  isLoggedInd: any;
+  isLoggedInd: boolean;
+  wishListItems: number[]; // Assuming wishlist items are identified by their IDs
 }
 
 @Injectable({
@@ -16,7 +17,8 @@ export class GlobalStateService {
     tab: { index: 1, tabName: "selling" },
     users: [],
     categories: [],
-    isLoggedInd: false
+    isLoggedInd: false,
+    wishListItems: [] // Corrected spelling from whishListItems to wishListItems
   };
 
   private stateSubject = new BehaviorSubject<AppState>(this.initialState);
@@ -33,8 +35,26 @@ export class GlobalStateService {
     this.stateSubject.next(newState);
   }
 
+  // Method to toggle the wishlist item
+  wishlistToggle(id: number) {
+    const currentState = this.stateSubject.value;
+    const currentWishList = currentState.wishListItems;
+    let newWishList: number[];
+    if (currentWishList.includes(id)) {
+      newWishList = currentWishList.filter(itemId => itemId !== id);
+    } else {
+      newWishList = [...currentWishList, id];
+    }
+
+    const newState = {
+      ...currentState,
+      wishListItems: newWishList
+    };
+    this.stateSubject.next(newState);
+  }
+
   setCategories(data: any) {
-    console.log(data,"setCategories state");
+    console.log(data, "setCategories state");
     const currentState = this.stateSubject.value;
     const newState = {
       ...currentState,
@@ -44,8 +64,8 @@ export class GlobalStateService {
   }
 
   // Method to show the auth modal
-  showAuthModal(isAtuthicated: boolean) {
-    this.updateState({ isLoggedInd: isAtuthicated });
+  showAuthModal(isAuthenticated: boolean) {
+    this.updateState({ isLoggedInd: isAuthenticated });
   }
 
   // Method to hide the auth modal

@@ -636,8 +636,13 @@ body {
     column-gap: 20px;
   }
 
-  button:hover {
+  button:hover:not(.hover-bg-none) {
     background: #FFD33C;
+  }
+
+  .hover-bg-none:focus {
+    outline: none;
+    box-shadow: none;
   }
 }
 
@@ -685,7 +690,8 @@ body {
   .product-card {
     width: 100%;
   }
-  .xs-mr-0{
+
+  .xs-mr-0 {
     margin-right: 0px !important;
   }
 }
