@@ -1,13 +1,17 @@
 .product_title {
   padding: 13px;
+  font-size: 26px;
+  line-height: 33px;
+  font-weight: 600;
+  font-family: poppins;
+  color: #191F33;
 }
 .basic-info-product {
   padding-left: 13px;
   .icons-plus-info {
     font-size: 13.28px;
     color: #767e94;
-    i,
-    img {
+    i{
       width: 19.93px;
       height: 19.93px;
     }
