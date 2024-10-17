@@ -32,6 +32,7 @@ import { SharedModule } from "../../shared/shared.module";
 ]
 })
 export class AuctionProductComponent {
+  dummy =[{src:"/assets/images/no-img.png"}]
   promotionBanners: any = [
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"

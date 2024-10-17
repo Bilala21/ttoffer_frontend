@@ -4,61 +4,192 @@
   line-height: 33px;
   font-weight: 600;
   font-family: poppins;
-  color: #191F33;
+  color: #191f33;
 }
 .basic-info-product {
   padding-left: 13px;
   .icons-plus-info {
     font-size: 13.28px;
     color: #767e94;
-    i{
+    i {
       width: 19.93px;
       height: 19.93px;
     }
   }
 }
-.send-message {
-  border-radius: 20px;
-  padding: 10px;
-}
-.make-offer {
-  border-radius: 20px;
-  padding: 10px;
-  background-color: #ebeef7;
-}
-.userImage {
-  width: 46px;
-  height: 46px;
-  border-radius: 57px;
-}
-.add-by {
-  color: #767e94;
-  font-size: 12px;
-}
-.user-name {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 19.93px;
-}
-.profile-link {
-  text-decoration: none;
-  color: #636a80;
-}
-.detail-des {
-  font-size: 19.93px;
-  font-weight: 19px;
-  line-height: 26px;
-  color: #191f33;
-}
-.des-in-detail {
-  word-wrap: break-word;
-  color: #767e94;
-  font-size: 2.2vh;
-}
-.right-side-heading {
+.right-side-title {
   font-size: 24px;
-  line-height: 31.2px;
+  line-height: 31px;
   font-weight: 600;
+  font-family: poppins;
+  color: #001b2e;
+  margin: 0;
+}
+.auction-profile {
+  height: 42px;
+  border-radius: 10px;
+}
+.auction-user-name {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  font-family: poppins;
+  color: #1b2028;
+  margin: 0;
+}
+.verified-img {
+  width: 24px;
+  height: 24px;
+}
+.verified-member {
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 500;
+  font-family: poppins;
+  color: #1b2028;
+  margin: 0;
+}
+.member-since {
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 500;
+  font-family: poppins;
+  color: #878787;
+}
+.starting-price {
+  font-size: 14px;
+  line-height: 12px;
+  font-weight: 700;
+  font-family: poppins;
+  color: #001b2e;
+  margin: 0;
+}
+.auction-price {
+  font-size: 12px;
+  line-height: 10px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #001b2e;
+}
+.live-user-img-main {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  margin-top: 4px;
+}
+.live-user-img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.live-user-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+.user-length-count {
+  font-size: 8px;
+  line-height: 12px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #000000;
+}
+.are-live {
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #14181b;
+  margin-left: 5px;
+}
+.max-price {
+  font-size: 12px;
+  line-height: 10px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #001b2e;
+}
+.live-auction {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  font-family: poppins;
+  margin-left: 5px;
+}
+.bids-made {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  font-family: poppins;
+  margin-left: 5px;
+}
+.biders {
+  max-height: 350px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+.bider-users {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.bider-user {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  font-family: poppins;
+}
+.bider-user-time {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  font-family: poppins;
+  color: #878787;
+}
+.bider-user-price {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  font-family: poppins;
+  color: #001b2e;
+  text-align: end;
+}
+.placeBids {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #001b2e;
+  margin: 0;
+  border-radius: 16px;
+}
+.custom-bid {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  font-family: poppins;
+  color: #f2f2f2;
+  margin: 0;
+  border-radius: 16px;
+}
+.bid-your-place {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+  font-family: poppins;
+  color: #292d32;
+  margin: 0;
+  border-radius: 16px;
+  padding: 10px 32px;
+}
+@media (max-width : 1024) {
+  .product_title{
+    font-size: 18px;
+  }
 }
 // Modal Styles
 #offerModal {
