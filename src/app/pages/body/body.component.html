@@ -1,6 +1,6 @@
 <main class="mt-16">
   <div class="container-fluid xs-px-0">
-    <div class="col-xl-11 mx-auto mt-3 xs-px-0">
+    <div class=" mx-auto mt-3 xs-px-0">
       <div>
         <app-slider></app-slider>
       </div>
@@ -9,10 +9,10 @@
       </div>
     </div>
     <!--BILAL PRODUCTS AREA -->
-    <div class="col-xl-11 mx-auto mt-3 xs-px-15">
+    <div class=" mx-auto mt-3 xs-px-15">
       <app-post-categories />
     </div>
-    <div class="col-xl-11 mx-auto xs-px-15">
+    <div class=" mx-auto xs-px-15">
       <div class="row pb-3 rounded-2 row-gap-20">
         <div class="w-100 text-center">
           <h2 class="m-0">Auction Products</h2>
@@ -25,13 +25,13 @@
           </a>
         </div>
         @for (post of auctionPosts; track $index) {
-        <div class="col-md-3">
+        <div class="product-card">
           <app-product-card [postData]="post" postDetialUrl="auction-product-detail" />
         </div>
         }
       </div>
     </div>
-    <div class="col-xl-11 mx-auto mt-3 xs-px-15">
+    <div class=" mx-auto mt-3 xs-px-15">
       <div class="row py-3 rounded-2 row-gap-20">
         <div class="w-100 text-center">
           <h2 class="m-0">Feature Products</h2>
@@ -44,7 +44,7 @@
           </a>
         </div>
         @for (post of featuredPosts.slice(0,10); track $index) {
-        <div class="col-md-3">
+        <div class="product-card">
           <app-product-card [postData]="post" postDetialUrl="product-detail" />
         </div>
         }

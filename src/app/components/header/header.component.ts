@@ -9,7 +9,6 @@ import { LoginModalComponent } from "../../pages/login-modal/login-modal.compone
 import { SharedDataService } from '../../shared/services/shared-data.service';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'app-header-navigation',
   standalone: true,
@@ -28,9 +27,17 @@ export class HeaderNavigationComponent implements OnInit {
   screenWidth: number = window.innerWidth;
   screenHeight: number = window.innerHeight;
   imgUrl: string | null = null;
-  constructor(private globalStateService: GlobalStateService, private mainServicesService: MainServicesService, private authService: AuthService, private router: Router,private service:SharedDataService) {
+
+  constructor(
+    private globalStateService: GlobalStateService,
+    private mainServicesService: MainServicesService,
+    private authService: AuthService,
+    private router: Router,
+    private service: SharedDataService
+  ) {
     this.currentUser = JSON.parse(localStorage.getItem('key') as string);
   }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.getScreenSize();
@@ -39,15 +46,18 @@ export class HeaderNavigationComponent implements OnInit {
   getScreenSize() {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
-    if (this.screenWidth < 1024) {
+
+   if (this.screenWidth < 1024 && this.screenWidth > 768) {
       this.categoryLimit = 4;
     }
-    if (this.screenWidth < 576) {
+    else if (this.screenWidth < 768) {
       this.categoryLimit = 2;
     }
     else {
       this.categoryLimit = 8;
     }
+
+    console.log('Category Limit:', this.categoryLimit, 'Screen Width:', this.screenWidth);
   }
 
   showSearchBar() {
@@ -64,7 +74,6 @@ export class HeaderNavigationComponent implements OnInit {
     this.loading = false;
   }
 
-
   ngOnInit(): void {
     this.imageUrlSubscription = this.service.currentImageUrl.subscribe(
       (url: string | null) => {
@@ -72,53 +81,50 @@ export class HeaderNavigationComponent implements OnInit {
       }
     );
 
-    // If currentUser is defined, set imgUrl based on currentUser's property
     if (this.currentUser && this.currentUser.img) {
       this.imgUrl = this.currentUser.img;
     }
-    
+
     this.loading = true;
     this.getScreenSize();
     this.mainServicesService.getCategories().subscribe({
       next: (res: any) => {
         this.categories = res;
         this.loading = false;
-        this.globalStateService.setCategories(res)
-
+        this.globalStateService.setCategories(res);
       },
       error: (err) => {
         console.log(err);
         this.loading = false;
-      },
+      }
     });
   }
+
   openChat() {
     const storedData = localStorage.getItem('key');
-      if (!storedData) {
+    if (!storedData) {
       this.authService.triggerOpenModal();
       return;
     } else {
-      // debugger
       const userData = JSON.parse(storedData);
-      const userId = userData?.id; 
+      const userId = userData?.id;
       if (userId) {
         this.router.navigate([`/chatBox/${userId}`]);
       }
     }
   }
-  openSelling(){
+
+  openSelling() {
     const storedData = localStorage.getItem('key');
     if (!storedData) {
-    this.authService.triggerOpenModal();
-    return;
-  } else {
-    // debugger
-    const userData = JSON.parse(storedData);
-    const userId = userData?.id; 
-    if (userId) {
-      this.router.navigate([`/selling/${userId}`]);
+      this.authService.triggerOpenModal();
+      return;
+    } else {
+      const userData = JSON.parse(storedData);
+      const userId = userData?.id;
+      if (userId) {
+        this.router.navigate([`/selling/${userId}`]);
+      }
     }
   }
-  }
-  
 }
