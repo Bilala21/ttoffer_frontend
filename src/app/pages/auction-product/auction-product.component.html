@@ -116,7 +116,7 @@
                         >
                           <h6 class="sm-cat-text4">Starting price</h6>
                           <span class="sm-cat-text3">{{
-                            auctionProduct[0].auction_price
+                            auctionProduct[0]?.auction_price
                           }}</span>
                           <div class="row mt-3">
                             <div class="col-6">
@@ -390,7 +390,7 @@
                   >
                     <h6 class="sm-cat-text4">Starting price</h6>
                     <span class="sm-cat-text3">{{
-                      auctionProduct[0].auction_price
+                      auctionProduct[0]?.auction_price
                     }}</span>
                     <div class="row mt-3">
                       <div class="col-6">
@@ -506,48 +506,13 @@
             </div>
             <!-- allowedToBid && IsBit -->
             <div *ngIf="true" class="row mt-3 justify-content-between">
-              <div class="col-1 sm-p-0">
+              <div *ngFor="let price of priceOptions" class="col-1 sm-p-0">
                 <button
-                  id="placeBid"
-                  name="placeBid"
-                  class="btn btn-outline-dark sm-cat-text"
-                  style="border-radius: 3vh; font-size: 1.6vh"
-                  (click)="bid26()"
-                >
-                  26k
-                </button>
-              </div>
-              <div class="col-1 sm-p-0">
-                <button
-                  id="placeBid"
-                  name="placeBid"
                   class="btn btn-outline-dark sm-cat-text3"
-                  style="border-radius: 3vh; font-size: 1.6vh"
-                  (click)="bid28()"
+                  style="border-radius: 3vh; font-size: 1.6vh;cursor: pointer;"
+                  (click)="placeBid(price)"
                 >
-                  28k
-                </button>
-              </div>
-              <div class="col-1 sm-p-0">
-                <button
-                  id="placeBid"
-                  name="placeBid"
-                  class="btn btn-outline-dark sm-cat-text3"
-                  style="border-radius: 3vh; font-size: 1.6vh"
-                  (click)="bid32()"
-                >
-                  32k
-                </button>
-              </div>
-              <div class="col-1 sm-p-0">
-                <button
-                  id="placeBid"
-                  name="placeBid"
-                  class="btn btn-outline-dark sm-cat-text3"
-                  style="border-radius: 3vh; font-size: 1.6vh"
-                  (click)="bid35()"
-                >
-                  35k
+                  {{ price}}
                 </button>
               </div>
               <div class="col-5">
@@ -635,7 +600,7 @@
                 >
               </div>
               <div class="mt-4">
-                <button class="btn btn-dark w-100" (click)="placeBid()">
+                <button class="btn btn-dark w-100" (click)="placeBid(price)">
                   Yes, Place My Bid
                 </button>
                 <button class="btn btn-dark w-100 mt-3" (click)="closeModal()">
