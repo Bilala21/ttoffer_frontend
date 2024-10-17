@@ -2545,11 +2545,9 @@
 
               <div class="row mt-3">
                 <div class="col-md-6 mx-auto">
-                  <button
-                    class="btn btn-dark w-100"
-                    (click)="AddProductFirstStep()"
-                  >
-                    Post
+                  <button class="btn btn-dark w-100" (click)="AddProductFirstStep()" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Post</span>
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
                   </button>
                 </div>
               </div>
