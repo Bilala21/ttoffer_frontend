@@ -31,67 +31,77 @@
               <button type="button" class="btn btngroup p-2 tab-btn"
                   [ngClass]="{'active': activeButton === 2}" 
                   >
-                  Feature Products
-              </button>
-          </div>
-      </div>
-      <div class="col-3 sm-p-0">
-          <select class="form-select form-control w-100 sm-cat-text1 page-dropdown" 
-              aria-label="Default select example">
-              <option selected value="1">Latest</option>
-              <option value="2">One</option>
-              <option value="3">Two</option>
-              <option value="4">Three</option>
-          </select>
-      </div>
-      <div class="col-3 sm-p-0">
-          <select class="form-select form-control w-100 sm-cat-text1 mx-2 page-dropdown"
-               aria-label="Default select example">
-              <option selected value="1">21 per page</option>
-              <option value="2">One</option>
-              <option value="3">Two</option>
-              <option value="4">Three</option>
-          </select>
-      </div>
+                    Feature Products
+                  </button>
+                </div>
+              </div>
+              <div class="col-3 sm-p-0">
+                <select
+                  class="form-select form-control w-100 sm-cat-text1 page-dropdown"
+                  aria-label="Default select example"
+                >
+                  <option selected value="1">Latest</option>
+                  <option value="2">One</option>
+                  <option value="3">Two</option>
+                  <option value="4">Three</option>
+                </select>
+              </div>
+              <div class="col-3 sm-p-0">
+                <select
+                  class="form-select form-control w-100 sm-cat-text1 mx-2 page-dropdown"
+                  aria-label="Default select example"
+                >
+                  <option selected value="1">21 per page</option>
+                  <option value="2">One</option>
+                  <option value="3">Two</option>
+                  <option value="4">Three</option>
+                </select>
+              </div>
 
-      <!-- for mobile view filter side  -->
-      <div class="col-2 d-block d-xl-none">
-          <img (click)="toggleSidebar()"  src="assets/images/filter-icon.svg" class="w-75 sm-img4"
-              alt="">
-      </div>
-      <div class="col-xl-5 d-block d-xl-none mt-3">
-          <div class="btn-group w-100" role="group" aria-label="Basic example">
-              <button type="button" class="btn btngroup p-2 sm-font tab-btn "
-                  [ngClass]="{'active': activeButton === 1}" 
+              <!-- for mobile view filter side  -->
+              <div class="col-2 d-block d-xl-none">
+                <img
+                  (click)="toggleSidebar()"
+                  src="assets/images/filter-icon.svg"
+                  class="w-75 sm-img4"
+                  alt=""
+                />
+              </div>
+              <div class="col-xl-5 d-block d-xl-none mt-3">
+                <div
+                  class="btn-group w-100"
+                  role="group"
+                  aria-label="Basic example"
+                >
+                  <button
+                    type="button"
+                    class="btn btngroup p-2 sm-font tab-btn"
+                    [ngClass]="{ active: activeButton === 1 }"
                   >
-                  Auction Products
-              </button>
-              <button type="button" class="btn btngroup p-2 sm-font tab-btn"
-                  [ngClass]="{'active': activeButton === 2}" 
+                    Auction Products
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btngroup p-2 sm-font tab-btn"
+                    [ngClass]="{ active: activeButton === 2 }"
                   >
-                  Feature Products
-              </button>
+                    Feature Products
+                  </button>
+                </div>
+              </div>
+              <div
+                class="sidebar d-block d-xl-none"
+                [ngClass]="{ active: isActive }"
+              >
+                <app-post-filter></app-post-filter>
+              </div>
+            </div>
+            <div class="mt-4 post-list pr-2">
+              <app-post [cols]="postCols"></app-post>
+            </div>
           </div>
-      </div>
-      <div class="sidebar d-block  d-xl-none" [ngClass]="{'active': isActive}" >
-        <app-post-filter></app-post-filter>
-
-        
-      </div>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      </div>
-      <div class="mt-4 post-list pr-2">
-        <app-post [cols]="postCols"></app-post>
+        </div>
       </div>
     </div>
-</div>
-</div>
-    </div>     
+  </div>
+</main>

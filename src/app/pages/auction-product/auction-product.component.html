@@ -5,8 +5,8 @@
   type="ball-clip-rotate"
   [fullScreen]="true">
 </ngx-spinner> -->
-<h2>Testing</h2>
-<main class="mt-16">
+<!-- <h2>Testing</h2> -->
+<main class="mt-16 mb-5">
   <div *ngIf="loading" class="loader-overlay">
     <div class="loader"></div>
   </div>
@@ -33,22 +33,46 @@
                 </p>
               </div>
             </div>
-
-            <app-product-carousel
-              [photo]="auctionProduct[0]?.photo"
-              [video]="auctionProduct[0]?.video"
-            ></app-product-carousel>
-            <!-- right-side-for-mobile -->
-            <div class="d-block d-xl-none mt-5">
-              <div class="row">
-                <div class="col-xl-6 col-md-6">
-                  <h2 class="sm-cat-text5">Descriptions</h2>
-                  <p class="sm-cat-text4">
-                    {{ this.auctionProduct[0]?.description }}
+            <div class="">
+              @if(auctionProduct[0]?.photo.length > 0){
+              <app-product-carousel
+                [photo]="auctionProduct[0]?.photo"
+                [video]="auctionProduct[0]?.video"
+              ></app-product-carousel>
+              }@else {
+              <app-product-carousel
+                [photo]="dummy"
+                [video]="auctionProduct[0]?.video"
+              ></app-product-carousel>
+              }
+            </div>
+            <!-- description-for-desktop -->
+            <div class="d-none d-xl-block">
+              <div class="row container">
+                <div class="col-8 mt-5">
+                  <h5 class="detail-des">Descriptions</h5>
+                  <p class="des-in-detail">
+                    {{ auctionProduct[0]?.description }}
                   </p>
                 </div>
-                <div class="col-xl-6 col-md-6 d-block d-xl-none">
-                  <h4 class="sm-cat-text4">{{ auctionProduct[0]?.title }}</h4>
+              </div>
+            </div>
+
+            <!-- right-side-for-mobile -->
+            <div class="d-block d-xl-none mt-5">
+              <div class="row border">
+                <!-- descriptions -->
+                <div class="col-xl-6 col-md-6">
+                  <h2 class="detail-des">Descriptions</h2>
+                  <p class="sdes-in-detail">
+                    {{ this.auctionProduct[0]?.description }} Descriptions
+                  </p>
+                </div>
+
+                <div class="col-xl-6 col-md-6">
+                  <h4 class="right-side-title">
+                    {{ auctionProduct[0]?.title }} 
+                  </h4>
                   <div class="row align-items-center">
                     <div class="col-7">
                       <a
@@ -63,15 +87,16 @@
                         <div class="row align-items-center">
                           <div class="col-4">
                             <img
-                              [src]="auctionProduct[0]?.user.img"
+                              [src]="auctionProduct[0]?.user?.img"
                               class="w-100"
-                              style="height: 42px; border-radius: 10px"
+                              class="auction-profile"
                               alt=""
+                              loading="lazy"
                             />
                             <!-- <img src="assets/images/profile-img1.png" class="w-100" alt=""> -->
                           </div>
                           <div class="col-8" style="font-size: 2vh">
-                            <span style="font-size: 1.5vh">{{
+                            <span class="auction-user-name">{{
                               auctionProduct[0]?.user?.name
                             }}</span>
                           </div>
@@ -79,24 +104,25 @@
                       </a>
                     </div>
                     <div class="col-5" *ngIf="isVerified">
-                      <img src="assets/images/verify.svg" alt="" />
-                      <span style="font-size: 1.2vh">Verified Member</span>
+                      <img
+                        src="assets/images/verify.svg"
+                        alt=""
+                        loading="lazy"
+                      />
+                      <span class="verified-img">Verified Member</span>
                     </div>
-                    <!-- <div class="col-11 col-md-12" style="text-align: end;">
-                                          <span style="font-size: 1.2vh;">Member since {{auctionProduct[0].user.created_at|date}}</span>
-                                      </div> -->
                   </div>
                   <div class="row justify-content-center">
                     <div class="col-11 col-md-12" style="text-align: end">
-                      <span style="font-size: 10px" class="sm-cat-text3"
+                      <span class="member-since"
                         >Member since
-                        {{ auctionProduct[0]?.user.created_at | date }}</span
+                        {{ auctionProduct[0]?.user?.created_at | date }}</span
                       >
                     </div>
                   </div>
                   <div
                     class="row mt-5 justify-content-center"
-                    *ngIf="liveAuction.length && liveAuction.length > 0"
+                    *ngIf="liveAuction?.length && liveAuction.length > 0"
                   >
                     <div
                       class="col-11 col-md-12"
@@ -114,79 +140,58 @@
                             padding-right: 1vh;
                           "
                         >
-                          <h6 class="sm-cat-text4">Starting price</h6>
-                          <span class="sm-cat-text3">{{
+                          <h6 class="starting-price">Starting price</h6>
+                          <span class="auction-price">{{
                             auctionProduct[0]?.auction_price
                           }}</span>
                           <div class="row mt-3">
                             <div class="col-6">
-                              <div
-                                class="d-flex flex-wrap"
-                                style="width: 117px; overflow: hidden"
-                              >
+                              <!-- live-user-img-main -->
+                              <div class="live-user-img-main">
                                 <!-- Display each image in a single row -->
                                 <div
-                                  *ngFor="let data of profileImg"
+                                  *ngFor="let data of profileImg.slice(1,6)"
                                   class="d-flex me-2 mb-2"
                                 >
                                   <img
                                     [src]="data.img"
                                     alt=""
-                                    style="
-                                      width: 20px;
-                                      height: 20px;
-                                      border-radius: 50%;
-                                    "
+                                    class="live-user-img"
+                                    loading="lazy"
                                   />
                                 </div>
                               </div>
                             </div>
                             <div class="col-6">
-                              <div class="d-flex justify-content-center h-100">
-                                <div
-                                  class="d-flex justify-content-center align-items-center me-2"
-                                  style="
-                                    border: 1px solid black;
-                                    border-radius: 50%;
-                                    width: 5vh;
-                                    height: 5vh;
-                                  "
-                                >
-                                  <span
-                                    class="sm-cat-text3"
-                                    style="
-                                      font-size: 1.8vh;
-                                      margin: 0;
-                                      padding: 0;
-                                    "
-                                  >
-                                    +24
+                              <div
+                                class="h-100"
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  align-items: center;
+                                "
+                              >
+                                <div class="live-user-count">
+                                  <span class="user-length-count">
+                                    +{{ liveAuction.length }}
                                   </span>
                                 </div>
-                                <span
-                                  class="sm-cat-text3"
-                                  style="
-                                    font-size: 2vh;
-                                    padding: 4px 0px 0px 5px;
-                                  "
-                                  >are live</span
-                                >
+                                <span class="are-live">are live</span>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-6">
-                          <h6 class="sm-cat-text4">Current Bid Price</h6>
-                          <span class="sm-cat-text3">AED </span
-                          ><span class="sm-cat-text3">{{ maxPrice }}</span>
+                          <h6 class="starting-price">Current Bid Price</h6>
+                          <span class="max-price">AED {{ maxPrice }}</span>
                           <div class="mt-3">
                             <span
-                              class="sm-cat-text3"
+                              class="are-live"
                               *ngIf="
                                 calculateRemaningTime &&
                                 calculateRemaningTime != ''
                               "
-                              >{{ calculateRemaningTime }}</span
+                              >{{ calculateRemaningTime || "N/A" }}</span
                             >
                           </div>
                         </div>
@@ -194,120 +199,131 @@
                     </div>
                   </div>
                   <div
-                    class="row mt-5"
+                    class="row mt-3"
                     *ngIf="liveAuction.length && liveAuction.length > 0"
                   >
                     <div class="col-6">
-                      <img src="assets/images/liveDot.svg" alt="" />
-                      <span style="font-weight: bold">Live Auction</span>
+                      <img
+                        src="assets/images/liveDot.svg"
+                        alt=""
+                        loading="lazy"
+                      />
+                      <span class="live-auction">Live Auction</span>
                     </div>
                     <div class="col-6" style="text-align: end">
-                      <span class="sm-cat-text3"
+                      <span class="bids-made"
                         >{{ liveAuction.length }} Bids made</span
                       >
                     </div>
                   </div>
+                  <!-- bids-data -->
                   <div
                     class="sidebar"
                     *ngIf="liveAuction.length && liveAuction.length > 0"
                   >
-                    <div class="sidebar-content">
+                    <div class="sidebar-content biders">
                       <div
-                        class="row mt-3 align-items-center justify-content-between"
+                        class="row mt-3 align-items-center justify-content-between mx-0"
                         *ngFor="let data of liveAuction"
                       >
-                        <div class="col-9">
+                        <div class="col-8">
                           <div class="row align-items-center">
-                            <div class="col-3">
-                              <img [src]="data.user.img" class="w-100" alt="" />
+                            <div class="col-2">
+                              <img
+                                loading="lazy"
+                                [src]="
+                                  data?.user?.img
+                                    ? data?.user?.img
+                                    : '/assets/images/profile-placeholder.png'
+                                "
+                                alt=""
+                                class="bider-users"
+                              />
                             </div>
-                            <div class="col-9">
-                              <h6 class="sm-cat-text4" class="m-0 p-0">
-                                {{ data.user.name }}"
+                            <div class="col-9 mt-2">
+                              <h6 class="m-0 p-0 bider-user">
+                                {{ data?.user?.name }}"
                               </h6>
-                              <span class="sm-cat-text">{{
-                                data.created_at | date
+                              <span class="bider-user-time">{{
+                                data?.created_at | date
                               }}</span>
                             </div>
                           </div>
                         </div>
-                        <div class="col-2" style="text-align: end">
-                          <span class="sm-cat-text">{{ data.price }}</span>
+                        <div class="col-2 bider-user-price">
+                          <span>{{ data?.price }}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    *ngIf="allowedToBid && IsBit"
-                    class="row mt-3 justify-content-between"
-                  >
-                    <div class="col-1">
-                      <button
-                        id="placeBid"
-                        name="placeBid"
-                        class="btn btn-outline-dark sm-cat-text"
-                        style="border-radius: 3vh; font-size: 1vh"
-                        (click)="bid26()"
-                      >
-                        26k
-                      </button>
+                  <!-- allowedToBid && IsBit -->
+                  <div *ngIf="true" class="row mt-3 justify-content-between">
+                    <div class="col-12 col-xl-6 d-flex mb-2 md-xl-0 justify-content-between">
+                      <div class="col-2 sm-p-0">
+                        <button
+                          id="placeBid"
+                          name="placeBid"
+                          class="btn btn-outline-dark placeBids"
+                          (click)="bid26()"
+                        >
+                          26k
+                        </button>
+                      </div>
+                      <div class="col-2 sm-p-0">
+                        <button
+                          id="placeBid"
+                          name="placeBid"
+                          class="btn btn-outline-dark placeBids"
+                          (click)="bid28()"
+                        >
+                          28k
+                        </button>
+                      </div>
+                      <div class="col-2 sm-p-0">
+                        <button
+                          id="placeBid"
+                          name="placeBid"
+                          class="btn btn-outline-dark placeBids"
+                          (click)="bid32()"
+                        >
+                          32k
+                        </button>
+                      </div>
+                      <div class="col-2 sm-p-0">
+                        <button
+                          id="placeBid"
+                          name="placeBid"
+                          class="btn btn-outline-dark placeBids"
+                          (click)="bid35()"
+                        >
+                          35k
+                        </button>
+                      </div>
                     </div>
-                    <div class="col-1">
+
+                    <div class="col-12 col-xl-5">
                       <button
                         id="placeBid"
                         name="placeBid"
-                        class="btn btn-outline-dark sm-cat-text3"
-                        style="border-radius: 3vh; font-size: 1vh"
-                        (click)="bid28()"
-                      >
-                        28k
-                      </button>
-                    </div>
-                    <div class="col-1">
-                      <button
-                        id="placeBid"
-                        name="placeBid"
-                        class="btn btn-outline-dark sm-cat-text3"
-                        style="border-radius: 3vh; font-size: 1vh"
-                        (click)="bid32()"
-                      >
-                        32k
-                      </button>
-                    </div>
-                    <div class="col-1">
-                      <button
-                        id="placeBid"
-                        name="placeBid"
-                        class="btn btn-outline-dark sm-cat-text3"
-                        style="border-radius: 3vh; font-size: 1vh"
-                        (click)="bid35()"
-                      >
-                        35k
-                      </button>
-                    </div>
-                    <div class="col-5">
-                      <button
-                        id="placeBid"
-                        name="placeBid"
-                        class="btn btn-dark w-100 sm-cat-text3 sm-p-2"
+                        class="btn btn-dark w-100 custom-bid sm-p-2"
                         (click)="showInput()"
-                        style="border-radius: 3vh; font-size: 1vh; padding: 1vh"
                       >
                         use custom bid
                       </button>
                     </div>
+
                   </div>
-                  <div *ngIf="allowedToBid && IsBit" class="row mt-3">
+                  <!-- btn -->
+                  <div *ngIf="true" class="row mt-3">
                     <div class="col-12">
                       <button
                         (click)="openModal()"
                         [disabled]="price == null || price == ''"
                         id="placeBid"
                         name="placeBid"
-                        class="btn btn-dark w-100 p-3 sm-cat-text3"
-                        style="border-radius: 4vh"
+                        class="btn btn-outline-dark w-100 bid-your-place"
                       >
-                        Place Bid for AED{{ price }}
+                        {{ price ? price : "Place Bid for AED " }}
                       </button>
                       <input
                         id="placeBid"
@@ -315,65 +331,73 @@
                         [(ngModel)]="price"
                         *ngIf="showBid"
                         type="text"
-                        placeholder="AED "
+                        placeholder="AED"
                         class="form-control w-100 p-4 mt-3 text-center"
-                        style="border-radius: 4vh"
+                        style="border-radius: 16px"
                       />
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
+
           <!-- desktop-right-hand-side-section -->
-          <div class="col-md-4 mt-5 d-none d-xl-block">
-            <h4 class="sm-cat-text4 right-side-heading">{{ auctionProduct[0]?.title }}</h4>
-            <div class="row align-items-center">
+          <div class="col-md-4 d-none d-xl-block" style="margin-top: 75px">
+            <h4 class="right-side-title" style="">
+              {{ auctionProduct[0]?.title }}
+            </h4>
+            <div class="row align-items-center mt-3">
               <div class="col-7">
                 <a
                   style="text-decoration: none; color: black"
-                  href="/auctionUserProfile/{{ auctionProduct[0]?.user?.id }}"
+                  routerLink="/auctionUserProfile/{{
+                    auctionProduct[0]?.user?.id
+                  }}"
                 >
                   <div class="row align-items-center">
-                    <div class="col-4">
+                    <div class="col-2 mr-3">
                       <img
-                        [src]="auctionProduct[0]?.user?.img"
-                        class="w-100"
-                        style="height: 42px; border-radius: 10px"
+                        loading="lazy"
+                        [src]="
+                          auctionProduct[0]?.user?.img
+                            ? auctionProduct[0]?.user?.img
+                            : '/assets/images/profile-placeholder.png'
+                        "
+                        class="auction-profile"
                         alt=""
+                        loading="lazy"
                       />
-                      <!-- <img src="assets/images/profile-img1.png" class="w-100" alt=""> -->
                     </div>
-                    <div class="col-8" style="font-size: 2vh">
-                      <span class="sm-cat-text3">{{
-                        auctionProduct[0]?.user?.name
-                      }}</span>
+                    <div class="col-8">
+                      <span class="auction-user-name"
+                        >{{ auctionProduct[0]?.user?.name }}</span
+                      >
                     </div>
                   </div>
                 </a>
               </div>
-              <div class="col-5" *ngIf="this.isVerified">
-                <img src="assets/images/verify.svg" alt="" style="width: 12%" />
-                <span style="font-size: 10px" class="sm-cat-text3"
-                  >Verified Member</span
-                >
+              <!-- this.isVerified *ngIf="" -->
+              <div class="col-5" style="text-align: end">
+                <img
+                  src="assets/images/verify.svg"
+                  alt=""
+                  class="verified-img"
+                  loading="lazy"
+                />
+                <span class="verified-member">Verified Member</span>
               </div>
               <div class="col-md-12" style="text-align: end">
-                <span style="font-size: 10px" class="sm-cat-text3"
+                <span class="member-since"
                   >Member since
                   {{ auctionProduct[0]?.user?.created_at | date }}</span
                 >
               </div>
             </div>
-            <!-- <div class="row justify-content-center">
-                          <div class="col-11 col-md-12" style="text-align: end;">
-                              <span style="font-size: 10px;" class="sm-cat-text3">Member since {{auctionProduct[0].user.created_at|date}}</span>
-                          </div>
-                      </div> -->
-            <!-- how-many-lives -->
             <div
               class="row mt-5 justify-content-center"
-              *ngIf="liveAuction.length && liveAuction.length > 0"
+              *ngIf="liveAuction?.length && liveAuction.length > 0"
             >
               <div
                 class="col-11 col-md-12"
@@ -388,70 +412,59 @@
                     class="col-6"
                     style="border-right: 1px solid #787878; padding-right: 1vh"
                   >
-                    <h6 class="sm-cat-text4">Starting price</h6>
-                    <span class="sm-cat-text3">{{
-                      auctionProduct[0]?.auction_price
+                    <h6 class="starting-price">Starting price</h6>
+                    <span class="auction-price">{{
+                      auctionProduct[0]?.auction_price || "N/A"
                     }}</span>
-                    <div class="row mt-3">
+                    <div class="row mt-2">
                       <div class="col-6">
-                        <div
-                          class="d-flex flex-wrap"
-                          style="width: 117px; overflow: hidden"
-                        >
+                        <div class="live-user-img-main">
                           <!-- Display each image in a single row -->
                           <div
-                            *ngFor="let data of profileImg"
+                            *ngFor="
+                              let data of profileImg.slice(1, 6);
+                              let i = index
+                            "
                             class="d-flex me-2 mb-2"
                           >
                             <img
-                              [src]="data.img"
+                              [src]="data?.img"
                               alt=""
-                              style="
-                                width: 20px;
-                                height: 20px;
-                                border-radius: 50%;
-                              "
+                              class="live-user-img"
+                              loading="lazy"
                             />
                           </div>
                         </div>
                       </div>
                       <div class="col-6">
-                        <div class="d-flex justify-content-center h-100">
-                          <div
-                            class="d-flex justify-content-center align-items-center me-2"
-                            style="
-                              border: 1px solid black;
-                              border-radius: 50%;
-                              width: 5vh;
-                              height: 5vh;
-                            "
-                          >
-                            <span
-                              class="sm-cat-text3"
-                              style="font-size: 1.8vh; margin: 0; padding: 0"
-                            >
-                              {{ liveAuction.length }}
+                        <div
+                          class="h-100"
+                          style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                          "
+                        >
+                          <div class="live-user-count">
+                            <span class="user-length-count">
+                              +{{ liveAuction.length }}
                             </span>
                           </div>
-                          <span
-                            class="sm-cat-text3"
-                            style="font-size: 2vh; padding: 4px 0px 0px 5px"
-                            >are live</span
-                          >
+                          <span class="are-live">are live</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
-                    <h6 class="sm-cat-text4">Current Bid Price</h6>
-                    <span class="sm-cat-text3">AED{{ maxPrice }}</span>
+                    <h6 class="starting-price">Current Bid Price</h6>
+                    <span class="max-price">AED {{ maxPrice }}</span>
                     <div class="mt-3">
                       <span
-                        class="sm-cat-text3"
+                        class="are-live"
                         *ngIf="
                           calculateRemaningTime && calculateRemaningTime != ''
                         "
-                        >{{ calculateRemaningTime }}</span
+                        >{{ calculateRemaningTime || "N/A" }}</span
                       >
                     </div>
                   </div>
@@ -460,15 +473,15 @@
             </div>
             <!-- live-action bids-mads -->
             <div
-              class="row mt-5"
+              class="row mt-3"
               *ngIf="liveAuction.length && liveAuction.length > 0"
             >
               <div class="col-6">
-                <img src="assets/images/liveDot.svg" alt="" />
-                <span style="font-weight: bold">Live Auction</span>
+                <img src="assets/images/liveDot.svg" alt="" loading="lazy" />
+                <span class="live-auction">Live Auction</span>
               </div>
               <div class="col-6" style="text-align: end">
-                <span class="sm-cat-text3"
+                <span class="bids-made"
                   >{{ liveAuction.length }} Bids made</span
                 >
               </div>
@@ -478,27 +491,36 @@
               class="sidebar"
               *ngIf="liveAuction.length && liveAuction.length > 0"
             >
-              <div class="sidebar-content">
+              <div class="sidebar-content biders">
                 <div
-                  class="row mt-3 align-items-center justify-content-between"
+                  class="row mt-3 align-items-center justify-content-between mx-0"
                   *ngFor="let data of liveAuction"
                 >
-                  <div class="col-9">
+                  <div class="col-8">
                     <div class="row align-items-center">
-                      <div class="col-3">
-                        <img [src]="data?.user?.img" class="w-100" alt="" />
+                      <div class="col-2">
+                        <img
+                          loading="lazy"
+                          [src]="
+                            data?.user?.img
+                              ? data?.user?.img
+                              : '/assets/images/profile-placeholder.png'
+                          "
+                          alt=""
+                          class="bider-users"
+                        />
                       </div>
-                      <div class="col-9">
-                        <h6 class="sm-cat-text4" class="m-0 p-0">
+                      <div class="col-9 mt-2">
+                        <h6 class="m-0 p-0 bider-user">
                           {{ data?.user?.name }}"
                         </h6>
-                        <span class="sm-cat-text">{{
+                        <span class="bider-user-time">{{
                           data?.created_at | date
                         }}</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-2" style="text-align: end">
+                  <div class="col-2 bider-user-price">
                     <span class="sm-cat-text">{{ data?.price }}</span>
                   </div>
                 </div>
@@ -519,9 +541,8 @@
                 <button
                   id="placeBid"
                   name="placeBid"
-                  class="btn btn-dark w-100 sm-cat-text3 sm-p-2"
+                  class="btn btn-dark w-100 custom-bid sm-p-2"
                   (click)="showInput()"
-                  style="border-radius: 3vh; font-size: 1.5vh; padding: 1.5vh"
                 >
                   use custom bid
                 </button>
@@ -536,10 +557,9 @@
                   [disabled]="price == null || price == ''"
                   id="placeBid"
                   name="placeBid"
-                  class="btn btn-dark w-100 p-3 sm-cat-text3"
-                  style="border-radius: 4vh"
+                  class="btn btn-outline-dark w-100 bid-your-place"
                 >
-                  Place Bid for AED {{ price }}
+                  {{ price ? price : "Place Bid for AED " }}
                 </button>
                 <input
                   id="placeBid"
@@ -549,18 +569,9 @@
                   type="text"
                   placeholder="AED"
                   class="form-control w-100 p-4 mt-3 text-center"
-                  style="border-radius: 4vh"
+                  style="border-radius: 16px"
                 />
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- description-for-desktop -->
-        <div class="d-none d-xl-block">
-          <div class="row container">
-            <div class="col-8 mt-5">
-              <h5 class="detail-des">Descriptions</h5>
-              <p class="des-in-detail">{{ auctionProduct[0]?.description }}</p>
             </div>
           </div>
         </div>
@@ -613,5 +624,4 @@
       </div>
     </div>
   </div>
-
 </main>
