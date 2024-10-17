@@ -617,8 +617,6 @@ body {
 
 .product-card {
   width: 312px;
-  // height: 395px;
-
   .card-top {
     height: 180px;
 
@@ -636,7 +634,7 @@ body {
     column-gap: 20px;
   }
 
-  button:hover:not(.hover-bg-none) {
+  .hover-able-btn:hover{
     background: #FFD33C;
   }
 
