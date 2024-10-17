@@ -24,6 +24,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { AccountSettingDialogeComponent } from '../account-setting-dialoge/account-setting-dialoge.component';
+import { ToastrService } from 'ngx-toastr';
 
 interface ImageSnippet {
   file: File | null;
@@ -71,7 +72,7 @@ export class ProfilePageComponent {
   progress!: number;
   defaultProfileUrl: string = 'assets/images/updateImage.png';
   showMore: boolean = false;
-  selectedTab: any = 'purchasesSales';
+  selectedTab: any ;
   selectedTabItem: string = '';
   selectedTabId: any;
   activeButton: number = 1;
@@ -84,6 +85,9 @@ export class ProfilePageComponent {
   currentUserId: number = 0;
   user_Id: number = 0;
   title: string = '';
+  editTitle:any;
+  editPrice:any;
+  editDescription:any
   description: string = '';
   userImage: any;
   profilePhoto: File | null = null;
@@ -93,7 +97,7 @@ export class ProfilePageComponent {
   price: string = '';
   subCategoriesId: any;
   userSetting: any;
-  final_price: any = 900;
+  final_price: any;
   startingTime: string = '';
   endingTime: string = '';
   startingDate: Date | null = null;
@@ -590,6 +594,7 @@ export class ProfilePageComponent {
   loading = false;
   editProductData: any = null;
   constructor(
+    private toastr:ToastrService,
     private mainServices: MainServicesService,
     private extension: Extension,
     private route: ActivatedRoute,
@@ -605,13 +610,15 @@ export class ProfilePageComponent {
     this.categoryForm = this.fb.group({});
   }
   ngOnInit() {
-    const currentTab: any = localStorage.getItem('currentTab');
-    this.editProductData=localStorage.getItem('editProduct');
+    debugger
+    let currentTab: any = localStorage.getItem('currentTab');
 
-    if(this.editProductData){
-      this.selectTab('editPost')
+// Check if currentTab is explicitly null or empty and assign a default value if needed
+if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
+  currentTab = 'purchasesSales';
+}
+      this.editProductData=localStorage.getItem('editProduct');
 
-    }
     this.selectTab(currentTab);
 
     this.getNotification();
@@ -628,38 +635,60 @@ export class ProfilePageComponent {
   loadCategories(): void {
     this.mainServices.getCategories(this.selectedTabId).subscribe(
       (data) => {
-        ;
         this.categories = data;
-        if(this.editProductData){
-          
-          this.editProductData=JSON.parse(this.editProductData);
-          this.cd.detectChanges();
-          this.selectedCategoryId=this.editProductData.category_id;
-          this.selectedSubCategoryId=this.editProductData.sub_category_id;
-          this.title=this.editProductData.title;
-          this.productId=JSON.parse(this.editProductData.attributes).product_id;
-          this.description=this.editProductData.description;
+  
+        if (this.editProductData) {
+          this.editProductData = JSON.parse(this.editProductData);
+          this.selectedCategoryId = this.editProductData.category_id;
+          this.selectedSubCategoryId = this.editProductData.sub_category_id;
+          this.editTitle = this.editProductData.title;
+          this.productId = JSON.parse(this.editProductData.attributes).product_id;
+          this.editDescription = this.editProductData.description;
+  
+          // Set pricingCatId based on ProductType
+          if (this.editProductData.ProductType === 'featured') {
+            this.pricingCatId = 'FixedPrice';
+            this.editPrice = this.editProductData.fix_price;
+          } else if (this.editProductData.ProductType === 'auction') {
+            this.pricingCatId = 'Auction';
+            this.startingPrice = this.editProductData.auction_price; // Bind starting price
+            this.final_price = this.editProductData.final_price; // Bind final price
+            this.startingTime = this.editProductData.starting_time; // Bind starting time
+            this.endingTime = this.editProductData.ending_time; // Bind ending time
+            this.startingDate = this.editProductData.starting_date; // Bind starting date
+            this.endingDate = this.editProductData.ending_date; // Bind ending date
+          }
+  
           this.getSubcategories(this.selectedCategoryId);
-        }else{
-          this.selectedCategoryId=this.categories[0].id;
-
+        } else {
+          this.selectedCategoryId = this.categories[0].id;
+          this.pricingCatId = this.pricingCategories[0].id; // Set default for new entries
           this.getSubcategories(this.categories[0].id);
         }
+  
         this.initializeForm();
-        this.categoryForm.patchValue(JSON.parse(this.editProductData.attributes))
+        this.categoryForm.patchValue(JSON.parse(this.editProductData.attributes));
       },
       (error) => {
         console.error('Error fetching categories:', error); // Handle error
       }
     );
   }
-  initializeForm() {
-    
+        initializeForm() {
+    debugger
     // Initialize form controls dynamically based on the selected category
     const fields = this.categoryFields[this.selectedCategoryId];
     fields.forEach(field => {
       this.categoryForm.addControl(field.model, this.fb.control('', Validators.required));
     });
+    if (this.categoryFields[this.selectedCategoryId]) {
+      this.categoryFields[this.selectedCategoryId].forEach((field:any) => {
+        // If the field type is select, set the default value to the first option
+        if (field.type === 'select' && field.options.length > 0) {
+          this.attributes[field.model] = field.options[0].id; // Set default to the first option
+        }
+      });
+    }
   }
 
 showfor(){
@@ -850,17 +879,11 @@ showfor(){
     };
   
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      // Remove the photo with the matching ID from the editProductData array
-    
-  
-      // Retrieve the object stored in local storage
-  debugger
-      // Check if the product exists in the stored data
+      this.toastr.success('Product image deleted successfully', 'Success');
+
       if (this.editProductData && this.editProductData.id == input.product_id ) {
-        // Update the photo array by removing the image with the matching ID
         this.editProductData.photo = this.editProductData.photo.filter((photo: any) => photo.product_id !== input.product_id);
   
-        // Save the updated object back to local storage
         localStorage.setItem('editProduct', JSON.stringify(this.editProductData));
       }
   
@@ -1294,7 +1317,7 @@ showfor(){
       formData.append('img', this.selectedFile);
       const url = `https://ttoffer.com/backend/public/api/update/user`;
       const token = localStorage.getItem('authToken');
-      this.loading = true;
+      // this.loading = true;
 
       fetch(url, {
         method: 'POST',
@@ -1317,37 +1340,9 @@ showfor(){
           this.imageUrl = data.data.img;
           this.service.changeImageUrl(this.imageUrl);
           this.UpdateLocalUserData(data.data);
-          this.loading = false;
+          // this.loading = false;
         });
 
-      // this.http.post(`https://ttoffer.com/backend/public/api/update/user`,formData, { headers: this.getHeaders() }).subscribe(
-      //   (response: any) => {
-
-      //     this.UpdateLocalUserData(response.data)
-      //     this.showSuccessMessage(response.message)
-      //     console.log('File upload successful', response);
-      //     this.updateProductImage();
-      //     // this.atributes()
-      //     this.addProductSeccondStep();
-      //   },
-      //   error => {
-      //     console.error('File upload failed', error);
-      //   }
-      // );
-      // let data = {
-      //   user_id: 11,
-      //   img: this.selectedFile
-      // };
-
-      // this.mainServices.updateUserImage(data).subscribe(
-      //   res => {
-
-      //     console.log('Response:', res); // For debugging
-      //   },
-      //   err => {
-      //     console.error('Upload failed:', err);
-      //   }
-      // );
     }
   }
   UpdateLocalUserData(data: any) {
@@ -1355,31 +1350,6 @@ showfor(){
     localStorage.setItem('key', jsonString);
     this.getCurrentUser();
   }
-  // onImageUpload(event: any): void {
-  //
-  //   const input = event.target as HTMLInputElement;
-  //   let files = input.files;
-
-  //   if (files && files[0]) {
-  //     let file = files[0];
-  //     this.userImage = file;
-  //     this.profilePhoto = file;
-  //     this.updateProfile()
-  //   }
-  // }
-
-  // updateProfile() {
-  //
-  //   let data = {
-  //     user_id:11,
-  //     // src: "",
-  //     img:this.userImage,
-  //   }
-  //   this.mainServices.updateUserImage(data).subscribe(res => {
-  //
-  //     console.log('Response:', res); // For debugging
-  //   });
-  // }
 
   triggerFileInput(): void {
     const fileInput = document.getElementById(
@@ -1387,30 +1357,8 @@ showfor(){
     ) as HTMLInputElement;
     fileInput.click();
   }
-  // AddProductFirstStep() {
 
-  //   let input = {
-  //     user_id: this.currentUserId,
-  //     title: this.title,
-  //     description: this.description,
-  //     photo: this.selectedFiles,
-  //     video: this.selectedFiles,
-  //   }
-  //   this.mainServices.addProductFirstStep(input).subscribe((res: any) => {
-
-  //     res
-  //     this.productId = res.product_id
-  //     this.atributes()
-  //     this.addProductSeccondStep();
-  //     console.log(res);
-  //   })
-  // }
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-  }
+ 
 
   EditProductFirstStep() {
     let formData = new FormData();
@@ -1422,8 +1370,8 @@ showfor(){
       'user_id',
       (this.currentUserId ? Number(this.currentUserId) : 0).toString()
     );
-    formData.append('title', this.title);
-    formData.append('description', this.description);
+    formData.append('title', this.editTitle);
+    formData.append('description', this.editDescription);
     formData.append(
       'product_id',
       (this.productId ? Number(this.productId) : 0).toString()
@@ -1616,8 +1564,8 @@ showfor(){
       const res: any = await this.mainServices
         .addProductLastStep(input)
         .toPromise();
-      this.showSuccessMessage('Product added successfully');
-      this.router.navigate(['']);
+        this.toastr.success('Product is live now!', 'Success');
+        this.router.navigate(['']);
     } catch (error) {
       this.handleError(error);
     }
@@ -1675,7 +1623,7 @@ showfor(){
     } else if (this.pricingCatId == 'FixedPrice') {
       input = {
         product_id: this.productId,
-        fix_price: this.price,
+        fix_price: this.editPrice,
         auction_price: null,
       };
     } else {
@@ -1700,8 +1648,8 @@ showfor(){
     };
     this.mainServices.editProductLastStep(input).subscribe((res: any) => {
       res;
-localStorage.removeItem('editProduct')
-      this.showSuccessMessage('Product updated Successfully');
+      localStorage.removeItem('editProduct')
+      this.toastr.success('Product updated successfully', 'Success');
       console.log(res);
       this.loading = false;
       this.router.navigate(['']);
@@ -1713,72 +1661,10 @@ localStorage.removeItem('editProduct')
       next: (res: any) => {
         this.sellingList = res;
         console.log(res);
+        this.loading=false
+
         this.purchaseListTemp = res.data?.purchase ;
         this.sellingListTemp = res.data?.selling ;
-        this.cd.detectChanges()
-this.loading=false
-        // if (this.selectedTab !== '') {
-        //   this.sellingListTemp = this.sellingListTemp.filter((item: any) => {
-        //     return this.selectedTabItem == null
-        //       ? item.user_id === this.selectedTabId
-        //       : item.id === this.selectedTabId;
-        //   });
-
-          // if (this.sellingListTemp?.[0]) {
-          //   if (this.selectedTabItem === 'editPost') {
-          //     this.isEditPost = true;
-          //     this.locationId = this.sellingListTemp[0]?.location || null;
-          //     this.productId = this.sellingListTemp[0]?.id || null;
-          //     this.title = this.sellingListTemp[0]?.title || '';
-          //     this.description = this.sellingListTemp[0]?.description || '';
-          //   } else {
-          //     this.locationId = this.currentUserProfile?.location || null;
-          //   }
-
-          //   const attributesString = this.sellingListTemp[0]?.attributes;
-          //   if (attributesString) {
-          //     try {
-          //       const parsedAttributes = JSON.parse(attributesString);
-          //       const parsedAttributesAttributesString =
-          //         parsedAttributes?.attributes;
-
-          //       if (parsedAttributesAttributesString) {
-          //         const parsedAttributesAttributes = JSON.parse(
-          //           parsedAttributesAttributesString
-          //         );
-
-                 
-          //       } else {
-          //         console.error(
-          //           "Parsed attributes object does not contain 'attributes'."
-          //         );
-          //       }
-          //     } catch (error) {
-          //       console.error('Error parsing attributes:', error);
-          //     }
-          //   }
-
-          //   // Handle pricing information
-          //   this.startingTime = this.sellingListTemp[0]?.starting_time || null;
-          //   this.endingTime = this.sellingListTemp[0]?.ending_time || null;
-          //   this.startingDate = this.sellingListTemp[0]?.starting_date || null;
-          //   this.endingDate = this.sellingListTemp[0]?.ending_date || null;
-          //   this.startingPrice = this.sellingListTemp[0]?.auction_price || null;
-          //   this.price = this.sellingListTemp[0]?.fix_price || null;
-
-          //   // Determine pricing category
-          //   if (this.sellingListTemp[0]?.fix_price != null) {
-          //     this.pricingCatId = 'FixedPrice';
-          //   } else if (this.sellingListTemp[0]?.auction_price != null) {
-          //     this.pricingCatId = 'Auction';
-          //   } else {
-          //     this.pricingCatId = 'SellToTTOffer';
-          //   }
-          // }
-        // }
-
-        // this.loading = false;
-        console.log(this.sellingList);
       },
       error: (err: any) => {
         console.error('Error fetching selling data:', err);
@@ -1888,6 +1774,10 @@ this.loading=false
       }
     });
   }
+  onDeleteAccount(): void {
+    // Navigate to the Delete Account page or show a confirmation dialog
+    this.router.navigate([`/user/delete-account/${this.currentUserId}`]); // Use the appropriate route path
+  }
   updateUserInfo(field: string, value: any) {
     this.isDisabled = true;
     this.loading = true;
@@ -1933,11 +1823,9 @@ this.loading=false
         this.savedItems = res.data;
 
         this.savedItems.isAuction = this.savedItems.fix_price == null ? true:false;
-        console.log('SAVED ITEMS', this.savedItems);
         // this.loading = false;
       },
       (err: any) => {
-        this.loading = false;
       }
     );
   }

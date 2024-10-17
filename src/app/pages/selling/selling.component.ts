@@ -255,7 +255,8 @@ export class SellingComponent {
   
       // Store the JSON string in local storage
       localStorage.setItem('editProduct', sellingListString);
-  
+      localStorage.setItem('currentTab', 'editPost');
+
       // Navigate to the product details page using Angular Router (for example, the first item in the list)
       const postId = this.sellingList[0].id;
       this.router.navigate(['/profilePage', postId]);
