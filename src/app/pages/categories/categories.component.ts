@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SharedDataService } from '../../shared/services/shared-data.service';
 import { SharedModule } from "../../shared/shared.module";
+import { GlobalStateService } from '../../shared/services/state/global-state.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
-  imports: [HeaderComponent, CommonModule, FooterComponent, FormsModule, SharedModule,RouterModule]
+  imports: [HeaderComponent, CommonModule, FooterComponent, FormsModule, SharedModule, RouterModule]
 })
 export class CategoriesComponent {
   promotionBanners: any = [
@@ -37,9 +39,9 @@ export class CategoriesComponent {
   isAuctionProduct: boolean = false
   isFeatureProduct: boolean = false
   activeButton: number = 1;
-  IsBit:boolean=false;
-  calculateRemaningTime!:string;
-  searchLocation= "";
+  IsBit: boolean = false;
+  calculateRemaningTime!: string;
+  searchLocation = "";
   locations: any = [];
   subCategories: any = [
     { title: 'Sub Categories', id: 'flexRadioDefault1', content1: 'Lands & Plots', content2: 'Houses', content3: 'Apartments & Flats', content4: 'Shops - Offices', content5: 'Portions & Floors', content6: 'View all' },
@@ -66,11 +68,15 @@ export class CategoriesComponent {
 
   auction: any[] = []
   feature: any[] = []
-  title:any;
+  title: any;
+  wishList: any = []
+  currentUser: any = {}
   constructor(
     private mainServices: MainServicesService,
     private route: ActivatedRoute,
-    private http: HttpClient,public subCategoryService:SharedDataService,public cd:ChangeDetectorRef
+    private http: HttpClient, public subCategoryService: SharedDataService, public cd: ChangeDetectorRef,
+    private globalStateService: GlobalStateService,
+    private toastr: ToastrService
   ) { }
   ngOnInit(): void {
     this.categorieId = this.route.snapshot.paramMap.get('id')!;
@@ -81,7 +87,7 @@ export class CategoriesComponent {
     // });    
     this.getAllProducts();
     // this.subCategory();
-this.loadSubCategories(this.categorieId)
+    this.loadSubCategories(this.categorieId)
   }
   showAuction(buttonIndex: number) {
     this.activeButton = buttonIndex;
@@ -92,30 +98,54 @@ this.loadSubCategories(this.categorieId)
   }
 
   currentUserId: number = 0;
+
   addWishLst(item: any) {
-    ;
+    this.globalStateService.wishlistToggle(item.id);
+    this.globalStateService.currentState.subscribe(state => {
+      this.wishList = state.wishListItems
+      this.currentUser = state.currentUser
+    });
     let input = {
-      user_id: this.currentUserId,
+      user_id: this.currentUser.id,
       product_id: item.id
     }
-    this.mainServices.addWishList(input).subscribe((res: any) => {
-      ;
-      this.getFeatcherdProduct();
-      this.getAuctionProduct();
+    this.mainServices.addWishList(input).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastr.success('Product added to wishlist successfully', 'Success');
+        }
+        console.log(res, "toggleWishlist");
+      },
+      error: (err) => {
+        this.toastr.error('Failed to add product to wishlist', 'Error');
+        console.log(err);
+      },
     })
   }
-  removeWishLst(item: any) {
+  // addWishLst(item: any) {
+  //   ;
+  //   let input = {
+  //     user_id: this.currentUserId,
+  //     product_id: item.id
+  //   }
+  //   this.mainServices.addWishList(input).subscribe((res: any) => {
+  //     ;
+  //     this.getFeatcherdProduct();
+  //     this.getAuctionProduct();
+  //   })
+  // }
+  // removeWishLst(item: any) {
 
-    let input = {
-      id: item.id
-    }
-    this.mainServices.removeWishList(input).subscribe((res: any) => {
+  //   let input = {
+  //     id: item.id
+  //   }
+  //   this.mainServices.removeWishList(input).subscribe((res: any) => {
 
 
-      this.getFeatcherdProduct();
-      this.getAuctionProduct();
-    })
-  }
+  //     this.getFeatcherdProduct();
+  //     this.getAuctionProduct();
+  //   })
+  // }
 
   getDisplayedFeatured() {
     return this.showAll ? this.feature : this.feature.slice(0, 8);
@@ -145,24 +175,24 @@ this.loadSubCategories(this.categorieId)
         }
       })
   }
-  filterByLocation(){
-    if(this.searchLocation !== ""){
-      this.auction = this.auction.filter(x=>x.location == this.searchLocation)
-      this.feature = this.feature.filter(x=>x.location == this.searchLocation)
+  filterByLocation() {
+    if (this.searchLocation !== "") {
+      this.auction = this.auction.filter(x => x.location == this.searchLocation)
+      this.feature = this.feature.filter(x => x.location == this.searchLocation)
     }
   }
   filterByPrice() {
     if (this.min_price != undefined && this.min_price !== null) {
-        this.feature = this.feature.filter(item => item.fix_price !== null && item.fix_price >= this.min_price);
-        this.auction = this.auction.filter(item => item.auction_price !== null && item.auction_price >= this.min_price);
+      this.feature = this.feature.filter(item => item.fix_price !== null && item.fix_price >= this.min_price);
+      this.auction = this.auction.filter(item => item.auction_price !== null && item.auction_price >= this.min_price);
     }
 
     if (this.max_price != undefined && this.max_price !== null) {
-        this.feature = this.feature.filter(item => item.fix_price !== null && item.fix_price <= this.max_price);
-        this.auction = this.auction.filter(item => item.auction_price !== null && item.auction_price <= this.max_price);
+      this.feature = this.feature.filter(item => item.fix_price !== null && item.fix_price <= this.max_price);
+      this.auction = this.auction.filter(item => item.auction_price !== null && item.auction_price <= this.max_price);
     }
-}
-  getProductByLocation(location:any){
+  }
+  getProductByLocation(location: any) {
     this.searchLocation = location;
     this.getAllProducts()
 
@@ -170,13 +200,13 @@ this.loadSubCategories(this.categorieId)
   openfilter() {
     this.show = !this.show
   }
- 
+
   loadSubCategories(categoryId: any): void {
-    
-   this.subCategoryService.getDataByCategoryId(categoryId);
-   
+
+    this.subCategoryService.getDataByCategoryId(categoryId);
+
   }
-  
+
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken');
     return new HttpHeaders({
@@ -198,7 +228,7 @@ this.loadSubCategories(this.categorieId)
       min_price: this.min_price,
       max_price: this.max_price
     }
-    
+
     this.mainServices.getAllProducts(input).subscribe((res: any) => {
 
       this.categories = res.data
@@ -210,34 +240,35 @@ this.loadSubCategories(this.categorieId)
         this.categories.forEach(category => {
           var attributes = null
           const parsedAttributes = JSON.parse(category.attributes);
-          if(parsedAttributes.attributes != undefined){
+          if (parsedAttributes.attributes != undefined) {
             attributes = JSON.parse(parsedAttributes.attributes);
 
           }
-          if(attributes == null || this.categorieId == attributes.category_id){
+          if (attributes == null || this.categorieId == attributes.category_id) {
 
-          if (category.fix_price !== null) {
+            if (category.fix_price !== null) {
 
-            this.feature.push(category);
-            this.addLocationIfNotExists(category.location);
-            this.filterByLocation();
-            this.filterByPrice();
+              this.feature.push(category);
+              this.addLocationIfNotExists(category.location);
+              this.filterByLocation();
+              this.filterByPrice();
+            }
+            else if (category.auction_price !== null) {
+              this.auction.push(category);
+              // this.auction.forEach(item =>{
+              //   // this.locations.push(item.)
+              // })
+              this.addLocationIfNotExists(category.location);
+              this.filterByLocation();
+              this.filterByPrice();
+
+
+            }
+            else {
+              // this.feature = []
+              // this.auction = []
+            }
           }
-          else if (category.auction_price !== null) {
-            this.auction.push(category);
-            // this.auction.forEach(item =>{
-            //   // this.locations.push(item.)
-            // })
-            this.addLocationIfNotExists(category.location);
-            this.filterByLocation();
-            this.filterByPrice();
-
-
-          }
-          else {
-            // this.feature = []
-            // this.auction = []
-          }}
           this.loading = false
 
         });
@@ -261,55 +292,55 @@ this.loadSubCategories(this.categorieId)
     if (locationId != null && !this.locations.some((location: { id: string; }) => location.id === locationId)) {
       // Add the new location if it does not exist
       this.locations.push({ id: locationId });
+    }
   }
-}
 
-startCountdowns() {
-  this.auction.forEach((item, index) => {
-    // if(item.title =='multi image and vieo'){
-    //
-    // }
-    // const endingDateTimeString = `${item.ending_date.split(' ')[0]} ${item.ending_time}`;
-    // const endingDateTime = new Date(endingDateTimeString).getTime();
-    const datePart = item.ending_date.split('T')[0]; // Extract the date part
-    const endingDateTimeString = `${datePart}T${item.ending_time}:00.000Z`; // Combine with the time and format it
-    const endingDateTime = new Date(endingDateTimeString).getTime(); // Parse and get the timestamp
+  startCountdowns() {
+    this.auction.forEach((item, index) => {
+      // if(item.title =='multi image and vieo'){
+      //
+      // }
+      // const endingDateTimeString = `${item.ending_date.split(' ')[0]} ${item.ending_time}`;
+      // const endingDateTime = new Date(endingDateTimeString).getTime();
+      const datePart = item.ending_date.split('T')[0]; // Extract the date part
+      const endingDateTimeString = `${datePart}T${item.ending_time}:00.000Z`; // Combine with the time and format it
+      const endingDateTime = new Date(endingDateTimeString).getTime(); // Parse and get the timestamp
 
-    const intervalId = setInterval(() => {
-      const nowUTC = Date.now();
-      const timeDifference = endingDateTime - nowUTC;
-      if (timeDifference <= 0 || Number.isNaN(timeDifference)) {
-        clearInterval(intervalId);
-        item.calculateRemaningTime='Bid Expired';
-        item.IsBit=false
-        // this.auction.splice(index, 1); // Remove the item from auction
-      } else {
-        item.calculateRemaningTime = this.formatTimeDifference(timeDifference);
-        // item.remainingTime = this.formatTimeDifference(timeDifference)+ ' remaining';
-        item.IsBit=true;
-      }
-    }, 1000); // Update every second
-  });
-}
-formatTimeDifference(timeDifference: number): string {
-  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+      const intervalId = setInterval(() => {
+        const nowUTC = Date.now();
+        const timeDifference = endingDateTime - nowUTC;
+        if (timeDifference <= 0 || Number.isNaN(timeDifference)) {
+          clearInterval(intervalId);
+          item.calculateRemaningTime = 'Bid Expired';
+          item.IsBit = false
+          // this.auction.splice(index, 1); // Remove the item from auction
+        } else {
+          item.calculateRemaningTime = this.formatTimeDifference(timeDifference);
+          // item.remainingTime = this.formatTimeDifference(timeDifference)+ ' remaining';
+          item.IsBit = true;
+        }
+      }, 1000); // Update every second
+    });
+  }
+  formatTimeDifference(timeDifference: number): string {
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-  let formattedTime = '';
-  if (days > 0) {
-    formattedTime += `${days}d `;
-} if (hours > 0) {
-    formattedTime += `${hours}h `;
-} if (minutes > 0) {
-    formattedTime += `${minutes}m `;
-}
+    let formattedTime = '';
+    if (days > 0) {
+      formattedTime += `${days}d `;
+    } if (hours > 0) {
+      formattedTime += `${hours}h `;
+    } if (minutes > 0) {
+      formattedTime += `${minutes}m `;
+    }
     formattedTime += `${seconds}s `;
 
 
-  return formattedTime;
-}
+    return formattedTime;
+  }
   getSubCatProducts(row: any) {
 
     this.sub_category_id = row.id;
@@ -431,13 +462,13 @@ formatTimeDifference(timeDifference: number): string {
   }
   getProductCondition(condition: any) {
 
-    if(condition == "Any"){
-      this.sort_by =""
+    if (condition == "Any") {
+      this.sort_by = ""
     }
-    else if(condition == "New"){
+    else if (condition == "New") {
       this.sort_by = "newest on top"
     }
-    else if(condition == "Used"){
+    else if (condition == "Used") {
       this.sort_by = "newest on bottom"
     }
     this.getAllProducts()
@@ -459,12 +490,12 @@ formatTimeDifference(timeDifference: number): string {
   //   this.getAllProducts();
 
   // }
-  sellerVerify(){
+  sellerVerify() {
 
   }
-  getproductBySellerType(sellerType:any){
-    
-this.is_urgent=sellerType;
-this.getAllProducts();
+  getproductBySellerType(sellerType: any) {
+
+    this.is_urgent = sellerType;
+    this.getAllProducts();
   }
 }

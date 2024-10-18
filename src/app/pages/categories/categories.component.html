@@ -1,17 +1,26 @@
 <!-- <app-header></app-header> -->
+
+<!-- CODED BY BILAL -->
 <main class="mt-16">
+  <div class="container-fluid">
+    <div class="mt-3 xs-px-0">
+      <div>
+        <app-slider></app-slider>
+      </div>
+      <app-promotion-slider [banners]="promotionBanners" />
+    </div>
+  </div>
+</main>
+<!-- END  BY BILAL -->
+
+
+
+<main class="mt-16 d-none">
   <div class="col-xl-11 mx-auto mt-3 xs-px-0">
     <div>
       <app-slider></app-slider>
     </div>
     <app-promotion-slider [banners]="promotionBanners" />
-  </div>
-  <div *ngIf="loading" class="loader-overlay">
-    <div class="loader">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
   </div>
   <div class="container-fluid">
     <div class="row">
@@ -37,28 +46,16 @@
                   <div class="accordion-item mt-3">
                     <div class="accordion-header">
                       <h6>Sub Category</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon" />
                     </div>
                     <div class="p-3">
-                      <div
-                        class="form-check"
-                        *ngFor="
+                      <div class="form-check" *ngFor="
                           let subCat of subCategoryService.subCatContent;
                           let i = index
-                        "
-                      >
+                        ">
                         <div class="mt-3">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="subCat"
-                            (change)="getSubCatProducts(subCat)"
-                            [id]="'subCat' + i"
-                          />
+                          <input class="form-check-input" type="radio" name="subCat"
+                            (change)="getSubCatProducts(subCat)" [id]="'subCat' + i" />
                           <label class="form-check-label" [for]="'subCat' + i">
                             {{ subCat.name }}
                           </label>
@@ -70,30 +67,14 @@
                   <div class="accordion-item mt-3">
                     <div class="accordion-header">
                       <h6>SELLER TYPE</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon" />
                     </div>
                     <div class="p-3">
-                      <div
-                        class="form-check"
-                        *ngFor="let seller of sellerType; let i = index"
-                      >
+                      <div class="form-check" *ngFor="let seller of sellerType; let i = index">
                         <div class="mt-3">
-                          <input
-                            style="cursor: pointer"
-                            class="form-check-input"
-                            type="radio"
-                            name="sellerType"
-                            [id]="'sellerType' + i"
-                            (change)="getproductBySellerType(seller.id)"
-                          />
-                          <label
-                            class="form-check-label"
-                            [for]="'sellerType' + i"
-                          >
+                          <input style="cursor: pointer" class="form-check-input" type="radio" name="sellerType"
+                            [id]="'sellerType' + i" (change)="getproductBySellerType(seller.id)" />
+                          <label class="form-check-label" [for]="'sellerType' + i">
                             {{ seller.id }}
                           </label>
                         </div>
@@ -104,29 +85,14 @@
                   <div class="accordion-item mt-3">
                     <div class="accordion-header">
                       <h6>CONDITIONS</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon" />
                     </div>
                     <div class="p-3">
-                      <div
-                        class="form-check"
-                        *ngFor="let condtion of conditions; let i = index"
-                      >
+                      <div class="form-check" *ngFor="let condtion of conditions; let i = index">
                         <div class="mt-3">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="conditionType"
-                            [id]="'conditionType' + i"
-                            (change)="getProductCondition(condtion.id)"
-                          />
-                          <label
-                            class="form-check-label"
-                            [for]="'conditionType' + i"
-                          >
+                          <input class="form-check-input" type="radio" name="conditionType" [id]="'conditionType' + i"
+                            (change)="getProductCondition(condtion.id)" />
+                          <label class="form-check-label" [for]="'conditionType' + i">
                             {{ condtion.id }}
                           </label>
                         </div>
@@ -137,31 +103,14 @@
                   <div class="accordion-item mt-3">
                     <div class="accordion-header">
                       <h6>Location</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon" />
                     </div>
                     <div class="p-3">
-                      <div
-                        class="form-check"
-                        *ngFor="let location of locations; let i = index"
-                      >
+                      <div class="form-check" *ngFor="let location of locations; let i = index">
                         <div class="mt-3">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="locationType"
-                            placeholder="add location"
-                            [id]="'locationType' + i"
-                            (change)="getProductByLocation(location.id)"
-                          />
-                          <label
-                            class="form-check-label truncate"
-                            [title]="location.id"
-                            [for]="'locationType' + i"
-                          >
+                          <input class="form-check-input" type="radio" name="locationType" placeholder="add location"
+                            [id]="'locationType' + i" (change)="getProductByLocation(location.id)" />
+                          <label class="form-check-label truncate" [title]="location.id" [for]="'locationType' + i">
                             {{ location.id }}
                           </label>
                         </div>
@@ -169,30 +118,17 @@
                     </div>
                   </div>
                   <!-- location-miles -->
-                  <div
-                    class="accordion-item mt-3"
-                    *ngFor="let item of locationRadius; let i = index"
-                  >
+                  <div class="accordion-item mt-3" *ngFor="let item of locationRadius; let i = index">
                     <div class="accordion-header">
                       <h6 class="m-0 p-0">{{ item.title }}</h6>
                       <span class="m-0 p-0">{{ item.subTitle }}</span>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                        [ngClass]="{ rotate: isRadiusActive(i) }"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon"
+                        [ngClass]="{ rotate: isRadiusActive(i) }" />
                     </div>
-                    <div
-                      class="accordion-body"
-                      [ngClass]="{ active: isRadiusActive(i) }"
-                    >
+                    <div class="accordion-body" [ngClass]="{ active: isRadiusActive(i) }">
                       <div *ngIf="i === 0" class="mt-3">
                         <div class="progress-container">
-                          <div
-                            class="progress-bar"
-                            [style.width.%]="progress"
-                          ></div>
+                          <div class="progress-bar" [style.width.%]="progress"></div>
                         </div>
                         <!-- <div
                           class="progress-dot"
@@ -202,48 +138,25 @@
                     </div>
                   </div>
                   <!-- price -->
-                  <div
-                    class="accordion-item mt-3"
-                    *ngFor="let item of prices; let i = index"
-                  >
-                    <div
-                      class="accordion-header"
-                      (click)="togglePriceAccordion(i)"
-                    >
+                  <div class="accordion-item mt-3" *ngFor="let item of prices; let i = index">
+                    <div class="accordion-header" (click)="togglePriceAccordion(i)">
                       <h6 class="m-0 p-0">{{ item.title }}</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                        [ngClass]="{ rotate: isRadiusActive(i) }"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon"
+                        [ngClass]="{ rotate: isRadiusActive(i) }" />
                     </div>
 
-                    <div
-                      class="accordion-body"
-                      [ngClass]="{ active: isRadiusActive(i) }"
-                    >
+                    <div class="accordion-body" [ngClass]="{ active: isRadiusActive(i) }">
                       <div *ngIf="i === 0" class="mt-3">
                         <div class="row">
                           <div class="col-6 position-relative">
-                            <input
-                              type="text"
-                              class="form-control w-100 pr-5"
-                              [(ngModel)]="min_price"
-                              (change)="getAllProducts()"
-                              placeholder="Minimum Price"
-                            />
+                            <input type="text" class="form-control w-100 pr-5" [(ngModel)]="min_price"
+                              (change)="getAllProducts()" placeholder="Minimum Price" />
                             <span class="currency-label">AED</span>
                           </div>
 
                           <div class="col-6 position-relative">
-                            <input
-                              type="text"
-                              class="form-control w-100 pr-5"
-                              [(ngModel)]="max_price"
-                              (change)="getAllProducts()"
-                              placeholder="Maximum Price"
-                            />
+                            <input type="text" class="form-control w-100 pr-5" [(ngModel)]="max_price"
+                              (change)="getAllProducts()" placeholder="Maximum Price" />
                             <span class="currency-label">AED</span>
                           </div>
                         </div>
@@ -260,9 +173,7 @@
             <!-- right-side-end -->
             <h2 class="side-filter-title">{{ title }}</h2>
             <!-- mobile-result-found -->
-            <div
-              class="px-0 d-flex justify-content-between"
-            >
+            <div class="px-0 d-flex justify-content-between">
               <div class="result-found">
                 <h4 class="mr-2 mb-0">
                   {{ categories.length }}
@@ -271,46 +182,24 @@
               </div>
               <!-- for mobile view filter side btn -->
               <div class="col-2 d-block d-xl-none px-0">
-                <img
-                  (click)="openfilter()"
-                  src="assets/images/filter-icon.svg"
-                  class="filter-image sm-img4"
-                  alt=""
-                  style="width: 40px;float: right;"
-                />
+                <img (click)="openfilter()" src="assets/images/filter-icon.svg" class="filter-image sm-img4" alt=""
+                  style="width: 40px;float: right;" />
               </div>
             </div>
           </div>
 
           <!-- left-side-start -->
           <div class="col-xl-9">
-            <div
-              class="row sm-mt-0 align-items-center justify-content-between sm-pe-0"
-              style="padding-right: 30px"
-            >
+            <div class="row sm-mt-0 align-items-center justify-content-between sm-pe-0" style="padding-right: 30px">
               <!-- desktop-btn-auction-feature -->
               <div class="col-md-5 d-none d-xl-block">
-                <div
-                  class="btn-group w-100"
-                  role="group"
-                  aria-label="Basic example"
-                >
-                  <button
-                    type="button"
-                    class="btn btngroup p-2"
-                    [ngClass]="{ active: activeButton === 1 }"
-                    (click)="showAuction(1)"
-                    style="border: 1px solid #9ca3af"
-                  >
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btngroup p-2" [ngClass]="{ active: activeButton === 1 }"
+                    (click)="showAuction(1)" style="border: 1px solid #9ca3af">
                     Auction Products
                   </button>
-                  <button
-                    type="button"
-                    class="btn btngroup p-2"
-                    [ngClass]="{ active: activeButton === 2 }"
-                    (click)="showFeature(2)"
-                    style="border: 1px solid #9ca3af"
-                  >
+                  <button type="button" class="btn btngroup p-2" [ngClass]="{ active: activeButton === 2 }"
+                    (click)="showFeature(2)" style="border: 1px solid #9ca3af">
                     Feature Products
                   </button>
                 </div>
@@ -318,70 +207,32 @@
 
               <!-- mobile-btn-feature-auction -->
               <div class="col-xl-5 d-block d-xl-none mt-3">
-                <div
-                  class="btn-group w-100"
-                  role="group"
-                  aria-label="Basic example"
-                >
-                  <button
-                    type="button"
-                    class="btn btngroup p-2 sm-font"
-                    [ngClass]="{ active: activeButton === 1 }"
-                    (click)="showAuction(1)"
-                    style="border: 1px solid #9ca3af"
-                  >
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btngroup p-2 sm-font" [ngClass]="{ active: activeButton === 1 }"
+                    (click)="showAuction(1)" style="border: 1px solid #9ca3af">
                     Auction Products
                   </button>
-                  <button
-                    type="button"
-                    class="btn btngroup p-2 sm-font"
-                    [ngClass]="{ active: activeButton === 2 }"
-                    (click)="showFeature(2)"
-                    style="border: 1px solid #9ca3af"
-                  >
+                  <button type="button" class="btn btngroup p-2 sm-font" [ngClass]="{ active: activeButton === 2 }"
+                    (click)="showFeature(2)" style="border: 1px solid #9ca3af">
                     Feature Products
                   </button>
                 </div>
               </div>
               <!-- mobile view filter side-start  -->
-              <div
-                *ngIf="show"
-                style="background-color: #ffffff; flex: 1; margin: 0px 10px"
-                class="d-block d-xl-none"
-              >
+              <div *ngIf="show" style="background-color: #ffffff; flex: 1; margin: 0px 10px" class="d-block d-xl-none">
                 <div class="accordion">
-                  <div
-                    class="accordion-item mt-3"
-                    *ngFor="let category of subCategories; let i = index"
-                  >
+                  <div class="accordion-item mt-3" *ngFor="let category of subCategories; let i = index">
                     <div class="accordion-header" (click)="toggleAccordion(i)">
                       <h6>{{ category.title }}</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                        [ngClass]="{ rotate: isActive(i) }"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon"
+                        [ngClass]="{ rotate: isActive(i) }" />
                     </div>
-                    <div
-                      class="accordion-body"
-                      [ngClass]="{ active: isActive(i) }"
-                    >
-                      <div
-                        class="form-check"
-                        *ngFor="let content of getCategoryContents(category)"
-                      >
+                    <div class="accordion-body" [ngClass]="{ active: isActive(i) }">
+                      <div class="form-check" *ngFor="let content of getCategoryContents(category)">
                         <div class="mt-3">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="{{ category.id }}"
-                            [id]="category.id + content"
-                          />
-                          <label
-                            class="form-check-label"
-                            [for]="category.id + content"
-                          >
+                          <input class="form-check-input" type="radio" name="{{ category.id }}"
+                            [id]="category.id + content" />
+                          <label class="form-check-label" [for]="category.id + content">
                             {{ content }}
                           </label>
                         </div>
@@ -391,29 +242,14 @@
                   <div class="accordion-item mt-3">
                     <div class="accordion-header">
                       <h6>Sub Category</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon" />
                     </div>
                     <div class="accordion-body">
-                      <div
-                        class="form-check"
-                        *ngFor="let content of subCategoryService.subCatContent"
-                      >
+                      <div class="form-check" *ngFor="let content of subCategoryService.subCatContent">
                         <div class="mt-3">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="{{ content.name }}"
-                            (click)="getSubCatProducts(content)"
-                            [id]="content.name + content"
-                          />
-                          <label
-                            class="form-check-label"
-                            [for]="content.name + content"
-                          >
+                          <input class="form-check-input" type="radio" name="{{ content.name }}"
+                            (click)="getSubCatProducts(content)" [id]="content.name + content" />
+                          <label class="form-check-label" [for]="content.name + content">
                             {{ content.name }}
                           </label>
                         </div>
@@ -449,34 +285,18 @@
                             </div> -->
 
                 <div class="accordion">
-                  <div
-                    class="accordion-item mt-3"
-                    *ngFor="let item of locationRadius; let i = index"
-                  >
-                    <div
-                      class="accordion-header"
-                      (click)="toggleRadiusAccordion(i)"
-                    >
+                  <div class="accordion-item mt-3" *ngFor="let item of locationRadius; let i = index">
+                    <div class="accordion-header" (click)="toggleRadiusAccordion(i)">
                       <h6 class="m-0 p-0">{{ item.title }}</h6>
                       <span class="m-0 p-0">{{ item.subTitle }}</span>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                        [ngClass]="{ rotate: isRadiusActive(i) }"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon"
+                        [ngClass]="{ rotate: isRadiusActive(i) }" />
                     </div>
-                    <div
-                      class="accordion-body"
-                      [ngClass]="{ active: isRadiusActive(i) }"
-                    >
+                    <div class="accordion-body" [ngClass]="{ active: isRadiusActive(i) }">
                       <div *ngIf="i === 0" class="mt-3">
                         <div style="position: relative">
                           <div class="progress-container">
-                            <div
-                              class="progress-bar"
-                              [style.width.%]="progress"
-                            ></div>
+                            <div class="progress-bar" [style.width.%]="progress"></div>
                           </div>
                           <!-- <div
                             class="progress-dot"
@@ -489,52 +309,28 @@
                 </div>
 
                 <div class="accordion">
-                  <div
-                    class="accordion-item mt-3"
-                    *ngFor="let item of prices; let i = index"
-                  >
-                    <div
-                      class="accordion-header"
-                      (click)="togglePriceAccordion(i)"
-                    >
+                  <div class="accordion-item mt-3" *ngFor="let item of prices; let i = index">
+                    <div class="accordion-header" (click)="togglePriceAccordion(i)">
                       <h6 class="m-0 p-0">{{ item.title }}</h6>
-                      <img
-                        src="assets/images/up-chevron.png"
-                        alt="chevron"
-                        class="chevron-icon"
-                        [ngClass]="{ rotate: isRadiusActive(i) }"
-                      />
+                      <img src="assets/images/up-chevron.png" alt="chevron" class="chevron-icon"
+                        [ngClass]="{ rotate: isRadiusActive(i) }" />
                     </div>
-                    <div
-                      class="accordion-body"
-                      [ngClass]="{ active: isRadiusActive(i) }"
-                    >
+                    <div class="accordion-body" [ngClass]="{ active: isRadiusActive(i) }">
                       <div *ngIf="i === 0" class="mt-3">
                         <div class="row">
                           <div class="col-6 position-relative">
-                            <input
-                              type="text"
-                              class="form-control w-100 pr-5"
-                              placeholder="150"
-                            />
+                            <input type="text" class="form-control w-100 pr-5" placeholder="150" />
                             <span class="currency-label">USD</span>
                           </div>
 
                           <div class="col-6 position-relative">
-                            <input
-                              type="text"
-                              class="form-control w-100 pr-5"
-                              placeholder="670.00"
-                            />
+                            <input type="text" class="form-control w-100 pr-5" placeholder="670.00" />
                             <span class="currency-label">USD</span>
                           </div>
                         </div>
                         <div style="position: relative" class="mt-3">
                           <div class="progress-container">
-                            <div
-                              class="progress-bar"
-                              [style.width.%]="progress"
-                            ></div>
+                            <div class="progress-bar" [style.width.%]="progress"></div>
                           </div>
                           <!-- <div
                             class="progress-dot"
@@ -549,60 +345,38 @@
               <!-- mobile view filter side-end  -->
             </div>
             <!-- desktop view  -->
-            <div
-              class="sidebar d-none d-xl-block"
-              *ngIf="activeButton != 1 && activeButton != 2"
-            >
+            <div class="sidebar d-none d-xl-block" *ngIf="activeButton != 1 && activeButton != 2">
               <div class="content">
                 <div class="row mt-3">
                   @for (item of getDisplayedItems(); track item.id) {
                   <div class="col-xl-4">
-                    <div
-                      class="card mb-2 w-100 p-2 sm-p-1"
-                      style="border-radius: 10px !important"
-                    >
+                    <div class="card mb-2 w-100 p-2 sm-p-1" style="border-radius: 10px !important">
                       <div class="m-2 card border-0">
                         <!-- <img class="position-relative" [src]="'assets/catImage/' + item.imageName"> -->
-                        <img
-                          class="position-relative"
-                          style="height: 25vh; border-radius: 1vh"
-                          [src]="
+                        <img class="position-relative" style="height: 25vh; border-radius: 1vh" [src]="
                             item.photo && item.photo.length > 0
                               ? item.photo[0].src
                               : 'assets/images/default-img.jpg'
-                          "
-                        />
+                          " />
                         <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                        <div
-                          class="position-absolute bg-warning p-1 sm-cat-text"
-                          style="
+                        <div class="position-absolute bg-warning p-1 sm-cat-text" style="
                             border-radius: 5px;
                             top: 10px;
                             left: 5px;
                             cursor: pointer;
-                          "
-                        >
+                          ">
                           <span class="m-0 p-2">Special Offer</span>
                         </div>
-                        <div
-                          class="position-absolute"
-                          style="top: 10px; right: 5px; cursor: pointer"
-                        >
-                          <img
-                            src="assets/images/fav.png"
-                            class="sm-img2"
-                            alt=""
-                          />
+                        <div class="position-absolute" style="top: 10px; right: 5px; cursor: pointer">
+                          <img src="assets/images/fav.png" class="sm-img2" alt="" />
                         </div>
                         <div class="d-flex justify-content-between mt-2">
                           <!-- <b style="text-align: left;">{{item.price}}</b> -->
-                          <b
-                            [ngStyle]="{
+                          <b [ngStyle]="{
                               opacity: 'AED 2,44,5544' ? '1' : '0',
                               'text-align': 'left'
-                            }"
-                          >
+                            }">
                             AED 2,44,5544
                           </b>
 
@@ -613,190 +387,93 @@
                                                 </div> -->
                         </div>
                         <!-- <h6 class="ellipsis" style="text-align: left; font-size: 15px;">{{item.title}}</h6> -->
-                        <h5
-                          class="ellipsis mt-1"
-                          [ngStyle]="{ opacity: item.title ? '1' : '0' }"
-                          style="text-align: left; font-size: 15px"
-                        >
+                        <h5 class="ellipsis mt-1" [ngStyle]="{ opacity: item.title ? '1' : '0' }"
+                          style="text-align: left; font-size: 15px">
                           {{ item.title }}
                         </h5>
 
                         <div class="row mb-1 mt-1 d-flex">
                           <!-- Vahecils -->
-                          <div
-                            *ngIf="!(isVehicle(item) || isProperty(item))"
-                            style="text-align: left"
-                            class="col-6"
-                          >
-                            <img
-                              src="assets/images/date.svg"
-                              style="width: 12%; text-align: left"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{
+                          <div *ngIf="!(isVehicle(item) || isProperty(item))" style="text-align: left" class="col-6">
+                            <img src="assets/images/date.svg" style="width: 12%; text-align: left" alt="" />
+                            <span class="sm-cat-text3" [ngStyle]="{
                                 opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
+                              }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                            >
+                              ">
                               {{ item.created_at | date }}
                             </span>
                           </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-5"
-                          >
-                            <img
-                              src="assets/images/date.svg"
-                              style="width: 15%"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
+                          <div *ngIf="isVehicle(item)" style="text-align: left" class="col-5">
+                            <img src="assets/images/date.svg" style="width: 15%" alt="" /><span class="sm-cat-text3"
                               [ngStyle]="{
                                 opacity: item.created_at ? '1' : '0'
-                              }"
-                              style="
+                              }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                              >{{ item.created_at | date }}</span
-                            >
+                              ">{{ item.created_at | date }}</span>
                           </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-3"
-                          >
-                            <img
-                              src="assets/images/km.svg"
-                              style="width: 40%"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                              style="
+                          <div *ngIf="isVehicle(item)" style="text-align: left" class="col-3">
+                            <img src="assets/images/km.svg" style="width: 40%" alt="" />
+                            <span class="sm-cat-text3" [ngStyle]="{ opacity: Km(item) ? '1' : '0' }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                            >
+                              ">
                               {{ Km(item) }}
                             </span>
                           </div>
-                          <div
-                            *ngIf="isVehicle(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              src="assets/images/petrol.svg"
-                              style="width: 25%"
-                              alt=""
-                            />
-                            <span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: petrol(item) ? '1' : '0' }"
-                              style="
+                          <div *ngIf="isVehicle(item)" style="text-align: left" class="col-4">
+                            <img src="assets/images/petrol.svg" style="width: 25%" alt="" />
+                            <span class="sm-cat-text3" [ngStyle]="{ opacity: petrol(item) ? '1' : '0' }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                            >
+                              ">
                               {{ petrol(item) }}
                             </span>
                           </div>
                           <!-- Property -->
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bath.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                              style="
+                          <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                            <img style="width: 25%" src="assets/images/bath.png" alt="" /><span class="sm-cat-text3"
+                              [ngStyle]="{ opacity: bath(item) ? '1' : '0' }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                              >{{ bath(item) }}</span
-                            >
+                              ">{{ bath(item) }}</span>
                           </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/bed.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
-                              [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                              style="
+                          <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                            <img style="width: 25%" src="assets/images/bed.png" alt="" /><span class="sm-cat-text3"
+                              [ngStyle]="{ opacity: bed(item) ? '1' : '0' }" style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                              >{{ bed(item) }}</span
-                            >
+                              ">{{ bed(item) }}</span>
                           </div>
-                          <div
-                            *ngIf="isProperty(item)"
-                            style="text-align: left"
-                            class="col-4"
-                          >
-                            <img
-                              style="width: 25%"
-                              src="assets/images/dining.png"
-                              alt=""
-                            /><span
-                              class="sm-cat-text3"
+                          <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                            <img style="width: 25%" src="assets/images/dining.png" alt="" /><span class="sm-cat-text3"
                               style="
                                 margin-left: 5px;
                                 font-size: 1.5vh;
                                 color: #8e8e8e;
-                              "
-                            ></span>
+                              "></span>
                           </div>
                         </div>
                         <div class="d-flex">
-                          <img
-                            src="assets/images/location.svg"
-                            style="width: 7%"
-                            alt=""
-                          /><span
-                            style="
+                          <img src="assets/images/location.svg" style="width: 7%" alt="" /><span style="
                               font-size: 2.5vh;
                               margin-left: 5px;
                               text-overflow: ellipsis;
                               white-space: nowrap;
                               overflow: hidden;
                               color: #8e8e8e;
-                            "
-                            [ngStyle]="{ opacity: item.location ? '1' : '0' }"
-                            >{{ item.location }}</span
-                          >
+                            " [ngStyle]="{ opacity: item.location ? '1' : '0' }">{{ item.location }}</span>
                         </div>
-                        <a
-                          routerLink="/auctionProduct/{{ item.id }}"
-                          type="submit"
-                          class="bidButton p-2 mt-2"
-                          >Bid Now</a
-                        >
+                        <a routerLink="/auctionProduct/{{ item.id }}" type="submit" class="bidButton p-2 mt-2">Bid
+                          Now</a>
                       </div>
                     </div>
                   </div>
@@ -805,267 +482,135 @@
               </div>
             </div>
             <!-- desktop view auction product start -->
-            <div
-              class="sidebar mt-3 d-none d-xl-block"
-              *ngIf="activeButton === 1"
-            >
+            <div class="sidebar mt-3 d-none d-xl-block" *ngIf="activeButton === 1">
               <div class="content border-2">
                 <div class="row mt-3">
-                  <div
-                    class="col-xl-4"
-                    *ngFor="let item of auction; trackBy: trackById"
-                  >
+                  <div class="col-xl-4" *ngFor="let item of auction; trackBy: trackById">
                     <!-- card-link-start -->
-                    <a
-                      style="text-decoration: none; color: #1e293b"
-                      routerLink="/auction-product-detail/{{ item.id }}/{{
+                    <a style="text-decoration: none; color: #1e293b" routerLink="/auction-product-detail/{{ item.id }}/{{
                         item.slug
-                      }}"
-                    >
-                      <div
-                        class="card mb-2 w-100 p-2"
-                        style="border-radius: 10px !important"
-                      >
+                      }}">
+                      <div class="card mb-2 w-100 p-2" style="border-radius: 10px !important">
                         <div class="m-2 card border-0">
-                          <img
-                            class="position-relative"
-                            style="height: 25vh; border-radius: 1vh"
-                            [src]="
+                          <img class="position-relative" style="height: 25vh; border-radius: 1vh" [src]="
                               item.photo && item.photo.length > 0
                                 ? item.photo[0].src
                                 : 'assets/images/default-img.jpg'
-                            "
-                          />
+                            " />
                           <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                          <div
-                            class="position-absolute bg-warning p-1"
-                            style="border-radius: 5px; top: 10px; left: 5px"
-                          >
+                          <div class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px">
                             <!-- <span class="m-0 p-2">Special Offer</span> -->
                           </div>
-                          <div
-                            class="position-absolute"
-                            style="top: 10px; right: 5px"
-                          >
-                            <img
-                              *ngIf="item.wishlist.length <= 0"
-                              src="assets/images/fav.png"
-                              alt=""
-                              (click)="addWishLst(item)"
-                            />
-                            <img
-                              *ngIf="item.wishlist.length > 0"
-                              src="assets/images/fav-added.png"
-                              alt=""
-                              (click)="removeWishLst(item)"
-                            />
+                          <div class="position-absolute" style="top: 10px; right: 5px">
+                            <img *ngIf="item.wishlist.length <= 0" src="assets/images/fav.png" alt=""
+                              (click)="addWishLst(item)" />
+                            <img *ngIf="item.wishlist.length > 0" src="assets/images/fav-added.png" alt="" />
                           </div>
                           <div class="d-flex justify-content-between mt-2">
                             <b style="text-align: left">{{ item.price }}</b>
-                            <div
-                              style="
+                            <div style="
                                 background-color: #ffd33c;
                                 border-radius: 5px;
-                              "
-                              *ngIf="
+                              " *ngIf="
                                 item.calculateRemaningTime &&
                                 item.calculateRemaningTime != ''
-                              "
-                            >
+                              ">
                               <span class="p-1">{{
                                 item.calculateRemaningTime
-                              }}</span>
+                                }}</span>
                             </div>
                           </div>
-                          <span
-                            class="ellipsis"
-                            style="text-align: left; font-size: 15px"
-                            >{{ item.title }}</span
-                          >
+                          <span class="ellipsis" style="text-align: left; font-size: 15px">{{ item.title }}</span>
                           <div class="row mb-1 mt-1 d-flex">
                             <!-- Vahecils -->
-                            <div
-                              *ngIf="!(isVehicle(item) || isProperty(item))"
-                              style="text-align: left"
-                              class="col-6"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 12%; text-align: left"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="!(isVehicle(item) || isProperty(item))" style="text-align: left" class="col-6">
+                              <img src="assets/images/date.svg" style="width: 12%; text-align: left" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ item.created_at | date }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-5"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 15%"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-5">
+                              <img src="assets/images/date.svg" style="width: 15%" alt="" /><span class="sm-cat-text3"
                                 [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ item.created_at | date }}</span
-                              >
+                                ">{{ item.created_at | date }}</span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-3"
-                            >
-                              <img
-                                src="assets/images/km.svg"
-                                style="width: 40%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-3">
+                              <img src="assets/images/km.svg" style="width: 40%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{ opacity: Km(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ Km(item) }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                src="assets/images/petrol.svg"
-                                style="width: 25%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-4">
+                              <img src="assets/images/petrol.svg" style="width: 25%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: petrol(item) ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ petrol(item) }}
                               </span>
                             </div>
                             <!-- Property -->
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bath.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bath.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bath(item) }}</span
-                              >
+                                ">{{ bath(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bed.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bed.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bed(item) }}</span
-                              >
+                                ">{{ bed(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/dining.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/dining.png" alt="" /><span class="sm-cat-text3"
                                 style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              ></span>
+                                "></span>
                             </div>
                           </div>
                           <div class="d-flex">
-                            <img
-                              src="assets/images/location.svg"
-                              style="width: 8%"
-                              alt=""
-                            /><span
-                              style="
+                            <img src="assets/images/location.svg" style="width: 8%" alt="" /><span style="
                                 font-size: 1.7vh;
                                 margin-left: 5px;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
                                 overflow: hidden;
-                              "
-                              >{{ item.location }}</span
-                            >
+                              ">{{ item.location }}</span>
                           </div>
                           <!-- auction-product-detail/:id/:name -->
-                          <a
-                            routerLink="/auction-product-detail/{{ item.id }}/{{
+                          <a routerLink="/auction-product-detail/{{ item.id }}/{{
                               item.slug
-                            }}"
-                            [ngStyle]="{
+                            }}" [ngStyle]="{
                            'visibility': item.IsBit && item.IsBit != '' ? 'visible' : 'hidden',
                            'opacity': item.IsBit && item.IsBit != '' ? '1' : '0',
-                          }"
-                            type="submit"
-                            class="bidButton p-2 mt-3 border-2"
-                            >Bid Now</a
-                          >
+                          }" type="submit" class="bidButton p-2 mt-3 border-2">Bid Now</a>
                         </div>
                       </div>
                     </a>
@@ -1076,239 +621,118 @@
             </div>
             <!-- desktop view auction product  end-->
             <!-- desktop view feature product  start-->
-            <div
-              class="sidebar mt-3 d-none d-xl-block"
-              *ngIf="activeButton === 2"
-            >
+            <div class="sidebar mt-3 d-none d-xl-block" *ngIf="activeButton === 2">
               <div class="content">
                 <div class="row mt-3">
-                  <div
-                    class="col-xl-4"
-                    *ngFor="let item of feature; trackBy: trackById"
-                  >
-                    <a
-                      style="text-decoration: none; color: #1e293b"
-                      routerLink="/product-detail/{{ item.id }}/{{ item.slug }}"
-                    >
-                      <div
-                        class="card mb-2 p-2 w-100 sm-card-height"
-                        style="height: 44vh; border-radius: 10px !important"
-                      >
+                  <div class="col-xl-4" *ngFor="let item of feature; trackBy: trackById">
+                    <a style="text-decoration: none; color: #1e293b"
+                      routerLink="/product-detail/{{ item.id }}/{{ item.slug }}">
+                      <div class="card mb-2 p-2 w-100 sm-card-height"
+                        style="height: 44vh; border-radius: 10px !important">
                         <div class="m-2 card border-0">
-                          <img
-                            class="position-relative"
-                            style="height: 25vh; border-radius: 1vh"
-                            [src]="
+                          <img class="position-relative" style="height: 25vh; border-radius: 1vh" [src]="
                               item.photo && item.photo.length > 0
                                 ? item.photo[0].src
                                 : 'assets/images/default-img.jpg'
-                            "
-                          />
+                            " />
                           <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                     *ngIf="item.photo && item.video.length > 0"
                                                     [src]="item.video[0].src"> -->
-                          <div
-                            class="position-absolute bg-warning p-1"
-                            style="border-radius: 5px; top: 10px; left: 5px"
-                          >
+                          <div class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px">
                             <!-- <span class="m-0 p-2">Special Offer</span> -->
                           </div>
-                          <div
-                            class="position-absolute"
-                            style="top: 10px; right: 5px"
-                          >
-                            <img
-                              *ngIf="item.wishlist.length <= 0"
-                              src="assets/images/fav.png"
-                              alt=""
-                              (click)="addWishLst(item)"
-                            />
-                            <img
-                              *ngIf="item.wishlist.length > 0"
-                              src="assets/images/fav-added.png"
-                              alt=""
-                              (click)="removeWishLst(item)"
-                            />
+                          <div class="position-absolute" style="top: 10px; right: 5px">
+                            <img *ngIf="item.wishlist.length <= 0" src="assets/images/fav.png" alt=""
+                              (click)="addWishLst(item)" />
+                            <img *ngIf="item.wishlist.length > 0" src="assets/images/fav-added.png" alt="" />
                           </div>
                           <b style="text-align: left; margin-top: 5px">{{
                             item.price
-                          }}</b>
-                          <span
-                            class="ellipsis"
-                            style="text-align: left; font-size: 15px"
-                            >{{ item.title }}</span
-                          >
+                            }}</b>
+                          <span class="ellipsis" style="text-align: left; font-size: 15px">{{ item.title }}</span>
                           <div class="row mb-1 mt-1 d-flex">
                             <!-- Vahecils -->
-                            <div
-                              *ngIf="!(isVehicle(item) || isProperty(item))"
-                              style="text-align: left"
-                              class="col-6"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 12%; text-align: left"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="!(isVehicle(item) || isProperty(item))" style="text-align: left" class="col-6">
+                              <img src="assets/images/date.svg" style="width: 12%; text-align: left" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ item.created_at | date }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-5"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 15%"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-5">
+                              <img src="assets/images/date.svg" style="width: 15%" alt="" /><span class="sm-cat-text3"
                                 [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ item.created_at | date }}</span
-                              >
+                                ">{{ item.created_at | date }}</span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-3"
-                            >
-                              <img
-                                src="assets/images/km.svg"
-                                style="width: 40%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-3">
+                              <img src="assets/images/km.svg" style="width: 40%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{ opacity: Km(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ Km(item) }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                src="assets/images/petrol.svg"
-                                style="width: 25%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-4">
+                              <img src="assets/images/petrol.svg" style="width: 25%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: petrol(item) ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ petrol(item) }}
                               </span>
                             </div>
                             <!-- Property -->
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bath.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bath.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bath(item) }}</span
-                              >
+                                ">{{ bath(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bed.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bed.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bed(item) }}</span
-                              >
+                                ">{{ bed(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/dining.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/dining.png" alt="" /><span class="sm-cat-text3"
                                 style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              ></span>
+                                "></span>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col-12">
                               <div class="d-flex">
-                                <img
-                                  src="assets/images/location.svg"
-                                  style="width: 8%"
-                                  alt=""
-                                /><span
-                                  style="
+                                <img src="assets/images/location.svg" style="width: 8%" alt="" /><span style="
                                     font-size: 1.7vh;
                                     margin-left: 5px;
                                     text-overflow: ellipsis;
                                     white-space: nowrap;
                                     overflow: hidden;
-                                  "
-                                  >{{ item.location }}</span
-                                >
+                                  ">{{ item.location }}</span>
                               </div>
                             </div>
                           </div>
@@ -1324,264 +748,135 @@
             <div class="mt-5 d-block d-xl-none" *ngIf="activeButton === 1">
               <div class="content">
                 <div class="row mt-3">
-                  <div
-                    class="col-xl-4 col-md-4"
-                    *ngFor="let item of auction; trackBy: trackById"
-                  >
-                    <a
-                      style="text-decoration: none; color: #1e293b"
-                      routerLink="/auction-product-detail/{{ item.id }}/{{
+                  <div class="col-xl-4 col-md-4" *ngFor="let item of auction; trackBy: trackById">
+                    <a style="text-decoration: none; color: #1e293b" routerLink="/auction-product-detail/{{ item.id }}/{{
                         item.slug
-                      }}"
-                    >
-                      <div
-                        class="card mb-2 w-100 p-2"
-                        style="border-radius: 10px !important"
-                      >
+                      }}">
+                      <div class="card mb-2 w-100 p-2" style="border-radius: 10px !important">
                         <div class="m-2 card border-0">
-                          <img
-                            class="position-relative sm-card-h"
-                            style="height: 13vh; border-radius: 1vh"
-                            [src]="
+                          <img class="position-relative sm-card-h" style="height: 13vh; border-radius: 1vh" [src]="
                               item.photo && item.photo.length > 0
                                 ? item.photo[0].src
                                 : 'assets/images/default-img.jpg'
-                            "
-                          />
+                            " />
                           <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                          <div
-                            class="position-absolute bg-warning p-1"
-                            style="border-radius: 5px; top: 10px; left: 5px"
-                          >
+                          <div class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px">
                             <!-- <span class="m-0 p-2">Special Offer</span> -->
                           </div>
-                          <div
-                            class="position-absolute"
-                            style="top: 10px; right: 5px"
-                          >
-                            <img
-                              *ngIf="item.wishlist.length <= 0"
-                              src="assets/images/fav.png"
-                              alt=""
-                              (click)="addWishLst(item)"
-                            />
-                            <img
-                              *ngIf="item.wishlist.length > 0"
-                              src="assets/images/fav-added.png"
-                              alt=""
-                              (click)="removeWishLst(item)"
-                            />
+                          <div class="position-absolute" style="top: 10px; right: 5px">
+                            <img *ngIf="item.wishlist.length <= 0" src="assets/images/fav.png" alt=""
+                              (click)="addWishLst(item)" />
+                            <img *ngIf="item.wishlist.length > 0" src="assets/images/fav-added.png" alt="" />
                           </div>
                           <div class="d-flex justify-content-between mt-2">
                             <b style="text-align: left">{{ item.price }}</b>
-                            <div
-                              style="
+                            <div style="
                                 background-color: #ffd33c;
                                 border-radius: 5px;
-                              "
-                              *ngIf="
+                              " *ngIf="
                                 item.calculateRemaningTime &&
                                 item.calculateRemaningTime != ''
-                              "
-                            >
+                              ">
                               <span class="p-1">{{
                                 item.calculateRemaningTime
-                              }}</span>
+                                }}</span>
                             </div>
                           </div>
-                          <span
-                            class="ellipsis sm-cat-text4"
-                            style="text-align: left; font-size: 15px"
-                            >{{ item.title }}</span
-                          >
+                          <span class="ellipsis sm-cat-text4" style="text-align: left; font-size: 15px">{{ item.title
+                            }}</span>
                           <div class="row mb-1 mt-1 d-flex">
                             <!-- Vahecils -->
-                            <div
-                              *ngIf="!(isVehicle(item) || isProperty(item))"
-                              style="text-align: left"
-                              class="col-6"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 12%; text-align: left"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="!(isVehicle(item) || isProperty(item))" style="text-align: left" class="col-6">
+                              <img src="assets/images/date.svg" style="width: 12%; text-align: left" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ item.created_at | date }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-5"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 15%"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-5">
+                              <img src="assets/images/date.svg" style="width: 15%" alt="" /><span class="sm-cat-text3"
                                 [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ item.created_at | date }}</span
-                              >
+                                ">{{ item.created_at | date }}</span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-3"
-                            >
-                              <img
-                                src="assets/images/km.svg"
-                                style="width: 40%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-3">
+                              <img src="assets/images/km.svg" style="width: 40%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{ opacity: Km(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ Km(item) }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                src="assets/images/petrol.svg"
-                                style="width: 25%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-4">
+                              <img src="assets/images/petrol.svg" style="width: 25%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: petrol(item) ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ petrol(item) }}
                               </span>
                             </div>
                             <!-- Property -->
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bath.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bath.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bath(item) }}</span
-                              >
+                                ">{{ bath(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bed.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bed.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bed(item) }}</span
-                              >
+                                ">{{ bed(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/dining.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/dining.png" alt="" /><span class="sm-cat-text3"
                                 style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              ></span>
+                                "></span>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col-12">
                               <div class="d-flex">
-                                <img
-                                  src="assets/images/location.svg"
-                                  style="width: 10%"
-                                  alt=""
-                                /><span
-                                  class="sm-cat-text4"
-                                  style="
+                                <img src="assets/images/location.svg" style="width: 10%" alt="" /><span
+                                  class="sm-cat-text4" style="
                                     font-size: 1.7vh;
                                     color: 88eE8E;
                                     margin-left: 5px;
                                     text-overflow: ellipsis;
                                     white-space: nowrap;
                                     overflow: hidden;
-                                  "
-                                  >{{ item.location }}</span
-                                >
+                                  ">{{ item.location }}</span>
                               </div>
                             </div>
                           </div>
-                          <a
-                            routerLink="/auctionProduct/{{ item.id }}"
-                            type="submit"
-                            [ngStyle]="{
+                          <a routerLink="/auctionProduct/{{ item.id }}" type="submit" [ngStyle]="{
                                                   'visibility': item.IsBit && item.IsBit != '' ? 'visible' : 'hidden',
                                                   'opacity': item.IsBit && item.IsBit != '' ? '1' : '0',
-                                                }"
-                            class="bidButton p-2 mt-2 sm"
-                            style="font-size: 14px"
-                            >Bid Now</a
-                          >
+                                                }" class="bidButton p-2 mt-2 sm" style="font-size: 14px">Bid Now</a>
                         </div>
                       </div>
                     </a>
@@ -1594,52 +889,26 @@
             <div class="mt-5 d-block d-xl-none" *ngIf="activeButton === 2">
               <div class="content">
                 <div class="row mt-3">
-                  <div
-                    class="col-xl-4 col-md-4"
-                    *ngFor="let item of feature; trackBy: trackById"
-                  >
-                    <a
-                      style="text-decoration: none; color: #1e293b"
-                      routerLink="/product-detail/{{ item.id }}/{{ item.slug }}"
-                    >
-                      <div
-                        class="card mb-2 w-100 p-2"
-                        style="border-radius: 10px !important"
-                      >
+                  <div class="col-xl-4 col-md-4" *ngFor="let item of feature; trackBy: trackById">
+                    <a style="text-decoration: none; color: #1e293b"
+                      routerLink="/product-detail/{{ item.id }}/{{ item.slug }}">
+                      <div class="card mb-2 w-100 p-2" style="border-radius: 10px !important">
                         <div class="m-2 card border-0">
-                          <img
-                            class="position-relative"
-                            style="height: 13vh; border-radius: 1vh"
-                            [src]="
+                          <img class="position-relative" style="height: 13vh; border-radius: 1vh" [src]="
                               item.photo && item.photo.length > 0
                                 ? item.photo[0].src
                                 : 'assets/images/default-img.jpg'
-                            "
-                          />
+                            " />
                           <!-- <img class="position-relative" style="height: 25vh; border-radius: 1vh;"
                                                 *ngIf="item.photo && item.video.length > 0" [src]="item.video[0].src"> -->
-                          <div
-                            class="position-absolute bg-warning p-1"
-                            style="border-radius: 5px; top: 10px; left: 5px"
-                          >
+                          <div class="position-absolute bg-warning p-1"
+                            style="border-radius: 5px; top: 10px; left: 5px">
                             <!-- <span class="m-0 p-2">Special Offer</span> -->
                           </div>
-                          <div
-                            class="position-absolute"
-                            style="top: 10px; right: 5px"
-                          >
-                            <img
-                              *ngIf="item.wishlist.length <= 0"
-                              src="assets/images/fav.png"
-                              alt=""
-                              (click)="addWishLst(item)"
-                            />
-                            <img
-                              *ngIf="item.wishlist.length > 0"
-                              src="assets/images/fav-added.png"
-                              alt=""
-                              (click)="removeWishLst(item)"
-                            />
+                          <div class="position-absolute" style="top: 10px; right: 5px">
+                            <img *ngIf="item.wishlist.length <= 0" src="assets/images/fav.png" alt=""
+                              (click)="addWishLst(item)" />
+                            <img *ngIf="item.wishlist.length > 0" src="assets/images/fav-added.png" alt="" />
                           </div>
                           <div class="d-flex justify-content-between mt-2">
                             <b style="text-align: left">{{ item.price }}</b>
@@ -1647,184 +916,92 @@
                                                     <span class="p-1 sm-cat-text3">01: 23s remaining</span>
                                                 </div> -->
                           </div>
-                          <span
-                            class="ellipsis sm-cat-text4"
-                            style="text-align: left; font-size: 15px"
-                            >{{ item.title }}</span
-                          >
+                          <span class="ellipsis sm-cat-text4" style="text-align: left; font-size: 15px">{{ item.title
+                            }}</span>
                           <div class="row mb-1 mt-1 d-flex">
                             <!-- Vahecils -->
-                            <div
-                              *ngIf="!(isVehicle(item) || isProperty(item))"
-                              style="text-align: left"
-                              class="col-6"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 12%; text-align: left"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="!(isVehicle(item) || isProperty(item))" style="text-align: left" class="col-6">
+                              <img src="assets/images/date.svg" style="width: 12%; text-align: left" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ item.created_at | date }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-5"
-                            >
-                              <img
-                                src="assets/images/date.svg"
-                                style="width: 15%"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-5">
+                              <img src="assets/images/date.svg" style="width: 15%" alt="" /><span class="sm-cat-text3"
                                 [ngStyle]="{
                                   opacity: item.created_at ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ item.created_at | date }}</span
-                              >
+                                ">{{ item.created_at | date }}</span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-3"
-                            >
-                              <img
-                                src="assets/images/km.svg"
-                                style="width: 40%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: Km(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-3">
+                              <img src="assets/images/km.svg" style="width: 40%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{ opacity: Km(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ Km(item) }}
                               </span>
                             </div>
-                            <div
-                              *ngIf="isVehicle(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                src="assets/images/petrol.svg"
-                                style="width: 25%"
-                                alt=""
-                              />
-                              <span
-                                class="sm-cat-text3"
-                                [ngStyle]="{
+                            <div *ngIf="isVehicle(item)" style="text-align: left" class="col-4">
+                              <img src="assets/images/petrol.svg" style="width: 25%" alt="" />
+                              <span class="sm-cat-text3" [ngStyle]="{
                                   opacity: petrol(item) ? '1' : '0'
-                                }"
-                                style="
+                                }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              >
+                                ">
                                 {{ petrol(item) }}
                               </span>
                             </div>
                             <!-- Property -->
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bath.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bath.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bath(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bath(item) }}</span
-                              >
+                                ">{{ bath(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/bed.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
-                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }"
-                                style="
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/bed.png" alt="" /><span class="sm-cat-text3"
+                                [ngStyle]="{ opacity: bed(item) ? '1' : '0' }" style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                                >{{ bed(item) }}</span
-                              >
+                                ">{{ bed(item) }}</span>
                             </div>
-                            <div
-                              *ngIf="isProperty(item)"
-                              style="text-align: left"
-                              class="col-4"
-                            >
-                              <img
-                                style="width: 25%"
-                                src="assets/images/dining.png"
-                                alt=""
-                              /><span
-                                class="sm-cat-text3"
+                            <div *ngIf="isProperty(item)" style="text-align: left" class="col-4">
+                              <img style="width: 25%" src="assets/images/dining.png" alt="" /><span class="sm-cat-text3"
                                 style="
                                   margin-left: 5px;
                                   font-size: 1.5vh;
                                   color: #8e8e8e;
-                                "
-                              ></span>
+                                "></span>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col-12">
                               <div class="d-flex">
-                                <img
-                                  src="assets/images/location.svg"
-                                  style="width: 10%"
-                                  alt=""
-                                /><span
-                                  class="sm-cat-text4"
-                                  style="
+                                <img src="assets/images/location.svg" style="width: 10%" alt="" /><span
+                                  class="sm-cat-text4" style="
                                     font-size: 1.7vh;
                                     color: 88eE8E;
                                     margin-left: 5px;
                                     text-overflow: ellipsis;
                                     white-space: nowrap;
                                     overflow: hidden;
-                                  "
-                                  >{{ item.location }}</span
-                                >
+                                  ">{{ item.location }}</span>
                               </div>
                             </div>
                           </div>
@@ -1841,114 +1018,58 @@
               <div class="row mt-5">
                 @for (item of getDisplayedItems(); track item.id) {
                 <div class="col-6">
-                  <div
-                    class="card mb-2 w-100 p-2 sm-p-1"
-                    style="border-radius: 10px !important"
-                  >
+                  <div class="card mb-2 w-100 p-2 sm-p-1" style="border-radius: 10px !important">
                     <div class="m-2 card border-0">
-                      <img
-                        class="position-relative"
-                        [src]="'assets/catImage/' + item.imageName"
-                      />
-                      <div
-                        class="position-absolute bg-warning p-1 sm-cat-text"
-                        style="
+                      <img class="position-relative" [src]="'assets/catImage/' + item.imageName" />
+                      <div class="position-absolute bg-warning p-1 sm-cat-text" style="
                           border-radius: 5px;
                           top: 10px;
                           left: 5px;
                           cursor: pointer;
-                        "
-                      >
+                        ">
                         <span class="m-0 p-2">Special Offer</span>
                       </div>
-                      <div
-                        class="position-absolute"
-                        style="top: 10px; right: 5px; cursor: pointer"
-                      >
-                        <img
-                          src="assets/images/fav.png"
-                          class="sm-img2"
-                          alt=""
-                        />
+                      <div class="position-absolute" style="top: 10px; right: 5px; cursor: pointer">
+                        <img src="assets/images/fav.png" class="sm-img2" alt="" />
                       </div>
-                      <div
-                        class="d-flex justify-content-between mt-2 sm-cat-text"
-                      >
+                      <div class="d-flex justify-content-between mt-2 sm-cat-text">
                         <b style="text-align: left">{{ item.price }}</b>
                         <!-- <div style="background-color: #FFD33C; border-radius: 5px;">
                                                 <span class="p-1">01: 23s remaining</span>
                                             </div> -->
                       </div>
-                      <span
-                        class="ellipsis sm-cat-text1"
-                        style="text-align: left; font-size: 15px"
-                        >{{ item.title }}</span
-                      >
+                      <span class="ellipsis sm-cat-text1" style="text-align: left; font-size: 15px">{{ item.title
+                        }}</span>
                       <div class="p-2 d-flex" style="font-size: 12px">
-                        <div
-                          class="d-flex align-items-center sm-cat-text1"
-                          style="margin-right: 15px"
-                        >
-                          <img
-                            src="assets/images/date.svg"
-                            class="w-25"
-                            alt=""
-                          /><span style="margin-left: 5px">{{
+                        <div class="d-flex align-items-center sm-cat-text1" style="margin-right: 15px">
+                          <img src="assets/images/date.svg" class="w-25" alt="" /><span style="margin-left: 5px">{{
                             item.year
-                          }}</span>
+                            }}</span>
                         </div>
-                        <div
-                          class="d-flex align-items-center sm-cat-text1"
-                          style="margin-right: 15px"
-                        >
-                          <img
-                            src="assets/images/km.svg"
-                            class="w-25"
-                            alt=""
-                          /><span style="margin-left: 5px">{{ item.km }}</span>
+                        <div class="d-flex align-items-center sm-cat-text1" style="margin-right: 15px">
+                          <img src="assets/images/km.svg" class="w-25" alt="" /><span style="margin-left: 5px">{{
+                            item.km }}</span>
                         </div>
-                        <div
-                          class="d-flex align-items-center sm-cat-text1"
-                          style="margin-right: 15px"
-                        >
-                          <img
-                            src="assets/images/petrol.svg"
-                            class="w-25"
-                            alt=""
-                          /><span
-                            class="sm-cat-text1"
-                            style="margin-left: 5px"
-                            >{{ item.petrol }}</span
-                          >
+                        <div class="d-flex align-items-center sm-cat-text1" style="margin-right: 15px">
+                          <img src="assets/images/petrol.svg" class="w-25" alt="" /><span class="sm-cat-text1"
+                            style="margin-left: 5px">{{ item.petrol }}</span>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-12">
                           <div class="d-flex">
-                            <img
-                              src="assets/images/location.svg"
-                              style="width: 8%"
-                              alt=""
-                            /><span
-                              class="sm-cat-text1"
+                            <img src="assets/images/location.svg" style="width: 8%" alt="" /><span class="sm-cat-text1"
                               style="
                                 font-size: 1.7vh;
                                 margin-left: 5px;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
                                 overflow: hidden;
-                              "
-                              >{{ item.location }}</span
-                            >
+                              ">{{ item.location }}</span>
                           </div>
                         </div>
                       </div>
-                      <a
-                        routerLink="/productDetails"
-                        type="submit"
-                        class="bidButton p-2 mt-3 sm-cat-text1"
-                        >Bid Now</a
-                      >
+                      <a routerLink="/productDetails" type="submit" class="bidButton p-2 mt-3 sm-cat-text1">Bid Now</a>
                     </div>
                   </div>
                 </div>

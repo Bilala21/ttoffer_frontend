@@ -66,11 +66,7 @@ export class BodyComponent implements OnDestroy {
       this.countdownSubscriptions.push(subscription);
     });
   }
-
-
-
-
-
+  
   ngOnDestroy(): void {
     this.countdownSubscriptions.forEach((subscription) => subscription.unsubscribe());
   }

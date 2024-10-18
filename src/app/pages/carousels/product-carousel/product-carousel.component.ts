@@ -28,13 +28,13 @@ export class ProductCarouselComponent {
     this.selectedImage = image;
   }
   ngOnInit():void{
-    debugger
+    
     // this.nextImage();
    
     
   }
   ngOnChanges() {
-    debugger
+    
     this.media = this.photo?.length > 0 ? this.photo : this.video;
     console.log("media",this.media)
     this.selectedImage = this.media[0];

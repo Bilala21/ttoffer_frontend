@@ -7,6 +7,7 @@ interface AppState {
   categories: any[];
   isLoggedInd: boolean;
   wishListItems: number[]; // Assuming wishlist items are identified by their IDs
+  currentUser: any
 }
 
 @Injectable({
@@ -18,13 +19,18 @@ export class GlobalStateService {
     users: [],
     categories: [],
     isLoggedInd: false,
-    wishListItems: [] // Corrected spelling from whishListItems to wishListItems
+    wishListItems: [],
+    currentUser: {}
   };
 
   private stateSubject = new BehaviorSubject<AppState>(this.initialState);
   currentState = this.stateSubject.asObservable();
 
-  constructor() { }
+  constructor() {
+    const currentUser = JSON.parse(localStorage.getItem("key") || '{}');
+    const currentState = this.stateSubject.value;
+    this.stateSubject.next({ ...currentState, currentUser: currentUser });
+  }
 
   updateTab(index: number, tabName: string) {
     const currentState = this.stateSubject.value;
@@ -78,4 +84,5 @@ export class GlobalStateService {
     const currentState = this.stateSubject.value;
     this.stateSubject.next({ ...currentState, ...newState });
   }
+  
 }
