@@ -120,7 +120,7 @@ export class ProfilePageComponent {
   isEditPost: boolean = false;
   subCategory: any = [];
   categories: any = [];
-
+  isLoading:boolean=false;
   showNotif() {
     this.showNotification = true;
   }
@@ -610,7 +610,7 @@ export class ProfilePageComponent {
     this.categoryForm = this.fb.group({});
   }
   ngOnInit() {
-    debugger
+    
     let currentTab: any = localStorage.getItem('currentTab');
 
 // Check if currentTab is explicitly null or empty and assign a default value if needed
@@ -675,7 +675,7 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
     );
   }
         initializeForm() {
-    debugger
+    
     // Initialize form controls dynamically based on the selected category
     const fields = this.categoryFields[this.selectedCategoryId];
     fields.forEach(field => {
@@ -1443,7 +1443,7 @@ showfor(){
 
     try {
       const token = localStorage.getItem('authToken');
-      this.loading = true;
+      this.isLoading = true;
 
       // Fetch request to send formData
       const response = await fetch(
@@ -1565,6 +1565,7 @@ showfor(){
         .addProductLastStep(input)
         .toPromise();
         this.toastr.success('Product is live now!', 'Success');
+        this.isLoading=false
         this.router.navigate(['']);
     } catch (error) {
       this.handleError(error);

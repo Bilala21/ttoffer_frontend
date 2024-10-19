@@ -54,7 +54,7 @@ export class TokenizedInterceptor implements HttpInterceptor {
           // if ((error.status === 500 || error.status === 0) && !this.isErrorShown) {
             this.isErrorShown = true;
             // this.router.navigate(['/',this.languageCountry,this.componentRoutes.ServerError]);
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
           // }
           return throwError(() => error);
         })

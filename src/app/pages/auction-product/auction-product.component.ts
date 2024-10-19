@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { SharedModule } from "../../shared/shared.module";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-auction-product',
@@ -32,6 +33,7 @@ import { SharedModule } from "../../shared/shared.module";
 ]
 })
 export class AuctionProductComponent {
+  dummy =[{src:"/assets/images/no-img.png"}]
   promotionBanners: any = [
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
@@ -41,11 +43,10 @@ export class AuctionProductComponent {
   allowedToBid: boolean = false;
   isVerified:boolean=false;
   profileImg: any[] = [
-    { elipsImg1: 'assets/images/Ellipse1.svg', elipsImg2: 'assets/images/Ellipse2.svg', elipsImg3: 'assets/images/Ellipse3.svg', elipsImg4: 'assets/images/Ellipse4.svg', subHeading1: 'Sale Faster', subHeading2: 'Mark As Sold' }
   ]
 
   liveAuction: any[] = []
-  productId: any = '1027';
+  productId: any ;
   auctionProduct: any[] = [];
   auctionProductTemp: any[] = [];
   currentUserid: number = 0
@@ -58,17 +59,19 @@ export class AuctionProductComponent {
   loading = false;
   calculateRemaningTime!:string;
   IsBit:boolean=false;
+  priceOptions!: number[];
   constructor(
     private route: ActivatedRoute,
     private mainServices: MainServicesService,
     private extension: Extension,
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public toastr:ToastrService
   ) {
-    // this.currentUserid = extension.getUserId()
+    this.currentUserid = extension.getUserId()
   }
   ngOnInit(): void {
-    // this.productId = this.route.snapshot.paramMap.get('id')!;
+    this.productId = this.route.snapshot.paramMap.get('id')!;
     this.getAuctionProduct();
     this.getBid();
   }
@@ -127,6 +130,7 @@ export class AuctionProductComponent {
     this.loading = true;
     this.mainServices.getAuctionProduct().subscribe(res => {
       console.log("Auction Response ",res.data);
+      
       this.auctionProduct = res.data
       this.auctionProductTemp = res.data
       this.auctionProduct = this.auctionProduct.filter((item) => {
@@ -134,9 +138,9 @@ export class AuctionProductComponent {
           return item.id == this.productId;
       });
       console.log("data",this.auctionProduct)
-      // this.allowedToBid = this.auctionProduct.filter((item) => {
-      //   return item.user_id == this.currentUserid;
-      // }).length <= 0;
+      this.allowedToBid = this.auctionProduct.filter((item) => {
+        return item.user_id == this.currentUserid;
+      }).length <= 0;
 
       this.loading = false;
       this.auctionProduct = this.auctionProduct.map((item) => {
@@ -145,7 +149,7 @@ export class AuctionProductComponent {
           const startDate = new Date(item.starting_date);
           const endDate = new Date(item.ending_date);
           const timeDiff = endDate.getDate() - startDate.getDate();
-          // remainingDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+          remainingDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
           remainingDays = timeDiff
         }
         return {
@@ -200,36 +204,55 @@ export class AuctionProductComponent {
     return formattedTime;
   }
 
-  placeBid() {
-    this.loading = true;
-    if (this.price<this.maxPrice) {
-      return
+  placeBid(price:any) {
+  
+    if (price < this.maxPrice) {
+      this.loading = false; 
+
+      this.toastr.error(`Bid should be higher than ${this.maxPrice} `, 'Error');
+
+      return;
     }
-    let input = {
+  
+    const input = {
       user_id: this.currentUserid,
       product_id: this.productId,
-      price: this.price
-    }
-    this.mainServices.placeBid(input).subscribe((res:any) => {
-      this.showSuccessMessage(res.message)
-      this.getBid();
+      price: price,
+    };
+  
+    try {
+      this.mainServices.placeBid(input).subscribe({
+        next: (res: any) => {
+          this.toastr.success(`Bid Placed for AED ${input.price} successfully`, 'Success');
+          this.getBid();
+          this.loading = false;
+          this.closeModal();
+          console.log(res);
+        },
+        error: (err: any) => {
+          const errorMessage = err?.error?.message || 'Failed to place bid. Please try again later.';
+          this.toastr.error(errorMessage, 'Error');
+          this.loading = false;
+          console.error(err);
+        }
+      });
+    } catch (error) {
+      this.toastr.error('An unexpected error occurred. Please try again later.', 'Error');
       this.loading = false;
-      this.closeModal();
-      console.log(res)
-    })
+    }
   }
+  
 
   getBid() {
     this.loading = true;
     let input = {
       product_id: this.productId,
     }
-    this.profileImg=[];
     this.mainServices.getPlacedBids(input).subscribe((res: any) => {
       this.liveAuction = res.data;
 
-      // this.profileImg = res.data.user;
       res.data.forEach((item:any) => {
+        
         if (item.user && item.user.img) {
           const imgObject = { img: item.user.img };
           this.profileImg.push(imgObject);
@@ -239,12 +262,21 @@ export class AuctionProductComponent {
       if (this.liveAuction && this.liveAuction.length > 0) {
         const prices = this.liveAuction.map((item) => item.price);
         this.maxPrice = Math.max(...prices);
-        // console.log('Max price', maxPrice);
+        this.generatePriceOptions();
       }
       this.loading = false;
     })
   }
-
+  generatePriceOptions(): void {
+    const increment = 2000; // Define the fixed increment value
+    this.priceOptions = [
+      this.maxPrice + increment,
+      this.maxPrice + increment * 2,
+      this.maxPrice + increment * 3,
+      this.maxPrice + increment * 4,
+    ];
+  }
+  
   bid26() {
     this.price = "26000"
   }

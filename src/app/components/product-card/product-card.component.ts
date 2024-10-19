@@ -2,6 +2,8 @@ import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
+import { MainServicesService } from '../../shared/services/main-services.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-card',
@@ -10,36 +12,37 @@ import { GlobalStateService } from '../../shared/services/state/global-state.ser
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })
-export class ProductCardComponent implements OnInit {
-  constructor(private globalStateService: GlobalStateService) { }
+export class ProductCardComponent {
+  constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private toastr: ToastrService) { }
   @Input() postData: any = {}
   @Input({ required: true }) postDetialUrl: string = ""
   wishList: any = []
+  currentUser: any = {}
   getYear(date: string) {
     return new Date(date).getFullYear();
   }
 
   toggleWishlist(item: any) {
-    const currentUser = JSON.parse(localStorage.getItem("key") || '{}');
-    console.log(currentUser, "currentUser");
-    let input = {
-      user_id: 1,
-      product_id: item.id
-    }
     this.globalStateService.wishlistToggle(item.id);
     this.globalStateService.currentState.subscribe(state => {
       this.wishList = state.wishListItems
-      console.log(state.wishListItems, 'state.wishListItems;');
+      this.currentUser = state.currentUser
     });
-    // this.mainServices.addWishList(input).subscribe((res: any) => {
-    // })
-  }
-
-  toInteger(value: string | number): number {
-    return parseInt(value as string, 10);
-  }
-  ngOnInit(): void {
-
-    console.log(this.postData, "postData");
+    let input = {
+      user_id: this.currentUser.id,
+      product_id: item.id
+    }
+    this.mainServices.addWishList(input).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastr.success('Product added to wishlist successfully', 'Success');
+        }
+        console.log(res, "toggleWishlist");
+      },
+      error: (err) => {
+        this.toastr.error('Failed to add product to wishlist', 'Error');
+        console.log(err);
+      },
+    })
   }
 }
