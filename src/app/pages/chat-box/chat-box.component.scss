@@ -32,10 +32,7 @@
       }
     }
 
-    .users {
-      max-height: calc(100vh - 350px);
-      overflow-y: auto;
-    }
+   
   }
 
   .right-side {
@@ -93,4 +90,8 @@
       }
     }
   }
+}
+.scrollable-content {
+  max-height: calc(100vh - 350px);
+  overflow-y: auto;
 }

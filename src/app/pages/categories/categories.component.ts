@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { SharedModule } from "../../shared/shared.module";
 import { AppFiltersComponent } from '../../components/app-filters/app-filters.component';
@@ -15,33 +15,39 @@ import { GlobalStateService } from '../../shared/services/state/global-state.ser
   imports: [SharedModule, AppFiltersComponent, ProductCardComponent]
 })
 export class CategoriesComponent {
-  constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService) { }
+  constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService,private cd:ChangeDetectorRef) {
+   }
   promotionBanners: any = [
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
     },
   ]
-  activeTab: string = "auction"
+  activeTab: any = "auction"
   data: any = []
   handleTab(tab: string) {
+    debugger
     this.activeTab = tab
     this.globalStateService.updateProdTab("ProductType", tab)
   }
   ngOnInit(): void {
+    this.handleTab(this.activeTab)
+
     this.globalStateService.currentState.subscribe((state) => {
-      this.data = state.filteredProducts
+      debugger
+      this.data = state.filteredProducts;
+      this.globalStateService.productlength=this.data.length
+      // this.activeTab = state.prodTab
+
     })
-    if (this.data.length) {
-      forkJoin({
-        auctionProduct: this.mainServices.getAuctionProduct(),
-      }).subscribe({
-        next: (response) => {
-          this.data = response.auctionProduct.data;
-        },
-        error: (err) => {
-          console.error('Error occurred while fetching data', err);
-        },
-      });
-    }
+      // forkJoin({
+      //   auctionProduct: this.mainServices.getFilteredProducts(this.activeTab),
+      // }).subscribe({
+      //   next: (response) => {
+      //     this.data = response.auctionProduct
+      //   },
+      //   error: (err) => {
+      //     console.error('Error occurred while fetching data', err);
+      //   },
+      // });
   }
 }
