@@ -39,14 +39,16 @@
                 <div class="border-b">
                     <div class="pb-3 px-4 d-flex align-items-center top">
                         <img src="/assets/images/banner3.webp" alt="image" loading="lazy" class="rounded-2">
-                        <div class="ml-3">
-                            <h2 class="fs-20 fw-semibold m-0">Florencio Dorrance</h2>
+                        <div class="ml-3 flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <h2 class="fs-20 fw-semibold m-0">Florencio Dorrance</h2>
+                                <div class="ml-4">$500</div>
+                            </div>
                             <div class="fs-12 fw-semibold text-slate-400 d-flex align-items-center">
                                 <span class="dot rounded-pill mr-1"></span>
                                 Online
                             </div>
                         </div>
-                        <div>$500</div>
                     </div>
                 </div>
                 <div class="bid-box mx-auto text-center p-4 position-relative">
@@ -57,7 +59,7 @@
                     <div class="mt-2 d-flex align-items-center">
                         <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1">Reject Offer</button>
                         <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1 mx-3">Accept Offer</button>
-                        <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1">Counter Offer</button>
+                        <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1" (click)="openModal()">Counter Offer</button>
                     </div>
                 </div>
                 <div class="messages-side mt-5 pt-5">
@@ -85,4 +87,53 @@
             </div>
         </div>
     </div>
+
+    <!-- modal-for-bid -->
+  <div
+  class="modal fade"
+  id="offerModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="offerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button
+          type="button"
+          class="close"
+          (click)="closeModal()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body mb-5">
+        <div class="row">
+          <div class="col-9 mx-auto">
+            <div class="text-center">
+              <h3 class="">Confirm Bid</h3>
+              <!-- {{ price }}. -->
+              <span
+                >You have placed a bid for AED  Should we place
+                this as your Bid?</span
+              >
+            </div>
+            <div class="mt-4">
+                <!-- (click)="placeBid(price)" -->
+              <button class="btn btn-dark w-100" >
+                Yes, Place My Bid
+              </button>
+              <button class="btn btn-dark w-100 mt-3" (click)="closeModal()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </main>

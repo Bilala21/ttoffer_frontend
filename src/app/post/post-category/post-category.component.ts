@@ -1,22 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
-
+import { GlobalStateService } from '../../shared/services/state/global-state.service';
+import { CountdownTimerService } from '../../shared/services/countdown-timer.service';
 @Component({
   selector: 'app-post-category',
   templateUrl: './post-category.component.html',
   styleUrls: ['./post-category.component.scss'],
 })
 export class PostCategoryComponent implements OnInit {
+  constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService,private cd:ChangeDetectorRef) {
+  }
   activeButton: number = 1;
   isActive = false;
   postCols = 'col-12 col-md-6 col-lg-6 col-xl-4';
   feature = [];
   auction = [];
-  constructor(private mainServices: MainServicesService) {}
+  data:any[]=[]
+  promotionBanners: any = [
+    {
+      banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
+    },
+  ]
+  activeTab: any = "auction"
+  handleTab(tab: string) {
+   
+    this.activeTab = tab
+    this.globalStateService.updateProdTab("ProductType", tab)
+  }
 
   ngOnInit() {
     this.getAuctionProduct();
     this.getFeaturedProduct();
+    this.handleTab(this.activeTab)
+
+    this.globalStateService.currentState.subscribe((state) => {
+      this.data = state.filteredProducts;
+      this.globalStateService.productlength=this.data.length
+      // this.activeTab = state.prodTab
+
+    })
   }
   // getAuctionProduct
   getAuctionProduct() {
