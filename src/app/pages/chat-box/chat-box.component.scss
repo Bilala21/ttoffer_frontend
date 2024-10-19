@@ -71,7 +71,7 @@
       }
 
       .msg-content {
-        background: #F3F4F5;
+        background:#ffc107;
 
         img {
           width: 15px;
@@ -94,4 +94,10 @@
 .scrollable-content {
   max-height: calc(100vh - 350px);
   overflow-y: auto;
+}
+.small-profile-image {
+  width: 24px; /* Adjust size as needed */
+  height: 24px;
+  border: 2px solid #fff; /* Optional: Adds a white border around the image */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow */
 }
