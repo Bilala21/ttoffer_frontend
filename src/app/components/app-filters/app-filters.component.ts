@@ -58,10 +58,6 @@ export class AppFiltersComponent {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.slug = this.route.snapshot.paramMap.get('slug');
-    this.globalStateService.currentState.subscribe((state) => {
-      console.log(state, "prodTab");
-      filterCriteria[state.prodTab.key]=state.prodTab.value
-    })
     this.mainServicesService.getSubCategories(this.id).subscribe({
       next: (res) => {
         this.subCategories = res
