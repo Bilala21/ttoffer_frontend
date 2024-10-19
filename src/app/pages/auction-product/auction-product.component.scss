@@ -186,6 +186,20 @@
   border-radius: 16px;
   padding: 10px 32px;
 }
+.detail-des {
+  font-size: 19.93px;
+  font-weight: 600;
+  line-height: 26px;
+  color: #191f33;
+}
+.des-in-detail {
+  word-wrap: break-word;
+  color: #767e94;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+  font-family: poppins;
+}
 @media (max-width : 1024) {
   .product_title{
     font-size: 18px;

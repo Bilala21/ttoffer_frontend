@@ -8,13 +8,14 @@ import { FooterComponent } from '../../shared/shared-components/footer/footer.co
 import { ProductCarouselComponent } from '../carousels/product-carousel/product-carousel.component';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterLink } from '@angular/router';
+import { CardShimmerComponent } from "../../components/card-shimmer/card-shimmer.component";
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrl: './body.component.scss',
   standalone: true,
-  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule, RouterLink],
+  imports: [HeaderComponent, ProductCardComponent, FooterComponent, ProductCarouselComponent, SharedModule, RouterLink, CardShimmerComponent],
 })
 export class BodyComponent implements OnDestroy {
   auctionPosts: any = [];

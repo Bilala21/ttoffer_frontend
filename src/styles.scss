@@ -737,3 +737,116 @@ body {
     max-width: 1380px;
   }
 }
+// banner plus slider shimmer
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  position: relative;
+  width: 100%;
+  height: var(--shimmer-height, 200px); /* Use custom height or fallback to 200px */
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #e0e0e0 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* Wrapper for images */
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  height: var(--img-height, 200px); /* Custom height for images */
+}
+
+.img-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container */
+  opacity: 0;
+}
+
+.img-wrapper img.loaded {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Adjust height for mobile screens */
+@media (max-width: 576px) {
+  .img-wrapper {
+    height: var(--mobile-img-height, 150px); /* Custom height for mobile */
+  }
+}
+
+// product card shimmer
+// shimmer
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+  position: relative;
+  
+}
+
+.shimmer-img {
+  height: 180px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.shimmer-text {
+  height: 20px;
+  width: 70%;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.shimmer-button {
+  height: 40px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+   .shimmer-card {
+    flex: 1 1 calc(50% - 15px); /* Two cards per row on smaller screens */
+    max-width: calc(50% - 15px);
+  }
+}
+
+@media (max-width: 576px) {
+  .shimmer-card {
+    flex: 1 1 100%; /* Full width for small screens */
+    max-width: 100%;
+  }
+}
