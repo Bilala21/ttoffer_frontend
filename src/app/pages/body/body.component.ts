@@ -9,6 +9,7 @@ import { ProductCarouselComponent } from '../carousels/product-carousel/product-
 import { SharedModule } from '../../shared/shared.module';
 import { RouterLink } from '@angular/router';
 import { CardShimmerComponent } from "../../components/card-shimmer/card-shimmer.component";
+import { GlobalStateService } from '../../shared/services/state/global-state.service';
 
 @Component({
   selector: 'app-body',
@@ -35,6 +36,7 @@ export class BodyComponent implements OnDestroy {
     private mainServices: MainServicesService,
     private cdr: ChangeDetectorRef,
     private countdownTimerService: CountdownTimerService,
+    private globalStateService:GlobalStateService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class BodyComponent implements OnDestroy {
       next: (response) => {
         this.auctionPosts = response.auctionProduct.data;
         this.featuredPosts = response.featureProduct.data;
+        // this.globalStateService.setFilteredProducts()
         this.startCountdowns();
       },
       error: (err) => {
@@ -67,11 +70,7 @@ export class BodyComponent implements OnDestroy {
       this.countdownSubscriptions.push(subscription);
     });
   }
-
-
-
-
-
+  
   ngOnDestroy(): void {
     this.countdownSubscriptions.forEach((subscription) => subscription.unsubscribe());
   }

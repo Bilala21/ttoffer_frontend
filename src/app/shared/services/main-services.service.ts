@@ -48,7 +48,7 @@ export class MainServicesService {
   //   return this.http.post(`${this.apiUrl}api/featured-products`, null, { headers: this.getHeaders() });
   // }
   getFeatureProduct(): Observable<any> {
-    
+
     return this.http.post(`${this.apiUrl}api/featured-products`, null);
   }
   getAuctionProduct(): Observable<any> {
@@ -197,6 +197,9 @@ export class MainServicesService {
       category_id: categoryId
     }
     return this.http.post<any[]>(`${this.apiUrl}` + 'api/sub-categories', data);
+  }
 
+  getFilteredProducts(data: any = {}): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}` + 'api/get-all-products', data);
   }
 }

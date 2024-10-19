@@ -25,6 +25,7 @@ export class ChatBoxComponent {
     // {img:'assets/images/chat-profile4.png', name:'Titus Kitamura', text:'omg, this is amazing', time:'5h'},
   ]
   selectedUser: any = null;
+  meassages:any={sender:[],reciever:[]};
   selectedConversation: any = [];
   conversationBox: any = [];
   currentUserid: number = 0;
@@ -213,5 +214,8 @@ export class ChatBoxComponent {
 
       res
     });
+  }
+  sendMessage($event:any){
+  console.log($event)
   }
 }

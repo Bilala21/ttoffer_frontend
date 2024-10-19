@@ -89,6 +89,7 @@ export class HeaderNavigationComponent implements OnInit {
     this.getScreenSize();
     this.mainServicesService.getCategories().subscribe({
       next: (res: any) => {
+        console.log(res,"123bilal");
         this.categories = res;
         this.loading = false;
         this.globalStateService.setCategories(res);

@@ -130,7 +130,7 @@ export class AuctionProductComponent {
     this.loading = true;
     this.mainServices.getAuctionProduct().subscribe(res => {
       console.log("Auction Response ",res.data);
-      // debugger
+      
       this.auctionProduct = res.data
       this.auctionProductTemp = res.data
       this.auctionProduct = this.auctionProduct.filter((item) => {
@@ -252,7 +252,7 @@ export class AuctionProductComponent {
       this.liveAuction = res.data;
 
       res.data.forEach((item:any) => {
-        // debugger
+        
         if (item.user && item.user.img) {
           const imgObject = { img: item.user.img };
           this.profileImg.push(imgObject);
