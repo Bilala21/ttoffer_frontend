@@ -61,12 +61,18 @@ fetchData(){
 
   }
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.slug = this.route.snapshot.paramMap.get('slug');
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      this.slug = params.get('slug') || '';
+      this.getSubCategory(); // Call the API whenever 'id' changes
+    });
     this.globalStateService.product.subscribe((state) => {
       this.filterCriteria[state.prodTab.key]=state.prodTab.value;
       this.fetchData();
     })
+    this.getSubCategory()
+  }
+  getSubCategory(){
     this.mainServicesService.getSubCategories(this.id).subscribe({
       next: (res) => {
         this.subCategories = res
