@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
@@ -9,16 +9,15 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './app-filters.component.html',
-  styleUrl: './app-filters.component.scss'
+  styleUrls: ['./app-filters.component.scss'] // Corrected from styleUrl to styleUrls
 })
-export class AppFiltersComponent {
-  constructor(private route: ActivatedRoute, private mainServicesService: MainServicesService, public globalStateService: GlobalStateService) { }
-  slug: any = ""
+export class AppFiltersComponent implements OnInit {
+  slug: any = "";
   minPrice: number = 0;
   maxPrice: number = 150;
-  id: any = null
-  subCategories: any = []
-  locations: any = [
+  id: string | null = null;
+  subCategories: any[] = [];
+  locations: string[] = [
     "Dhaka, Bangladesh",
     "Minnesota, USA",
     "Wisconsin, USA",
@@ -28,24 +27,58 @@ export class AppFiltersComponent {
     "Washington, USA",
     "Brasilia, Brazil",
     "Karachi, Pakistan"
-  ]
+  ];
 
   filterCriteria: any = {
     location: []
+  };
+
+  constructor(
+    private route: ActivatedRoute,
+    private mainServicesService: MainServicesService,
+    public globalStateService: GlobalStateService
+  ) { }
+
+  ngOnInit() {
+    // Subscribe to route parameters
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      this.slug = params.get('slug');
+      this.fetchSubCategories(); // Fetch subcategories whenever the parameters change
+    });
+
+    // Subscribe to global product state
+    this.globalStateService.product.subscribe(state => {
+      this.filterCriteria[state.prodTab.key] = state.prodTab.value;
+      this.fetchData();
+    });
   }
 
-fetchData(){
-  debugger
-  const modifiedFilter={...this.filterCriteria,location:this.filterCriteria.location.join(',')}
-  this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
-    next: (res: any) => {
-      this.globalStateService.setFilteredProducts(res.data)
-    },
-    error: (err) => {
-      console.log(err);
+  fetchSubCategories() {
+    if (this.id) {
+      this.mainServicesService.getSubCategories(this.id).subscribe({
+        next: (res) => {
+          this.subCategories = res;
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
-  })
-}
+  }
+
+  fetchData() {
+    const modifiedFilter = { ...this.filterCriteria, location: this.filterCriteria.location.join(',') };
+    this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
+      next: (res: any) => {
+        this.globalStateService.setFilteredProducts(res.data);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
   handleFilter(filter: any) {
     if (filter.key === "location") {
       const locIndex = this.filterCriteria.location.indexOf(filter.value);
@@ -58,24 +91,5 @@ fetchData(){
       this.filterCriteria[filter.key] = filter.value;
     }
     this.fetchData();
-   
-
-  }
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.slug = this.route.snapshot.paramMap.get('slug');
-    this.globalStateService.product.subscribe((state) => {
-      debugger
-      this.filterCriteria[state.prodTab.key]=state.prodTab.value;
-      this.fetchData();
-    })
-    this.mainServicesService.getSubCategories(this.id).subscribe({
-      next: (res) => {
-        this.subCategories = res
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
   }
 }
