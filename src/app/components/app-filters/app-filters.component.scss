@@ -1,0 +1,28 @@
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.price-box {
+    column-gap: 10px;
+
+    div {
+        width: 50%;
+    }
+}
+
+input:focus-within {
+    outline: none;
+}
+
+button:focus {
+    box-shadow: none;
+}
+.scrollable-content{
+    max-height: 200px;
+}

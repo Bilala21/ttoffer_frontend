@@ -355,6 +355,7 @@ body {
 .fs-10 {
   font-size: 10px;
 }
+
 .fs-8 {
   font-size: 8px;
 }
@@ -387,7 +388,7 @@ body {
   color: #222;
 }
 
- .text-slate-400 {
+.text-slate-400 {
   color: #A2A2A2 !important;
 }
 
@@ -646,7 +647,7 @@ body {
     outline: none;
     box-shadow: none;
   }
-  
+
 }
 
 .rounded-2 {
@@ -668,13 +669,22 @@ body {
 .permotion-banners:first-child {
   display: none;
 }
-.border-r{
+
+.border-r {
   border-right: 1px solid #d8dfe0;
 }
-.border-b{
+
+.border-b {
   border-bottom: 1px solid #d8dfe0;
 }
 
+.product-filter {
+  max-width: 250px;
+  min-width: 250px;
+}
+.row-gap{
+  row-gap: 20px;
+}
 
 @media (max-width:576px) {
   .xs-rounded-0 {

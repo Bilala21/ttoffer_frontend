@@ -5,6 +5,8 @@ interface AppState {
   tab: { index: number; tabName: string };
   users: any[]; // You might want to define a specific user type here
   categories: any[];
+  subCategories: any[];
+  filteredProducts: any[];
   isLoggedInd: boolean;
   wishListItems: number[]; // Assuming wishlist items are identified by their IDs
   currentUser: any
@@ -20,7 +22,9 @@ export class GlobalStateService {
     categories: [],
     isLoggedInd: false,
     wishListItems: [],
-    currentUser: {}
+    currentUser: {},
+    subCategories: [],
+    filteredProducts: []
   };
 
   private stateSubject = new BehaviorSubject<AppState>(this.initialState);
@@ -59,12 +63,28 @@ export class GlobalStateService {
     this.stateSubject.next(newState);
   }
 
+  setFilteredProducts(data: any) {
+    const currentState = this.stateSubject.value;
+    const newState = {
+      ...currentState,
+      filteredProducts: data
+    };
+    this.stateSubject.next(newState);
+  }
   setCategories(data: any) {
     console.log(data, "setCategories state");
     const currentState = this.stateSubject.value;
     const newState = {
       ...currentState,
       categories: data
+    };
+    this.stateSubject.next(newState);
+  }
+  setSubCategories(data: any) {
+    const currentState = this.stateSubject.value;
+    const newState = {
+      ...currentState,
+      subCategories: data
     };
     this.stateSubject.next(newState);
   }
@@ -84,5 +104,5 @@ export class GlobalStateService {
     const currentState = this.stateSubject.value;
     this.stateSubject.next({ ...currentState, ...newState });
   }
-  
+
 }
