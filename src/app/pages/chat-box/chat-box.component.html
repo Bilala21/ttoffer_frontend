@@ -8,7 +8,6 @@
                         <h2 class="fs-20 fw-semibold m-0">Messages</h2>
                         <span class="ml-3 fs-12 rounded-pill bg-yellow-800 d-block text-center">12</span>
                     </div>
-                    <i class="fa fa-plus rounded-pill text-white bg-dark text-center cursor-pointer"></i>
                 </div>
                 <div class="message-content pl-2 pr-1">
                     <div class="input-search rounded-2 py-1 px-3 mb-3">
@@ -24,7 +23,12 @@
                                     <h2 class="fs-14 fw-semibold m-0">Elmer Laverty</h2>
                                     <span class="fs-14 fw-normal text-slate-400">1h</span>
                                 </div>
+                                <div style="display: flex;justify-content: space-between;">
                                 <p class="m-0 fs-12 fw-normal text-slate-400">message</p>
+                                <img style="width: 25px;
+                                height: 25px;
+                                object-fit: fill;" src="/assets/images/banner3.webp" alt="Small Profile Image" loading="lazy" class="small-profile-image rounded-circle">
+                            </div>
                             </div>
                         </div>
                         }
@@ -42,6 +46,7 @@
                                 Online
                             </div>
                         </div>
+                        <div>$500</div>
                     </div>
                 </div>
                 <div class="bid-box mx-auto text-center p-4 position-relative">
@@ -65,13 +70,18 @@
                     </div>
                 </div>
                 <div class="message-input d-flex align-items-center mt-5 mb-4">
-                    <button class="btn bg-transparent"><i class="fas fa-paperclip"></i></button>
+                    <button class="btn bg-transparent" (click)="fileInput.click()">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
                     <div class="d-flex align-items-center flex-grow-1 position-relative">
-                        <input type="text" placeholder="Type a message"  class="flex-grow-1 py-2 px-2 rounded-2" #chatMessage>
-                        <button  type="button" (click)="sendMessage(chatMessage.value)" class="btn bg-transparent position-absolute"><i class="fas fa-paper-plane"></i>
+                        <input type="text" placeholder="Type a message" class="flex-grow-1 py-2 px-2 rounded-2" #chatMessage>
+                        <button type="button" (click)="sendMessage(chatMessage.value)" class="btn bg-transparent position-absolute">
+                            <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

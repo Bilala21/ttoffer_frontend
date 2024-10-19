@@ -215,7 +215,36 @@ export class ChatBoxComponent {
       res
     });
   }
-  sendMessage($event:any){
-  console.log($event)
+ 
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
+  sendMessage(message: string): void {
+    if (message.trim() || this.selectedFile) {
+      // Handle sending message and the file to the server or chat list
+      console.log('Message:', message);
+      console.log('Selected File:', this.selectedFile);
+      // Reset message and file preview
+      this.clearMessage();
+    }
   }
+
+  clearMessage(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+
+      // Read the file to generate a preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
 }
