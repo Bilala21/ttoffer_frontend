@@ -28,9 +28,15 @@ export class GlobalStateService {
     filteredProducts: [],
     prodTab:{key: "ProductType", value: "auction"}
   };
+  public filterCriteria: any = {
+    location: []
+  }
+  public productlength:any;
 
   private stateSubject = new BehaviorSubject<AppState>(this.initialState);
   currentState = this.stateSubject.asObservable();
+  public productSubject = new BehaviorSubject<any>([]);
+  product = this.productSubject.asObservable();
 
   constructor() {
     const currentUser = JSON.parse(localStorage.getItem("key") || '{}');
@@ -47,16 +53,13 @@ export class GlobalStateService {
     this.stateSubject.next(newState);
   }
   updateProdTab(key: string, value: string) {
-    const currentState = this.stateSubject.value;
+    debugger
     const newState = {
-      ...currentState,
       prodTab: { key, value }
     };
-    this.stateSubject.next(newState);
+    this.productSubject.next(newState);
   }
-
-  // Method to toggle the wishlist item
-  wishlistToggle(id: number) {
+    wishlistToggle(id: number) {
     const currentState = this.stateSubject.value;
     const currentWishList = currentState.wishListItems;
     let newWishList: number[];
@@ -81,6 +84,7 @@ export class GlobalStateService {
     };
     this.stateSubject.next(newState);
   }
+  
   setCategories(data: any) {
     console.log(data, "setCategories state");
     const currentState = this.stateSubject.value;

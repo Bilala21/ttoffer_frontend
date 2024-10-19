@@ -214,4 +214,7 @@ export class ChatBoxComponent {
       res
     });
   }
+  sendMessage($event:any){
+console.log($event)
+  }
 }
