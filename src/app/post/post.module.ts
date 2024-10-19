@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProductCardComponent } from "../components/product-card/product-card.component";
 import { CardShimmerComponent } from "../components/card-shimmer/card-shimmer.component";
+import { AppFiltersComponent } from "../components/app-filters/app-filters.component";
 @NgModule({
   declarations: [
     PostCardComponent,
@@ -42,7 +43,8 @@ import { CardShimmerComponent } from "../components/card-shimmer/card-shimmer.co
     SharedModule,
     ReactiveFormsModule,
     ProductCardComponent,
-    CardShimmerComponent
+    CardShimmerComponent,
+    AppFiltersComponent
 ],
   exports:[
     PostComponent,

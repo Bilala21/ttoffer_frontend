@@ -35,7 +35,6 @@ export class AppFiltersComponent {
   }
 
 fetchData(){
-  debugger
   const modifiedFilter={...this.filterCriteria,location:this.filterCriteria.location.join(',')}
   this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
     next: (res: any) => {
@@ -65,7 +64,6 @@ fetchData(){
     this.id = this.route.snapshot.paramMap.get('id');
     this.slug = this.route.snapshot.paramMap.get('slug');
     this.globalStateService.product.subscribe((state) => {
-      debugger
       this.filterCriteria[state.prodTab.key]=state.prodTab.value;
       this.fetchData();
     })

@@ -6,13 +6,14 @@ import { CountdownTimerService } from '../../shared/services/countdown-timer.ser
 import { forkJoin } from 'rxjs';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
+import { CardShimmerComponent } from "../../components/card-shimmer/card-shimmer.component";
 
 @Component({
   selector: 'app-categories',
   standalone: true,
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
-  imports: [SharedModule, AppFiltersComponent, ProductCardComponent]
+  imports: [SharedModule, AppFiltersComponent, ProductCardComponent, CardShimmerComponent]
 })
 export class CategoriesComponent {
   constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService,private cd:ChangeDetectorRef) {
@@ -25,7 +26,7 @@ export class CategoriesComponent {
   activeTab: any = "auction"
   data: any = []
   handleTab(tab: string) {
-    debugger
+   
     this.activeTab = tab
     this.globalStateService.updateProdTab("ProductType", tab)
   }
@@ -33,7 +34,6 @@ export class CategoriesComponent {
     this.handleTab(this.activeTab)
 
     this.globalStateService.currentState.subscribe((state) => {
-      debugger
       this.data = state.filteredProducts;
       this.globalStateService.productlength=this.data.length
       // this.activeTab = state.prodTab

@@ -20,11 +20,23 @@
             (click)="handleTab('feature')"> Feature Products</button>
         </div>
         <div class="row px-0 row-gap">
-          @for (post of data; track $index) {
+          @if(!data.length){
+            @for(data of [1,2,3,4,5,6,7,8,9];track $index){
+              <div
+              class="m-1 p-0 border-1 rounded-2 shimmer-card"
+              >
+              <app-card-shimmer/>
+              </div>
+              
+            }
+          }@else { @for (post of data; track $index) {
           <div class="col-lg-4">
-            <app-product-card [postData]="post" postDetialUrl="auction-product-detail" />
+            <app-product-card
+              [postData]="post"
+              postDetialUrl="auction-product-detail"
+            />
           </div>
-          }
+          } }
         </div>
       </div>
     </div>
