@@ -25,12 +25,13 @@ export class CategoriesComponent {
   data: any = []
   handleTab(tab: string) {
     this.activeTab = tab
+    this.globalStateService.updateProdTab("ProductType", tab)
   }
   ngOnInit(): void {
     this.globalStateService.currentState.subscribe((state) => {
       this.data = state.filteredProducts
     })
-    if (!this.data.length) {
+    if (this.data.length) {
       forkJoin({
         auctionProduct: this.mainServices.getAuctionProduct(),
       }).subscribe({

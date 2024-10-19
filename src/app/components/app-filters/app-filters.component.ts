@@ -29,6 +29,8 @@ export class AppFiltersComponent {
   filterCriteria: any = {
     location: []
   }
+
+
   handleFilter(filter: any) {
     if (filter.key === "location") {
       const locIndex = this.filterCriteria.location.indexOf(filter.value);
@@ -42,7 +44,7 @@ export class AppFiltersComponent {
     }
 
     this.mainServicesService.getFilteredProducts().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.globalStateService.setFilteredProducts(res.data)
         console.log(res, "getFilteredProducts");
       },
@@ -53,14 +55,15 @@ export class AppFiltersComponent {
 
     console.log(this.filterCriteria, "Updated Filters");
   }
-
-
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.slug = this.route.snapshot.paramMap.get('slug');
+    this.globalStateService.currentState.subscribe((state) => {
+      console.log(state, "prodTab");
+      filterCriteria[state.prodTab.key]=state.prodTab.value
+    })
     this.mainServicesService.getSubCategories(this.id).subscribe({
       next: (res) => {
-        console.log(res, "subcate");
         this.subCategories = res
       },
       error: (err) => {

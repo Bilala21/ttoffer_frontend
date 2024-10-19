@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 interface AppState {
   tab: { index: number; tabName: string };
+  prodTab: { key: string; value: string };
   users: any[]; // You might want to define a specific user type here
   categories: any[];
   subCategories: any[];
@@ -24,7 +25,8 @@ export class GlobalStateService {
     wishListItems: [],
     currentUser: {},
     subCategories: [],
-    filteredProducts: []
+    filteredProducts: [],
+    prodTab:{key: "ProductType", value: "auction"}
   };
 
   private stateSubject = new BehaviorSubject<AppState>(this.initialState);
@@ -41,6 +43,14 @@ export class GlobalStateService {
     const newState = {
       ...currentState,
       tab: { index, tabName }
+    };
+    this.stateSubject.next(newState);
+  }
+  updateProdTab(key: string, value: string) {
+    const currentState = this.stateSubject.value;
+    const newState = {
+      ...currentState,
+      prodTab: { key, value }
     };
     this.stateSubject.next(newState);
   }
