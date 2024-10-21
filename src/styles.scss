@@ -389,7 +389,7 @@ body {
 }
 
 .text-slate-400 {
-  color: #A2A2A2 !important;
+  color: #222 !important;
 }
 
 .text-dark-350 {
@@ -712,6 +712,11 @@ body {
 
   .xs-mr-0 {
     margin-right: 0px !important;
+  }
+  .carousel.slide{
+    img{
+      max-height: 140px;
+    }
   }
 }
 

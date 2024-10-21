@@ -18,7 +18,7 @@
 
         <section class="card-bottom pb-1 text-gray-400">
             <div class="d-flex align-items-center justify-content-between">
-                <strong class="text-dark">AED {{postData?.auction_price}}</strong>
+                <strong class="text-dark">AED {{formatPrice(postData?.auction_price)}}</strong>
                 <span *ngIf="postData.ProductType =='auction'"
                     class="bg-yellow-700 px-2 py-1 rounded fs-12 fw-normal text-dark" aria-live="polite">
                     {{postData?.isBid ? postData.calculateRemaningTime + ' remaining' : 'Bid Expired' }}
@@ -50,6 +50,7 @@
     </article>
     <!-- </a> -->
     <a routerLink="/{{postDetialUrl}}/{{postData?.id}}/{{postData?.slug}}" *ngIf="postData.ProductType =='auction'"
-        class="mt-2 btn bg-dark-650 text-white py-2 pointer-cursor rounded-2 w-100 hover-able-btn" aria-label="Bid Now">Bid
+        class="mt-2 btn bg-dark-650 text-white py-2 pointer-cursor rounded-2 w-100 hover-able-btn"
+        aria-label="Bid Now">Bid
         Now</a>
 </div>
