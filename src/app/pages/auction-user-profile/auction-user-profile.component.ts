@@ -78,7 +78,7 @@ export class AuctionUserProfileComponent {
       });
     }
     getAuctionUser(){
-      this.loading = true
+      // this.loading = true
 
       this.mainServices.getUserInfo(this.auctionUserId).subscribe((res:any) =>{
 

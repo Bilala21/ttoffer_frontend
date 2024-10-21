@@ -65,6 +65,8 @@ export interface CategoryField {
   ],
 })
 export class ProfilePageComponent {
+  imageloading:any=false
+  selectedVideoFile:any
   categoryForm: FormGroup;
   validationErrors: { [key: string]: string } = {};
   attributes: { [key: string]: any } = {};
@@ -109,6 +111,7 @@ export class ProfilePageComponent {
   lowestPrice: string = '';
   defaultsImage: string = 'assets/images/best-selling.png';
   public imagesFiles: File[] = [];
+  EditImageFilesAbc: File[] = [];
   filesabc: File[]=[];
   imageFilesAbc: File[] = [];
   videoFilesAbc: File[] = [];
@@ -617,7 +620,7 @@ export class ProfilePageComponent {
 if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   currentTab = 'purchasesSales';
 }
-      this.editProductData=localStorage.getItem('editProduct');
+    this.editProductData=localStorage.getItem('editProduct');
 
     this.selectTab(currentTab);
 
@@ -828,6 +831,15 @@ showfor(){
   //     this.filesabc = [];
   //   }
   // }
+  onEditFileChange(event: any){
+    if (event.target.files && event.target.files.length > 0) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.EditImageFilesAbc.push(event.target.files[i]);
+        this.updateProductImage()
+        this.readFileAsDataURL(event.target.files[i]);
+      }
+    }
+  }
   onFileChange(event: any) {
     if (event.target.files && event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
@@ -840,6 +852,13 @@ showfor(){
     const reader = new FileReader();
     reader.onload = () => {
       this.selectedFiles.push({ src: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  }
+  readEditFileAsDataURL(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.editProductData.data.push({ src: reader.result as string });
     };
     reader.readAsDataURL(file);
   }
@@ -879,12 +898,25 @@ showfor(){
     };
   
     this.mainServices.deleteProductImage(input).subscribe((res) => {
+      debugger
       this.toastr.success('Product image deleted successfully', 'Success');
 
-      if (this.editProductData && this.editProductData.id == input.product_id ) {
-        this.editProductData.photo = this.editProductData.photo.filter((photo: any) => photo.product_id !== input.product_id);
-  
-        localStorage.setItem('editProduct', JSON.stringify(this.editProductData));
+      if (this.editProductData) {
+        // Retrieve existing editProductData from localStorage
+        const editProductDataStr = localStorage.getItem('editProduct');
+        if (editProductDataStr) {
+          // Parse the existing data
+          const editProductData = JSON.parse(editProductDataStr);
+      
+          // Filter the photo array to remove the photo with the specified id
+          editProductData.photo = editProductData.photo.filter((photo: any) => photo.id !== input.id);
+          
+          // Save the updated object back to localStorage
+          localStorage.setItem('editProduct', JSON.stringify(editProductData));
+          
+          // Update the local instance if necessary
+          this.editProductData = editProductData; // Optional, if you want to keep it in sync
+        }
       }
   
       console.log(res);
@@ -894,7 +926,58 @@ showfor(){
   
   
   async updateProductImage() {
-    this.loading = true;
+    this.imageloading = true;
+
+    let formData = new FormData();
+
+    // Append image files to formData
+    this.EditImageFilesAbc.forEach((file, index) => {
+      formData.append(`src[]`, file, file.name);
+    });
+
+    // Append product ID
+    formData.append(
+      'product_id',
+      this.productId ? Number(this.productId).toString() : '0'
+    );
+
+    try {
+      const token = localStorage.getItem('authToken');
+
+      // Fetch request to upload the image
+      const response = await fetch(
+        'https://www.ttoffer.com/backend/public/api/upload-image',
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            // 'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        }
+      );
+
+      // Check if the request was successful
+      if (response.ok) {
+        const data = await response.json();
+        this.EditImageFilesAbc=[]
+        debugger
+        this.imageloading=false
+        localStorage.setItem('editProduct', JSON.stringify(data.data));
+        this.editProductData=localStorage.getItem('editProduct')
+        this.editProductData = JSON.parse(this.editProductData);
+      } else {
+        console.error('Image upload failed', await response.json());
+      }
+    } catch (error) {
+      // Handle fetch error
+      console.error('Image upload failed', error);
+    } finally {
+      this.imageloading = false;
+    }
+  }
+  async addProductImage() {
+    this.imageloading = true;
 
     let formData = new FormData();
 
@@ -928,7 +1011,7 @@ showfor(){
       // Check if the request was successful
       if (response.ok) {
         const data = await response.json();
-        console.log('Image upload successful', data);
+        
       } else {
         console.error('Image upload failed', await response.json());
       }
@@ -936,7 +1019,7 @@ showfor(){
       // Handle fetch error
       console.error('Image upload failed', error);
     } finally {
-      this.loading = false;
+      this.imageloading = false;
     }
   }
 
@@ -953,18 +1036,41 @@ showfor(){
   }
 
   selectedVideos: Array<{ url: string }> = [];
+  selectedVideo: any | null = null;
 
   onVideosSelected(event: any): void {
     const files = event.target.files;
     for (let file of files) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selectedVideos.push({ url: e.target.result });
-      };
-      reader.readAsDataURL(file);
+      const videoURL = URL.createObjectURL(file);
+      this.selectedVideos.push({ url: videoURL });
     }
   }
-
+  onVideoSelected(event: any): void {
+    const file = event.target.files[0];
+  
+    // Check if a video is already selected
+    if (this.selectedVideo) {
+      this.toastr.error('You cannot upload more than one video.', 'Error');
+      return;
+    }
+  
+    // Check if the file exists
+    if (file) {
+      // Check the file size (20 MB limit)
+      const maxFileSize = 20 * 1024 * 1024; // 20 MB in bytes
+      if (file.size > maxFileSize) {
+        this.toastr.error('Video size exceeds the maximum limit of 20 MB.', 'Error');
+        return;
+      }
+  
+      const videoURL = URL.createObjectURL(file);
+      this.selectedVideo = { url: videoURL ,file: file };
+    }
+  }
+  
+  removeVideo(): void {
+    this.selectedVideo = null; // Clear the selected video
+  }
   selectVideo(index: number): void {
     this.selectedVideoIndex = index;
   }
@@ -1377,7 +1483,7 @@ showfor(){
       (this.productId ? Number(this.productId) : 0).toString()
     );
     const token = localStorage.getItem('authToken');
-
+     this,this.isLoading=true;
     fetch('https://www.ttoffer.com/backend/public/api/edit-product-first-step', {
       method: 'POST',
       body: formData,
@@ -1392,6 +1498,7 @@ showfor(){
       this.EditProductSeccondStep(); // Call the next step if upload is successful
   })
   .catch(error => {
+    this.isLoading=false
       console.error('File upload failed', error);
   });
   }
@@ -1429,9 +1536,9 @@ showfor(){
     let formData = new FormData();
 
     // Append video files to formData
-    this.videoFilesAbc.forEach((file) => {
-      formData.append(`video[]`, file, file.name);
-    });
+    if (this.selectedVideo && this.selectedVideo.file) {
+      formData.append('video[]', this.selectedVideo.file, this.selectedVideo.file.name);
+    }
 
     // Append other fields
     formData.append(
@@ -1462,7 +1569,7 @@ showfor(){
 
       if (response.ok) {
         this.productId = data.product_id;
-        await this.updateProductImage();
+        await this.addProductImage();
         // this.attributes();
         await this.addProductSecondStep();
       } else {
@@ -1579,7 +1686,6 @@ showfor(){
   }
 
   EditProductSeccondStep() {
-    this.loading = true;
     let input = {
       user_id: this.currentUserId,
       product_id: this.productId,
@@ -1599,7 +1705,6 @@ showfor(){
       res;
       this.EditProductThirdStep();
       console.log(res);
-      this.loading = false;
     });
   }
   EditProductThirdStep() {
@@ -1652,7 +1757,7 @@ showfor(){
       localStorage.removeItem('editProduct')
       this.toastr.success('Product updated successfully', 'Success');
       console.log(res);
-      this.loading = false;
+      this.isLoading = false;
       this.router.navigate(['']);
     });
   }
@@ -2084,4 +2189,14 @@ showfor(){
   subcat(subCat: any) {
     subCat;
   }
+  removeImage(index: number, event: Event): void {
+    event.stopPropagation(); // Prevent triggering the selectImage function
+    this.selectedFiles.splice(index, 1); // Remove the image from the array
+    if (this.selectedImageIndex === index) {
+      this.selectedImageIndex = -1; // Reset selected image if the deleted image was selected
+    } else if (this.selectedImageIndex > index) {
+      this.selectedImageIndex -= 1; // Adjust the selected image index if necessary
+    }
+  }
+  
 }
