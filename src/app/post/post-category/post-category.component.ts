@@ -30,6 +30,18 @@ export class PostCategoryComponent implements OnInit {
     this.globalStateService.updateProdTab("ProductType", tab)
   }
 
+  ngOnInit() {
+    // this.getAuctionProduct();
+    // this.getFeaturedProduct();
+    this.handleTab(this.activeTab)
+
+    this.globalStateService.currentState.subscribe((state) => {
+      this.data = state.filteredProducts;
+      this.globalStateService.productlength=this.data.length
+      // this.activeTab = state.prodTab
+
+    })
+  }
   // getAuctionProduct
   getAuctionProduct() {
     this.mainServices.getAuctionProduct().subscribe({
