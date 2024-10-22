@@ -663,14 +663,16 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
           }
   
           this.getSubcategories(this.selectedCategoryId);
+          this.initializeForm();
+          this.categoryForm.patchValue(JSON.parse(this.editProductData.attributes));
         } else {
           this.selectedCategoryId = this.categories[0].id;
           this.pricingCatId = this.pricingCategories[0].id; // Set default for new entries
           this.getSubcategories(this.categories[0].id);
+          this.initializeForm()
+
         }
-  
-        this.initializeForm();
-        this.categoryForm.patchValue(JSON.parse(this.editProductData.attributes));
+       
       },
       (error) => {
         console.error('Error fetching categories:', error); // Handle error

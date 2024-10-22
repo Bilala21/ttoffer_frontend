@@ -852,10 +852,11 @@
                             >
                               <div class="row align-items-center p-1">
                                 <div class="col-3">
-                                  <img
+                                  <!-- <img
                                     src="assets/images/app-store.png"
                                     alt=""
-                                  />
+                                  /> -->
+                                  <i class="fab fa-app-store-ios"></i>
                                 </div>
                                 <div class="col-9">
                                   <span style="font-size: 1.8vh"
@@ -871,7 +872,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="sellingList.data.archive == 0 && activeButton == 3">
+                <div *ngIf="sellingList?.data?.archive == 0 && activeButton == 3">
                   <div class="col-12 text-center mx-auto">
                     <img src="assets/images/archieve-item.png" alt="" />
                     <h4 class="mt-5"></h4>
@@ -916,10 +917,11 @@
                             >
                               <div class="row align-items-center p-1">
                                 <div class="col-3">
-                                  <img
+                                  <!-- <img
                                     src="assets/images/app-store.png"
                                     alt=""
-                                  />
+                                  /> -->
+                                  <i class="fab fa-app-store-ios"></i>
                                 </div>
                                 <div class="col-9">
                                   <span style="font-size: 1.8vh"
@@ -1238,7 +1240,8 @@
                           >
                             <div class="row align-items-center p-1">
                               <div class="col-3">
-                                <img src="assets/images/app-store.png" alt="" />
+                                <!-- <img src="assets/images/app-store.png" alt="" /> -->
+                                <i class="fab fa-app-store-ios"></i>
                               </div>
                               <div class="col-9">
                                 <span style="font-size: 1.8vh">Get it now</span>
@@ -1387,7 +1390,8 @@
                           >
                             <div class="row align-items-center p-1">
                               <div class="col-3">
-                                <img src="assets/images/app-store.png" alt="" />
+                                <!-- <img src="assets/images/app-store.png" alt="" /> -->
+                                <i class="fab fa-app-store-ios"></i>
                               </div>
                               <div class="col-9">
                                 <span style="font-size: 1.8vh">Get it now</span>
@@ -1535,7 +1539,7 @@
 
                         <div
                           class="image-item"
-                          *ngFor="let file of editProductData.photo; let i = index"
+                          *ngFor="let file of editProductData?.photo; let i = index"
                          
                           (click)="selectImage(i)"
                         >
