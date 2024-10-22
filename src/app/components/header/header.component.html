@@ -104,11 +104,11 @@
             <ul class="list-unstyled d-flex align-items-center justify-content-center fs-14 w-100 mb-0 categories">
                 <li *ngFor="let category of categories.slice(0, categoryLimit)">
                     <a routerLink="/category/{{category.id}}/{{category.slug}}"
-                        class="text-slate-400 text-decoration-none">{{category.name}}</a>
+                        class="category-color text-decoration-none">{{category.name}}</a>
                 </li>
                 <li class="position-relative catagory-parent">
                     <div class="dropdown pb-0">
-                        <button class="btn dropdown-toggle text-slate-400 fs-14 text-uppercase fw-semibold"
+                        <button class="btn dropdown-toggle fs-14 text-uppercase fw-semibold category-color"
                             type="button" id="moreCategoriesDropdown" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             more categories
@@ -117,7 +117,7 @@
                             aria-labelledby="moreCategoriesDropdown">
                             <a *ngFor="let category of categories.slice(categoryLimit)"
                                 routerLink="/category/{{category.id}}/{{category.slug}}"
-                                class="text-slate-400 text-decoration-none hover-able py-2 fs-14 px-3 d-block w-100">{{category.name}}</a>
+                                class="category-color text-decoration-none hover-able py-2 fs-14 px-3 d-block w-100">{{category.name}}</a>
                         </div>
                     </div>
                 </li>
