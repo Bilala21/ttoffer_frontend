@@ -29,8 +29,8 @@ export class PostCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getAuctionProduct();
-    // this.getFeaturedProduct();
+    this.getAuctionProduct();
+    this.getFeaturedProduct();
     this.handleTab(this.activeTab)
 
     this.globalStateService.currentState.subscribe((state) => {
