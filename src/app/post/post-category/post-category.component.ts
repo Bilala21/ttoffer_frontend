@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
 import { CountdownTimerService } from '../../shared/services/countdown-timer.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-post-category',
   templateUrl: './post-category.component.html',
@@ -16,6 +17,7 @@ export class PostCategoryComponent implements OnInit {
   feature = [];
   auction = [];
   data:any[]=[]
+  countdownSubscriptions: Subscription[] = [];
   promotionBanners: any = [
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
@@ -28,24 +30,13 @@ export class PostCategoryComponent implements OnInit {
     this.globalStateService.updateProdTab("ProductType", tab)
   }
 
-  ngOnInit() {
-    this.getAuctionProduct();
-    this.getFeaturedProduct();
-    this.handleTab(this.activeTab)
-
-    this.globalStateService.currentState.subscribe((state) => {
-      this.data = state.filteredProducts;
-      this.globalStateService.productlength=this.data.length
-      // this.activeTab = state.prodTab
-
-    })
-  }
   // getAuctionProduct
   getAuctionProduct() {
     this.mainServices.getAuctionProduct().subscribe({
       next: (res) => {
         this.auction = res.data;
         console.log(this.auction);
+        this.startCountdowns();
       },
       error: (error) => {
         console.log(error);
@@ -82,4 +73,34 @@ export class PostCategoryComponent implements OnInit {
   setActiveButton(buttonNumber: number) {
     this.activeButton = buttonNumber;
   }
+
+  startCountdowns() {
+    this.auction.forEach((item: any) => {
+      const datePart = item.ending_date.split('T')[0];
+      const endingDateTime = `${datePart}T${item.ending_time}:00.000Z`;
+
+      const subscription = this.countdownTimerService.startCountdown(endingDateTime).subscribe((remainingTime) => {
+        item.calculateRemaningTime = remainingTime;
+        item.isBid = remainingTime !== 'Bid Expired';
+        this.cd.detectChanges();
+      });
+
+      this.countdownSubscriptions.push(subscription);
+    });
+  }
+
+  
+  ngOnInit() {
+    this.getAuctionProduct();
+    this.getFeaturedProduct();
+    this.handleTab(this.activeTab)
+    this.countdownSubscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.globalStateService.currentState.subscribe((state) => {
+      this.data = state.filteredProducts;
+      this.globalStateService.productlength=this.data.length
+      // this.activeTab = state.prodTab
+
+    })
+  }
+  
 }

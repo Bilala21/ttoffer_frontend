@@ -900,7 +900,7 @@ showfor(){
     };
   
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      debugger
+      // debugger
       this.toastr.success('Product image deleted successfully', 'Success');
 
       if (this.editProductData) {
@@ -963,7 +963,7 @@ showfor(){
       if (response.ok) {
         const data = await response.json();
         this.EditImageFilesAbc=[]
-        debugger
+        // debugger
         this.imageloading=false
         localStorage.setItem('editProduct', JSON.stringify(data.data));
         this.editProductData=localStorage.getItem('editProduct')

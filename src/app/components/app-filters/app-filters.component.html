@@ -114,14 +114,14 @@
                 <input type="text" placeholder="0" [(ngModel)]="minPrice" value="0"
                     class="w-100 border-0 py-2 px-2 fs-14 bg-transparent"
                     (focusout)="handleFilter({key:'min_price', value: minPrice})">
-                <span class="fs-12 text-slate-400">USD</span>
+                <span class="fs-12 text-slate-400">MAX USD</span>
             </div>
             <!-- Maximum Price Input -->
             <div class="d-flex align-items-center flex-grow-1 border-1 rounded pr-2">
                 <input type="text" placeholder="150" [(ngModel)]="maxPrice" value="150"
                     class="w-100 border-0 py-2 px-2 fs-14 bg-transparent"
                     (focusout)="handleFilter({key:'max_price', value: maxPrice})">
-                <span class="fs-12 text-slate-400">USD</span>
+                <span class="fs-12 text-slate-400">MIN USD</span>
             </div>
         </div>
         <!-- Range Slider -->
