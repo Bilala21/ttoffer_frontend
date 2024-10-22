@@ -79,14 +79,20 @@ export class AppFiltersComponent implements OnInit {
     const modifiedFilter = { ...this.filterCriteria, location: this.filterCriteria.location.join(',') };
     this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
       next: (res: any) => {
-        this.startCountdowns(res.data)
-        this.globalStateService.setFilteredProducts(res.data);
+        // Check if 'res' and 'res.data' are not null or undefined
+        if (res && res.data) {
+          this.startCountdowns(res.data);
+          this.globalStateService.setFilteredProducts(res.data);
+        } else {
+          console.log('No data found in response');
+        }
       },
       error: (err) => {
-        console.log(err);
+        console.log('Error fetching filtered products', err);
       }
     });
   }
+  
 
   handleFilter(filter: any) {
     if (filter.key === "location") {
