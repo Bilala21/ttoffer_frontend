@@ -1,4 +1,4 @@
-import { CommonModule, DecimalPipe, NgIf } from '@angular/common';
+import { DecimalPipe, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
@@ -8,7 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [NgIf, RouterLink,CommonModule],
+  imports: [NgIf, RouterLink],
+  providers: [DecimalPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })
