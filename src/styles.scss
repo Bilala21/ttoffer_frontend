@@ -749,6 +749,14 @@ body {
     max-width: 960px;
   }
 }
+@media (max-width : 992px){
+  .product-filter {
+    max-width: 100%;
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
 
 @media (min-width: 1200px) {
 
@@ -865,6 +873,9 @@ body {
    .shimmer-card {
     flex: 1 1 calc(50% - 15px); /* Two cards per row on smaller screens */
     max-width: calc(50% - 15px);
+  }
+  .btn-pro{
+    font-size: 12px !important;
   }
 }
 

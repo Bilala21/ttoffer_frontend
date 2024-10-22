@@ -53,7 +53,6 @@ export class GlobalStateService {
     this.stateSubject.next(newState);
   }
   updateProdTab(key: string, value: string) {
-    debugger
     const newState = {
       prodTab: { key, value }
     };

@@ -102,7 +102,7 @@ export class ChatBoxComponent {
     this.suggestionsVisible = false;
   }
   ngOnInit(){
-  this.getAllChatsOfUser();
+  // this.getAllChatsOfUser();
   }
   getAllChatsOfUser = () => {
     this.mainServices.getAllChatsOfUser(this.currentUserid).subscribe((res:any) =>{

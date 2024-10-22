@@ -34,6 +34,7 @@ import { AuthService } from '../../shared/services/authentication/Auth.service';
 ]
 })
 export class ProductDetailsComponent {
+  dummy =[{src:"/assets/images/no-img.png"}]
   promotionBanners: any = [
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
@@ -182,9 +183,12 @@ export class ProductDetailsComponent {
         this.allowedToMakeOffer = this.featuredProducts.filter((item) => {
           return item.user_id == this.currentUserid;
         }).length <= 0;
+       if (this.featuredProducts[0].attributes) {
         this.attributesObject = JSON.parse(this.featuredProducts[0].attributes);
-        this.parsedAttributes = JSON.parse(this.attributesObject.attributes);
+        this.parsedAttributes = this.attributesObject?.attributes;
         console.log("product",this.featuredProducts[0].photo)
+       }
+       
         this.loading = false;
       },
       (error) => {
