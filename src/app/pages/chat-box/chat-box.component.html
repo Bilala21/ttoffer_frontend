@@ -12,23 +12,26 @@
                 <div class="message-content pl-2 pr-1">
                     <div class="input-search rounded-2 py-1 px-3 mb-3">
                         <i class="fa fa-search mr-2"></i>
-                        <input type="text" placeholder="Search..." class="border-0 bg-transparent py-2">
+                        <input type="text" placeholder="Search..." class="border-0 bg-transparent py-2"
+                            (input)="onSearch($event.target)">
                     </div>
                     <div class="users scrollable-content pr-2">
-                        @for (item of [1,2,3,4,5,6,7,8,8,8,8,8,8,8]; track $index) {
-                        <div class="p-2 d-flex align-items-center rounded-2 mb-3 {{$index==0 &&'bg-yellow-800'}}">
-                            <img src="/assets/images/banner3.webp" alt="image" loading="lazy" class="rounded-2">
-                            <div class="ml-3 flex-grow-1">
+                        @for (item of users; track $index) {
+                        <div class="p-2 d-flex align-items-center rounded-2 mb-3 cursor-pointer {{(selectedUserId? selectedUserId === item.id:$index==0 ) &&'bg-yellow-800'}}"
+                            (click)="handleSelectedUser(item)">
+                            <img src={{item.image}} alt="image" loading="lazy" class="rounded-2">
+                            <div class="ml-3 flex-grow-1 ">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h2 class="fs-14 fw-semibold m-0">Elmer Laverty</h2>
-                                    <span class="fs-14 fw-normal text-slate-400">1h</span>
+                                    <h2 class="fs-14 fw-semibold m-0">{{item.name}} </h2>
+                                    <span class="fs-14 fw-normal text-slate-400">{{item.time}} </span>
                                 </div>
                                 <div style="display: flex;justify-content: space-between;">
-                                <p class="m-0 fs-12 fw-normal text-slate-400">message</p>
-                                <img style="width: 25px;
+                                    <p class="m-0 fs-12 fw-normal text-slate-400">{{item.message}} </p>
+                                    <img style="width: 25px;
                                 height: 25px;
-                                object-fit: fill;" src="/assets/images/banner3.webp" alt="Small Profile Image" loading="lazy" class="small-profile-image rounded-circle">
-                            </div>
+                                object-fit: fill;" src="/assets/images/banner3.webp" alt="Small Profile Image"
+                                        loading="lazy" class="small-profile-image rounded-circle">
+                                </div>
                             </div>
                         </div>
                         }
@@ -59,7 +62,8 @@
                     <div class="mt-2 d-flex align-items-center">
                         <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1">Reject Offer</button>
                         <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1 mx-3">Accept Offer</button>
-                        <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1" (click)="openModal()">Counter Offer</button>
+                        <button class="btn bg-dark rounded-pill fs-8 text-white flex-grow-1"
+                            (click)="openModal()">Counter Offer</button>
                     </div>
                 </div>
                 <div class="messages-side mt-5 pt-5">
@@ -77,60 +81,51 @@
                     </button>
                     <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
                     <div class="d-flex align-items-center flex-grow-1 position-relative">
-                        <input type="text" placeholder="Type a message" class="flex-grow-1 py-2 px-2 rounded-2" #chatMessage>
-                        <button type="button" (click)="sendMessage(chatMessage.value)" class="btn bg-transparent position-absolute">
+                        <input type="text" placeholder="Type a message" class="flex-grow-1 py-2 px-2 rounded-2"
+                            #chatMessage>
+                        <button type="button" (click)="sendMessage(chatMessage.value)"
+                            class="btn bg-transparent position-absolute">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
 
     <!-- modal-for-bid -->
-  <div
-  class="modal fade"
-  id="offerModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="offerModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="close"
-          (click)="closeModal()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body mb-5">
-        <div class="row">
-          <div class="col-9 mx-auto">
-            <div class="text-center">
-              <h3 class="">Custom Offer</h3>
-              <input type="text" class="p-2 rounded w-100"  />
-            </div>
-            <div class="mt-4">
-                <!-- (click)="placeBid(price)" -->
-                <button class="btn btn-dark w-100" >
-                   Send your offer
-                </button>
-              <!-- 
+    <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="offerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body mb-5">
+                    <div class="row">
+                        <div class="col-9 mx-auto">
+                            <div class="text-center">
+                                <h3 class="">Custom Offer</h3>
+                                <input type="text" class="p-2 rounded w-100" />
+                            </div>
+                            <div class="mt-4">
+                                <!-- (click)="placeBid(price)" -->
+                                <button class="btn btn-dark w-100">
+                                    Send your offer
+                                </button>
+                                <!-- 
               <button class="btn btn-dark w-100 mt-3" (click)="closeModal()">
                 Cancel
               </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
 </main>
