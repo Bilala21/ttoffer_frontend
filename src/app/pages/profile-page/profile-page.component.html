@@ -132,18 +132,14 @@
                   [ngClass]="{ active: selectedTab === 'accountSetting' }"
                   (click)="selectTab('accountSetting')"
                 >
-                  <div class="row align-items-center">
-                    <div class="col-2">
-                      <img
-                        src="assets/images/user-edit.svg"
-                        class="w-100"
-                        alt=""
-                      />
-                    </div>
-                    <div class="col-10">
-                      <h6>Account Setting</h6>
-                    </div>
+                <div class="row align-items-center">
+                  <div class="col-2 text-center">
+                    <i class="fas fa-cog fa-2x" style="color:#686565"></i> <!-- Settings icon -->
                   </div>
+                  <div class="col-10">
+                    <h6>Account Setting</h6>
+                  </div>
+                </div>
                 </div>
                 <div
                   class="col-12 mt-3 p-2 onHover pointer"
@@ -497,11 +493,8 @@
                   >
                     <div class="row align-items-center">
                       <div class="col-2">
-                        <img
-                          src="assets/images/user-edit.svg"
-                          class="w-100"
-                          alt=""
-                        />
+                        <i class="fas fa-cog fa-2x" style="color:#686565"></i> <!-- Settings icon -->
+
                       </div>
                       <div class="col-10 m-0 p-0">
                         <h6>Account Setting</h6>
@@ -597,27 +590,29 @@
                   role="group"
                   aria-label="Basic example"
                 >
+                <button
+                type="button"
+                class="btn btngroup p-3 sm-p-2"
+                [ngClass]="{ active: activeButton === 2 }"
+                (click)="toggleActive(2)"
+               
+                style="
+                border-radius: 30px 0px 0px 30px;
+                border: 1px solid #9ca3af;
+              "
+              >
+                Buying
+              </button>
                   <button
                     type="button"
                     class="btn btngroup p-3 sm-p-2"
                     [ngClass]="{ active: activeButton === 1 }"
                     (click)="toggleActive(1)"
-                    style="
-                      border-radius: 30px 0px 0px 30px;
-                      border: 1px solid #9ca3af;
-                    "
+                    style="border: 1px solid #9ca3af"
                   >
                     Selling
                   </button>
-                  <button
-                    type="button"
-                    class="btn btngroup p-3 sm-p-2"
-                    [ngClass]="{ active: activeButton === 2 }"
-                    (click)="toggleActive(2)"
-                    style="border: 1px solid #9ca3af"
-                  >
-                    Buying
-                  </button>
+                
                   <button
                     type="button"
                     class="btn btngroup p-3 sm-p-2"
@@ -754,14 +749,14 @@
                         class="d-flex justify-content-between align-items-center"
                       >
                         <span class="card-title">{{ data.title }}</span>
-                        <span class="view-count"
+                        <!-- <span class="view-count"
                           >{{ data.view_count || 0 }} Views</span
-                        >
+                        > -->
                       </div>
                       <div
                         class="d-flex justify-content-start align-items-center"
                       >
-                        <div class="avatars d-flex">
+                        <!-- <div class="avatars d-flex">
                           <img
                             src="https://via.placeholder.com/30"
                             alt="User 1"
@@ -778,9 +773,9 @@
                             src="https://via.placeholder.com/30"
                             alt="User 3"
                           />
-                        </div>
+                        </div> -->
                       </div>
-                      <div class="action-text">
+                      <!-- <div class="action-text">
                         Sell faster <span>|</span>
                         <span
                           class="mark-as-sold"
@@ -788,7 +783,7 @@
                           style="cursor: pointer"
                           >Mark as sold</span
                         >
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -939,73 +934,6 @@
                 </div>
               </ng-template>
             </div>
-
-            <!-- <div style="height: 100vh">
-            <div class="sidebar-selling mt-5">
-              <div class="sidebar-content">
-                <div class="row">
-                  
-
-                  <div class="col-md-10 mx-auto" *ngIf="activeButton === 3">
-                    <div
-                      class="row mt-3 align-items-center justify-content-between"
-                      *ngFor="let data of sellingList.data.archive"
-                    >
-                      <div class="col-md-9">
-                        <div class="row align-items-center">
-                          <div class="col-4">
-                            <img src="{{ data.img }}" class="w-100" alt="" />
-                          </div>
-                          <div class="col-7">
-                            <div>
-                              <h5 class="sm-cat-text4">{{ data.heading }}</h5>
-                            </div>
-                            <div class="position-relative">
-                              <img src="{{ data.elipsImg1 }}" alt="" />
-                              <img
-                                src="{{ data.elipsImg2 }}"
-                                class="position-absolute"
-                                style="left: 18px; z-index: -1; top: 1px"
-                                alt=""
-                              />
-                              <img
-                                src="{{ data.elipsImg3 }}"
-                                class="position-absolute"
-                                style="left: 35px; z-index: -3; top: 1px"
-                                alt=""
-                              />
-                              <img
-                                src="{{ data.elipsImg4 }}"
-                                class="position-absolute"
-                                style="left: 53px; z-index: -6; top: 1px"
-                                alt=""
-                              />
-                            </div>
-                            <div class="d-flex justify-content-between mt-2">
-                              <span class="sm-cat-text3">{{
-                                data.subHeading1
-                              }}</span>
-                              <span class="sm-cat-text3">{{
-                                data.subHeading2
-                              }}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-2">
-                        <span class="text-end sm-cat-text1">{{
-                          data.view_count
-                        }}</span>
-
-                      </div>
-                      <hr />
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
           </div>
           <div
             *ngIf="selectedTab === 'paymentDeposit'"
@@ -1064,8 +992,8 @@
               <div class="col-md-10 mx-auto mt-5" *ngIf="activeButton === 1">
                 <div class="row">
                   <div class="col-6 text-center mx-auto">
-                    <h6 class="sm-cat-text3">Total Balance</h6>
-                    <h4>AED 5000</h4>
+                    <!-- <h6 class="sm-cat-text3">Total Balance</h6>
+                    <h4>AED 5000</h4> -->
                   </div>
                   <div class="col-12">
                     <div class="row justify-content-between">
@@ -1565,21 +1493,23 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12" style="cursor: pointer">
+                  <div class="col-12" style="cursor: pointer" [ngClass]="{ 'disabled': !editProductData }">
                     <img
                       src="assets/images/add-post-img.png"
                       class="w-100"
                       alt=""
-                      (click)="fileInput.click()"
+                      (click)="editProductData ? fileInput.click() : null"
+                      style="cursor: {{ editProductData ? 'pointer' : 'not-allowed' }}"
                     />
                     <input
-                      #fileInput
-                      type="file"
-                      (change)="onEditFileChange($event)"
-                      accept="image/*"
-                      style="display: none"
-                      multiple
-                    />
+        #fileInput
+        type="file"
+        (change)="onEditFileChange($event)"
+        accept="image/*"
+        style="display: none"
+        multiple
+        [disabled]="!editProductData" 
+      />
                   </div>
                 </div>
                 <div class="video-upload-container mt-5">
@@ -1608,7 +1538,8 @@
                         src="assets/images/add-post-video.png"
                         class="w-100"
                         alt="Upload Video"
-                        (click)="videoInput.click()"
+                        (click)="editProductData ? videoInput.click() : null"
+                        style="cursor: {{ editProductData ? 'pointer' : 'not-allowed' }}"
                       />
                       <input
                         #videoInput
@@ -1616,6 +1547,7 @@
                         (change)="onVideoSelected($event)"
                         accept="video/*"
                         style="display: none"
+                        [disabled]="!editProductData"
                       />
                     </div>
                   </div>
@@ -1662,6 +1594,7 @@
                         placeholder="Title"
                         [(ngModel)]="editTitle"
                         style="padding: 3vh; border-radius: 2vh"
+                        [disabled]="!editProductData"
                       />
                     </div>
                     <div class="mt-3">
@@ -1673,6 +1606,11 @@
                         class="form-control w-100"
                         id=""
                         style="padding: 3vh; border-radius: 2vh"
+                        ((input))="
+                       
+                        onFieldChange('description')
+                      "
+                      [disabled]="!editProductData"
                       ></textarea>
                     </div>
                   </div>
@@ -1689,6 +1627,7 @@
                         getSubcategories(selectedCategoryId);
                         onFieldChange('category')
                       "
+                       [disabled]="!editProductData"
                       aria-label="Default select example"
                     >
                       <option value="" disabled selected>
@@ -1720,6 +1659,7 @@
                       [(ngModel)]="selectedSubCategoryId"
                       (change)="onFieldChange('subcategory')"
                       aria-label="Default select example"
+                      [disabled]="!editProductData"
                     >
                       <option value="" disabled selected>
                         Select a subcategory
@@ -1768,10 +1708,12 @@
                         style="border-radius: 2vh"
                         (change)="onFieldChange(field.model)"
                         aria-label="Default select example"
+                        [disabled]="!editProductData"
                       >
                         <option
                           *ngFor="let option of field.options"
                           [value]="option.id"
+                           [disabled]="!editProductData"
                         >
                           {{ option.name }}
                         </option>
@@ -1791,6 +1733,7 @@
                         (input)="onFieldChange(field.model)"
                         [placeholder]="field.placeholder"
                         style="padding: 3vh; border-radius: 2vh"
+                        [disabled]="!editProductData"
                       />
                     </div>
                   </div>
@@ -1803,8 +1746,9 @@
                     <select
                       class="form-select form-control"
                       style="border-radius: 2vh"
-                      [(ngModel)]="pricingCatId"
+                      [(ngModel)]="editpricingCatId"
                       aria-label="Default select example"
+                      [disabled]="!editProductData"
                     >
                       <option
                         *ngFor="let pricingCat of pricingCategories"
@@ -1817,72 +1761,49 @@
                 </div>
                 <div
                   class="row mt-3"
-                  *ngIf="pricingCatId == 'Auction'"
+                  *ngIf="editpricingCatId == 'Auction'"
                   style="border: 1px solid gainsboro; border-radius: 5px"
                 >
                   <div class="col-12 p-3">
                     <label>Starting Bid</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control w-100"
                       placeholder="Starting Price"
-                      [(ngModel)]="startingPrice"
+                      [(ngModel)]="editStartingPrice"
                       style="padding: 3vh; border-radius: 2vh"
+                      [disabled]="!editProductData"
                     />
                   </div>
                   <div class="col-12 p-3">
                     <label>Lowest Price</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control w-100"
                       placeholder="Lowest amount for your item"
-                      [(ngModel)]="final_price"
+                      [(ngModel)]="edit_final_price"
                       style="padding: 3vh; border-radius: 2vh"
+                      [disabled]="!editProductData"
                     />
                   </div>
-                  <!-- <div class="row col-12 p-3">
-                                    <div class="col-3">
-                                        <label>Starting Time</label>
-                                        <input type="time" class="form-control" id="startTime" name="startTime"
-                                            style="width:140px;" [value]="startingTime" (input)="parseSTime($event)"
-                                            placeholder="Start Time" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Time</label>
-                                        <input type="time" class="form-control" id="endingTime" name="endingTime"
-                                            [value]="endingTime" (input)="parseETime($event)" placeholder="Ending Time"
-                                            required>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <label>Starting Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="startingDate | date:'yyyy-MM-dd'"
-                                            (input)="startingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <label>Ending Date</label>
-                                        <input type="date" class="form-control" id="dueDate" name="dueDate" #myDate
-                                            style="width:140px;" [value]="endingDate | date:'yyyy-MM-dd'"
-                                            (input)="endingDate=parseDate($event)" placeholder="Due Date" required>
-                                    </div>
-                                </div> -->
+                 
                   <div class="row col-12 p-3">
                     <!-- Starting Time Field -->
                     <div class="col-3">
                       <label for="startTime">Starting Time</label>
                       <input
-                        [disabled]="isEditPost"
+                  
                         type="time"
                         class="form-control"
                         id="startTime"
                         name="startTime"
                         style="width: 140px"
-                        [(ngModel)]="startingTime"
+                        [(ngModel)]="editStartingTime"
                         (input)="parseSTime($event)"
                         placeholder="Start Time"
                         required
                         [min]="getMinTime('start')"
+                        [disabled]="!editProductData"
                       />
                     </div>
 
@@ -1894,11 +1815,12 @@
                         class="form-control"
                         id="endingTime"
                         name="endingTime"
-                        [(ngModel)]="endingTime"
+                        [(ngModel)]="editEndingTime"
                         (input)="parseETime($event)"
                         placeholder="Ending Time"
                         required
                         [min]="getMinTime('end')"
+                        [disabled]="!editProductData"
                       />
                     </div>
 
@@ -1913,18 +1835,18 @@
                         name="startDate"
                         style="width: 140px"
                         [value]="
-                          startingDate
-                            ? (startingDate | date : 'yyyy-MM-dd')
+                          editStartingDate
+                            ? (editStartingDate | date : 'yyyy-MM-dd')
                             : getTodayDate()
                         "
-                        (input)="startingDate = parseDate($event)"
+                        (input)="editStartingDate = parseDate($event, 'start')"
                         placeholder="Start Date"
                         required
                         [min]="getTodayDate()"
+                        [disabled]="!editProductData"
                       />
                     </div>
-
-                    <!-- Ending Date Field -->
+                    
                     <div class="col-3">
                       <label for="endDate">Ending Date</label>
                       <input
@@ -1934,11 +1856,11 @@
                         name="endDate"
                         style="width: 140px"
                         [value]="
-                          endingDate
-                            ? (endingDate | date : 'yyyy-MM-dd')
+                          editEndingDate
+                            ? (editEndingDate | date : 'yyyy-MM-dd')
                             : getTodayDate()
                         "
-                        (input)="endingDate = parseDate($event)"
+                        (input)="editEndingDate = parseDate($event, 'end')"
                         placeholder="End Date"
                         required
                         [min]="
@@ -1946,13 +1868,15 @@
                             ? (startingDate | date : 'yyyy-MM-dd')
                             : getTodayDate()
                         "
+                         [disabled]="!editProductData"
                       />
                     </div>
+                    
                   </div>
                 </div>
                 <div
                   class="row mt-3"
-                  *ngIf="pricingCatId == 'FixedPrice'"
+                  *ngIf="editpricingCatId == 'FixedPrice'"
                   style="border: 1px solid gainsboro; border-radius: 5px"
                 >
                   <div class="col-12 p-3">
@@ -1963,12 +1887,13 @@
                       placeholder="Price"
                       [(ngModel)]="editPrice"
                       style="padding: 3vh; border-radius: 2vh"
+                      [disabled]="!editProductData"
                     />
                   </div>
                 </div>
                 <div
                   class="row mt-3"
-                  *ngIf="pricingCatId == 'SellToTTOffer'"
+                  *ngIf="editpricingCatId == 'SellToTTOffer'"
                   style="border: 1px solid gainsboro; border-radius: 5px"
                 >
                   <div class="col-12 p-3">
@@ -1981,6 +1906,7 @@
                       #myDate
                       placeholder="Due Date"
                       required
+                      [disabled]="!editProductData"
                     />
                   </div>
                 </div>
@@ -2038,6 +1964,7 @@
                 <div >
                   <div class="row mb-3">
                     <div class="col-12 mx-auto">
+                      
                       <label>Upload Image</label>
                       <div *ngIf="selectedFiles.length > 0" class="image-grid">
                         <!-- <label>Upload Image</label> -->
@@ -2046,7 +1973,7 @@
                           class="image-item"
                           *ngFor="let file of selectedFiles; let i = index"
                          
-                          (click)="selectImage(i)"
+                         
                         >
                           <img
                             [src]="file.src"
@@ -2082,7 +2009,15 @@
                       style="display: none"
                       multiple
                     />
+                    <div
+                    *ngIf="validationErrors['uploadImage']"
+                    class="text-danger mt-1"
+                  >
+                    {{ validationErrors["uploadImage"] }}
                   </div>
+                  </div>
+                  
+
                 </div>
                 <div class="video-upload-container mt-5">
                   <label>Upload Video</label>
@@ -2122,8 +2057,7 @@
                     </div>
                   </div>
                 </div>
-                
-
+               
                 <div
                   class="row mt-5 justify-content-end align-items-center"
                   *ngIf="selectedVideos.length > 0"
@@ -2166,7 +2100,14 @@
                         placeholder="Title"
                         [(ngModel)]="title"
                         style="padding: 3vh; border-radius: 2vh"
+                        (input)="onFieldChange('title')"
                       />
+                      <div
+                      *ngIf="validationErrors['title']"
+                      class="text-danger mt-1"
+                    >
+                      {{ validationErrors["title"] }}
+                    </div>
                     </div>
                     <div class="mt-3">
                       <label>Description (optional)</label>
@@ -2177,7 +2118,14 @@
                         class="form-control w-100"
                         id=""
                         style="padding: 3vh; border-radius: 2vh"
+                        (input)="onFieldChange('description')"
                       ></textarea>
+                      <div
+                      *ngIf="validationErrors['description']"
+                      class="text-danger mt-1"
+                    >
+                      {{ validationErrors["description"] }}
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -2195,9 +2143,7 @@
                       "
                       aria-label="Default select example"
                     >
-                      <option value="" disabled selected>
-                        Select a category
-                      </option>
+                     
                       <option
                         *ngFor="let category of categories"
                         [value]="category.id"
@@ -2225,9 +2171,7 @@
                       (change)="onFieldChange('subcategory')"
                       aria-label="Default select example"
                     >
-                      <option value="" disabled selected>
-                        Select a subcategory
-                      </option>
+                      
                       <option
                         *ngFor="let subCategory of subCategory"
                         [value]="subCategory.id"
@@ -2329,15 +2273,17 @@
                       [(ngModel)]="pricingCatId"
                       aria-label="Default select example"
                     >
-                      <option
-                        *ngFor="let pricingCat of pricingCategories"
-                        [value]="pricingCat.id"
-                      >
+                      <option *ngFor="let pricingCat of pricingCategories" [value]="pricingCat.id">
                         {{ pricingCat.name }}
                       </option>
                     </select>
+                    <div *ngIf="validationErrors['pricingCategory']" class="text-danger">
+                      {{ validationErrors['pricingCategory'] }}
+                    </div>
                   </div>
                 </div>
+                
+                <!-- Auction Fields -->
                 <div
                   class="row mt-3"
                   *ngIf="pricingCatId == 'Auction'"
@@ -2346,66 +2292,73 @@
                   <div class="col-12 p-3">
                     <label>Starting Bid</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control w-100"
                       placeholder="Starting Price"
                       [(ngModel)]="startingPrice"
                       style="padding: 3vh; border-radius: 2vh"
+                      (input)="onFieldChange('startingPrice')"
                     />
-                    <div class="col-12 p-3">
-                      <label>Lowest Price</label>
-                      <input
-                        type="text"
-                        class="form-control w-100"
-                        placeholder="Lowest amount for your item"
-                        [(ngModel)]="final_price"
-                        style="padding: 3vh; border-radius: 2vh"
-                      />
+                    <div *ngIf="validationErrors['startingPrice']" class="text-danger">
+                      {{ validationErrors['startingPrice'] }}
+                    </div>
+                  </div>
+                  <div class="col-12 p-3">
+                    <label>Lowest Price</label>
+                    <input
+                      type="number"
+                      class="form-control w-100"
+                      placeholder="Lowest amount for your item"
+                      [(ngModel)]="final_price"
+                      style="padding: 3vh; border-radius: 2vh"
+                      (input)="onFieldChange('final_price')"
+
+                    />
+                    <div *ngIf="validationErrors['final_price']" class="text-danger">
+                      {{ validationErrors['final_price'] }}
                     </div>
                   </div>
                   <div class="row col-12 p-3">
-                    <!-- Starting Time Field -->
                     <div class="col-3">
                       <label for="startTime">Starting Time</label>
                       <input
-                        [disabled]="isEditPost"
                         type="time"
                         class="form-control"
                         id="startTime"
-                        name="startTime"
-                        style="width: 140px"
                         [(ngModel)]="startingTime"
                         (input)="parseSTime($event)"
                         placeholder="Start Time"
-                        required
-                        [min]="getMinTime('start')"
-                      />
-                    </div>
+                        style="width: 140px"
+                        (input)="onFieldChange('startingTime')"
 
-                    <!-- Ending Time Field -->
+                      />
+                      <div *ngIf="validationErrors['startingTime']" class="text-danger">
+                        {{ validationErrors['startingTime'] }}
+                      </div>
+                    </div>
                     <div class="col-3">
                       <label for="endingTime">Ending Time</label>
                       <input
                         type="time"
                         class="form-control"
                         id="endingTime"
-                        name="endingTime"
                         [(ngModel)]="endingTime"
                         (input)="parseETime($event)"
                         placeholder="Ending Time"
-                        required
-                        [min]="getMinTime('end')"
-                      />
-                    </div>
+                        style="width: 140px"
+                        (input)="onFieldChange('endingTime')"
 
-                    <!-- Starting Date Field -->
+                      />
+                      <div *ngIf="validationErrors['endingTime']" class="text-danger">
+                        {{ validationErrors['endingTime'] }}
+                      </div>
+                    </div>
                     <div class="col-3">
                       <label for="startDate">Starting Date</label>
                       <input
                         [disabled]="isEditPost"
                         type="date"
                         class="form-control"
-                        id="startDate"
                         name="startDate"
                         style="width: 140px"
                         [value]="
@@ -2413,14 +2366,13 @@
                             ? (startingDate | date : 'yyyy-MM-dd')
                             : getTodayDate()
                         "
-                        (input)="startingDate = parseDate($event)"
+                        (input)="startingDate = parseDate($event, 'start')"
                         placeholder="Start Date"
                         required
                         [min]="getTodayDate()"
                       />
                     </div>
-
-                    <!-- Ending Date Field -->
+                    
                     <div class="col-3">
                       <label for="endDate">Ending Date</label>
                       <input
@@ -2432,9 +2384,9 @@
                         [value]="
                           endingDate
                             ? (endingDate | date : 'yyyy-MM-dd')
-                            : getTodayDate()
+                            : getTomorrowDate()
                         "
-                        (input)="endingDate = parseDate($event)"
+                        (input)="endingDate = parseDate($event, 'end')"
                         placeholder="End Date"
                         required
                         [min]="
@@ -2444,8 +2396,11 @@
                         "
                       />
                     </div>
+                    
                   </div>
                 </div>
+                
+                <!-- Fixed Price Fields -->
                 <div
                   class="row mt-3"
                   *ngIf="pricingCatId == 'FixedPrice'"
@@ -2459,9 +2414,16 @@
                       placeholder="Price"
                       [(ngModel)]="price"
                       style="padding: 3vh; border-radius: 2vh"
+                      (input)="onFieldChange('price')"
+
                     />
+                    <div *ngIf="validationErrors['price']" class="text-danger">
+                      {{ validationErrors['price'] }}
+                    </div>
                   </div>
                 </div>
+                
+                <!-- Sell To TT Offer Fields -->
                 <div
                   class="row mt-3"
                   *ngIf="pricingCatId == 'SellToTTOffer'"
@@ -2473,13 +2435,16 @@
                       type="date"
                       class="form-control"
                       id="dueDate"
-                      name="dueDate"
-                      #myDate
+                     
                       placeholder="Due Date"
                       required
                     />
+                    <div *ngIf="validationErrors['dueDate']" class="text-danger">
+                      {{ validationErrors['dueDate'] }}
+                    </div>
                   </div>
                 </div>
+                
                 <app-current-location
                   (locationFound)="onLocationFound($event)"
                 ></app-current-location>
@@ -2515,11 +2480,8 @@
               <div class="col-md-9 mx-auto" style="margin-top: 20vh">
                 <div class="row align-items-center">
                   <div class="col-2">
-                    <img
-                      src="assets/images/user-edit.svg"
-                      class="w-100"
-                      alt=""
-                    />
+                    <i class="fas fa-cog fa-2x" style="color:#686565"></i> <!-- Settings icon -->
+
                   </div>
                   <div class="col-10 m-0 p-0">
                     <h3 class="sm-cat-text4">Account Setting</h3>
@@ -2574,7 +2536,7 @@
                       <div class="col-2">
                         <i
                           class="bi bi-trash-fill"
-                          style="font-size: 1.5rem; color: black"
+                          style="font-size: 1.5rem; color:#686565"
                         ></i>
                       </div>
                       <div class="col-10">
