@@ -6,10 +6,10 @@ import { SellingComponent } from '../selling/selling.component';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterModule } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { forkJoin, map, Observable } from 'rxjs';
+import { filter, forkJoin, map, Observable } from 'rxjs';
 import { blob } from 'stream/consumers';
 import { ReviewPageComponent } from '../review-page/review-page.component';
 import { PaymentComponent } from '../payment/payment.component';
@@ -65,6 +65,10 @@ export interface CategoryField {
   ],
 })
 export class ProfilePageComponent {
+  editStartingPrice:any;
+  edit_final_price:any;
+  editStartingTime:any;
+  editEndingTime:any;
   imageloading:any=false
   selectedVideoFile:any
   categoryForm: FormGroup;
@@ -89,6 +93,7 @@ export class ProfilePageComponent {
   title: string = '';
   editTitle:any;
   editPrice:any;
+  editpricingCatId:any;
   editDescription:any
   description: string = '';
   userImage: any;
@@ -124,6 +129,9 @@ export class ProfilePageComponent {
   subCategory: any = [];
   categories: any = [];
   isLoading:boolean=false;
+  editStartingDate:any;
+  editEndingDate:any
+  private isNavigatingAway: boolean = false;
   showNotif() {
     this.showNotification = true;
   }
@@ -621,7 +629,12 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   currentTab = 'purchasesSales';
 }
     this.editProductData=localStorage.getItem('editProduct');
-
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationStart))
+    .subscribe((event: any) => {
+      // Set a flag when navigating away
+      this.isNavigatingAway = true;
+    });
     this.selectTab(currentTab);
 
     this.getNotification();
@@ -650,16 +663,16 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   
           // Set pricingCatId based on ProductType
           if (this.editProductData.ProductType === 'featured') {
-            this.pricingCatId = 'FixedPrice';
+            this.editpricingCatId = 'FixedPrice';
             this.editPrice = this.editProductData.fix_price;
           } else if (this.editProductData.ProductType === 'auction') {
-            this.pricingCatId = 'Auction';
-            this.startingPrice = this.editProductData.auction_price; // Bind starting price
-            this.final_price = this.editProductData.final_price; // Bind final price
-            this.startingTime = this.editProductData.starting_time; // Bind starting time
-            this.endingTime = this.editProductData.ending_time; // Bind ending time
-            this.startingDate = this.editProductData.starting_date; // Bind starting date
-            this.endingDate = this.editProductData.ending_date; // Bind ending date
+            this.editpricingCatId = 'Auction';
+            this.editStartingPrice = this.editProductData.auction_price; // Bind starting price
+            this.edit_final_price = this.editProductData.final_price; // Bind final price
+            this.editStartingTime = this.editProductData.starting_time; // Bind starting time
+            this.editEndingTime = this.editProductData.ending_time; // Bind ending time
+            this.editStartingDate = this.editProductData.starting_date; // Bind starting date
+            this.editEndingDate = this.editProductData.ending_date; // Bind ending date
           }
   
           this.getSubcategories(this.selectedCategoryId);
@@ -837,9 +850,10 @@ showfor(){
     if (event.target.files && event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
         this.EditImageFilesAbc.push(event.target.files[i]);
-        this.updateProductImage()
         this.readFileAsDataURL(event.target.files[i]);
       }
+      this.updateProductImage()
+
     }
   }
   onFileChange(event: any) {
@@ -854,6 +868,7 @@ showfor(){
     const reader = new FileReader();
     reader.onload = () => {
       this.selectedFiles.push({ src: reader.result as string });
+      this.validateForm()
     };
     reader.readAsDataURL(file);
   }
@@ -900,7 +915,7 @@ showfor(){
     };
   
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      debugger
+      // debugger
       this.toastr.success('Product image deleted successfully', 'Success');
 
       if (this.editProductData) {
@@ -963,7 +978,7 @@ showfor(){
       if (response.ok) {
         const data = await response.json();
         this.EditImageFilesAbc=[]
-        debugger
+        // debugger
         this.imageloading=false
         localStorage.setItem('editProduct', JSON.stringify(data.data));
         this.editProductData=localStorage.getItem('editProduct')
@@ -1406,15 +1421,7 @@ showfor(){
     if (event.target.files && event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
-    // this.selectedFile = event.target.files[0] ?? null;
-    // const input = event.target as HTMLInputElement;
-    // let files = input.files;
-
-    // if (files && files[0]) {
-    //   let file = files[0];
-    //   this.selectedFile = file;
     this.updateProfile();
-    // }
   }
 
   updateProfile(): void {
@@ -1505,16 +1512,24 @@ showfor(){
   });
   }
   validateForm(): boolean {
-    this.validationErrors = {}; // Clear existing errors before validation
-
+    debugger;
+    this.validationErrors = {}; 
+    if (!this.title) {
+      this.validationErrors['title'] = 'Please add a title.';
+    }
+    if (!this.description) {
+      this.validationErrors['description'] = 'Please add a description.';
+    }
     if (!this.selectedCategoryId) {
       this.validationErrors['category'] = 'Please select a category.';
     }
-
     if (!this.selectedSubCategoryId) {
       this.validationErrors['subCategory'] = 'Please select a sub-category.';
     }
-
+    if (this.selectedFiles.length == 0) {
+      this.validationErrors['uploadImage'] = 'Please add at least one image.';
+    }
+  
     // Validate attributes for the selected category
     const requiredFields = this.categoryFields[this.selectedCategoryId] || [];
     requiredFields.forEach((field) => {
@@ -1522,9 +1537,45 @@ showfor(){
         this.validationErrors[field.model] = `${field.label} is required.`;
       }
     });
-
-    return Object.keys(this.validationErrors).length === 0; // Return true if no errors
+  
+    // Specific validation for different pricing categories
+    switch (this.pricingCatId) {
+      case 'Auction':
+        if (!this.startingPrice) {
+          this.validationErrors['startingPrice'] = 'Starting price is required for Auction.';
+        }
+        if (!this.final_price) {
+          this.validationErrors['final_price'] = 'Lowest price is required for Auction.';
+        }
+        if (!this.startingTime) {
+          this.validationErrors['startingTime'] = 'Starting time is required for Auction.';
+        }
+        if (!this.endingTime) {
+          this.validationErrors['endingTime'] = 'Ending time is required for Auction.';
+        }
+        if (!this.startingDate) {
+          this.validationErrors['startingDate'] = 'Starting date is required for Auction.';
+        }
+        if (!this.endingDate) {
+          this.validationErrors['endingDate'] = 'Ending date is required for Auction.';
+        }
+        break;
+  
+      case 'FixedPrice':
+        if (!this.price) {
+          this.validationErrors['price'] = 'Price is required for Fixed Price.';
+        }
+        break;
+  
+     
+  
+      default:
+        break;
+    }
+  
+    return Object.keys(this.validationErrors).length === 0;
   }
+  
   onFieldChange(fieldModel: string): void {
     if (this.validationErrors[fieldModel]) {
       delete this.validationErrors[fieldModel];
@@ -1532,7 +1583,6 @@ showfor(){
   }
   async AddProductFirstStep() {
     if (!this.validateForm()) {
-      // Display error messages if form is invalid
       return;
     }
     let formData = new FormData();
@@ -1596,7 +1646,6 @@ showfor(){
   }
 
   async addProductSecondStep() {
-    // Adding category and subcategory details to attributes
     this.attributes['category_id'] = this.selectedCategoryId;
     this.attributes['category_name'] = this.getCategoryNameById(
       this.selectedCategoryId
@@ -1704,7 +1753,6 @@ showfor(){
       attributes: JSON.stringify(this.categoryForm.value),
     };
     this.mainServices.editProductSecondStep(input).subscribe((res) => {
-      res;
       this.EditProductThirdStep();
       console.log(res);
     });
@@ -1712,23 +1760,21 @@ showfor(){
   EditProductThirdStep() {
     this.loading = true;
     let input;
-    if (this.pricingCatId == 'Auction') {
+    if (this.editpricingCatId == 'Auction') {
       input = {
         product_id: this.productId,
-        auction_price: this.startingPrice.toString(),
-        starting_date: this.startingDate
-          ? new Date(this.startingDate).toISOString()
+        auction_price: this.editStartingPrice.toString(),
+        starting_date: this.editStartingDate
+          ? new Date(this.editStartingDate).toISOString()
           : null,
-        // starting_time: '12:16',
-        starting_time: this.startingTime.toString(),
-        ending_date: this.endingDate
-          ? new Date(this.endingDate).toISOString()
+        starting_time: this.editStartingTime.toString(),
+        ending_date: this.editEndingDate
+          ? new Date(this.editEndingDate).toISOString()
           : null,
-        // ending_time: '12:16',
-        ending_time: this.endingTime,
-        fix_price: null,
+        ending_time: this.editEndingTime.toString(),
+        final_price: this.edit_final_price,
       };
-    } else if (this.pricingCatId == 'FixedPrice') {
+    } else if (this.editpricingCatId == 'FixedPrice') {
       input = {
         product_id: this.productId,
         fix_price: this.editPrice,
@@ -1796,32 +1842,6 @@ showfor(){
         this.loading = false;
       });
   }
-  // getSubCategoryName(categoryId: number, subCategoryId: number): string | undefined {
-  //   // Combine all subcategories into one array
-  //   const allSubCategories = [
-  //     ...this.subCatMobile,
-  //     ...this.subCatPropertyForSales,
-  //     ...this.subCatVehicles,
-  //     ...this.subCatPropertyRent,
-  //     ...this.subCatElectronics,
-  //     ...this.subCatBike,
-  //     ...this.subCatJob,
-  //     ...this.subCatServices,
-  //     ...this.subCatAnimal,
-  //     ...this.subCatFurniture,
-  //     ...this.subCatFashion,
-  //     ...this.subCatKid,
-  //   ];
-
-  //   // Find the subcategory that matches both categoryId and subCategoryId
-  //   const foundSubCategory = allSubCategories.find(
-  //     subCat => subCat.category_id === categoryId && subCat.id === subCategoryId
-  //   );
-
-  //   // Return the name of the found subcategory, or undefined if not found
-  //   return foundSubCategory ? foundSubCategory.name : "";
-  // }
-
   getCurrentUser() {
     if (typeof window !== 'undefined' && window.localStorage) {
       const jsonStringGetData = localStorage.getItem('key');
@@ -1960,23 +1980,41 @@ showfor(){
   //   const date = (event.target as HTMLInputElement).value;
   //   return date ? new Date(date) : new Date();
   // }
-  parseDate(event: any): Date {
+  parseDate(event: any, type: 'start' | 'end'): Date {
     const date = (event.target as HTMLInputElement).value;
     const selectedDate = date ? new Date(date) : new Date();
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset time for comparison
-    selectedDate.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0); // Ensure no time component for comparison
 
+    // Check if the selected date is in the past
     if (selectedDate < today) {
-      this.showErrorMessage('Selected date cannot be in the past.');
       event.target.value = ''; // Clear the input field
       return new Date(); // Return the current date as a fallback
     }
 
-    return selectedDate;
-  }
+    // Additional check for end date
+    if (type === 'end' && this.startingDate) {
+      const startingDate = new Date(this.startingDate);
+      startingDate.setHours(0, 0, 0, 0); // Reset time for comparison
 
+      if (selectedDate < startingDate) {
+        // Ending date is less than the starting date
+        this.toastr.error('Ending date cannot be earlier than the starting date.', 'Error');
+        event.target.value = ''; // Clear the ending date input
+        return this.startingDate; // Return the starting date as fallback
+      }
+    }
+
+    return selectedDate;
+}
+
+getTomorrowDate(): string {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1); // Add 1 day
+  return tomorrow.toISOString().split('T')[0]; // Format as 'yyyy-MM-dd'
+}
   parseETime(event: any): void {
     const selectedEndingTime = event.target.value;
     const selectedStartingTime = this.startingTime;
@@ -2003,7 +2041,7 @@ showfor(){
       selectedStartingDate.toDateString() === selectedEndingDate.toDateString()
     ) {
       if (endTime < startTime) {
-        this.showErrorMessage('Ending time cannot be less than starting time.');
+        this.toastr.error('Ending time cannot be less than starting time', 'Error');
         setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
         return;
       }
@@ -2013,35 +2051,40 @@ showfor(){
     this.endingTime = selectedEndingTime;
   }
 
+  
   parseSTime(event: any): void {
     const selectedStartingTime = event.target.value;
 
     if (!this.startingDate) {
-      this.showErrorMessage('Invalid date selected.');
-      setTimeout(() => (this.startingTime = ''), 1); // Clear the starting time input
-      return;
+        this.showErrorMessage('Invalid date selected.');
+        setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
+        return;
     }
 
     const selectedStartingDate = new Date(this.startingDate);
     const currentDateTime = new Date();
+
+    // Parse the selected starting time in 24-hour format (input type "time" works in 24-hour format)
+    const [hours, minutes] = selectedStartingTime.split(':').map(Number); 
     const startTime = new Date(
-      `${selectedStartingDate.toDateString()} ${selectedStartingTime}`
+        selectedStartingDate.getFullYear(),
+        selectedStartingDate.getMonth(),
+        selectedStartingDate.getDate(),
+        hours, minutes
     );
 
-    // Check if starting time is less than current time on the same date
-    if (
-      selectedStartingDate.toDateString() === currentDateTime.toDateString()
-    ) {
-      if (startTime < currentDateTime) {
-        this.showErrorMessage('Starting time cannot be in the past.');
-        setTimeout(() => (this.startingTime = ''), 1); // Clear the starting time input
-        return;
-      }
+    // Check if starting time is in the past on the current date
+    if (selectedStartingDate.toDateString() === currentDateTime.toDateString()) {
+        if (startTime < currentDateTime) {
+            this.toastr.error('Starting time cannot be in the past.', 'Error');
+            setTimeout(() => this.startingTime = "", 1); // Clear the starting time input
+            return;
+        }
     }
 
     // Update the startingTime if valid
     this.startingTime = selectedStartingTime;
-  }
+}
 
   // Format a Date object as 'yyyy-MM-dd'
   formatDate(date: any): string {
@@ -2086,57 +2129,18 @@ showfor(){
           ? this.getCurrentTime()
           : '00:00';
       }
-      return '00:00'; // Default value when startingDate is null
+      return '00:00'; 
     } else if (type === 'end') {
       if (this.endingDate) {
         const formattedEndDate = this.formatDate(this.endingDate);
         return formattedEndDate === todayDate ? this.getCurrentTime() : '00:00';
       }
-      return '00:00'; // Default value when endingDate is null
+      return '00:00'; 
     }
 
-    return '00:00'; // Fallback default value
+    return '00:00'; 
   }
-
-  // attributes() {
-  //   const subCategoryList = this.categoryLookup[this.selectedCategoryId];
-  //   const category = this.categories.find((cat: any) => cat.id === this.selectedCategoryId) || {};
-  //   const subCategory = subCategoryList ? subCategoryList.find((subCat: any) => subCat.id === this.selectedSubCategoryId) : {};
-  //   const categoryName = category.name || '';
-  //   const subCategoryName = subCategory?.name || '';
-
-  //   // Define a mapping object for category-specific fields
-  //   const categoryFieldMapping: any = {
-  //     '1': { brand: this.brandId, condition: this.conditionId, storage: this.storageId, color: this.colorId },
-  //     '2': { condition: this.conditionId, color: this.colorId },
-  //     '3': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId, bathRoom: this.bathRoomId },
-  //     '4': { type: this.typeId, bedrooms: this.bedRoomId, area: this.areaSizeId, yearBuilt: this.yearBuiltId, feature: this.feartureId, Amenities: this.amenitiesId, storage: this.storageId },
-  //     '5': { makeAndModel: this.makeAndModelId, year: this.yearBuiltId, condition: this.conditionId, mileage: this.mileage, fuelType: this.fuelTypeId, color: this.colorId },
-  //     '6': { subCatId: this.subCategoriesId, condition: this.conditionId, engineCapacity: this.engineCapacityId, model: this.modelId },
-  //     '7': { type: this.jobtypeId, experience: this.experienceId, education: this.educationId, salary: this.salaryId, salaryPeriod: this.salaryPeriodId, companyName: this.companyNameId, possitionType: this.positionTypeId, carrierLevel: this.careerLevelId },
-  //     '8': { subcategory: this.subCategoriesId, condition: this.conditionId, car: this.carId },
-  //     '9': { subcategory: this.subCategoriesId, type: this.fashionTypeId, condition: this.conditionId, color: this.colorId },
-  //     '10': { subcategory: this.subCategoriesId, condition: this.conditionId, fabric: this.fabricId, suitType: this.suitTypeId },
-  //     '11': { subcategory: this.subCategoriesId, condition: this.conditionId, toy: this.toyId },
-  //     '12': { subcategory: this.subCategoriesId, condition: this.conditionId, age: this.ageId, breed: this.breedId },
-  //   };
-
-  //   const jsonData: any = {
-  //     category_id: this.selectedCategoryId || '',
-  //     category_name: categoryName,
-  //     sub_category_id: this.selectedSubCategoryId || '',
-  //     sub_category_name: subCategoryName,
-  //     product_id: this.productId || '',
-  //     price: this.price?.trim() || null,
-  //     location: this.locationId || '',
-  //   };
-
-  //   Object.assign(jsonData, categoryFieldMapping[this.selectedCategoryId] || {});
-
-  //   this.jSonAttributes = JSON.stringify(jsonData);
-  // }
-
-  getSubcategories(categoryId: any): void {
+    getSubcategories(categoryId: any): void {
     if (categoryId) {
       this.mainServices.getSubCategories(this.selectedCategoryId).subscribe(
         (data) => {
@@ -2151,28 +2155,7 @@ showfor(){
   markAsSold(prodictId: any) {
     this.router.navigate(['/markAsSold/', prodictId]);
   }
-  // getNotification() {
-  //
-  //   this.loading = true
-  //   this.mainServices.getNotification(this.currentUserId).subscribe((res: any) => {
-  //
-  //     this.notificationList = res.data
-  //     console.log('Notification:', this.notificationList)
-  //     this.loading = false
-  //   })
-  // }
-  addCumtomLink() {
-    // let formData = new FormData();
-    // formData.append('custom_link', this.customLink);
-    // this.http.post('https://www.ttoffer.com/backend/public/api/edit-product-first-step', formData, { headers: this.getHeaders() }).subscribe(
-    //   (response: any) => {
-    //
-    //   },
-    //   error => {
-    //     console.error('File upload failed', error);
-    //   }
-    // );
-
+    addCumtomLink() {
     let input = {
       custom_link: this.customLink,
     };
@@ -2200,5 +2183,10 @@ showfor(){
       this.selectedImageIndex -= 1; // Adjust the selected image index if necessary
     }
   }
-  
+  ngOnDestroy() {
+    // Remove editPost data from localStorage if navigating away
+    if (this.isNavigatingAway) {
+      localStorage.removeItem('editProduct');
+    }
+  }
 }

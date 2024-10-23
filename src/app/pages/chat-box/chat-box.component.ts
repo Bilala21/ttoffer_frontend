@@ -6,26 +6,27 @@ import { MainServicesService } from '../../shared/services/main-services.service
 import { Extension } from '../../helper/common/extension/extension';
 import { FooterComponent } from "../../shared/shared-components/footer/footer.component";
 import { ActivatedRoute } from '@angular/router';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-chat-box',
-    standalone: true,
-    templateUrl: './chat-box.component.html',
-    styleUrl: './chat-box.component.scss',
-    imports: [HeaderComponent, NgFor, CommonModule, ReactiveFormsModule, FooterComponent]
+  selector: 'app-chat-box',
+  standalone: true,
+  templateUrl: './chat-box.component.html',
+  styleUrl: './chat-box.component.scss',
+  imports: [HeaderComponent, NgFor, CommonModule, ReactiveFormsModule, FooterComponent]
 })
 export class ChatBoxComponent {
-  offerStatus: number|null = null
+  offerStatus: number | null = null
   // @ViewChild('selectedUserDiv')
   // selectedUserDiv!: ElementRef;
-  chatBox: any[]= [
+  chatBox: any[] = [
     // {img:'assets/images/chat-profile1.png', name:'Elmer Laverty', text:'Haha oh man 🔥', time:'12m'},
     // {img:'assets/images/chat-profile2.png', name:'Florencio Dorrance', text:'woohoooo', time:'24m'},
     // {img:'assets/images/chat-profile3.png', name:'Lavern Laboy', text:`Haha that's terrifying 😂`, time:'1h'},
     // {img:'assets/images/chat-profile4.png', name:'Titus Kitamura', text:'omg, this is amazing', time:'5h'},
   ]
   selectedUser: any = null;
-  meassages:any={sender:[],reciever:[]};
+  meassages: any = { sender: [], reciever: [] };
   selectedConversation: any = [];
   conversationBox: any = [];
   currentUserid: number = 0;
@@ -34,12 +35,49 @@ export class ChatBoxComponent {
   sellerId: number = 0
   buyerId: number = 0
   offerId: number = 0
+  searchQuery: string = '';
+  users: any = [
+    {
+      image: "/assets/images/banner3.webp",
+      name: "Ali",
+      message: "This is message",
+      time: "h1",
+      id: 1
+    },
+    {
+      image: "/assets/images/banner3.webp",
+      name: "Bilal",
+      message: "This is message",
+      time: "h2",
+      id: 2
+    },
+    {
+      image: "/assets/images/banner3.webp",
+      name: "Numan",
+      message: "This is message",
+      time: "h3",
+      id: 3
+    },
+  ];
+  selectedUserId: any = null
+
+  filteredUsers: string[] = [...this.users];
   constructor(
     private mainServices: MainServicesService,
-    private extension:Extension,
-    private route:ActivatedRoute
-  ){
+    private extension: Extension,
+    private route: ActivatedRoute
+  ) {
     this.currentUserid = extension.getUserId();
+
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchText => {
+      this.searchQuery = searchText;
+      this.filteredUsers = this.filterUsers(searchText);
+      this.users = this.filteredUsers
+      console.log(this.filteredUsers, 'filteredUsers');
+    });
   }
 
   selectUser(user: any) {
@@ -101,11 +139,11 @@ export class ChatBoxComponent {
     this.messageControl.setValue(suggestion);
     this.suggestionsVisible = false;
   }
-  ngOnInit(){
-  // this.getAllChatsOfUser();
+  ngOnInit() {
+    // this.getAllChatsOfUser();
   }
   getAllChatsOfUser = () => {
-    this.mainServices.getAllChatsOfUser(this.currentUserid).subscribe((res:any) =>{
+    this.mainServices.getAllChatsOfUser(this.currentUserid).subscribe((res: any) => {
       this.chatBox = res.data
       this.chatBox = this.chatBox.sort((a: any, b: any) => {
         return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
@@ -114,7 +152,7 @@ export class ChatBoxComponent {
       // this.selectedUser = this.chatBox.filter(chat => chat.receiver_id == receiverIdFromRoute);
 
       this.selectedUser = this.chatBox[0];
-      if(this.selectedUser != null)
+      if (this.selectedUser != null)
         this.getConversation(this.selectedUser);
       console.log(this.chatBox)
       console.log(this.chatBox)
@@ -154,46 +192,46 @@ export class ChatBoxComponent {
     }
   }
 
-  getConversation(data:any){
-    this.mainServices.getConversation(data.conversation_id).subscribe((res:any) =>{
+  getConversation(data: any) {
+    this.mainServices.getConversation(data.conversation_id).subscribe((res: any) => {
       this.selectedConversation = res;
-      this.selectUser((res.data.Participant2.id!=this.currentUserid)?res.data.Participant2:res.data.Participant1)
+      this.selectUser((res.data.Participant2.id != this.currentUserid) ? res.data.Participant2 : res.data.Participant1)
 
       console.log(res)
       console.log(res.data.conversation)
       this.conversationBox = res.data.conversation
       this.productId = this.conversationBox[0].product_id;
       this.sellerId = this.conversationBox[0].sender_id;
-      this.buyerId  = this.conversationBox[0].receiver_id;
-      this.offerStatus  = this.conversationBox[0].offer.status;
-      this.offerId  = this.conversationBox[0].offer_id;
-      this.conversationBox.replier=res.data.Participant1.img;
-      this.conversationBox.sender=res.data.Participant2.img;
-      console.log('conversationBox',this.conversationBox)
+      this.buyerId = this.conversationBox[0].receiver_id;
+      this.offerStatus = this.conversationBox[0].offer.status;
+      this.offerId = this.conversationBox[0].offer_id;
+      this.conversationBox.replier = res.data.Participant1.img;
+      this.conversationBox.sender = res.data.Participant2.img;
+      console.log('conversationBox', this.conversationBox)
     })
   }
-  sendMsg(){
+  sendMsg() {
 
     let input = {
       // sender_id: this.selectedConversation.data.Participant1.id,
       sender_id: this.currentUserid,
-      receiver_id: (this.currentUserid != this.selectedConversation.data.Participant2.id)?this.selectedConversation.data.Participant2.id:this.selectedConversation.data.Participant1.id,
+      receiver_id: (this.currentUserid != this.selectedConversation.data.Participant2.id) ? this.selectedConversation.data.Participant2.id : this.selectedConversation.data.Participant1.id,
       message: this.message,
     }
-    this.mainServices.sendMsg(input).subscribe((res:any) =>{
+    this.mainServices.sendMsg(input).subscribe((res: any) => {
 
       this.message = "";
       // this.getConversation(res.conversation_id)
       this.getConversation(res.data.Message[0])
     })
   }
-  acceptOffer(){
+  acceptOffer() {
 
     let input = {
       product_id: this.productId,
-      seller_id:this.sellerId,
-      buyer_id:this.buyerId,
-      offer_id:this.offerId
+      seller_id: this.sellerId,
+      buyer_id: this.buyerId,
+      offer_id: this.offerId
     }
     this.mainServices.acceptOffer(input).subscribe(res => {
 
@@ -202,20 +240,20 @@ export class ChatBoxComponent {
     });
   }
 
-  rejectOffer(){
+  rejectOffer() {
 
     let input = {
       product_id: this.productId,
-      seller_id:this.sellerId,
-      buyer_id:this.buyerId,
-      offer_id:this.offerId
+      seller_id: this.sellerId,
+      buyer_id: this.buyerId,
+      offer_id: this.offerId
     }
     this.mainServices.rejectOffer(input).subscribe(res => {
 
       res
     });
   }
- 
+
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   sendMessage(message: string): void {
@@ -246,5 +284,23 @@ export class ChatBoxComponent {
       reader.readAsDataURL(file);
     }
   }
+  // CODED BY BILAL
+  handleSelectedUser(user: any) {
+    this.selectedUserId = user.id
+  }
+  searchSubject: Subject<string> = new Subject<string>();
 
+  onSearch(event: any) {
+    this.searchSubject.next(event.value); // Send input to the search stream
+  }
+
+  filterUsers(query: string): any[] {
+    if (!query.trim()) {
+      console.log(this.users, "users");
+      return this.users;
+    }
+    return this.filteredUsers.filter((user: any) =>
+      user.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }
 }

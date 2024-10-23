@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
 import { FormsModule } from '@angular/forms';
+import { CountdownTimerService } from '../../shared/services/countdown-timer.service';
+import { Subscription } from 'rxjs';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 
 @Component({
   selector: 'app-filters',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,NgxSliderModule],
   templateUrl: './app-filters.component.html',
   styleUrls: ['./app-filters.component.scss'] // Corrected from styleUrl to styleUrls
 })
@@ -28,6 +32,7 @@ export class AppFiltersComponent implements OnInit {
     "Brasilia, Brazil",
     "Karachi, Pakistan"
   ];
+  countdownSubscriptions: Subscription[] = [];
 
   filterCriteria: any = {
     location: []
@@ -36,7 +41,10 @@ export class AppFiltersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mainServicesService: MainServicesService,
-    public globalStateService: GlobalStateService
+    public globalStateService: GlobalStateService,
+    private mainServices: MainServicesService,
+    private cd: ChangeDetectorRef,
+    private countdownTimerService: CountdownTimerService
   ) { }
 
   ngOnInit() {
@@ -71,13 +79,20 @@ export class AppFiltersComponent implements OnInit {
     const modifiedFilter = { ...this.filterCriteria, location: this.filterCriteria.location.join(',') };
     this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
       next: (res: any) => {
-        this.globalStateService.setFilteredProducts(res.data);
+        // Check if 'res' and 'res.data' are not null or undefined
+        if (res && res.data) {
+          this.startCountdowns(res.data);
+          this.globalStateService.setFilteredProducts(res.data);
+        } else {
+          console.log('No data found in response');
+        }
       },
       error: (err) => {
-        console.log(err);
+        console.log('Error fetching filtered products', err);
       }
     });
   }
+  
 
   handleFilter(filter: any) {
     if (filter.key === "location") {
@@ -91,5 +106,23 @@ export class AppFiltersComponent implements OnInit {
       this.filterCriteria[filter.key] = filter.value;
     }
     this.fetchData();
+  }
+
+  startCountdowns(data: any) {
+    data.forEach((item: any) => {
+      console.log(item.ProductType,"item.productType");
+      if (item.ProductType === 'auction') {
+        const datePart = item.ending_date.split('T')[0];
+        const endingDateTime = `${datePart}T${item.ending_time}:00.000Z`;
+
+        const subscription = this.countdownTimerService.startCountdown(endingDateTime).subscribe((remainingTime) => {
+          item.calculateRemaningTime = remainingTime;
+          item.isBid = remainingTime !== 'Bid Expired';
+          this.cd.detectChanges();
+        });
+
+        this.countdownSubscriptions.push(subscription);
+      }
+    });
   }
 }
