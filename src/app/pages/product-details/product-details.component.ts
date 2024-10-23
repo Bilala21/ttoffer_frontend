@@ -13,6 +13,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedModule } from "../../shared/shared.module";
 import { AuthService } from '../../shared/services/authentication/Auth.service';
+import { SideProductDetailsComponent } from "./sideProductDetail/side-product-details.component";
 
 @Component({
     selector: 'app-product-details',
@@ -30,7 +31,8 @@ import { AuthService } from '../../shared/services/authentication/Auth.service';
     CommonModule,
     SharedModule,
     RouterModule,
-    LoginModalComponent
+    LoginModalComponent,
+    SideProductDetailsComponent
 ]
 })
 export class ProductDetailsComponent {

@@ -25,6 +25,7 @@ export class CategoriesComponent {
   ]
   activeTab: any = "auction"
   data: any = []
+  loading: any = true
   handleTab(tab: string) {
    
     this.activeTab = tab
@@ -39,6 +40,9 @@ export class CategoriesComponent {
       // this.activeTab = state.prodTab
 
     })
+    setTimeout(()=>{
+    this.loading = false
+    },2000)
       // forkJoin({
       //   auctionProduct: this.mainServices.getFilteredProducts(this.activeTab),
       // }).subscribe({
