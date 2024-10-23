@@ -915,7 +915,7 @@ showfor(){
     };
   
     this.mainServices.deleteProductImage(input).subscribe((res) => {
-      debugger
+      
       this.toastr.success('Product image deleted successfully', 'Success');
 
       if (this.editProductData) {
@@ -978,7 +978,7 @@ showfor(){
       if (response.ok) {
         const data = await response.json();
         this.EditImageFilesAbc=[]
-        debugger
+        
         this.imageloading=false
         localStorage.setItem('editProduct', JSON.stringify(data.data));
         this.editProductData=localStorage.getItem('editProduct')
@@ -1512,7 +1512,7 @@ showfor(){
   });
   }
   validateForm(): boolean {
-    debugger;
+    
     this.validationErrors = {}; 
     if (!this.title) {
       this.validationErrors['title'] = 'Please add a title.';
@@ -1898,18 +1898,36 @@ showfor(){
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.updateUserInfo(result.key, result.value);
+        if (result.key === 'password') {
+          this.updateUserInfo(result.key, {
+            old_password: result.old_password,
+            password: result.password
+          });
+        } else {
+          this.updateUserInfo(result.key, result.value);
+        }
       }
     });
   }
   onDeleteAccount(): void {
-    // Navigate to the Delete Account page or show a confirmation dialog
-    this.router.navigate([`/user/delete-account/${this.currentUserId}`]); // Use the appropriate route path
+    this.router.navigate([`/user/delete-account/${this.currentUserId}`]); 
   }
   updateUserInfo(field: string, value: any) {
     this.isDisabled = true;
     this.loading = true;
-    const input = { [field]: value };
+  
+    let input;
+    if (field === 'password') {
+      // Pass both old and new passwords as input
+      input = {
+        old_password: value.old_password,
+        password: value.password
+      };
+    } else {
+      // Pass single value for other fields
+      input = { [field]: value };
+    }
+  
     const updateMethods: any = {
       phone: () => this.mainServices.updateNumber(input),
       email: () => this.mainServices.updateEmail(input),
@@ -1917,6 +1935,7 @@ showfor(){
       location: () => this.mainServices.updateLocation(input),
       name: () => this.mainServices.updateUserName(input),
     };
+  
     if (updateMethods[field]) {
       updateMethods[field]().subscribe({
         next: (res: any) => {
@@ -1926,7 +1945,7 @@ showfor(){
           this.getCurrentUser();
           this.loading = false;
           this.isDisabled = false;
-          this.showSuccessMessage('Updated successfully!');
+          this.toastr.success('Updated Successfully', 'Success');
         },
         error: (error: any) => {
           console.error(error);
@@ -1940,7 +1959,7 @@ showfor(){
       this.isDisabled = false;
     }
   }
-
+  
   wishListProduct() {
     // this.loading = true
     var input = {
@@ -2015,41 +2034,43 @@ getTomorrowDate(): string {
   tomorrow.setDate(tomorrow.getDate() + 1); // Add 1 day
   return tomorrow.toISOString().split('T')[0]; // Format as 'yyyy-MM-dd'
 }
-  parseETime(event: any): void {
-    const selectedEndingTime = event.target.value;
-    const selectedStartingTime = this.startingTime;
+parseETime(event: any): void {
+  const selectedEndingTime = event.target.value;
+  const selectedStartingTime = this.startingTime;
 
-    if (!this.startingDate || !this.endingDate) {
-      this.showErrorMessage('Invalid date selected.');
+  if (!this.startingDate || !this.endingDate) {
+    this.showErrorMessage('Invalid date selected.');
+    setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
+    return;
+  }
+
+  const selectedEndingDate = new Date(this.endingDate);
+  const selectedStartingDate = new Date(this.startingDate);
+
+  // Create Date objects for starting and ending times
+  const startTime = new Date(
+    `${selectedStartingDate.toDateString()} ${selectedStartingTime}`
+  );
+  const endTime = new Date(
+    `${selectedEndingDate.toDateString()} ${selectedEndingTime}`
+  );
+
+  // Check if ending time is less than or equal to starting time on the same date
+  if (
+    selectedStartingDate.toDateString() === selectedEndingDate.toDateString()
+  ) {
+    if (endTime <= startTime) {
+      // Show error if ending time is less than or equal to starting time
+      this.toastr.error('Ending time cannot be less than or equal to the starting time', 'Error');
       setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
       return;
     }
-
-    const selectedEndingDate = new Date(this.endingDate);
-    const selectedStartingDate = new Date(this.startingDate);
-
-    // Create Date objects for starting and ending times
-    const startTime = new Date(
-      `${selectedStartingDate.toDateString()} ${selectedStartingTime}`
-    );
-    const endTime = new Date(
-      `${selectedEndingDate.toDateString()} ${selectedEndingTime}`
-    );
-
-    // Check if ending time is less than starting time on the same date
-    if (
-      selectedStartingDate.toDateString() === selectedEndingDate.toDateString()
-    ) {
-      if (endTime < startTime) {
-        this.toastr.error('Ending time cannot be less than starting time', 'Error');
-        setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
-        return;
-      }
-    }
-
-    // Update the endingTime if valid
-    this.endingTime = selectedEndingTime;
   }
+
+  // Update the endingTime if valid
+  this.endingTime = selectedEndingTime;
+}
+
 
   
   parseSTime(event: any): void {

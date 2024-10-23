@@ -44,16 +44,17 @@ export class AccountSettingDialogeComponent {
       case 'email':
         updatedData['value'] = this.userInformation.email;
         break;
-      case 'password':
-        updatedData['value'] = this.userInformation.password;
-        break;
+        case 'password':
+          updatedData['old_password'] = this.userInformation.old_password;
+          updatedData['password'] = this.userInformation.password;
+          break;
       case 'location':
         updatedData['value'] = this.userInformation.location;
         break;
       default:
         break;
     }
-
+debugger
     // Close the dialog and return the relevant data
     this.dialogRef.close(updatedData,);
   }
