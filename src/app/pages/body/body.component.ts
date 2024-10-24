@@ -22,6 +22,7 @@ export class BodyComponent implements OnDestroy {
   auctionPosts: any = [];
   featuredPosts: any = [];
   countdownSubscriptions: Subscription[] = [];
+  loading = true
 
   permotionBanners: any = [
     {
@@ -40,6 +41,7 @@ export class BodyComponent implements OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
     forkJoin({
       auctionProduct: this.mainServices.getAuctionProduct(),
       featureProduct: this.mainServices.getFeatureProduct(),
@@ -49,9 +51,11 @@ export class BodyComponent implements OnDestroy {
         this.featuredPosts = response.featureProduct.data;
         // this.globalStateService.setFilteredProducts()
         this.startCountdowns();
+        this.loading = false
       },
       error: (err) => {
         console.error('Error occurred while fetching data', err);
+        this.loading = false
       },
     });
   }
