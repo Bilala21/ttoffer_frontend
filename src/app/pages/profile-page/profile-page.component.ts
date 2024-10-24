@@ -65,6 +65,7 @@ export interface CategoryField {
   ],
 })
 export class ProfilePageComponent {
+  activeButtonPayment:number=1;
   editStartingPrice:any;
   edit_final_price:any;
   editStartingTime:any;
@@ -81,7 +82,7 @@ export class ProfilePageComponent {
   selectedTab: any ;
   selectedTabItem: string = '';
   selectedTabId: any;
-  activeButton: number = 1;
+  activeButton: number = 2;
   showDiv: boolean = false;
   currentUserProfile: any;
   rating: number = 0; // Current rating
@@ -131,6 +132,7 @@ export class ProfilePageComponent {
   isLoading:boolean=false;
   editStartingDate:any;
   editEndingDate:any
+  soldList:any
   private isNavigatingAway: boolean = false;
   showNotif() {
     this.showNotification = true;
@@ -624,15 +626,18 @@ export class ProfilePageComponent {
     console.log(this.categoryForm,"this.pricingCatId");
     let currentTab: any = localStorage.getItem('currentTab');
 
-// Check if currentTab is explicitly null or empty and assign a default value if needed
 if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   currentTab = 'purchasesSales';
 }
+this.route.queryParams.subscribe((params) => {
+  if (params['button']) {
+    this.activeButton = +params['button']; 
+  }
+});
     this.editProductData=localStorage.getItem('editProduct');
     this.router.events
     .pipe(filter(event => event instanceof NavigationStart))
     .subscribe((event: any) => {
-      // Set a flag when navigating away
       this.isNavigatingAway = true;
     });
     this.selectTab(currentTab);
@@ -769,8 +774,12 @@ showfor(){
 
   toggleActive(buttonIndex: number) {
     this.activeButton = buttonIndex;
+    
   }
-
+  toggleActivePayement(buttonIndex: number) {
+    this.activeButtonPayment = buttonIndex;
+    
+  }
   sellingList: any = [];
   sellingListTemp: any = [];
   purchaseListTemp: any = [];
@@ -1521,10 +1530,10 @@ showfor(){
       this.validationErrors['description'] = 'Please add a description.';
     }
     if (!this.selectedCategoryId) {
-      this.validationErrors['category'] = 'Please select a category.';
+      this.validationErrors['selectedCategoryId'] = 'Please select a category.';
     }
     if (!this.selectedSubCategoryId) {
-      this.validationErrors['subCategory'] = 'Please select a sub-category.';
+      this.validationErrors['selectedSubCategoryId'] = 'Please select a sub-category.';
     }
     if (this.selectedFiles.length == 0) {
       this.validationErrors['uploadImage'] = 'Please add at least one image.';
@@ -1628,6 +1637,8 @@ showfor(){
         throw new Error(data.message || 'File upload failed');
       }
     } catch (error) {
+      this.loading = false;
+
       this.handleError(error);
     } finally {
       this.loading = false;
@@ -1676,7 +1687,10 @@ showfor(){
         .toPromise();
       await this.addProductThirdStep();
     } catch (error) {
+      this.loading=false
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1685,6 +1699,7 @@ showfor(){
 
     if (this.pricingCatId === 'Auction') {
       input = {
+        productType:'auction',
         product_id: this.productId,
         auction_price: this.startingPrice,
         starting_date: this.startingDate,
@@ -1695,11 +1710,13 @@ showfor(){
       };
     } else if (this.pricingCatId === 'FixedPrice') {
       input = {
+        productType:'featured',
         product_id: this.productId,
         fix_price: this.price,
       };
     } else {
-      input = { product_id: this.productId };
+      
+      input = { product_id: this.productId , productType:'other',};
     }
 
     try {
@@ -1708,7 +1725,10 @@ showfor(){
         .toPromise();
       await this.addProductLastStep();
     } catch (error) {
+      this.loading=false;
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1726,7 +1746,10 @@ showfor(){
         this.isLoading=false
         this.router.navigate(['']);
     } catch (error) {
+      this.loading=false;
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1816,7 +1839,7 @@ showfor(){
         this.sellingList = res;
         console.log(res);
         this.loading=false
-
+        this.soldList=res.data?.history
         this.purchaseListTemp = res.data?.purchase ;
         this.sellingListTemp = res.data?.selling ;
       },
@@ -1898,18 +1921,36 @@ showfor(){
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.updateUserInfo(result.key, result.value);
+        if (result.key === 'password') {
+          this.updateUserInfo(result.key, {
+            old_password: result.old_password,
+            password: result.password
+          });
+        } else {
+          this.updateUserInfo(result.key, result.value);
+        }
       }
     });
   }
   onDeleteAccount(): void {
-    // Navigate to the Delete Account page or show a confirmation dialog
-    this.router.navigate([`/user/delete-account/${this.currentUserId}`]); // Use the appropriate route path
+    this.router.navigate([`/user/delete-account/${this.currentUserId}`]); 
   }
   updateUserInfo(field: string, value: any) {
     this.isDisabled = true;
     this.loading = true;
-    const input = { [field]: value };
+  
+    let input;
+    if (field === 'password') {
+      // Pass both old and new passwords as input
+      input = {
+        old_password: value.old_password,
+        password: value.password
+      };
+    } else {
+      // Pass single value for other fields
+      input = { [field]: value };
+    }
+  
     const updateMethods: any = {
       phone: () => this.mainServices.updateNumber(input),
       email: () => this.mainServices.updateEmail(input),
@@ -1917,6 +1958,7 @@ showfor(){
       location: () => this.mainServices.updateLocation(input),
       name: () => this.mainServices.updateUserName(input),
     };
+  
     if (updateMethods[field]) {
       updateMethods[field]().subscribe({
         next: (res: any) => {
@@ -1926,7 +1968,7 @@ showfor(){
           this.getCurrentUser();
           this.loading = false;
           this.isDisabled = false;
-          this.showSuccessMessage('Updated successfully!');
+          this.toastr.success('Updated Successfully', 'Success');
         },
         error: (error: any) => {
           console.error(error);
@@ -1940,7 +1982,7 @@ showfor(){
       this.isDisabled = false;
     }
   }
-
+  
   wishListProduct() {
     // this.loading = true
     var input = {
@@ -2015,41 +2057,43 @@ getTomorrowDate(): string {
   tomorrow.setDate(tomorrow.getDate() + 1); // Add 1 day
   return tomorrow.toISOString().split('T')[0]; // Format as 'yyyy-MM-dd'
 }
-  parseETime(event: any): void {
-    const selectedEndingTime = event.target.value;
-    const selectedStartingTime = this.startingTime;
+parseETime(event: any): void {
+  const selectedEndingTime = event.target.value;
+  const selectedStartingTime = this.startingTime;
 
-    if (!this.startingDate || !this.endingDate) {
-      this.showErrorMessage('Invalid date selected.');
+  if (!this.startingDate || !this.endingDate) {
+    this.showErrorMessage('Invalid date selected.');
+    setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
+    return;
+  }
+
+  const selectedEndingDate = new Date(this.endingDate);
+  const selectedStartingDate = new Date(this.startingDate);
+
+  // Create Date objects for starting and ending times
+  const startTime = new Date(
+    `${selectedStartingDate.toDateString()} ${selectedStartingTime}`
+  );
+  const endTime = new Date(
+    `${selectedEndingDate.toDateString()} ${selectedEndingTime}`
+  );
+
+  // Check if ending time is less than or equal to starting time on the same date
+  if (
+    selectedStartingDate.toDateString() === selectedEndingDate.toDateString()
+  ) {
+    if (endTime <= startTime) {
+      // Show error if ending time is less than or equal to starting time
+      this.toastr.error('Ending time cannot be less than or equal to the starting time', 'Error');
       setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
       return;
     }
-
-    const selectedEndingDate = new Date(this.endingDate);
-    const selectedStartingDate = new Date(this.startingDate);
-
-    // Create Date objects for starting and ending times
-    const startTime = new Date(
-      `${selectedStartingDate.toDateString()} ${selectedStartingTime}`
-    );
-    const endTime = new Date(
-      `${selectedEndingDate.toDateString()} ${selectedEndingTime}`
-    );
-
-    // Check if ending time is less than starting time on the same date
-    if (
-      selectedStartingDate.toDateString() === selectedEndingDate.toDateString()
-    ) {
-      if (endTime < startTime) {
-        this.toastr.error('Ending time cannot be less than starting time', 'Error');
-        setTimeout(() => (this.endingTime = ''), 1); // Clear the ending time input
-        return;
-      }
-    }
-
-    // Update the endingTime if valid
-    this.endingTime = selectedEndingTime;
   }
+
+  // Update the endingTime if valid
+  this.endingTime = selectedEndingTime;
+}
+
 
   
   parseSTime(event: any): void {
@@ -2152,8 +2196,9 @@ getTomorrowDate(): string {
       this.subCategory = []; // Clear subcategories if no category is selected
     }
   }
-  markAsSold(prodictId: any) {
-    this.router.navigate(['/markAsSold/', prodictId]);
+  markAsSold(product: any) {
+    localStorage.setItem('soldItems', JSON.stringify(product));
+    this.router.navigate(['/markAsSold/', product.id]);
   }
     addCumtomLink() {
     let input = {

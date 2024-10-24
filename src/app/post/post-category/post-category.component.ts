@@ -1,8 +1,10 @@
+import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { GlobalStateService } from '../../shared/services/state/global-state.service';
 import { CountdownTimerService } from '../../shared/services/countdown-timer.service';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-post-category',
   templateUrl: './post-category.component.html',
@@ -26,9 +28,8 @@ export class PostCategoryComponent implements OnInit {
   ]
   activeTab: any = "auction"
   handleTab(tab: string) {
-   
-    this.activeTab = tab
-    this.globalStateService.updateProdTab("ProductType", tab)
+    this.activeTab = tab;
+    this.globalStateService.updateProdTab("ProductType", tab);
   }
 
   toggleSidebar() {

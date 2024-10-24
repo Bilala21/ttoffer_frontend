@@ -711,7 +711,7 @@
                         Sell faster <span>|</span>
                         <span
                           class="mark-as-sold"
-                          (click)="markAsSold(data.id)"
+                          (click)="markAsSold(data)"
                           style="cursor: pointer"
                           >Mark as sold</span
                         >
@@ -867,7 +867,47 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="sellingList?.data?.archive == 0 && activeButton == 3">
+                <div
+                  *ngIf="
+                    activeButton === 3 &&
+                    soldList &&
+                    soldList.length > 0
+                  "
+                >
+                  <!-- Your actual data card structure goes here -->
+                  <div
+                    class="card-container"
+                    *ngFor="let data of soldList"
+                   
+                    style="cursor: pointer"
+                  >
+                    <!-- Image -->
+                    <img
+                      src="{{
+                        data.photo && data.photo.length > 0
+                          ? data.photo[0].src
+                          : 'assets/images/default-img.jpg'
+                      }}"
+                      alt="Item Image"
+                      style="width: 115px; height: 115px; border-radius: 16px"
+                    />
+                    <div class="ms-3 flex-grow-1 custom-margin-left">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="card-title">{{ data.title }}</span>
+                       
+                      </div>
+                      <div
+                        class="d-flex justify-content-start align-items-center"
+                      >
+                      <p>sold</p>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="soldList == 0 && activeButton == 3">
                   <div class="col-12 text-center mx-auto">
                     <img src="assets/images/archieve-item.png" alt="" />
                     <h4 class="mt-5"></h4>
@@ -966,8 +1006,8 @@
                   <button
                     type="button"
                     class="btn btngroup p-3 sm-p-2 sm-font"
-                    [ngClass]="{ active: activeButton === 1 }"
-                    (click)="toggleActive(1)"
+                    [ngClass]="{ active: activeButtonPayment === 1 }"
+                    (click)="toggleActivePayement(1)"
                     style="
                       border-radius: 30px 0px 0px 30px;
                       border: 1px solid #9ca3af;
@@ -978,8 +1018,8 @@
                   <button
                     type="button"
                     class="btn btngroup p-3 sm-p-2 sm-font"
-                    [ngClass]="{ active: activeButton === 2 }"
-                    (click)="toggleActive(2)"
+                    [ngClass]="{ active: activeButtonPayment === 2 }"
+                    (click)="toggleActivePayement(2)"
                     style="
                       border-radius: 0px 30px 30px 0px;
                       border: 1px solid #9ca3af;
@@ -989,7 +1029,7 @@
                   </button>
                 </div>
               </div>
-              <div class="col-md-10 mx-auto mt-5" *ngIf="activeButton === 1">
+              <div class="col-md-10 mx-auto mt-5" *ngIf="activeButtonPayment === 1">
                 <div class="row">
                   <div class="col-6 text-center mx-auto">
                     <!-- <h6 class="sm-cat-text3">Total Balance</h6>
@@ -1078,7 +1118,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-10 mx-auto mt-5" *ngIf="activeButton === 2">
+              <div class="col-10 mx-auto mt-5" *ngIf="activeButtonPayment === 2">
                 <div class="row">
                   <div class="col-md-8 mx-auto mt-5 text-center">
                     <img
@@ -1191,11 +1231,12 @@
                       *ngFor="let data of savedItems"
                     >
                       <a
-                        [routerLink]="
-                          data.fix_price == null
-                            ? ['/auctionProduct', data.product.id]
-                            : ['/productDetails', data.product.id]
-                        "
+                      [routerLink]="
+                      data.fix_price == null
+                        ? ['/auction-product-detail', data.product.id, data.product.title]
+                        : ['/product-detail', data.product.id]
+                    "
+                  
                         style="text-decoration: none; color: #1b2028"
                       >
                         <div class="row align-items-center">
@@ -1598,7 +1639,7 @@
                       />
                     </div>
                     <div class="mt-3">
-                      <label>Description (optional)</label>
+                      <label>Description</label>
                       <textarea
                         name="Description"
                         placeholder="Description"
@@ -2110,7 +2151,7 @@
                     </div>
                     </div>
                     <div class="mt-3">
-                      <label>Description (optional)</label>
+                      <label>Description</label>
                       <textarea
                         name="Description"
                         placeholder="Description"
@@ -2134,12 +2175,12 @@
                     <label>Category (required)</label>
                     <select
                       class="form-select form-control"
-                      [ngClass]="{ 'is-invalid': validationErrors['category'] }"
+                      [ngClass]="{ 'is-invalid': validationErrors['selectedCategoryId'] }"
                       style="border-radius: 2vh"
                       [(ngModel)]="selectedCategoryId"
                       (change)="
                         getSubcategories(selectedCategoryId);
-                        onFieldChange('category')
+                        onFieldChange('selectedCategoryId')
                       "
                       aria-label="Default select example"
                     >
@@ -2152,10 +2193,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="validationErrors['category']"
+                      *ngIf="validationErrors['selectedCategoryId']"
                       class="text-danger mt-1"
                     >
-                      {{ validationErrors["category"] }}
+                      {{ validationErrors["selectedCategoryId"] }}
                     </div>
                   </div>
 
@@ -2164,11 +2205,11 @@
                     <select
                       class="form-select form-control"
                       [ngClass]="{
-                        'is-invalid': validationErrors['subcategory']
+                        'is-invalid': validationErrors['selectedSubCategoryId']
                       }"
                       style="border-radius: 2vh"
                       [(ngModel)]="selectedSubCategoryId"
-                      (change)="onFieldChange('subcategory')"
+                      (change)="onFieldChange('selectedSubCategoryId')"
                       aria-label="Default select example"
                     >
                       
@@ -2180,10 +2221,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="validationErrors['subcategory']"
+                      *ngIf="validationErrors['selectedSubCategoryId']"
                       class="text-danger mt-1"
                     >
-                      {{ validationErrors["subcategory"] }}
+                      {{ validationErrors["selectedSubCategoryId"] }}
                     </div>
                   </div>
                 </div>

@@ -105,7 +105,7 @@ export class ProductDetailsComponent {
   }
     openModal() {
       if (!localStorage.getItem('key')) {
-        // debugger
+        // 
         this.authService.triggerOpenModal();
       }
         const modal = document.getElementById('offerModal');
@@ -137,7 +137,7 @@ export class ProductDetailsComponent {
       }
       openChat() {
         if (!localStorage.getItem('key')) {
-          // debugger
+          // 
           this.authService.triggerOpenModal();
           return
         }

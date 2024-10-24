@@ -99,6 +99,7 @@ export class AppFiltersComponent implements OnInit {
         } else {
           console.log('No data found in response');
         }
+        this.globalStateService.setFilteredProducts(res.data.data);
       },
       error: (err) => {
         console.log('Error fetching filtered products', err);
