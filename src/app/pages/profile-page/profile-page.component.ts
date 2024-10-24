@@ -65,6 +65,7 @@ export interface CategoryField {
   ],
 })
 export class ProfilePageComponent {
+  activeButtonPayment:number=1;
   editStartingPrice:any;
   edit_final_price:any;
   editStartingTime:any;
@@ -81,7 +82,7 @@ export class ProfilePageComponent {
   selectedTab: any ;
   selectedTabItem: string = '';
   selectedTabId: any;
-  activeButton: number = 1;
+  activeButton: number = 2;
   showDiv: boolean = false;
   currentUserProfile: any;
   rating: number = 0; // Current rating
@@ -131,6 +132,7 @@ export class ProfilePageComponent {
   isLoading:boolean=false;
   editStartingDate:any;
   editEndingDate:any
+  soldList:any
   private isNavigatingAway: boolean = false;
   showNotif() {
     this.showNotification = true;
@@ -624,15 +626,18 @@ export class ProfilePageComponent {
     
     let currentTab: any = localStorage.getItem('currentTab');
 
-// Check if currentTab is explicitly null or empty and assign a default value if needed
 if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
   currentTab = 'purchasesSales';
 }
+this.route.queryParams.subscribe((params) => {
+  if (params['button']) {
+    this.activeButton = +params['button']; 
+  }
+});
     this.editProductData=localStorage.getItem('editProduct');
     this.router.events
     .pipe(filter(event => event instanceof NavigationStart))
     .subscribe((event: any) => {
-      // Set a flag when navigating away
       this.isNavigatingAway = true;
     });
     this.selectTab(currentTab);
@@ -769,8 +774,12 @@ showfor(){
 
   toggleActive(buttonIndex: number) {
     this.activeButton = buttonIndex;
+    
   }
-
+  toggleActivePayement(buttonIndex: number) {
+    this.activeButtonPayment = buttonIndex;
+    
+  }
   sellingList: any = [];
   sellingListTemp: any = [];
   purchaseListTemp: any = [];
@@ -1521,10 +1530,10 @@ showfor(){
       this.validationErrors['description'] = 'Please add a description.';
     }
     if (!this.selectedCategoryId) {
-      this.validationErrors['category'] = 'Please select a category.';
+      this.validationErrors['selectedCategoryId'] = 'Please select a category.';
     }
     if (!this.selectedSubCategoryId) {
-      this.validationErrors['subCategory'] = 'Please select a sub-category.';
+      this.validationErrors['selectedSubCategoryId'] = 'Please select a sub-category.';
     }
     if (this.selectedFiles.length == 0) {
       this.validationErrors['uploadImage'] = 'Please add at least one image.';
@@ -1628,6 +1637,8 @@ showfor(){
         throw new Error(data.message || 'File upload failed');
       }
     } catch (error) {
+      this.loading = false;
+
       this.handleError(error);
     } finally {
       this.loading = false;
@@ -1676,7 +1687,10 @@ showfor(){
         .toPromise();
       await this.addProductThirdStep();
     } catch (error) {
+      this.loading=false
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1685,6 +1699,7 @@ showfor(){
 
     if (this.pricingCatId === 'Auction') {
       input = {
+        productType:'auction',
         product_id: this.productId,
         auction_price: this.startingPrice,
         starting_date: this.startingDate,
@@ -1695,11 +1710,13 @@ showfor(){
       };
     } else if (this.pricingCatId === 'FixedPrice') {
       input = {
+        productType:'featured',
         product_id: this.productId,
         fix_price: this.price,
       };
     } else {
-      input = { product_id: this.productId };
+      
+      input = { product_id: this.productId , productType:'other',};
     }
 
     try {
@@ -1708,7 +1725,10 @@ showfor(){
         .toPromise();
       await this.addProductLastStep();
     } catch (error) {
+      this.loading=false;
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1726,7 +1746,10 @@ showfor(){
         this.isLoading=false
         this.router.navigate(['']);
     } catch (error) {
+      this.loading=false;
       this.handleError(error);
+    }finally{
+      this.loading=false;
     }
   }
 
@@ -1816,7 +1839,7 @@ showfor(){
         this.sellingList = res;
         console.log(res);
         this.loading=false
-
+        this.soldList=res.data?.history
         this.purchaseListTemp = res.data?.purchase ;
         this.sellingListTemp = res.data?.selling ;
       },
@@ -2173,8 +2196,9 @@ parseETime(event: any): void {
       this.subCategory = []; // Clear subcategories if no category is selected
     }
   }
-  markAsSold(prodictId: any) {
-    this.router.navigate(['/markAsSold/', prodictId]);
+  markAsSold(product: any) {
+    localStorage.setItem('soldItems', JSON.stringify(product));
+    this.router.navigate(['/markAsSold/', product.id]);
   }
     addCumtomLink() {
     let input = {

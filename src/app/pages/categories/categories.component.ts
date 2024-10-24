@@ -36,18 +36,8 @@ export class CategoriesComponent {
     this.globalStateService.currentState.subscribe((state) => {
       this.data = state.filteredProducts;
       this.globalStateService.productlength=this.data.length
-      // this.activeTab = state.prodTab
 
     })
-      // forkJoin({
-      //   auctionProduct: this.mainServices.getFilteredProducts(this.activeTab),
-      // }).subscribe({
-      //   next: (response) => {
-      //     this.data = response.auctionProduct
-      //   },
-      //   error: (err) => {
-      //     console.error('Error occurred while fetching data', err);
-      //   },
-      // });
+      
   }
 }

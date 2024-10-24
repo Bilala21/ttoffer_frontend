@@ -54,7 +54,7 @@ export class AccountSettingDialogeComponent {
       default:
         break;
     }
-debugger
+
     // Close the dialog and return the relevant data
     this.dialogRef.close(updatedData,);
   }

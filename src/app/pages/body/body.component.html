@@ -22,7 +22,7 @@
           <p class="fs-14 mb-0">Hurry up! The auction is ending soon</p>
         </div>
         <div class="w-100 text-right pr-3">
-          <a routerLink="/post/post-category" class="fw-bold text-primary">
+          <a [routerLink]="['/post/post-category']" [queryParams]="{ name: 'auction' }" class="fw-bold text-primary">
             View All
             <i class="fa fa-angle-right"></i>
           </a>
@@ -55,7 +55,7 @@
           </p>
         </div>
         <div class="w-100 text-right pr-3">
-          <a routerLink="/post/post-category" class="fw-bold text-primary">
+          <a [routerLink]="['/post/post-category']" [queryParams]="{ name: 'featured' }" class="fw-bold text-primary">
             View All
             <i class="fa fa-angle-right"></i>
           </a>

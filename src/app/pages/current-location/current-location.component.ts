@@ -24,7 +24,7 @@ export class CurrentLocationComponent implements OnInit {
 
   async getCurrentLocation() {
     try {
-      debugger
+      
       const position = await this.getLocation();
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;

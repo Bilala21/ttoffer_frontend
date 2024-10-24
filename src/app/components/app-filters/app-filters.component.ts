@@ -71,7 +71,7 @@ export class AppFiltersComponent implements OnInit {
     const modifiedFilter = { ...this.filterCriteria, location: this.filterCriteria.location.join(',') };
     this.mainServicesService.getFilteredProducts(modifiedFilter).subscribe({
       next: (res: any) => {
-        this.globalStateService.setFilteredProducts(res.data);
+        this.globalStateService.setFilteredProducts(res.data.data);
       },
       error: (err) => {
         console.log(err);
