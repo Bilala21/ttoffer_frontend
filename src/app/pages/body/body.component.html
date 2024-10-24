@@ -27,7 +27,7 @@
             <i class="fa fa-angle-right"></i>
           </a>
         </div>
-        @if(!auctionPosts.length){
+        @if(loading){
           @for(data of [1,2,3,4,5,6,7,8];track $index){
             <div
             class="m-1 p-0 border-1 rounded-2 shimmer-card"
@@ -36,7 +36,9 @@
             </div>
             
           }
-        }@else { @for (post of auctionPosts; track $index) {
+        }@else if(auctionPosts.length == 0){
+          <p class="no-data-found">No Data Found</p>
+        }@else{ @for (post of auctionPosts; track $index) {
         <div class="product-card">
           <app-product-card
             [postData]="post"
@@ -60,13 +62,15 @@
             <i class="fa fa-angle-right"></i>
           </a>
         </div>
-        @if(!featuredPosts.length){ @for(data of [1,2,3,4,5,6,7,8];track $index){
+        @if(loading){ @for(data of [1,2,3,4,5,6,7,8];track $index){
         <div
           class="m-1 p-0 border-1 rounded-2 shimmer-card"
         >
         <app-card-shimmer/>
         </div>
-        } }@else { @for (post of featuredPosts.slice(0,10); track $index) {
+        } }@else if(featuredPosts.length == 0){
+          <p class="no-data-found">No Data Found</p>
+        }@else { @for (post of featuredPosts.slice(0,10); track $index) {
         <div class="product-card">
           <app-product-card [postData]="post" postDetialUrl="product-detail" />
         </div>
