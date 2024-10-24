@@ -1,86 +1,82 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MainServicesService } from '../../shared/services/main-services.service';
 import { Extension } from '../../helper/common/extension/extension';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule, Location } from '@angular/common'; // Ensure you import Location from @angular/common
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { CommonModule, Location } from '@angular/common';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { catchError } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports:[CommonModule,FormsModule],
+  imports: [CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  @Output() closeModalEvent = new EventEmitter<void>();
+  @Output() backEvent = new EventEmitter<void>();
 
-  @Output() closeModalEvent = new EventEmitter<void>(); // Define event emitter
-  @Output() backEvent = new EventEmitter<void>(); // Event emitter for back button
-
-  email: string = '';
-  phone: string = '';
-  password: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  username: string = '';
-  emailOrPhone: string = '';
-  confirmPassword: string = '';
-  errorMessage!:string;
-
+  registerForm: FormGroup;
+  errorMessage!: string;
   loading = false;
-  currentUser: any = [];
-  constructor(
-    private mainServices: MainServicesService, private extention: Extension,
-    private location: Location, private snackBar: MatSnackBar){
 
-    }
+  constructor(
+    private mainServices: MainServicesService,
+    private extention: Extension,
+    private location: Location,
+    private toastr: ToastrService, // Inject ToastrService
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      emailOrPhone: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator() });
+  }
+
   backButton() {
     this.backEvent.emit();
   }
+  passwordMatchValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+      const password = formGroup.get('password')?.value;
+      const confirmPassword = formGroup.get('confirmPassword')?.value;
+      return password && confirmPassword && password !== confirmPassword
+        ? { passwordMismatch: true }
+        : null;
+    };
+  }
   confirmRegistration() {
-    let input = {
-      name: this.firstName + this.lastName,
-      username: this.username,
-      email: this.emailOrPhone,
-      password: this.password
-    }
-    this.mainServices.getSignUp(input).pipe(
-      catchError((error) => {
+    if (this.registerForm.valid) {
+      const input = {
+        name: `${this.registerForm.value.firstName} ${this.registerForm.value.lastName}`,
+        username: this.registerForm.value.username,
+        email: this.registerForm.value.emailOrPhone,
+        password: this.registerForm.value.password
+      };
 
-
-        this.errorMessage = error.error.message.username!=undefined ?error.error.message.username[0]:error.error.message.password!=undefined?error.error.message.password[0]:error.error.message ;
-        return '';
-      })
-    ).subscribe((res: any) => {
-
-      if (res != null) {
-          // this.showRegisterBox = false;
+      this.mainServices.getSignUp(input).pipe(
+        catchError((error) => {
+          this.errorMessage = error.error.message.username !== undefined
+            ? error.error.message.username[0]
+            : error.error.message.password !== undefined
+              ? error.error.message.password[0]
+              : error.error.message;
+          return [];
+        })
+      ).subscribe((res: any) => {
+        if (res != null) {
+          this.toastr.success('Registration successful!', 'Success');
           this.closeModalEvent.emit();
-          this.showSuccessMessage("Account Registered Successfully");
-
-      }
-    });
+        }
+      });
+    } else {
+      this.errorMessage = 'Please fill out the form correctly.';
+    }
   }
-  ValidFor(): boolean {
-    return (
-      this.firstName.trim() !== '' &&
-      this.lastName.trim() !== '' &&
-      this.username.trim() !== '' &&
-      this.emailOrPhone.trim() !== '' &&
-      this.password.trim() !== '' &&
-      this.confirmPassword.trim() !== '' &&
-      this.confirmPassword == this.password
-    )
-  }
-  showSuccessMessage(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 100000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar']
-    });
-  }
-
-
 }

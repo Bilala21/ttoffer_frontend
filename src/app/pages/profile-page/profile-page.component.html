@@ -1660,7 +1660,7 @@
                 <label>Category (required)</label>
                 <select
                   class="form-select form-control input-class-add-form"
-                  [ngClass]="{ 'is-invalid': validationErrors['category'] }"
+                  [ngClass]="{ 'is-invalid': validationErrors['selectedCategoryId'] }"
                   [(ngModel)]="selectedCategoryId"
                   (change)="
                     getSubcategories(selectedCategoryId);
@@ -1678,10 +1678,10 @@
                   </option>
                 </select>
                 <div
-                  *ngIf="validationErrors['category']"
+                  *ngIf="validationErrors['selectedCategoryId']"
                   class="text-danger mt-1"
                 >
-                  {{ validationErrors["category"] }}
+                  {{ validationErrors["selectedCategoryId"] }}
                 </div>
               </div>
 
@@ -1690,10 +1690,10 @@
                 <select
                   class="form-select form-control input-class-add-form"
                   [ngClass]="{
-                    'is-invalid': validationErrors['subcategory']
+                    'is-invalid': validationErrors['selectedSubCategoryId']
                   }"
                   [(ngModel)]="selectedSubCategoryId"
-                  (change)="onFieldChange('subcategory')"
+                  (change)="onFieldChange('selectedSubCategoryId')"
                   aria-label="Default select example"
                   [disabled]="!editProductData"
                 >
@@ -1708,10 +1708,10 @@
                   </option>
                 </select>
                 <div
-                  *ngIf="validationErrors['subcategory']"
+                  *ngIf="validationErrors['selectedSubCategoryId']"
                   class="text-danger mt-1"
                 >
-                  {{ validationErrors["subcategory"] }}
+                  {{ validationErrors["selectedSubCategoryId"] }}
                 </div>
               </div>
             </div>
@@ -2160,7 +2160,7 @@
                 <label>Category (required)</label>
                 <select
                   class="form-select form-control input-class-add-form"
-                  [ngClass]="{ 'is-invalid': validationErrors['category'] }"
+                  [ngClass]="{ 'is-invalid': validationErrors['selectedCategoryId'] }"
                   [(ngModel)]="selectedCategoryId"
                   (change)="
                     getSubcategories(selectedCategoryId);
@@ -2176,10 +2176,10 @@
                   </option>
                 </select>
                 <div
-                  *ngIf="validationErrors['category']"
+                  *ngIf="validationErrors['selectedCategoryId']"
                   class="text-danger mt-1"
                 >
-                  {{ validationErrors["category"] }}
+                  {{ validationErrors["selectedCategoryId"] }}
                 </div>
               </div>
 
@@ -2191,7 +2191,7 @@
                     'is-invalid': validationErrors['subcategory']
                   }"
                   [(ngModel)]="selectedSubCategoryId"
-                  (change)="onFieldChange('subcategory')"
+                  (change)="onFieldChange('selectedSubCategoryId')"
                   aria-label="Default select example"
                 >
                   <option
@@ -2202,10 +2202,10 @@
                   </option>
                 </select>
                 <div
-                  *ngIf="validationErrors['subcategory']"
+                  *ngIf="validationErrors['selectedSubCategoryId']"
                   class="text-danger mt-1"
                 >
-                  {{ validationErrors["subcategory"] }}
+                  {{ validationErrors["selectedSubCategoryId"] }}
                 </div>
               </div>
             </div>
@@ -2481,7 +2481,7 @@
                   (click)="AddProductFirstStep()"
                   [disabled]="isLoading"
                 >
-                  <span *ngIf="!isLoading">Postsss</span>
+                  <span *ngIf="!isLoading">Post</span>
                   <span
                     *ngIf="isLoading"
                     class="spinner-border spinner-border-sm text-light"

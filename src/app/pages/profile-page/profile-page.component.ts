@@ -1039,12 +1039,14 @@ showfor(){
         const data = await response.json();
         
       } else {
+        this.loading=false
         console.error('Image upload failed', await response.json());
       }
     } catch (error) {
       // Handle fetch error
       console.error('Image upload failed', error);
     } finally {
+      this.loading=false;
       this.imageloading = false;
     }
   }
@@ -1637,11 +1639,11 @@ showfor(){
         throw new Error(data.message || 'File upload failed');
       }
     } catch (error) {
-      this.loading = false;
+      this.isLoading = false;
 
       this.handleError(error);
     } finally {
-      this.loading = false;
+      this.isLoading = false;
     }
   }
   getCategoryNameById(categoryId: number): string {
@@ -1687,10 +1689,10 @@ showfor(){
         .toPromise();
       await this.addProductThirdStep();
     } catch (error) {
-      this.loading=false
+      this.isLoading = false;
       this.handleError(error);
     }finally{
-      this.loading=false;
+      this.isLoading = false;
     }
   }
 
@@ -1725,10 +1727,10 @@ showfor(){
         .toPromise();
       await this.addProductLastStep();
     } catch (error) {
-      this.loading=false;
+      this.isLoading = false;
       this.handleError(error);
     }finally{
-      this.loading=false;
+      this.isLoading = false;
     }
   }
 
@@ -1746,10 +1748,10 @@ showfor(){
         this.isLoading=false
         this.router.navigate(['']);
     } catch (error) {
-      this.loading=false;
+      this.isLoading = false;
       this.handleError(error);
     }finally{
-      this.loading=false;
+      this.isLoading = false;
     }
   }
 
