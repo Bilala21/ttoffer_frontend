@@ -679,13 +679,37 @@ body {
 }
 
 .product-filter {
-  max-width: 250px;
-  min-width: 250px;
+  max-width: 300px;
+  min-width: 300px;
 }
-.row-gap{
+
+.row-gap {
   row-gap: 20px;
 }
 
+.dropdown-menu {
+  width: max-content;
+}
+
+// PRICE SLIDER
+.ngx-slider .ngx-slider-pointer {
+  width: 17px !important;
+  height: 17px !important;
+  top: -7px !important;
+  background: #007bff !important;
+}
+.ngx-slider .ngx-slider-selection{
+  background: #007bff !important;
+}
+.ngx-slider .ngx-slider-pointer:after{
+  display: none !important;
+}
+.ngx-slider.animate .ngx-slider-bubble{
+  display: none !important;
+}
+.ngx-slider{
+  margin: 10px 0 20px !important;
+}
 @media (max-width:576px) {
   .xs-rounded-0 {
     border-radius: 0px !important;
@@ -713,8 +737,9 @@ body {
   .xs-mr-0 {
     margin-right: 0px !important;
   }
-  .carousel.slide{
-    img{
+
+  .carousel.slide {
+    img {
       max-height: 140px;
     }
   }
@@ -749,7 +774,8 @@ body {
     max-width: 960px;
   }
 }
-@media (max-width : 992px){
+
+@media (max-width : 992px) {
   .product-filter {
     max-width: 100%;
     min-width: 100%;
@@ -766,14 +792,16 @@ body {
   .container-sm,
   .container-xl,
   .container-fluid {
-    max-width: 1380px;
+    max-width: 1300px;
   }
 }
+
 // banner plus slider shimmer
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -782,15 +810,14 @@ body {
 .shimmer {
   position: relative;
   width: 100%;
-  height: var(--shimmer-height, 200px); /* Use custom height or fallback to 200px */
+  height: var(--shimmer-height, 200px);
+  /* Use custom height or fallback to 200px */
   background: #f6f7f8;
-  background-image: linear-gradient(
-    to right,
-    #f6f7f8 0%,
-    #e0e0e0 20%,
-    #f6f7f8 40%,
-    #f6f7f8 100%
-  );
+  background-image: linear-gradient(to right,
+      #f6f7f8 0%,
+      #e0e0e0 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%);
   background-repeat: no-repeat;
   background-size: 1000px 100%;
   animation: shimmer 2s infinite linear;
@@ -800,7 +827,8 @@ body {
 .img-wrapper {
   position: relative;
   width: 100%;
-  height: var(--img-height, 200px); /* Custom height for images */
+  height: var(--img-height, 200px);
+  /* Custom height for images */
 }
 
 .img-wrapper img {
@@ -809,7 +837,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure the image covers the container */
+  object-fit: cover;
+  /* Ensure the image covers the container */
   opacity: 0;
 }
 
@@ -821,7 +850,8 @@ body {
 /* Adjust height for mobile screens */
 @media (max-width: 576px) {
   .img-wrapper {
-    height: var(--mobile-img-height, 150px); /* Custom height for mobile */
+    height: var(--mobile-img-height, 150px);
+    /* Custom height for mobile */
   }
 }
 
@@ -831,6 +861,7 @@ body {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -846,7 +877,7 @@ body {
   background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background-size: 1000px 104px;
   position: relative;
-  
+
 }
 
 .shimmer-img {
@@ -869,23 +900,49 @@ body {
   border-radius: 5px;
 }
 
+.auction-product-container {
+  .main-image-container {
+    padding-top: 20px;
+
+    img {
+      object-fit: contain !important;
+    }
+  }
+}
+
+.product-detail-container {
+  .main-image-container {
+    padding-top: 20px;
+    text-align: center;
+
+    img {
+      object-fit: contain !important;
+      width: auto !important;
+    }
+  }
+}
+
 @media (max-width: 768px) {
-   .shimmer-card {
-    flex: 1 1 calc(50% - 15px); /* Two cards per row on smaller screens */
+  .shimmer-card {
+    flex: 1 1 calc(50% - 15px);
+    /* Two cards per row on smaller screens */
     max-width: calc(50% - 15px);
   }
-  .btn-pro{
+
+  .btn-pro {
     font-size: 12px !important;
   }
 }
 
 @media (max-width: 576px) {
   .shimmer-card {
-    flex: 1 1 100%; /* Full width for small screens */
+    flex: 1 1 100%;
+    /* Full width for small screens */
     max-width: 100%;
   }
 }
-.no-data-found{
+
+.no-data-found {
   width: 100%;
   text-align: center;
   font-size: 20px;

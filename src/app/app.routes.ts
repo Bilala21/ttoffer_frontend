@@ -55,7 +55,7 @@ export const routes: Routes = [
         component: DeleteAccountPageComponent
     },
     {
-        path: 'profilePageBy/:id/:name',
+        path: 'profilePageBy/:id/:slug',
         component: ProfilePageComponent
     },
     {

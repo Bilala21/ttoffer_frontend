@@ -5,13 +5,13 @@ import { GlobalStateService } from '../../shared/services/state/global-state.ser
 import { FormsModule } from '@angular/forms';
 import { CountdownTimerService } from '../../shared/services/countdown-timer.service';
 import { Subscription } from 'rxjs';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 
 
 @Component({
   selector: 'app-filters',
   standalone: true,
-  imports: [FormsModule,NgxSliderModule],
+  imports: [FormsModule, NgxSliderModule],
   templateUrl: './app-filters.component.html',
   styleUrls: ['./app-filters.component.scss'] // Corrected from styleUrl to styleUrls
 })
@@ -36,6 +36,19 @@ export class AppFiltersComponent implements OnInit {
 
   filterCriteria: any = {
     location: []
+  };
+  value: number = 5;
+  highValue: number = 1000;
+  priceOptions: Options = {
+    floor: 0,
+    ceil: 5000,
+    hideLimitLabels: true,
+  };
+  radiusValue: number = 1;
+  radiusOptions: Options = {
+    floor: 0,
+    ceil: 50,
+    hideLimitLabels: true,
   };
 
   constructor(
@@ -92,7 +105,7 @@ export class AppFiltersComponent implements OnInit {
       }
     });
   }
-  
+
 
   handleFilter(filter: any) {
     if (filter.key === "location") {
@@ -108,9 +121,14 @@ export class AppFiltersComponent implements OnInit {
     this.fetchData();
   }
 
+  handlePrice(event: any) {
+    this.minPrice = event.value;
+    this.maxPrice = event.highValue;
+  }
+
   startCountdowns(data: any) {
     data.forEach((item: any) => {
-      console.log(item.ProductType,"item.productType");
+      console.log(item.ProductType, "item.productType");
       if (item.ProductType === 'auction') {
         const datePart = item.ending_date.split('T')[0];
         const endingDateTime = `${datePart}T${item.ending_time}:00.000Z`;

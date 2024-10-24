@@ -621,7 +621,7 @@ export class ProfilePageComponent {
     this.categoryForm = this.fb.group({});
   }
   ngOnInit() {
-    
+    console.log(this.categoryForm,"this.pricingCatId");
     let currentTab: any = localStorage.getItem('currentTab');
 
 // Check if currentTab is explicitly null or empty and assign a default value if needed
@@ -711,7 +711,7 @@ if (currentTab === null || currentTab === 'undefined' || currentTab === '') {
 
 showfor(){
   
-  console.log(this.categoryForm.value)
+  console.log(this.categoryForm)
 }
   showOtp() {
     this.showOTPBox = true;
@@ -1512,7 +1512,7 @@ showfor(){
   });
   }
   validateForm(): boolean {
-    debugger;
+    // debugger;
     this.validationErrors = {}; 
     if (!this.title) {
       this.validationErrors['title'] = 'Please add a title.';

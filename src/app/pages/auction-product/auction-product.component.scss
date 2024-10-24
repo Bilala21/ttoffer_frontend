@@ -27,6 +27,7 @@
 }
 .auction-profile {
   height: 42px;
+  width: 42px;
   border-radius: 10px;
 }
 .auction-user-name {
@@ -200,6 +201,9 @@
   font-weight: 400;
   line-height: 19px;
   font-family: poppins;
+}
+.bid-your-place:hover{
+  background: none
 }
 
 .custom-price {
