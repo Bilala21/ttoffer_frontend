@@ -7,20 +7,16 @@
       <app-promotion-slider [banners]="promotionBanners" />
     </div>
     <div class="d-flex pt-5">
-
-    <div class="d-block d-lg-flex pt-5">
       <aside class="product-filter">
         <app-filters />
       </aside>
       <!-- PRODUCT SIDE -->
-      <div class="flex-grow-1 pl-lg-4 ">
-        <div class="text-center mb-4 d-flex justify-content-center d-md-block">
-          <button type="button" class="btn-pro btn py-lg-2 px-lg-3 mr-1 {{activeTab=='auction'?'text-white bg-dark':'border-1'}}"
+      <div class="flex-grow-1 pl-4">
+        <div class="text-center mb-4">
+          <button type="button" class="btn py-2 px-3 mr-1 {{activeTab=='auction'?'text-white bg-dark':'border-1'}}"
             (click)="handleTab('auction')"> Auction Products </button>
           <button type="button" class="btn py-2 px-3 {{activeTab=='featured'?'bg-dark text-white':'border-1'}}"
             (click)="handleTab('featured')"> Feature Products</button>
-          <button type="button" class="btn-pro btn py-lg-2 px-lg-3 {{activeTab=='feature'?'bg-dark text-white':'border-1'}}"
-            (click)="handleTab('feature')"> Feature Products</button>
         </div>
         @if (!data.length) {
         <div class="text-center text-slate-400 pt-5">Data not found</div>
@@ -44,31 +40,6 @@
             />
           </div>
           } }
-
-        <div class="mt-4 main-card-container">
-          @if(loading){
-            @for(data of [1,2,3,4,5,6,7,8,9];track $index){
-              <div
-              class="m-1 p-0 border-1 rounded-2 shimmer-card"
-              >
-              <app-card-shimmer/>
-              </div>
-              
-            }
-          }@else if(data.length == 0) { 
-              <div class="flex-grow-1">
-                <p class="no-data-found">No Data Found</p>
-              </div>
-           }@else {
-            @for (post of data; track $index) {
-              <div class="product-card my-2 p-0 p-sm-3">
-                <app-product-card
-                  [postData]="post"
-                  [postDetialUrl]="activeTab == 'feature' ? 'product-detail' : 'auction-product-detail'"
-                />
-              </div>
-              }
-           }
         </div>
         }
       </div>

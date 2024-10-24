@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post-category.component.scss'],
 })
 export class PostCategoryComponent implements OnInit {
-  constructor(private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService,private cd:ChangeDetectorRef) {
+  constructor(private route:ActivatedRoute,private globalStateService: GlobalStateService, private mainServices: MainServicesService, private countdownTimerService: CountdownTimerService,private cd:ChangeDetectorRef) {
   }
   activeButton: number = 1;
   isActive = false;
@@ -25,8 +25,12 @@ export class PostCategoryComponent implements OnInit {
     {
       banner: "https://images.olx.com.pk/thumbnails/493379125-800x600.webp"
     },
-  ]
-  activeTab: any = "auction"
+  ];
+  activeTab: any = "auction";
+
+
+
+
   handleTab(tab: string) {
     this.activeTab = tab;
     this.globalStateService.updateProdTab("ProductType", tab);
@@ -58,6 +62,10 @@ export class PostCategoryComponent implements OnInit {
   
   ngOnInit() {
     this.handleTab(this.activeTab)
+    this.route.queryParams.subscribe((params) => {
+      const tabName = params['name'] || this.activeTab; 
+      this.handleTab(tabName);
+    });
     this.countdownSubscriptions.forEach((subscription) => subscription.unsubscribe());
     this.globalStateService.currentState.subscribe((state) => {
       this.data = state.filteredProducts;
@@ -71,3 +79,4 @@ export class PostCategoryComponent implements OnInit {
   }
   
 }
+
